@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Home - UAH Theatre</title>
+    <link rel="stylesheet" type="text/css" href="../css/homeStyle.css">
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+
+
+
+<nav class="navbar navbar-light bg-faded">
+    <form class="form-inline">
+        <div>
+            <span style="cursor:pointer" onclick="toggleFilterMenu()">Filters</span>
+        </div>
+        
+        <input id="searchBar" class="form-control" type="text" placeholder="Enter any keywords">
+        <button id="submitButton" class="btn" type="submit">Search</button>
+        
+        <div>
+            <span style="cursor:pointer" onclick="toggleAccountMenu()">&equiv;</span>
+        </div>
+    </form>
+</nav>
+
+<div id="filterMenu" class="leftSideNav">
+  <a href="javascript:void(0)" class="closebtn" onclick="toggleFilterMenu()">&times;</a>
+  <a href="#">About</a>
+  <a href="#">Services</a>
+  <a href="#">Clients</a>
+  <a href="#">Contact</a>
+</div>
+
+
+<div id="accountMenu" class="rightSideNav">
+  <a href="javascript:void(0)" class="closebtn" onclick="toggleAccountMenu()">&times;</a>
+  <a href="#">Reservations</a>
+  <a href="#">My Account</a>
+  <a href="#">Help & FAQ</a>
+  <a href="login.html">Log Out</a>
+</div>
+
+</body>
+</html>
+
+<script>
+    function toggleFilterMenu() {
+        if (document.getElementById("filterMenu").style.width == "250px") {
+            var menuItems = document.getElementById("filterMenu").getElementsByTagName('a');
+            for (var i = 1; i < menuItems.length; i++) {
+                menuItems[i].style.opacity = 0;
+            }
+            document.getElementById("filterMenu").style.width = "0";
+        } else {
+            if (document.getElementById("accountMenu").style.width == "250px") {
+                toggleAccountMenu();
+            }
+            
+            var menuItems = document.getElementById("filterMenu").getElementsByTagName('a');
+            for (var i = 1; i < menuItems.length; i++) {
+                menuItems[i].style.opacity = 1;
+            }
+            document.getElementById("filterMenu").style.width = "250px";
+        }
+    }
+
+
+    function toggleAccountMenu() {
+        if (document.getElementById("accountMenu").style.width == "250px") {
+            var menuItems = document.getElementById("accountMenu").getElementsByTagName('a');
+            for (var i = 1; i < menuItems.length; i++) {
+                menuItems[i].style.opacity = 0;
+            }
+            document.getElementById("accountMenu").style.width = "0";
+        } else {
+            if (document.getElementById("filterMenu").style.width == "250px") {
+                toggleFilterMenu();
+            }
+            
+            var menuItems = document.getElementById("accountMenu").getElementsByTagName('a');
+            for (var i = 1; i < menuItems.length; i++) {
+                menuItems[i].style.opacity = 1;
+            }
+            document.getElementById("accountMenu").style.width = "250px";
+        }
+    }
+</script>

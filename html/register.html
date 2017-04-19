@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Register - UAH Theatre</title>
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+<div>
+    <h2>Costume & Prop Inventory App</h2>
+    <h1>Register</h1>
+</div>
+
+<form>
+    <!--EMAIL INPUT-->
+    <div class="form-group row">
+        <div class="offset-2 col-8 offset-md-3 col-md-6">
+            <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+        </div>
+    </div>
+    
+    <!--PASSWORD INPUT-->
+    <div class="form-group row">
+        <div class="offset-2 col-8 offset-md-3 col-md-6">
+            <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="offset-2 col-8 offset-md-3 col-md-6">
+            <input type="password" class="form-control" id="inputPassword" placeholder="Confirm Password">
+        </div>
+    </div>
+    
+    <!--ACCOUNT TYPE-->
+    <fieldset class="form-group row">
+        <div class="offset-2 offset-md-3">
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+                    Student Account
+                </label>
+            </div>
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                    Admin Account
+                </label>
+            </div>
+        </div>
+    </fieldset>
+    
+    <!--SIGN UP BUTTON-->
+    <!--<div class="form-group row">-->
+    <!--    <div class="offset-2 col-8 offset-md-3 col-md-6">-->
+    <!--        <button onclick="location.href='login.html'" type="submit" class="btn" id="registerButton">Register</button>-->
+    <!--    </div>-->
+    <!--</div>-->
+</form>
+
+<!--Fake SIGN UP BUTTON-->
+<div class="row">
+    <div class="offset-2 col-8 offset-md-3 col-md-6">
+        <button onclick="location.href='login.html'" class="btn" id="registerButton">Register</button>
+    </div>
+</div>
+
+
+<div class="row">
+    <!--Go to Login Page-->
+    <div class="navButton offset-2 col-4 offset-md-3 col-md-3">
+        <button onclick="location.href='login.html'" class="btn" id="loginButton">Returning User?</button>
+    </div>
+    
+    <!--Use app as Guest-->
+    <div class="navButton col-4 col-md-3">
+        <button onclick="location.href='home.html'" class="btn" id="guestButton">Continue as Guest</button>
+    </div>
+</div>
+
+
+</body>
+</html>
+
