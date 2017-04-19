@@ -1,7 +1,12 @@
+#todo {
+    text-align: center;
+    margin-top: 10vh;
+}
+
 #menuNavButton {
     background-color: grey;
     padding: 4px 10px;
-    margin: 0 auto;
+    margin-left: 2vh;
 }
 
 #addNavButton {
@@ -11,7 +16,6 @@
     width: 50%;
     text-align: center;
     color: white;
-    right: 0px;
 }
 
 
