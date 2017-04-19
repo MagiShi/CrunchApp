@@ -18,16 +18,25 @@
 
 
 <nav class="navbar navbar-light bg-faded">
+    <!--SEARCH BAR-->
     <form class="form-inline">
         <a class="navbar-brand" href="#">Digital Inventory</a>
-        <input id="searchBar" class="form-control" type="text" placeholder="Enter any keywords">
-        <div>
-            <span style="cursor:pointer" onclick="toggleFilterMenu()">Edit Filters</span>
+        <div class="input-group">
+            <div class="input-group-btn search-panel">
+                <button type="button" class="btn">
+                	<span onclick="toggleFilterMenu()">Filters</span>
+                </button>
+            </div>
+            <input id="searchBar" class="form-control" type="text" placeholder="Enter any keywords">
+            <span class="input-group-btn">
+                <button class="btn" type="button">Search</button>
+            </span>
         </div>
-        <button id="submitButton" class="btn" type="submit">Search</button>
-        
         <div>
-            <span style="cursor:pointer" onclick="toggleAccountMenu()">&equiv;</span>
+            <span style="cursor:pointer" onclick="toggleAccountMenu()">Menu</span>
+        </div>
+        <div>
+            <span style="cursor:pointer" onclick="toggleAccountMenu()">Add Item</span>
         </div>
     </form>
 </nav>
