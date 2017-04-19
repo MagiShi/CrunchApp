@@ -3,6 +3,20 @@
 	<head>
 		<title>Add Item</title>
 		<link rel="stylesheet" type="text/css" href="../css/subpageStyle.css">
+	<script src="https://www.gstatic.com/firebasejs/3.8.0/firebase.js"></script>
+	<script>
+      		// Initialize Firebase
+      		var config = {
+        		apiKey: "AIzaSyCjX6tziVCN1danUH2P-oU2YfaRqf4x22U",
+        		authDomain: "crunchapp-de11a.firebaseapp.com",
+        		databaseURL: "https://crunchapp-de11a.firebaseio.com",
+        		projectId: "crunchapp-de11a",
+        		storageBucket: "crunchapp-de11a.appspot.com",
+        		messagingSenderId: "666618473993"
+      		};
+      		firebase.initializeApp(config);
+    	</script>
+	
 	</head>
  	<body>
 		<h1>Add a New Item</h1>
@@ -29,13 +43,13 @@
         </p>
         <p>
         	<label>Short Description:</label><br>
-            <textarea id="shortDescription" rows="2">
-            </textarea>
+            <textarea id="shortDescription" rows="2"></textarea>
         </p>
         <p>
             <input type="button" class="cancel" value="CANCEL">
-        	<input type="submit" class="add" value="ADD">
+        	<input type="submit" class="add" value="ADD" onclick="saveAddItemData()">
         </p>
     	</form>
+	<script src="scripts/main.js"></script>
   	</body>
 </html>
