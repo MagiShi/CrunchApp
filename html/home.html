@@ -4,10 +4,11 @@
     <title>Home - UAH Theatre</title>
     <link rel="stylesheet" type="text/css" href="../css/homeStyle.css">
     <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+    <script src="https://use.fontawesome.com/f26043ee62.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
@@ -24,22 +25,25 @@
         <div class="input-group">
             <div class="input-group-btn search-panel">
                 <button type="button" class="btn">
-                	<span onclick="toggleFilterMenu()">Filters</span>
+                    <span onclick="toggleFilterMenu()">Edit Filters</span>
                 </button>
             </div>
             <input id="searchBar" class="form-control" type="text" placeholder="Enter any keywords">
             <span class="input-group-btn">
-                <button class="btn" type="button">Search</button>
+                <button class="btn" type="button">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
             </span>
         </div>
-        <div>
+        <div id="menuNavButton">
             <span style="cursor:pointer" onclick="toggleAccountMenu()">Menu</span>
-        </div>
-        <div>
-            <span style="cursor:pointer" onclick="toggleAccountMenu()">Add Item</span>
         </div>
     </form>
 </nav>
+
+<div id="addNavButton">
+    <span style="cursor:pointer" onclick="location.href='addItem.html'">Add Item</span>
+</div>
 
 <div id="filterMenu" class="leftSideNav">
   <a href="javascript:void(0)" class="closebtn" onclick="toggleFilterMenu()">&times;</a>
@@ -76,7 +80,7 @@
             if (document.getElementById("accountMenu").style.width == "250px") {
                 toggleAccountMenu();
             }
-            
+
             var menuItems = document.getElementById("filterMenu").getElementsByTagName('a');
             for (var i = 1; i < menuItems.length; i++) {
                 menuItems[i].style.opacity = 1;
@@ -97,7 +101,7 @@
             if (document.getElementById("filterMenu").style.width == "250px") {
                 toggleFilterMenu();
             }
-            
+
             var menuItems = document.getElementById("accountMenu").getElementsByTagName('a');
             for (var i = 1; i < menuItems.length; i++) {
                 menuItems[i].style.opacity = 1;

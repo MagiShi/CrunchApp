@@ -1,6 +1,18 @@
+#menuNavButton {
+    background-color: grey;
+    padding: 4px 10px;
+    margin: 0 auto;
+}
 
-
-
+#addNavButton {
+    background-color: grey;
+    padding: 4px 10px;
+    margin: 100px auto;
+    width: 50%;
+    text-align: center;
+    color: white;
+    right: 0px;
+}
 
 
 /*-------------------SIDE MENUS-------------------*/
