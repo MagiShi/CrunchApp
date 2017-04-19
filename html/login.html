@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <title>Login - UAH Theatre</title>
+    <link rel="stylesheet" type="text/css" href="../css/welcomeStyle.css">
     <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -15,11 +16,12 @@
 </head>
 <body>
 
-<div>
-    <h2>Costume & Prop Inventory App</h2>
-    <h1>Login</h1>
+<div id="header">
+    <h1>Digital Inventory</h1>
+    <h2>Login</h2>
 </div>
 
+<div class="container-fluid">
 <form>
     <!--EMAIL INPUT-->
     <div class="form-group row">
@@ -38,30 +40,31 @@
     <!--LOG IN BUTTON-->
     <!--<div class="form-group row">-->
     <!--    <div class="offset-2 col-8 offset-md-3 col-md-6">-->
-    <!--        <button onclick="location.href='home.html'" type="submit" class="btn" id="loginButton">Login</button>-->
+    <!--        <button onclick="location.href='home.html'" type="submit" class="btn" id="goButton">Login</button>-->
     <!--    </div>-->
     <!--</div>-->
 </form>
 
 <!--Fake LOG IN BUTTON-->
-<div class="row">
+<div class="row" id="goButtonDiv">
     <div class="offset-2 col-8 offset-md-3 col-md-6">
-        <button onclick="location.href='home.html'" class="btn" id="loginButton">Login</button>
+        <button onclick="location.href='home.html'" class="btn">Login</button>
     </div>
 </div>
 
-<div class="row">
+<div class="row" id="navButtonDiv">
     <!--Go to Register New Account Page-->
     <div class="navButton offset-2 col-4 offset-md-3 col-md-3">
-        <button onclick="location.href='register.html'" class="btn" id="registerButton">New User?</button>
+        <button onclick="location.href='register.html'" class="btn">New User?</button>
     </div>
     
     <!--Use app as Guest-->
     <div class="navButton col-4 col-md-3">
-        <button onclick="location.href='home.html'" class="btn" id="guestButton">Continue as Guest</button>
+        <button onclick="location.href='home.html'" class="btn">Use as Guest</button>
     </div>
 </div>
 
+</div>
 
 </body>
 </html>
