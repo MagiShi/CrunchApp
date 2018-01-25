@@ -42,6 +42,7 @@ body {
 
 #loginButton {
     padding: 10px 130px;
+    width: 100%;
     font-size: 16px;
     background-color: #FDDA24;
     margin-top: 3vh;
