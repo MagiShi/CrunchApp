@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <title>Login - UAH Theatre</title>
-    <link rel="stylesheet" type="text/css" href="../css/welcomeStyle.css">
     <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/welcomeStyle.css') }}">
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -18,23 +18,20 @@
 
 <div id="header">
     <h1>Thracker</h1>
-    <h2>A Digital Theatre Inventory</h2>
-    <br>
-    <h2>Login</h2>
+    <h3>A Digital Theatre Inventory</h3>
 </div>
 
 <div class="container-fluid">
+<h4 style="margin-bottom:20px;">Login</h4>
 <form>
-    <!--EMAIL INPUT-->
-    <div class="form-group row">
-        <div class="offset-2 col-8 offset-md-3 col-md-6">
+    <div style="display:inline-block; text-align:center; width:30%">
+        <!--EMAIL INPUT-->
+        <div class="form-group">
             <input type="email" class="form-control" id="inputEmail" placeholder="Email">
         </div>
-    </div>
-    
-    <!--PASSWORD INPUT-->
-    <div class="form-group row">
-        <div class="offset-2 col-8 offset-md-3 col-md-6">
+        
+        <!--PASSWORD INPUT-->
+        <div class="form-group">
             <input type="password" class="form-control" id="inputPassword" placeholder="Password">
         </div>
     </div>
@@ -48,21 +45,20 @@
 </form>
 
 <!--Fake LOG IN BUTTON-->
-<div class="row" id="goButtonDiv">
-    <div class="offset-2 col-8 offset-md-3 col-md-6">
-        <button onclick="location.href='home.html'" class="btn">Login</button>
-    </div>
+<div id="goButtonDiv">
+    <button onclick="location.href='home.html'" class="btn">Login</button>
+
 </div>
 
-<div class="row" id="navButtonDiv">
+<div id="navButtonDiv">
     <!--Go to Register New Account Page-->
-    <div class="navButton offset-2 col-4 offset-md-3 col-md-3">
-        <button onclick="location.href='register.html'" class="btn">New User?</button>
+    <div>
+        <a href="location.href='register.html'">New User? Sign-up!</a>
     </div>
     
     <!--Use app as Guest-->
-    <div class="navButton col-4 col-md-3">
-        <button onclick="location.href='home.html'" class="btn">Use as Guest</button>
+    <div>
+        <a href="location.href='home.html'">Use as Guest</a>
     </div>
 </div>
 
