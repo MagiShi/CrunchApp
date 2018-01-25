@@ -23,5 +23,9 @@ def newUser():
 def register():
     return render_template('home.html')
 
+@app.route('/addItem.html')
+def add():
+    return render_template('addItem.html')
+
 if __name__ == "__main__":
     app.run()
