@@ -1,9 +1,14 @@
-from flask import Flask
+from flask import Flask, flash, redirect, render_template, request, session, abort
+ 
 app = Flask(__name__)
+ 
+@app.route('/')
+def home():
+    return render_template('login.html')
 
-@app.route("/")
-def hello():
-    #This is a test
-    return "Hello World! This should be in the master branch. Yet another test."
+@app.route('/home.html')
+def login():
+    return render_template('home.html')
 
-
+if __name__ == "__main__":
+    app.run()
