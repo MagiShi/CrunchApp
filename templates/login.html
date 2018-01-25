@@ -14,55 +14,47 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 
 </head>
-<body style="height:100%; background-color: #fafcfe;">
-
-<div id="header">
-    <h1>Thracker</h1>
-    <h3>A Digital Theatre Inventory</h3>
-</div>
+<body>
 
 <div class="container-fluid">
-    <div class="login-container">
-        <h4 style="margin-bottom:20px;">Login</h4>
-        <form>
-            <div style="display:inline-block; text-align:center; width:300px;">
+    <!-- LOGIN HEADER ROW -->
+    <div class="login-header row">
+        <div class="col-12">
+            <h1>Thracker</h1>
+            <h3>A Digital Theatre Inventory</h3>
+        </div>
+        
+    </div>
+    
+    <!-- LOGIN FORM ROW -->
+    <div class="row">
+        <div class="login-container offset-2 col-8 offset-md-4 col-md-4">
+            <h3>Welcome Back!</h3>
+            <form>
                 <!--EMAIL INPUT-->
                 <div class="form-group">
                     <input type="email" class="form-control" id="inputEmail" placeholder="Email">
                 </div>
-                
+
                 <!--PASSWORD INPUT-->
                 <div class="form-group">
                     <input type="password" class="form-control" id="inputPassword" placeholder="Password">
                 </div>
-            </div>
-            
-            <!--LOG IN BUTTON-->
-            <!--<div class="form-group row">-->
-            <!--    <div class="offset-2 col-8 offset-md-3 col-md-6">-->
-            <!--        <button onclick="location.href='home.html'" type="submit" class="btn" id="goButton">Login</button>-->
-            <!--    </div>-->
-            <!--</div>-->
-        </form>
+                
+                <!--LOG IN BUTTON-->
+                <button onclick="location.href='home.html'" class="btn" id="loginButton">Login</button>
+            </form>
 
-        <!--Fake LOG IN BUTTON-->
-        <div id="goButtonDiv">
-            <button onclick="location.href='home.html'" class="btn">Login</button>
-
-        </div>
-
-        <div id="navButtonDiv">
-            <!--Go to Register New Account Page-->
-            <div>
+            <div id="navButtonDiv">
+                <!--Go to Register New Account Page-->
                 <a href="register.html">New User? Sign-up!</a>
-            </div>
-            
-            <!--Use app as Guest-->
-            <div>
-                <a href="home.html">Use as Guest</a>
+                <br>
+                <!--Use app as Guest-->
+                <a href="home.html">Or, Use as Guest</a>
             </div>
         </div>
     </div>
+    
 </div>
 
 </body>

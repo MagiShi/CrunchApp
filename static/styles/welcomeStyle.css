@@ -1,26 +1,38 @@
-html, body {
-    height: 100%;
+body {
+    background-color: #fafcfe;
 }
 
-#header {
-    padding-top: 4vh;
-    padding-bottom: 4vh;
-    margin-bottom: 12vh;
+.login-header {
+    padding: 4vh;
     background-color: #0077C8;
     color: white;
     text-align: center;
 }
 
-.container-fluid {
+.login-container {
+    margin-top: 5vh;
+    padding: 3vh;
+    display: inline-block;
+    background-color: #FFF;
+    border-radius: 2px;
+    box-shadow: 0px 0px 6px #aaaaaa;
+}
+
+.login-container h3 {
+    color: #6a6a6a;
+    margin-bottom: 30px;
     text-align: center;
 }
 
-.login-container {
-    padding: 30px 30px;
-    display:inline-block;
-    background-color:#FFF;
-    border-radius: 2px;
-    box-shadow: 0px 0px 6px #aaaaaa;
+.login-container form {
+    display:inline-block; 
+    text-align:center; 
+    width:100%;
+}
+
+#inputEmail, 
+#inputPassword {
+    width: 100%;
 }
 
 #accountTypeDiv {
@@ -28,18 +40,20 @@ html, body {
     font-size: 20px;
 }
 
-#goButtonDiv button {
+#loginButton {
     padding: 10px 130px;
     font-size: 16px;
     background-color: #FDDA24;
-}
-#goButtonDiv {
     margin-top: 3vh;
     margin-bottom: 6vh;
 }
+#loginButton:hover {
+    background-color: #ffff4c;
+    cursor: pointer;
+}
 
 @media screen and (min-width:480px) and (max-width:800px) {
-    #goButtonDiv button, #navButtonDiv button {
+    #loginButton, #navButtonDiv button {
         font-size: 14px;
     }
     #accountTypeDiv {
@@ -48,15 +62,10 @@ html, body {
 }
 
 @media screen and (max-width:479px) {
-    #goButtonDiv button, #navButtonDiv button {
+    #loginButton, #navButtonDiv a {
         font-size: 10px;
     }
     #accountTypeDiv {
         font-size: 12px;
     }
-}
-
-#goButtonDiv button:hover {
-    background-color: #ffff4c;
-    cursor: pointer;
 }
