@@ -21,6 +21,7 @@ def home():
 def login():
     username = request.form['username']
     password = request.form['password']
+    error = None
 
     query = "SELECT * FROM registereduser WHERE username = '{0}' AND password = '{1}';".format(username, password)
     print (query)
@@ -31,7 +32,8 @@ def login():
 
         if tup is None:
             ##Need popup or error message or something here for wrong password/username
-            return render_template('login.html')
+            error = 'The username or password you have entered is invalid.'
+            return render_template('login.html', error=error)
     except: 
         ##Any errors (there shouldn't be) should be handled here
         query = "rollback;"
