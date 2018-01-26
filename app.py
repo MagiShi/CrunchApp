@@ -67,6 +67,10 @@ def register():
     else:
         isAdmin = True
 
+    if username == '' or email == '' or password == '':
+        error = 'Please fill in all fields'
+        return render_template('register.html', error=error)
+
     query = "INSERT into registereduser values ('{0}', '{1}', '{2}', {3});".format(email, username, password, isAdmin)
     print (query)
     # print (cursor.execute(query))
