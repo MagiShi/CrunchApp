@@ -11,19 +11,26 @@ url = urlparse(os.environ.get('DATABASE_URL'))
 db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname)
 schema = "schema.sql"
 conn = psycopg2.connect(db)
+cursor = conn.cursor()
 
 @app.route('/')
 def home():
-    return render_template('login.html')
-
-@app.route('/login.html')
-def returningUser():
     return render_template('login.html')
 
 @app.route('/login.html', methods=['POST'])
 def login():
     username = request.form['username']
     password = request.form['password']
+
+    sql = "SELECT * FROM registereduser WHERE username = '{0}' AND password = '{1}';".format(username, password)
+    print (sql)
+    cursor.execute(sql)
+    # print (cursor.fetchone())
+    tup = cursor.fetchone()
+
+    if tup is None:
+        return render_template('login.html')
+
     return render_template('home.html')
 
 @app.route('/home.html')
