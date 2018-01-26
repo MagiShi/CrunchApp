@@ -2,15 +2,15 @@ from flask import Flask, flash, redirect, render_template, request, session, abo
 
 
 import os
-import urlparse
-import psycopg2
-
+#import urlparse
+#import psycopg2
+#
 app = Flask(__name__)
-
-url = urlparse.urlparse(os.environ.get('DATABASE_URL'))
-db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname)
-schema = "schema.sql"
-conn = psycopg2.connect(db)
+#
+#url = urlparse.urlparse(os.environ.get('DATABASE_URL'))
+#db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname)
+#schema = "schema.sql"
+#conn = psycopg2.connect(db)
 
 @app.route('/')
 def home():
@@ -29,13 +29,18 @@ def guest():
     # should look different than a registered user (not able to add, delete, etc)
     return render_template('home.html')
 
-@app.route('/register.html')
+@app.route('/register.html', methods=['POST'])
 def newUser():
     return render_template('register.html')
 def register():
     username = request.form['username']
     email = request.form['email']
     password = request.form['password']
+    accountType = request.form['accountType']
+    if accountType == 'studentAccount':
+        isAdmin = False
+    else:
+        isAdmin = True
     return render_template('home.html')
 
 @app.route('/addItem.html')
