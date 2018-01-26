@@ -7,8 +7,7 @@ import psycopg2
 
 app = Flask(__name__)
 
-# url = urlparse(os.environ['DATABASE_URL'])
-url = urlparse("postgres://mbgugkwmyyrgpp:08f1f171ba8df81468de5e7d166069757cc545fb163d5cc820407068513b101d@ec2-54-163-237-249.compute-1.amazonaws.com:5432/da0io40vrbg6u0")
+url = urlparse(os.environ['DATABASE_URL'])
 db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname)
 schema = "schema.sql"
 conn = psycopg2.connect(db)
@@ -81,7 +80,7 @@ def register():
     # tup = cursor.fetchone()
     # print (tup)
 
-    return render_template('login.html')
+    return render_template('home.html')
 
 @app.route('/addItem.html')
 def add():
