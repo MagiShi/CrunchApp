@@ -7,6 +7,7 @@ import psycopg2
 
 app = Flask(__name__)
 
+# url = urlparse(os.environ['DATABASE_URL'])
 url = urlparse("postgres://mbgugkwmyyrgpp:08f1f171ba8df81468de5e7d166069757cc545fb163d5cc820407068513b101d@ec2-54-163-237-249.compute-1.amazonaws.com:5432/da0io40vrbg6u0")
 db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname)
 schema = "schema.sql"
@@ -24,13 +25,19 @@ def login():
 
     query = "SELECT * FROM registereduser WHERE username = '{0}' AND password = '{1}';".format(username, password)
     print (query)
-    cursor.execute(query)
-    # print (cursor.fetchone())
-    tup = cursor.fetchone()
+    try:
+        cursor.execute(query)
+        # print (cursor.fetchone())
+        tup = cursor.fetchone()
 
-    if tup is None:
+        if tup is None:
+            ##Need popup or error message or something here for wrong password/username
+            return render_template('login.html')
+    except: 
+        ##Any errors (there shouldn't be) should be handled here
+        query = "rollback;"
+        cursor.execute(query)
         return render_template('login.html')
-
     return render_template('home.html')
 
 @app.route('/home.html')
@@ -62,7 +69,15 @@ def register():
     print (query)
     # print (cursor.execute(query))
     # print (cursor.fetchone())
-    cursor.execute(query)
+    # cursor.execute(query)
+    try: 
+        cursor.execute(query)
+    except psycopg2.IntegrityError as e: 
+        query = "rollback;"
+        cursor.execute(query)
+
+        ##What to do if registration fails here
+        return render_template('register.html')
     # tup = cursor.fetchone()
     # print (tup)
 
