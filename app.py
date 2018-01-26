@@ -1,5 +1,5 @@
 from flask import Flask, flash, redirect, render_template, request, session, abort
- 
+
 
 import os
 import urlparse
@@ -11,12 +11,6 @@ url = urlparse.urlparse(os.environ.get('DATABASE_URL'))
 db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname)
 schema = "schema.sql"
 conn = psycopg2.connect(db)
-
-# app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://mbgugkwmyyrgpp:08f1f171ba8df81468de5e7d166069757cc545fb163d5cc820407068513b101d@ec2-54-163-237-249.compute-1.amazonaws.com:5432/da0io40vrbg6u0"
-# db = SQLAlchemy(app)
-# conn = psycopg2.connect(db)
-# cur = conn.cursor()
-# app = Flask(__name__)
 
 @app.route('/')
 def home():
