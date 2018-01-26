@@ -31,7 +31,8 @@ body {
 }
 
 #inputEmail, 
-#inputPassword {
+#inputPassword,
+#inputUsername {
     width: 100%;
 }
 
