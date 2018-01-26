@@ -28,7 +28,10 @@
     <!-- LOGIN FORM ROW -->
     <div class="row">
         <div class="login-container offset-2 col-8 offset-md-4 col-md-4">
-            <h3>Register</h3>
+            <h3>Create a New Account</h3>
+            {% if error %}
+                <p class="error" style="color:red;"><strong>*</strong> {{ error }}
+            {% endif %}
             <form method=POST action='/postregister.html'>
                 <div class="form-group">
                     <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Email">

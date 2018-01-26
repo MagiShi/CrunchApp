@@ -31,7 +31,7 @@ def login():
         tup = cursor.fetchone()
 
         if tup is None:
-            ##Need popup or error message or something here for wrong password/username
+            ##Error message for wrong password/username
             error = 'The username or password you have entered is invalid.'
             return render_template('login.html', error=error)
     except: 
@@ -77,8 +77,9 @@ def register():
         query = "rollback;"
         cursor.execute(query)
 
-        ##What to do if registration fails here
-        return render_template('register.html')
+        ##If registration fails
+        error = 'Account creation has failed.'
+        return render_template('register.html', error=error)
     # tup = cursor.fetchone()
     # print (tup)
 
