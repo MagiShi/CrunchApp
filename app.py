@@ -58,7 +58,8 @@ def register():
     username = request.form['username']
     email = request.form['email']
     password = request.form['password']
-
+    error = None
+    
     #Account type not accessed
     accountType = request.form['accountType']
     if accountType == 'studentAccount':
