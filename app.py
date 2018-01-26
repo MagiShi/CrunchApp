@@ -16,8 +16,10 @@ conn = psycopg2.connect(db)
 def home():
     return render_template('login.html')
 
-@app.route('/login.html')
+@app.route('/login.html', methods=['POST'])
 def returningUser():
+    username = request.form['username']
+    password = request.form['password']
     return render_template('login.html')
 
 @app.route('/home.html')
@@ -31,6 +33,9 @@ def guest():
 def newUser():
     return render_template('register.html')
 def register():
+    username = request.form['username']
+    email = request.form['email']
+    password = request.form['password']
     return render_template('home.html')
 
 @app.route('/addItem.html')
