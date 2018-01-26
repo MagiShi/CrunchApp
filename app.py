@@ -16,22 +16,28 @@ app = Flask(__name__)
 def home():
     return render_template('login.html')
 
-@app.route('/login.html', methods=['POST'])
+@app.route('/login.html')
 def returningUser():
-    username = request.form['username']
-    password = request.form['password']
     return render_template('login.html')
 
-@app.route('/home.html')
+@app.route('/login.html', methods=['POST'])
 def login():
+    username = request.form['username']
+    password = request.form['password']
+    return render_template('home.html')
+
+@app.route('/home.html')
+def loggedin():
     return render_template('home.html')
 def guest():
     # should look different than a registered user (not able to add, delete, etc)
     return render_template('home.html')
 
-@app.route('/register.html', methods=['POST'])
+@app.route('/register.html')
 def newUser():
     return render_template('register.html')
+
+@app.route('/register.html', methods=['POST'])
 def register():
     username = request.form['username']
     email = request.form['email']
