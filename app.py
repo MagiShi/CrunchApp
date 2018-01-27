@@ -14,7 +14,7 @@ app.config.update(
     MAIL_PORT=465,
     MAIL_USE_SSL=True,
     MAIL_USERNAME = 'crunch.thracker@gmail.com',
-    MAIL_PASSWORD = ENV['epassword']
+    MAIL_PASSWORD = os.environ['epassword']
     )
 mail = Mail(app)
 
