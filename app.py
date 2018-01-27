@@ -72,7 +72,7 @@ def forgotPass():
 def sendMail():
     email = request.form['email']
 
-    query = "Select password from registereduser Where email = '{0}'".format(email)
+    query = "Select password from registereduser Where email = '{0}';".format(email)
 
     try: 
         cursor.execute(query)
@@ -116,7 +116,7 @@ def register():
         return render_template('register.html', error=error)
 
     query = "INSERT into registereduser values ('{0}', '{1}', '{2}', {3});".format(email, username, password, isAdmin)
-    # print (query)
+    print (query)
     # print (cursor.execute(query))
     # print (cursor.fetchone())
     # cursor.execute(query)
