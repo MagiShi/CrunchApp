@@ -80,6 +80,7 @@ def sendMail():
 
         if tup is None:
             ##Error message for wrong password/username
+
             error = 'The email you have entered is unregistered.'
             return render_template('forgotpass.html', error=error)
 
@@ -116,21 +117,24 @@ def register():
         return render_template('register.html', error=error)
 
     query = "INSERT into registereduser values ('{0}', '{1}', '{2}', {3});".format(email, username, password, isAdmin)
-    print (query)
+    # print (query)
     # print (cursor.execute(query))
     # print (cursor.fetchone())
     # cursor.execute(query)
     try: 
         cursor.execute(query)
-    except psycopg2.IntegrityError as e: 
+        # print ("executed")
+    except Exception as e: 
         query = "rollback;"
         cursor.execute(query)
 
         ##If registration fails
         error = 'Account creation has failed.'
         return render_template('register.html', error=error)
-    # tup = cursor.fetchone()
+    # cursor.execute("Select * from registereduser;")
+    # tup = cursor.fetchall()
     # print (tup)
+    conn.commit()
 
     return render_template('home.html')
 
