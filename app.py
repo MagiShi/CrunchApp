@@ -43,7 +43,7 @@ def login():
 
         if tup is None:
             ##Error message for wrong password/username
-            error = 'The username or password you have entered is invalid.'
+            error = 'The username or password you have entered is incorrect.'
             return render_template('login.html', error=error)
     except: 
         ##Any errors (there shouldn't be) should be handled here
@@ -65,7 +65,7 @@ def newUser():
 
 @app.route('/forgotpass.html')
 def forgotPass():
-    error = 'Please type email in'
+    error = 'Please enter email address'
     return render_template('forgotpass.html', error=error)
 
 @app.route('/forgotpass.html', methods=['POST'])
