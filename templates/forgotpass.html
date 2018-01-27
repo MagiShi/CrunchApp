@@ -29,24 +29,19 @@
     <!-- LOGIN FORM ROW -->
     <div class="row">
         <div class="login-container offset-2 col-8 offset-md-4 col-md-4">
-            <h3>Welcome Back!</h3>
+            <h3>Forgot Password</h3>
             {% if error %}
                 <p class="error" style="color:red;"><strong>*</strong> {{ error }}
             {% endif %}
-            <form method=POST action='/login.html'>
+            <form method=POST action='/forgotpass.html'>
                 <!--EMAIL INPUT-->
                 <div class="form-group">
-                    <input type="text" name="username" class="form-control" id="inputUsername" placeholder="Username">
+                    <input type="text" name="email" class="form-control" id="inputemail" placeholder="Email">
                 </div>
 
-                <!--PASSWORD INPUT-->
-                <div class="form-group">
-                    <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password">
-                </div>
-                
                 <!--LOG IN BUTTON-->
                 <!-- <button onclick="location.href='home.html'" class="btn" id="loginButton">Login</button> -->
-                <button type="submit" class="btn" id="loginButton">Login</button>
+                <button type="submit" class="btn" id="loginButton">Send Email</button>
             </form>
 
             <div id="navButtonDiv">
@@ -54,9 +49,9 @@
                 <a href="register.html" style="float:left;">New User? Sign-up!</a>
                 <!--Use app as Guest-->
                 <a href="home.html" style="float:right;">Use as Guest</a>
+                <!--Use app as Guest-->
+                <a href="/" style="float:left;">Back to Login</a>
                 <br/>
-                <a href="forgotpass.html" style="float:left;">Forgot Password</a>
-                <!-- <button type="submit" class="btn" formaction="/forgotpass1.html" id="forgotPassword">Forgot Password</button> -->
             </div>
         </div>
     </div>
