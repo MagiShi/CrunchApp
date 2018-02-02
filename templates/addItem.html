@@ -1,55 +1,154 @@
-<!DOCTYPE HTML>
-<html lang = "en">
-	<head>
-		<title>Add Item</title>
-		<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/subpageStyle.css') }}">
-	<script src="https://www.gstatic.com/firebasejs/3.8.0/firebase.js"></script>
-	<script>
-      		// Initialize Firebase
-      		var config = {
-        		apiKey: "AIzaSyCjX6tziVCN1danUH2P-oU2YfaRqf4x22U",
-        		authDomain: "crunchapp-de11a.firebaseapp.com",
-        		databaseURL: "https://crunchapp-de11a.firebaseio.com",
-        		projectId: "crunchapp-de11a",
-        		storageBucket: "crunchapp-de11a.appspot.com",
-        		messagingSenderId: "666618473993"
-      		};
-      		firebase.initializeApp(config);
-    	</script>
-	
-	</head>
- 	<body>
-		<h1>Add a New Item</h1>
-		<form>
-        <fieldset>
-            <legend>
-                Upload Photo
-            </legend>
-            <p>
-                Choose a clear image of the item
-                <input type="button" class="button" value="Upload Photo">
-            </p>
-        </fieldset>
-		<p>
-        	<label>Item Name:</label><br>
-        	<input type="text" class="text" id="itemName"/>
-        </p>
-        <p>
-        	<label>Barcode:</label><br>
-        	<input type="text" class="text" id="barcode"/><br>
-            <div class="std">
-                OR <input type="button" class="button" value="Scan Barcode">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Add Item - UAH Theatre</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/addStyle.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+    <script src="https://use.fontawesome.com/f26043ee62.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+<nav class="navbar">
+    <!--SEARCH BAR-->
+    <form class="form-inline">
+        <a class="navbar-brand" href="#">Thracker</a>
+        <div class="input-group">
+            <div class="input-group-btn search-panel">
+                <button type="button" class="btn">
+                    <span onclick="toggleFilterMenu()">Edit Filters</span>
+                </button>
             </div>
-        </p>
-        <p>
-        	<label>Short Description:</label><br>
-            <textarea id="shortDescription" rows="2"></textarea>
-        </p>
-        <p>
-            <input type="button" class="cancel" value="CANCEL">
-        	<input type="submit" class="add" value="ADD" onclick="saveAddItemData()">
-        </p>
-    	</form>
-	<script src="../scripts/main.js"></script>
-  	</body>
+            <input id="searchBar" class="form-control" type="text" placeholder="Enter any keywords">
+            <span class="input-group-btn">
+                <button class="btn" type="button">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+            </span>
+            
+            <div id="menuNavButton">
+            <span style="cursor:pointer" onclick="toggleAccountMenu()">Menu</span>
+        </div>
+            
+            
+        </div>
+        
+    </form>
+</nav>
+    
+<div class="container-fluid">
+    <div class="row">
+        <div class="add-container offset-2 col-8 offset-md-4 col-md-4">
+            <form method=POST action='/itemdetail.html'>
+                <!--ITEM NAME INPUT-->
+                <div class="form-group">
+                    <input type="text" name="itemname" class="form-control" id="inputItemName" placeholder="Item Name">
+                </div>
+
+                <!--BARCODE INPUT-->
+                <div class="form-group">
+                    <input type="text" name="barcode" class="form-control" id="inputBarcode" placeholder="Barcode">
+                </div>
+
+                <!--DESCRIPTION INPUT-->
+                <div class="form-group">
+                    <input type="text" name="description" class="form-control" id="inputDescription" placeholder="Description">
+                </div>
+
+                
+                <!--ADD ITEM BUTTON-->
+                <button type="submit" class="btn" id="addItemButton">Add Item</button>
+
+
+            </form>
+            <form method=POST action='/home.html'>
+                <!-- CANCEL BUTTON -->
+                <!-- Navigate back to home page -->
+                <button type="submit" class="btn" id="cancelButton">Cancel</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+ 
+
+    
+    
+
+
+<div id="filterMenu" class="leftSideNav">
+  <a href="javascript:void(0)" class="closebtn" onclick="toggleFilterMenu()">&times;</a>
+  <a href="#">Characteristic 1</a>
+  <a href="#">Characteristic 2</a>
+  <a href="#">Characteristic 3</a>
+  <a href="#">Characteristic 4</a>
+  <a href="#">Characteristic 5</a>
+  <a href="#">Characteristic 6</a>
+  <a href="#">Characteristic 7</a>
+</div>
+
+
+<div id="accountMenu" class="rightSideNav">
+  <a href="javascript:void(0)" class="closebtn" onclick="toggleAccountMenu()">&times;</a>
+  <a href="#">Reservations</a>
+  <a href="#">My Account</a>
+  <a href="#">Help & FAQ</a>
+  <a href="login.html">Log Out</a>
+</div>
+
+</body>
 </html>
+
+<script>
+    function toggleFilterMenu() {
+        if (document.getElementById("filterMenu").style.width == "250px") {
+            var menuItems = document.getElementById("filterMenu").getElementsByTagName('a');
+            for (var i = 1; i < menuItems.length; i++) {
+                menuItems[i].style.opacity = 0;
+            }
+            document.getElementById("filterMenu").style.width = "0";
+        } else {
+            if (document.getElementById("accountMenu").style.width == "250px") {
+                toggleAccountMenu();
+            }
+
+            var menuItems = document.getElementById("filterMenu").getElementsByTagName('a');
+            for (var i = 1; i < menuItems.length; i++) {
+                menuItems[i].style.opacity = 1;
+            }
+            document.getElementById("filterMenu").style.width = "250px";
+        }
+    }
+
+
+    function toggleAccountMenu() {
+        if (document.getElementById("accountMenu").style.width == "250px") {
+            var menuItems = document.getElementById("accountMenu").getElementsByTagName('a');
+            for (var i = 1; i < menuItems.length; i++) {
+                menuItems[i].style.opacity = 0;
+            }
+            document.getElementById("accountMenu").style.width = "0";
+        } else {
+            if (document.getElementById("filterMenu").style.width == "250px") {
+                toggleFilterMenu();
+            }
+
+            var menuItems = document.getElementById("accountMenu").getElementsByTagName('a');
+            for (var i = 1; i < menuItems.length; i++) {
+                menuItems[i].style.opacity = 1;
+            }
+            document.getElementById("accountMenu").style.width = "250px";
+        }
+    }
+</script>
