@@ -142,5 +142,9 @@ def register():
 def add():
     return render_template('addItem.html')
 
+@app.route('/login.html')
+def logout():
+    return render_template('login.html')
+
 if __name__ == "__main__":
     app.run()
