@@ -1,0 +1,54 @@
+.itemDetailContainer {
+    padding: 5vw 20vw !important;
+}
+@media screen and (max-height: 640px) {
+    .itemDetailContainer {
+        padding: 5vh 15vw !important;
+    }
+}
+
+@media screen and (max-height: 450px) {
+    .itemDetailContainer {
+        padding: 5vh 10vw !important;
+    }
+}
+
+.itemName {
+    font-weight: 600;
+    font-size: 2rem;
+}
+
+.itemImage {
+    text-align: center;
+}
+
+.itemImage img {
+    width: 100%;
+}
+
+.reservation {
+    margin: 20px;
+    text-align: center;
+    font-style: italic;
+    color: #8b8b8b;
+}
+
+.itemAction {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.itemAction button {
+    width: 80%;
+    color: white;
+}
+.itemAction .edit {
+    background-color: #b0d8a6;
+}
+.itemAction .delete {
+    background-color: #e89797;
+}
+.itemAction p {
+    color: #e89797;
+    font-style: italic;
+}
