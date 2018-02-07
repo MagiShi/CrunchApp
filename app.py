@@ -29,6 +29,7 @@ def home():
     return render_template('login.html')
 
 @app.route('/login.html', methods=['POST'])
+#method for logging in, on home page.
 def login():
     username = request.form['username']
     password = request.form['password']
@@ -98,6 +99,7 @@ def sendMail():
     return render_template('login.html', error=error)
 
 @app.route('/postregister.html', methods=['POST'])
+#def for registering, occurs after clicking registration button
 def register():
     # print ("in here")
     username = request.form['username']
@@ -117,10 +119,7 @@ def register():
         return render_template('register.html', error=error)
 
     query = "INSERT into registereduser values ('{0}', '{1}', '{2}', {3});".format(email, username, password, isAdmin)
-    # print (query)
-    # print (cursor.execute(query))
-    # print (cursor.fetchone())
-    # cursor.execute(query)
+
     try: 
         cursor.execute(query)
         # print ("executed")
@@ -131,16 +130,46 @@ def register():
         ##If registration fails
         error = 'Account creation has failed.'
         return render_template('register.html', error=error)
-    # cursor.execute("Select * from registereduser;")
-    # tup = cursor.fetchall()
-    # print (tup)
+
     conn.commit()
 
     return render_template('home.html')
 
+# renders addItem page
 @app.route('/addItem.html')
 def add():
     return render_template('addItem.html')
+
+
+@app.route('/postaddItem.html', methods=['POST'])
+def addItem():    
+    item_id = request.form['barcode']
+    item_name = request.form['itemname']
+    description = request.form['description']
+    error = None
+
+    if item_id == '' or item_name == '':
+        error = 'Item must have a barcode/id and a name'
+        return render_template('addItem.html', error=error)
+    if description == '':
+        description = 'null'
+
+    query = "INSERT into item values ('{0}', '{1}', NULL, false, '{2}');".format(item_id, item_name, description)
+    print(query)
+    try: 
+        cursor.execute(query)
+        # print ("executed")
+    except Exception as e: 
+        query = "rollback;"
+        cursor.execute(query)
+
+        ##If item creation fails
+        error = 'Item creation has failed.'
+        return render_template('addItem.html', error=error)
+
+    conn.commit()
+    return render_template('itemDetail.html')
+
 
 @app.route('/login.html')
 def logout():
