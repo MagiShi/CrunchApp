@@ -42,10 +42,10 @@
     width: 80%;
     color: white;
 }
-.itemAction .edit {
+#editItemButton {
     background-color: #b0d8a6;
 }
-.itemAction .delete {
+#deleteItemButton {
     background-color: #e89797;
 }
 .itemAction p {
