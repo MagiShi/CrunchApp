@@ -195,5 +195,29 @@ def deleteItemFlag():
     error = 'Item successfully deleted'
     return render_template('itemDetail.html', error=error)
 
+@app.route('/itemDetail.html', methods=['POST'])
+def getItemInfo():
+    #temporary ID, need frontend to get the database ID
+    item_id = "id"
+    #query = "SELECT * FROM item WHERE itemid='{0}';".format(item_id)
+    try: 
+        cursor.execute("SELECT itemname FROM item WHERE itemid='{0}';".format(item_id))
+        itemname = cursor.fetchone()
+        cursor.execute("SELECT image FROM item WHERE itemid='{0}';".format(item_id))
+        image = cursor.fetchall()
+        cursor.execute("SELECT description FROM item WHERE itemid='{0}';".format(item_id))
+        description = cursor.fetchone()
+        cursor.execute("SELECT pendingdelete FROM item WHERE itemid='{0}';".format(item_id))
+        delete = cursor.fetchone()
+        # print ("executed")
+    except Exception as e: 
+        cursor.execute("rollback;")
+
+        ##If item does not exist etc
+        error = 'Item information cannot be retrieved'
+        return render_template('home.html', error=error)
+
+    return render_template('itemDetail.html', itemname=itemname, image=image, description=description, delete=delete)
+
 if __name__ == "__main__":
     app.run()
