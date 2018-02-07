@@ -107,3 +107,18 @@
   .rightSideNav, .leftSideNav {padding-top: 15px;}
   .rightSideNav a, .leftSideNav a {font-size: 18px;}
 }
+
+.itemSummary {
+    padding: 0 40px;
+}
+
+.itemSummary img {
+    width: 100%;
+    max-height: 50vh;
+}
+
+@media screen and (min-width: 48px) {
+    .itemSummary img {
+        max-height: 50vh;
+    }
+}

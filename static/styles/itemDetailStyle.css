@@ -1,13 +1,13 @@
 .itemDetailContainer {
     padding: 5vw 20vw !important;
 }
-@media screen and (max-height: 640px) {
+@media screen and (max-width: 640px) {
     .itemDetailContainer {
         padding: 5vh 15vw !important;
     }
 }
 
-@media screen and (max-height: 450px) {
+@media screen and (max-width: 450px) {
     .itemDetailContainer {
         padding: 5vh 10vw !important;
     }
