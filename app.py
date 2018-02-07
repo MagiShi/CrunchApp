@@ -152,7 +152,7 @@ def addItem():
         error = 'Item must have a barcode/id and a name'
         return render_template('addItem.html', error=error)
     if description == '':
-        description = 'null'
+        description = null
 
     query = "INSERT into item values ('{0}', '{1}', NULL, false, '{2}');".format(item_id, item_name, description)
     print(query)
@@ -174,6 +174,26 @@ def addItem():
 @app.route('/login.html')
 def logout():
     return render_template('login.html')
+
+@app.route('/deleteItem.html', methods=['POST'])
+def deleteItemFlag():
+    #temporary ID, need frontend to get the database ID
+    item_id = "id"
+    query = "UPDATE item set pendingdelete=true where itemid='{0}';".format(item_id)
+    try: 
+        cursor.execute(query)
+        # print ("executed")
+    except Exception as e: 
+        query = "rollback;"
+        cursor.execute(query)
+
+        ##If item creation fails
+        error = 'Item deletion has failed.'
+        return render_template('itemDetail.html', error=error)
+
+    conn.commit()
+    error = 'Item successfully deleted'
+    return render_template('itemDetail.html', error=error)
 
 if __name__ == "__main__":
     app.run()
