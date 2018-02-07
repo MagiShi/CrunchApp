@@ -221,4 +221,5 @@ def getItemInfo():
     return render_template('itemDetail.html', itemname=itemname, image=image, description=description, delete=delete)
 
 if __name__ == "__main__":
+    app.secret_key = "secret"
     app.run()
