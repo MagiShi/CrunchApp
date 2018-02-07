@@ -171,10 +171,10 @@ def addItem():
     return render_template('itemDetail.html')
 
 
-@app.route('/login.html')
+@app.route('/logout')
 def logout():
 	session.clear()
-    return render_template('login.html')
+    return redirect('/login.html')
 
 @app.route('/deleteItem.html', methods=['POST'])
 def deleteItemFlag():
