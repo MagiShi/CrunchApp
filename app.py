@@ -173,7 +173,7 @@ def addItem():
 
 @app.route('/logout')
 def logout():
-    session.clear()
+    #session.clear()
     return redirect('/')
 
 @app.route('/deleteItem.html', methods=['POST'])
