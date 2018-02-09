@@ -170,8 +170,6 @@ def addItem():
 
         conn.commit()
         return render_template('itemDetail.html')
-    if request.form.get("cancelButton"):
-        return redirect('home.html')
 
 @app.route('/logout')
 def logout():
@@ -222,10 +220,12 @@ def getItemInfo():
 
     return render_template('itemDetail.html', itemname=itemname, image=image, description=description, delete=delete)
 
+# renders editItem page
+@app.route('/editItem.html')
+def edit():
+    return render_template('editItem.html')
+
 if __name__ == "__main__":
     app.secret_key = "secret"
     app.run()
 
-@app.route('/editItem.html')
-def editItem():
-    return render_template('editItem.html')
