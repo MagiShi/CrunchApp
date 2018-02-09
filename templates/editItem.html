@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Item Detail - UAH Theatre</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/itemDetailStyle.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/homeStyle.css') }}">
+    <title>Add Item - UAH Theatre</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/addStyle.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
     <script src="https://use.fontawesome.com/f26043ee62.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -34,11 +34,9 @@
                 </button>
             </span>
             
-
-
             <div id="menuNavButton">
-                <span style="cursor:pointer" onclick="toggleAccountMenu()">Menu</span>
-            </div>
+            <span style="cursor:pointer" onclick="toggleAccountMenu()">Menu</span>
+        </div>
             
             
         </div>
@@ -46,57 +44,65 @@
     </form>
 </nav>
     
-<div class="itemDetailContainer container-fluid">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-12">
-            <p class="itemName">Item Name</p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="itemImage row">
-                <div class="col-12">
-                    <img src="http://lorempixel.com/480/640/food">
+        <div class="add-container offset-2 col-8 offset-md-4 col-md-4">
+                    {% if error %}
+                <p class="error" style="color:red;"><strong>*</strong> {{ error }}
+            {% endif %}
+            <form method=POST action=''>
+                <!--ITEM NAME INPUT-->
+                <div class="form-group">
+                    <input type="text" name="itemname" class="form-control" id="inputItemName" placeholder="ItemName">
+                </div>
+
+                <!--BARCODE INPUT-->
+                <div class="form-group">
+                    <input type="text" name="barcode" class="form-control" id="inputBarcode" placeholder="Barcode">
+                </div>
+
+                <!--DESCRIPTION INPUT-->
+                <div class="form-group">
+                    <input type="text" name="description" class="form-control" id="inputDescription" placeholder="Description">
+                </div>
+
+                
+                <!--ADD ITEM BUTTON-->
+                <button type="submit" name="addItemButton" class="btn" id="addItemButton" value="Save">Save Changes</button>
+                <!-- Navigate back to home page/ Trigger the confirmation modal -->
+                <button type="submit" name="cancelButton" class="btn" id="cancelButton" value="Cancel">Cancel</button>
+
+            </form>
+
+            <!-- Cancel Confirmation Modal -->
+            <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Cancel Confirmation</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" style="text-align: left;">
+                            You have unsaved changes on this page. Do you want to leave this page and discard your changes or stay on this page?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Stay & Continue to edit</button>
+                            <button type="submit" class="btn btn-primary" id="cancelConfirmed">Discard changes</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        
-        <div class="col-md-6">
-            <div class="reservation row">
-                <div class="col-12">
-                    <p>Reservation Set (Check your profile for more details)</p>
-                    <button class="btn" type="button">Reserve Item</button>
-                </div>
-            </div>
-            
-            <div class="itemText row">
-                <div class="col-12">
-                    <p>Barcode: ###</p>
-                    <p>Color: x, y, z</p>
-                    <p>Condition: Ok</p>
-                    <p>Etc: etc</p>
-                </div>
-            </div>
-            
-            <div class="itemAction row">
-                <div class="col-12">
-                    <p>Deletion Pending</p>
-                </div>
-                <div class="col-md-5">
-                    <button class="btn" id="editItemButton" type="button" onclick="location.href='editItem.html'">Edit Item
-                    </button>
-                </div>
-                <div class="offset-md-2 col-md-5">
-                    <button class="btn" id="deleteItemButton" type="button">Delete Item</button>
-                </div>
-            </div>
+
         </div>
     </div>
 </div>
 
 
-    
-    
+
+ 
+
     
     
 
@@ -125,6 +131,17 @@
 </html>
 
 <script>
+    $(document).ready(function() {
+        $('#cancelConfirmed').click(function() {
+            location.href = 'home.html';
+        });
+
+        $( '#cancelButton' ).click(function() {
+            $('#cancelModal').modal('show');
+            return false;
+        });
+    });
+
     function toggleFilterMenu() {
         if (document.getElementById("filterMenu").style.width == "250px") {
             var menuItems = document.getElementById("filterMenu").getElementsByTagName('a');

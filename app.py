@@ -225,3 +225,7 @@ def getItemInfo():
 if __name__ == "__main__":
     app.secret_key = "secret"
     app.run()
+
+@app.route('/editItem.html')
+def editItem():
+    return render_template('editItem.html')
