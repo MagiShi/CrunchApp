@@ -68,15 +68,32 @@
 
                 
                 <!--ADD ITEM BUTTON-->
-                <button type="submit" class="btn" id="addItemButton">Add Item</button>
-
+                <button type="submit" name="addItemButton" class="btn" id="addItemButton" value="Add">Add Item</button>
+                <!-- Navigate back to home page/ Trigger the confirmation modal -->
+                <button type="submit" name="cancelButton" class="btn" id="cancelButton" value="Cancel">Cancel</button>
 
             </form>
-            <form method=POST action='/home.html'>
-                <!-- CANCEL BUTTON -->
-                <!-- Navigate back to home page -->
-                <button type="submit" class="btn" id="cancelButton">Cancel</button>
-            </form>
+
+            <!-- Cancel Confirmation Modal -->
+            <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Cancel Confirmation</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" style="text-align: left;">
+                            You have not submitted the form yet. Are you sure you want to discard the item addition form?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Keep the form</button>
+                            <button type="submit" class="btn btn-primary" id="cancelConfirmed">Discard the form</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>
@@ -114,6 +131,17 @@
 </html>
 
 <script>
+    $(document).ready(function() {
+        $('#cancelConfirmed').click(function() {
+            location.href = 'home.html';
+        });
+
+        $( '#cancelButton' ).click(function() {
+            $('#cancelModal').modal('show');
+            return false;
+        });
+    });
+
     function toggleFilterMenu() {
         if (document.getElementById("filterMenu").style.width == "250px") {
             var menuItems = document.getElementById("filterMenu").getElementsByTagName('a');

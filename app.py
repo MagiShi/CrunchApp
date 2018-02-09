@@ -142,34 +142,36 @@ def add():
 
 
 @app.route('/postaddItem.html', methods=['POST'])
-def addItem():    
-    item_id = request.form['barcode']
-    item_name = request.form['itemname']
-    description = request.form['description']
-    error = None
+def addItem():
+    if request.form.get("addItemButton"):
+        item_id = request.form['barcode']
+        item_name = request.form['itemname']
+        description = request.form['description']
+        error = None
 
-    if item_id == '' or item_name == '':
-        error = 'Item must have a barcode/id and a name'
-        return render_template('addItem.html', error=error)
-    if description == '':
-        description = null
+        if item_id == '' or item_name == '':
+            error = 'Item must have a barcode/id and a name'
+            return render_template('addItem.html', error=error)
+        if description == '':
+            description = null
 
-    query = "INSERT into item values ('{0}', '{1}', NULL, false, '{2}');".format(item_id, item_name, description)
-    print(query)
-    try: 
-        cursor.execute(query)
-        # print ("executed")
-    except Exception as e: 
-        query = "rollback;"
-        cursor.execute(query)
+        query = "INSERT into item values ('{0}', '{1}', NULL, false, '{2}');".format(item_id, item_name, description)
+        print(query)
+        try:
+            cursor.execute(query)
+            # print ("executed")
+        except Exception as e:
+            query = "rollback;"
+            cursor.execute(query)
 
-        ##If item creation fails
-        error = 'Item creation has failed.'
-        return render_template('addItem.html', error=error)
+            ##If item creation fails
+            error = 'Item creation has failed.'
+            return render_template('addItem.html', error=error)
 
-    conn.commit()
-    return render_template('itemDetail.html')
-
+        conn.commit()
+        return render_template('itemDetail.html')
+    if request.form.get("cancelButton"):
+        return redirect('home.html')
 
 @app.route('/logout')
 def logout():
