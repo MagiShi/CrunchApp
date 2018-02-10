@@ -38,26 +38,26 @@
 }
 
 #addItemButton {
-    width: 100%;
     font-size: 16px;
-    background-color: #FDDA24;
+    background-color: #0275d8;
     margin-top: 3vh;
     margin-bottom: 4vh;
+    color: white;
 }
 #addItemButton:hover {
-    background-color: #ffff4c;
+    background-color: #025aa5;
     cursor: pointer;
 }
 
 #cancelButton {
-    width: 100%;
     font-size: 16px;
-    background-color: grey;
+    background-color: white;
+    border: 1px solid #adadad;
     margin-top: 3vh;
     margin-bottom: 4vh;
 }
 #cancelButton:hover {
-    background-color: #ffff4c;
+    background-color: #e6e6e6;
     cursor: pointer;
 }
 
@@ -83,6 +83,15 @@
     width: 100%;
 }
 
+.btn-primary {
+    background-color: #ff4646;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #cc2828;
+    border: none;
+}
 
 /*-------------------SIDE MENUS-------------------*/
 

@@ -52,3 +52,13 @@
     color: #e89797;
     font-style: italic;
 }
+
+#deleteConfirmed {
+    background-color: #ff4646;
+    border: none;
+}
+
+#deleteConfirmed:hover {
+    background-color: #cc2828;
+    border: none;
+}
