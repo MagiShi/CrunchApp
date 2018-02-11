@@ -33,7 +33,7 @@
             {% if error %}
                 <p class="error" style="color:red;"><strong>*</strong> {{ error }}
             {% endif %}
-            <form method=POST action='/postlogin.html'>
+            <form method=POST action='/postlogin'>
                 <!--EMAIL INPUT-->
                 <div class="form-group">
                     <input type="text" name="username" class="form-control" id="inputUsername" placeholder="Username">
@@ -51,11 +51,11 @@
 
             <div id="navButtonDiv">
                 <!--Go to Register New Account Page-->
-                <a href="register.html" style="float:left;">New User? Sign-up!</a>
+                <a href="register" style="float:left;">New User? Sign-up!</a>
                 <!--Use app as Guest-->
-                <a href="home.html" style="float:right;">Use as Guest</a>
+                <a href="home" style="float:right;">Use as Guest</a>
                 <br/>
-                <a href="forgotpass.html" style="float:left;">Forgot Password</a>
+                <a href="forgotpass" style="float:left;">Forgot Password</a>
                 <!-- <button type="submit" class="btn" formaction="/forgotpass1.html" id="forgotPassword">Forgot Password</button> -->
             </div>
         </div>

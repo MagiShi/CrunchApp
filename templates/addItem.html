@@ -20,7 +20,7 @@
 <nav class="navbar">
     <!--SEARCH BAR-->
     <form class="form-inline">
-        <a class="navbar-brand" href="home.html">Thracker</a>
+        <a class="navbar-brand" href="home">Thracker</a>
         <div class="input-group">
             <div class="input-group-btn search-panel">
                 <button type="button" class="btn">
@@ -50,7 +50,7 @@
                     {% if error %}
                 <p class="error" style="color:red;"><strong>*</strong> {{ error }}
             {% endif %}
-            <form method=POST action='/postaddItem.html'>
+            <form method=POST action='/postaddItem'>
                 <!--ITEM NAME INPUT-->
                 <div class="form-group">
                     <input type="text" name="itemname" class="form-control" id="inputItemName" placeholder="ItemName">
@@ -123,7 +123,7 @@
   <a href="#">Reservations</a>
   <a href="#">My Account</a>
   <a href="#">Help & FAQ</a>
-  <a href="login.html">Log Out</a>
+  <a href="login">Log Out</a>
 </div>
 
 </body>
@@ -132,7 +132,7 @@
 <script>
     $(document).ready(function() {
         $('#cancelConfirmed').click(function() {
-            location.href = 'home.html';
+            location.href = 'home';
         });
 
         $( '#cancelButton' ).click(function() {
