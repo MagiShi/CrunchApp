@@ -36,7 +36,7 @@ def home():
     # return render_template('login.html', error=json.loads(error))
     return render_template('login.html', error=error)
 
-@app.route('/postlogin.html', methods=['POST'])
+@app.route('/postlogin', methods=['POST'])
 #method for logging in, on home page.
 def login():
     username = request.form['username']
@@ -67,19 +67,19 @@ def login():
         return redirect(url_for('home', error=error))
     return redirect('home.html')
 
-@app.route('/home.html')
+@app.route('/home')
 def loggedin():
     return render_template('home.html')
 def guest():
     # should look different than a registered user (not able to add, delete, etc)
     return render_template('home.html')
 
-@app.route('/register.html')
+@app.route('/register')
 def newUser():
     error = request.args.get('error')
     return render_template('register.html', error=error)
 
-@app.route('/forgotpass.html')
+@app.route('/forgotpass')
 def forgotPass():
 
     if request.args.get('error') is None:
@@ -88,7 +88,7 @@ def forgotPass():
         error = request.args.get('error')
     return render_template('forgotpass.html', error=error)
 
-@app.route('/forgotpass.html', methods=['POST'])
+@app.route('/forgotpass', methods=['POST'])
 def sendMail():
     email = request.form['email']
 
@@ -118,7 +118,7 @@ def sendMail():
     error = 'Email sent'
     return redirect(url_for('home', error=error))
 
-@app.route('/postregister.html', methods=['POST'])
+@app.route('/postregister', methods=['POST'])
 #def for registering, occurs after clicking registration button
 def register():
     # print ("in here")
@@ -156,13 +156,13 @@ def register():
     return redirect(url_for('loggedin'))
 
 # renders addItem page
-@app.route('/addItem.html')
+@app.route('/addItem')
 def add():
     error = request.args.get('error')
     return render_template('addItem.html', error=error)
 
 
-@app.route('/postaddItem.html', methods=['POST'])
+@app.route('/postaddItem', methods=['POST'])
 def addItem():
     if request.form.get("addItemButton"):
         item_id = request.form['barcode']
@@ -199,7 +199,7 @@ def logout():
     #session.clear()
     return redirect('/')
 
-@app.route('/deleteItem.html', methods=['POST'])
+@app.route('/deleteItem', methods=['POST'])
 def deleteItemFlag():
     #temporary ID, need frontend to get the database ID
     item_id = "id"
@@ -219,13 +219,18 @@ def deleteItemFlag():
     error = 'Item successfully deleted'
     return render_template(url_for('getItemInfo', error=error))
 
-@app.route('/itemDetail.html', methods=['POST', 'GET'])
+@app.route('/itemDetail', methods=['POST', 'GET'])
 def getItemInfo():
 
     error = request.args.get('error')
 
     #temporary ID, need frontend to get the database ID
     item_id = "id"
+    itemname = None
+    image = None
+    description = None
+    delete = None
+    
     #query = "SELECT * FROM item WHERE itemid='{0}';".format(item_id)
     try: 
         cursor.execute("SELECT itemname FROM item WHERE itemid='{0}';".format(item_id))
@@ -246,10 +251,10 @@ def getItemInfo():
 
     return render_template('itemDetail.html', itemid=item_id, itemname=itemname, image=image, description=description, delete=delete, error=error)
     print("here")
-    return render_template('itemDetail.html', error=error)
+    # return render_template('itemDetail.html', error=error)
 
 # renders editItem page
-@app.route('/editItem.html')
+@app.route('/editItem')
 def edit():
     return render_template('editItem.html')
 
