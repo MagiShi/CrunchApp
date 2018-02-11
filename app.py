@@ -1,4 +1,4 @@
-from flask import Flask, flash, redirect, render_template, request, session, abort
+from flask import Flask, flash, redirect, render_template, request, session, abort, url_for, json
 from flask_mail import Mail, Message
 
 import os
@@ -14,11 +14,13 @@ app.config.update(
     MAIL_PORT=465,
     MAIL_USE_SSL=True,
     MAIL_USERNAME = 'crunch.thracker@gmail.com',
-    MAIL_PASSWORD = os.environ['epassword']
+    # MAIL_PASSWORD = os.environ['epassword']
+    MAIL_PASSWORD = 'crunchthracker'
     )
 mail = Mail(app)
 
-url = urlparse(os.environ['DATABASE_URL'])
+url = urlparse("postgres://mbgugkwmyyrgpp:08f1f171ba8df81468de5e7d166069757cc545fb163d5cc820407068513b101d@ec2-54-163-237-249.compute-1.amazonaws.com:5432/da0io40vrbg6u0")
+# url = urlparse(os.environ['DATABASE_URL'])
 db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname)
 schema = "schema.sql"
 conn = psycopg2.connect(db)
@@ -26,9 +28,15 @@ cursor = conn.cursor()
 
 @app.route('/')
 def home():
-    return render_template('login.html')
+    # if request.args.get('error') == None:
+        # print("here")
+        # return render_template('login.html')
+    error = request.args.get('error')
+    print (repr(error))
+    # return render_template('login.html', error=json.loads(error))
+    return render_template('login.html', error=error)
 
-@app.route('/login.html', methods=['POST'])
+@app.route('/postlogin.html', methods=['POST'])
 #method for logging in, on home page.
 def login():
     username = request.form['username']
@@ -37,6 +45,7 @@ def login():
 
     query = "SELECT * FROM registereduser WHERE username = '{0}' AND password = '{1}';".format(username, password)
     print (query)
+    # errors = {"error": "The username or password you have entered is incorrect."}
     try:
         cursor.execute(query)
         # print (cursor.fetchone())
@@ -45,13 +54,18 @@ def login():
         if tup is None:
             ##Error message for wrong password/username
             error = 'The username or password you have entered is incorrect.'
-            return render_template('login.html', error=error)
+            # errors =  json.dumps(errors)
+            # return redirect(url_for('home', error=errors))
+            return redirect(url_for('home', error=error))
     except: 
         ##Any errors (there shouldn't be) should be handled here
         query = "rollback;"
         cursor.execute(query)
-        return render_template('login.html')
-    return render_template('home.html')
+        # errors =  json.dumps(errors)
+        # return redirect(url_for('home', error=errors))
+        error = 'The username or password you have entered is incorrect.'
+        return redirect(url_for('home', error=error))
+    return redirect('home.html')
 
 @app.route('/home.html')
 def loggedin():
@@ -62,11 +76,16 @@ def guest():
 
 @app.route('/register.html')
 def newUser():
-    return render_template('register.html')
+    error = request.args.get('error')
+    return render_template('register.html', error=error)
 
 @app.route('/forgotpass.html')
 def forgotPass():
-    error = 'Please enter email address'
+
+    if request.args.get('error') is None:
+        error = 'Please enter email address'
+    else:
+        error = request.args.get('error')
     return render_template('forgotpass.html', error=error)
 
 @app.route('/forgotpass.html', methods=['POST'])
@@ -83,7 +102,8 @@ def sendMail():
             ##Error message for wrong password/username
 
             error = 'The email you have entered is unregistered.'
-            return render_template('forgotpass.html', error=error)
+            # return render_template('forgotpass.html', error=error)
+            return redirect(url_for('forgotPass', error=error))
 
         msg = Message("Your password is {0}".format(tup), sender=("crunch.thracker@gmail.com"), recipients=["{0}".format(email)])
         mail.send(msg)
@@ -92,11 +112,11 @@ def sendMail():
         query = "rollback;"
         cursor.execute(query)
         error = 'Please enter an email'
-        return render_template('forgotpass.html', error=error)
+        return redirect(url_for('forgotPass', error=error))
 
 
     error = 'Email sent'
-    return render_template('login.html', error=error)
+    return redirect(url_for('home', error=error))
 
 @app.route('/postregister.html', methods=['POST'])
 #def for registering, occurs after clicking registration button
@@ -116,7 +136,7 @@ def register():
 
     if username == '' or email == '' or password == '':
         error = 'Please fill in all fields'
-        return render_template('register.html', error=error)
+        return redirect(url_for('newUser', error=error))
 
     query = "INSERT into registereduser values ('{0}', '{1}', '{2}', {3});".format(email, username, password, isAdmin)
 
@@ -129,16 +149,17 @@ def register():
 
         ##If registration fails
         error = 'Account creation has failed.'
-        return render_template('register.html', error=error)
+        return redirect(url_for('newUser', error=error))
 
     conn.commit()
 
-    return render_template('home.html')
+    return redirect(url_for('loggedin'))
 
 # renders addItem page
 @app.route('/addItem.html')
 def add():
-    return render_template('addItem.html')
+    error = request.args.get('error')
+    return render_template('addItem.html', error=error)
 
 
 @app.route('/postaddItem.html', methods=['POST'])
@@ -151,7 +172,7 @@ def addItem():
 
         if item_id == '' or item_name == '':
             error = 'Item must have a barcode/id and a name'
-            return render_template('addItem.html', error=error)
+            return redirect(url_for('add', error=error))
         if description == '':
             description = null
 
@@ -166,10 +187,12 @@ def addItem():
 
             ##If item creation fails
             error = 'Item creation has failed.'
-            return render_template('addItem.html', error=error)
+            return redirect(url_for('add', error=error))
 
         conn.commit()
-        return render_template('itemDetail.html')
+        # print("added Item")
+        return redirect(url_for('getItemInfo'))
+
 
 @app.route('/logout')
 def logout():
@@ -190,14 +213,17 @@ def deleteItemFlag():
 
         ##If item creation fails
         error = 'Item deletion has failed.'
-        return render_template('itemDetail.html', error=error)
+        return redirect(url_for('getItemInfo', error=error))
 
     conn.commit()
     error = 'Item successfully deleted'
-    return render_template('itemDetail.html', error=error)
+    return render_template(url_for('getItemInfo', error=error))
 
-@app.route('/itemDetail.html', methods=['POST'])
+@app.route('/itemDetail.html', methods=['POST', 'GET'])
 def getItemInfo():
+
+    error = request.args.get('error')
+
     #temporary ID, need frontend to get the database ID
     item_id = "id"
     #query = "SELECT * FROM item WHERE itemid='{0}';".format(item_id)
@@ -216,9 +242,11 @@ def getItemInfo():
 
         ##If item does not exist etc
         error = 'Item information cannot be retrieved'
-        return render_template('home.html', error=error)
+        return redirect(url_for('loggedin', error=error))
 
-    return render_template('itemDetail.html', itemname=itemname, image=image, description=description, delete=delete)
+    return render_template('itemDetail.html', itemid=item_id, itemname=itemname, image=image, description=description, delete=delete, error=error)
+    print("here")
+    return render_template('itemDetail.html', error=error)
 
 # renders editItem page
 @app.route('/editItem.html')
