@@ -6,7 +6,7 @@ from urllib.parse import urlparse
 import psycopg2
 
 app = Flask(__name__)
-app.secret_key = "secret"
+app.secret_key = os.urandom(24)
 
 app.config.update(
     # DEBUG=True,
@@ -59,7 +59,7 @@ def login():
             # return redirect(url_for('home', error=errors))
             return redirect(url_for('welcome', error=error))
         else:
-        	session['loggedin'] = True;
+        	session['user'] = True;
     except: 
         ##Any errors (there shouldn't be) should be handled here
         query = "rollback;"
@@ -202,7 +202,7 @@ def addItem():
 
 @app.route('/logout')
 def logout():
-    session.clear()
+    session.pop('user', None)
     return redirect('/')
 
 @app.route('/deleteItem', methods=['POST'])
