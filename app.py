@@ -6,6 +6,7 @@ from urllib.parse import urlparse
 import psycopg2
 
 app = Flask(__name__)
+app.secret_key = "secret"
 
 app.config.update(
     # DEBUG=True,
@@ -265,6 +266,5 @@ def edit():
     return render_template('editItem.html')
 
 if __name__ == "__main__":
-    app.secret_key = "secret"
     app.run()
 
