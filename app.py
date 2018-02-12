@@ -57,6 +57,8 @@ def login():
             # errors =  json.dumps(errors)
             # return redirect(url_for('home', error=errors))
             return redirect(url_for('welcome', error=error))
+        else:
+        	session['loggedin'] = True;
     except: 
         ##Any errors (there shouldn't be) should be handled here
         query = "rollback;"
@@ -199,7 +201,7 @@ def addItem():
 
 @app.route('/logout')
 def logout():
-    #session.clear()
+    session.clear()
     return redirect('/')
 
 @app.route('/deleteItem', methods=['POST'])
