@@ -49,7 +49,7 @@
 <div class="itemDetailContainer container-fluid">
     <div class="row">
         <div class="col-12">
-            <p class="itemName">Item Name</p>
+            <p class="itemName">{{ itemname | first }}</p>
         </div>
     </div>
     <div class="row">
@@ -71,24 +71,35 @@
             
             <div class="itemText row">
                 <div class="col-12">
-                    <p>Barcode: ###</p>
+                    <p>Barcode: {{itemid}}</p>
                     <p>Color: x, y, z</p>
                     <p>Condition: Ok</p>
+                    <p>Description: {{description | first}}
                     <p>Etc: etc</p>
                 </div>
             </div>
             
             <div class="itemAction row">
                 <div class="col-12">
+                    {%if delete | first %}
                     <p>Deletion Pending</p>
+                    {% endif %}
+
                 </div>
                 <div class="col-md-5">
                     <button class="btn" id="editItemButton" type="button" onclick="location.href='editItem'">Edit Item
                     </button>
                 </div>
+                    {% if delete|first %}
+                <div class="offset-md-2 col-md-5">
+                    <button class="btn" id="deleteItemButton" button style="background-color:grey" type="submit" disabled>Delete Item</button>
+                </div>
+                    {% endif %}
+                    {% if not delete|first %}
                 <div class="offset-md-2 col-md-5">
                     <button class="btn" id="deleteItemButton" type="submit">Delete Item</button>
                 </div>
+                    {% endif %}
             </div>
 
             <!-- Deletion Confirmation Modal -->

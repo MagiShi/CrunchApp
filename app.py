@@ -14,11 +14,18 @@ app.config.update(
     MAIL_PORT=465,
     MAIL_USE_SSL=True,
     MAIL_USERNAME = 'crunch.thracker@gmail.com',
-    MAIL_PASSWORD = os.environ['epassword']
+
+    MAIL_PASSWORD = 'crunchthracker'
     )
 mail = Mail(app)
 
-url = urlparse(os.environ['DATABASE_URL'])
+url = urlparse("postgres://mbgugkwmyyrgpp:08f1f171ba8df81468de5e7d166069757cc545fb163d5cc820407068513b101d@ec2-54-163-237-249.compute-1.amazonaws.com:5432/da0io40vrbg6u0")
+# url = urlparse(os.environ['DATABASE_URL'])
+#     MAIL_PASSWORD = os.environ['epassword']
+#     )
+# mail = Mail(app)
+
+# url = urlparse(os.environ['DATABASE_URL'])
 
 
 db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname)
@@ -179,7 +186,7 @@ def addItem():
         if description == '':
             description = 'null'
 
-        query = "INSERT into item values ('{0}', '{1}', '{{ {2} }} ', false, {3});".format(item_id, item_name, image, description)
+        query = "INSERT into item values ('{0}', '{1}', '{{ {2} }} ', false, '{3}');".format(item_id, item_name, image, description)
         print(query)
         try:
             cursor.execute(query)
@@ -194,7 +201,7 @@ def addItem():
 
         conn.commit()
         # print("added Item")
-        return redirect(url_for('getItemInfo'))
+        return redirect(url_for('getItemInfo', item_id=item_id))
 
 
 @app.route('/logout')
@@ -202,10 +209,10 @@ def logout():
     #session.clear()
     return redirect('/')
 
-@app.route('/deleteItem', methods=['POST'])
+@app.route('/deleteItem/<item_id>', methods=['POST'])
 def deleteItemFlag():
     #temporary ID, need frontend to get the database ID
-    item_id = "id"
+    item_id = item_id
     query = "UPDATE item set pendingdelete=true where itemid='{0}';".format(item_id)
     try: 
         cursor.execute(query)
@@ -216,19 +223,17 @@ def deleteItemFlag():
 
         ##If item creation fails
         error = 'Item deletion has failed.'
-        return redirect(url_for('getItemInfo', error=error))
+        return redirect(url_for('getItemInfo', item_id=item_id, error=error))
 
     conn.commit()
-    error = 'Item successfully deleted'
-    return render_template(url_for('getItemInfo', error=error))
+    error = 'Item marked for deletion! Waiting for action by Admin'
+    return redirect(url_for('getItemInfo', error=error))
 
-@app.route('/itemDetail', methods=['POST', 'GET'])
-def getItemInfo():
+@app.route('/itemDetail/<item_id>', methods=['POST', 'GET'])
+def getItemInfo(item_id):
 
     error = request.args.get('error')
-
-    #temporary ID, need frontend to get the database ID
-    item_id = "id"
+    item_id = item_id
     itemname = None
     image = None
     description = None
