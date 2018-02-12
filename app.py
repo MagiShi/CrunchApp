@@ -210,8 +210,7 @@ def logout():
     return redirect('/')
 
 @app.route('/deleteItem/<item_id>', methods=['POST'])
-def deleteItemFlag():
-    #temporary ID, need frontend to get the database ID
+def deleteItemFlag(item_id):
     item_id = item_id
     query = "UPDATE item set pendingdelete=true where itemid='{0}';".format(item_id)
     try: 
@@ -227,7 +226,7 @@ def deleteItemFlag():
 
     conn.commit()
     error = 'Item marked for deletion! Waiting for action by Admin'
-    return redirect(url_for('getItemInfo', error=error))
+    return redirect(url_for('getItemInfo', item_id=item_id, error=error))
 
 @app.route('/itemDetail/<item_id>', methods=['POST', 'GET'])
 def getItemInfo(item_id):
