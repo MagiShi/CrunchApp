@@ -13,6 +13,7 @@
     border: none;
     border-bottom: 1px solid white;
     color: white;
+    margin-left: 2vh;
 }
 .navbar #searchBar::placeholder {
     color: rgba(255, 255, 255, 0.6);
@@ -32,9 +33,10 @@
 }
 
 #menuNavButton {
-    background-color: grey;
+    background-color: rgba(255, 255, 255, 0.2);
     padding: 4px 10px;
     margin-left: 2vh;
+    color: white;
 }
 
 #addItemButton {
