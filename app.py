@@ -6,6 +6,7 @@ from urllib.parse import urlparse
 import psycopg2
 
 app = Flask(__name__)
+app.secret_key = os.urandom(24)
 
 app.config.update(
     # DEBUG=True,
@@ -14,20 +15,20 @@ app.config.update(
     MAIL_PORT=465,
     MAIL_USE_SSL=True,
     MAIL_USERNAME = 'crunch.thracker@gmail.com',
-    # MAIL_PASSWORD = os.environ['epassword']
-    MAIL_PASSWORD = 'crunchthracker'
+    MAIL_PASSWORD = os.environ['epassword']
     )
 mail = Mail(app)
 
-url = urlparse("postgres://mbgugkwmyyrgpp:08f1f171ba8df81468de5e7d166069757cc545fb163d5cc820407068513b101d@ec2-54-163-237-249.compute-1.amazonaws.com:5432/da0io40vrbg6u0")
-# url = urlparse(os.environ['DATABASE_URL'])
+url = urlparse(os.environ['DATABASE_URL'])
+
+
 db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname)
 schema = "schema.sql"
 conn = psycopg2.connect(db)
 cursor = conn.cursor()
 
 @app.route('/')
-def home():
+def welcome():
     # if request.args.get('error') == None:
         # print("here")
         # return render_template('login.html')
@@ -56,7 +57,9 @@ def login():
             error = 'The username or password you have entered is incorrect.'
             # errors =  json.dumps(errors)
             # return redirect(url_for('home', error=errors))
-            return redirect(url_for('home', error=error))
+            return redirect(url_for('welcome', error=error))
+        else:
+        	session['user'] = True;
     except: 
         ##Any errors (there shouldn't be) should be handled here
         query = "rollback;"
@@ -64,8 +67,8 @@ def login():
         # errors =  json.dumps(errors)
         # return redirect(url_for('home', error=errors))
         error = 'The username or password you have entered is incorrect.'
-        return redirect(url_for('home', error=error))
-    return redirect('home.html')
+        return redirect(url_for('welcome', error=error))
+    return redirect(url_for('loggedin'))
 
 @app.route('/home')
 def loggedin():
@@ -168,15 +171,18 @@ def addItem():
         item_id = request.form['barcode']
         item_name = request.form['itemname']
         description = request.form['description']
+        image = 'null'
+        # images = request.form['image']
+        # print (repr(images))
         error = None
 
         if item_id == '' or item_name == '':
             error = 'Item must have a barcode/id and a name'
             return redirect(url_for('add', error=error))
         if description == '':
-            description = null
+            description = 'null'
 
-        query = "INSERT into item values ('{0}', '{1}', NULL, false, '{2}');".format(item_id, item_name, description)
+        query = "INSERT into item values ('{0}', '{1}', '{{ {2} }} ', false, {3});".format(item_id, item_name, image, description)
         print(query)
         try:
             cursor.execute(query)
@@ -196,7 +202,7 @@ def addItem():
 
 @app.route('/logout')
 def logout():
-    #session.clear()
+    session.pop('user', None)
     return redirect('/')
 
 @app.route('/deleteItem', methods=['POST'])
@@ -249,6 +255,7 @@ def getItemInfo():
         error = 'Item information cannot be retrieved'
         return redirect(url_for('loggedin', error=error))
 
+    #NOTE:  image should be a list/array
     return render_template('itemDetail.html', itemid=item_id, itemname=itemname, image=image, description=description, delete=delete, error=error)
     print("here")
     # return render_template('itemDetail.html', error=error)
@@ -259,6 +266,5 @@ def edit():
     return render_template('editItem.html')
 
 if __name__ == "__main__":
-    app.secret_key = "secret"
     app.run()
 
