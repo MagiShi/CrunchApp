@@ -15,18 +15,11 @@ app.config.update(
     MAIL_PORT=465,
     MAIL_USE_SSL=True,
     MAIL_USERNAME = 'crunch.thracker@gmail.com',
-
-    MAIL_PASSWORD = 'crunchthracker'
+    MAIL_PASSWORD = os.environ['epassword']
     )
 mail = Mail(app)
 
-url = urlparse("postgres://mbgugkwmyyrgpp:08f1f171ba8df81468de5e7d166069757cc545fb163d5cc820407068513b101d@ec2-54-163-237-249.compute-1.amazonaws.com:5432/da0io40vrbg6u0")
-# url = urlparse(os.environ['DATABASE_URL'])
-#     MAIL_PASSWORD = os.environ['epassword']
-#     )
-# mail = Mail(app)
-
-# url = urlparse(os.environ['DATABASE_URL'])
+url = urlparse(os.environ['DATABASE_URL'])
 
 
 db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname)
@@ -261,13 +254,39 @@ def getItemInfo(item_id):
 
     #NOTE:  image should be a list/array
     return render_template('itemDetail.html', itemid=item_id, itemname=itemname, image=image, description=description, delete=delete, error=error)
-    print("here")
+    # print("here")
     # return render_template('itemDetail.html', error=error)
 
 # renders editItem page
-@app.route('/editItem')
-def edit():
-    return render_template('editItem.html')
+@app.route('/editItem/<item_id>', methods=["POST", "GET"])
+def edit(item_id):
+
+    error = request.args.get('error')
+    item_id = item_id
+    itemname = None
+    image = None
+    description = None
+    delete = None
+    
+    #query = "SELECT * FROM item WHERE itemid='{0}';".format(item_id)
+    try: 
+        cursor.execute("SELECT itemname FROM item WHERE itemid='{0}';".format(item_id))
+        itemname = cursor.fetchone()
+        cursor.execute("SELECT image FROM item WHERE itemid='{0}';".format(item_id))
+        image = cursor.fetchall()
+        cursor.execute("SELECT description FROM item WHERE itemid='{0}';".format(item_id))
+        description = cursor.fetchone()
+        cursor.execute("SELECT pendingdelete FROM item WHERE itemid='{0}';".format(item_id))
+        delete = cursor.fetchone()
+        # print ("executed")
+    except Exception as e: 
+        cursor.execute("rollback;")
+
+        ##If item does not exist etc
+        error = 'Item information cannot be retrieved'
+        return redirect(url_for('loggedin', error=error))
+
+    return render_template('editItem.html', itemid=item_id, itemname=itemname, image=image, description=description, delete=delete, error=error)
 
 if __name__ == "__main__":
     app.run()

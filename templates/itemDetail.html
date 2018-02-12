@@ -20,7 +20,7 @@
 <nav class="navbar">
     <!--SEARCH BAR-->
     <form class="form-inline">
-        <a class="navbar-brand" href="home">Thracker</a>
+        <a class="navbar-brand" href="/home">Thracker</a>
         <div class="input-group">
             <div class="input-group-btn search-panel">
                 <button type="button" class="btn">
@@ -87,8 +87,12 @@
 
                 </div>
                 <div class="col-md-5">
-                    <button class="btn" id="editItemButton" type="button" onclick="location.href='editItem'">Edit Item
-                    </button>
+
+                <form method=POST action='/editItem/{{itemid}}'>
+                    <button class="btn" id="editItemButton" type="submit" value={{itemid}}>Edit</button>
+                </form>
+                    <!-- <button class="btn" id="editItemButton" type="button" onclick="location.href='/editItem'">Edit Item -->
+                    <!-- </button> -->
                 </div>
                     {% if delete|first %}
                 <div class="offset-md-2 col-md-5">

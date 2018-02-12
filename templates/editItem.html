@@ -20,7 +20,7 @@
 <nav class="navbar">
     <!--SEARCH BAR-->
     <form class="form-inline">
-        <a class="navbar-brand" href="home">Thracker</a>
+        <a class="navbar-brand" href="/home">Thracker</a>
         <div class="input-group">
             <div class="input-group-btn search-panel">
                 <button type="button" class="btn">
@@ -53,17 +53,17 @@
             <form method=POST action=''>
                 <!--ITEM NAME INPUT-->
                 <div class="form-group">
-                    <input type="text" name="itemname" class="form-control" id="inputItemName" placeholder="ItemName">
+                    <input type="text" name="itemname" class="form-control" id="inputItemName" placeholder="ItemName" value="{{itemname|first}}">
                 </div>
 
                 <!--BARCODE INPUT-->
                 <div class="form-group">
-                    <input type="text" name="barcode" class="form-control" id="inputBarcode" placeholder="Barcode">
+                    <input type="text" name="barcode" class="form-control" id="inputBarcode" placeholder="Barcode" value="{{itemid}}">
                 </div>
 
                 <!--DESCRIPTION INPUT-->
                 <div class="form-group">
-                    <input type="text" name="description" class="form-control" id="inputDescription" placeholder="Description">
+                    <input type="text" name="description" class="form-control" id="inputDescription" placeholder="Description" value="{{description|first}}">
                 </div>
 
                 <!-- Navigate back to home page/ Trigger the confirmation modal -->
