@@ -198,6 +198,19 @@ def addItem():
                 filedata = f.read()
                 f.close()
                 cursor.execute("UPDATE item SET image[0] = %s WHERE itemid=(%s);", (filedata, item_id))
+                conn.commit()
+
+            #assuming array for multiple upload
+            # imagefiles = request.form['photo']
+            # i = 0
+            # for image in imagefiles:
+            #     f = open(image1file,'rb')
+            #     filedata = f.read()
+            #     f.close()
+            #     cursor.execute("UPDATE item SET image[%d] = %s WHERE itemid=(%s);", (i,filedata, item_id))
+            #     conn.commit()
+            #     i += 1
+
             #cursor.execute("INSERT into item values (%s, %s, '{{ \" %s \" }} ', false, %s);", (item_id, item_name, psycopg2.Binary(filedata), description))
             # cursor.execute("INSERT into temptable values (%s, %s, %s, false, %s);", (item_id, item_name, psycopg2.Binary(filedata), description))
             # print ("executed")
@@ -239,8 +252,7 @@ def deleteItemFlag(item_id):
     conn.commit()
     error = 'Item marked for deletion! Waiting for action by Admin'
     return redirect(url_for('getItemInfo', item_id=item_id, error=error))
-# def hexToBase64(data):
-    # return btoa(String.fromCharCode.apply(null, str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" ")));
+
 @app.route('/itemDetail/<item_id>', methods=['POST', 'GET'])
 def getItemInfo(item_id):
 
@@ -274,6 +286,8 @@ def getItemInfo(item_id):
             encoded = base64.b64encode(image_data)
             stren = encoded.decode("utf-8")
             imagedata.append(stren)
+
+            # to show image as a seperate pop-up (?) --local
             # data = base64.b64decode(encoded)
             # image1 = Image.open(BytesIO(image_data))
             # image1.show()
