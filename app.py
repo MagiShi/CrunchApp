@@ -1,6 +1,8 @@
 from flask import Flask, flash, redirect, render_template, request, session, abort, url_for, json, send_file
 from flask_mail import Mail, Message
 
+from werkzeug.utils import secure_filename
+
 import base64
 from PIL import Image
 from io import BytesIO
@@ -12,8 +14,11 @@ import psycopg2
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
+app.config['UPLOAD_FOLDER'] = "tmp/"
 app.config.update(
     # DEBUG=True,
+
+
     #EMAIL SETTINGS
     MAIL_SERVER='smtp.gmail.com',
     MAIL_PORT=465,
@@ -176,15 +181,22 @@ def addItem():
         item_name = request.form['itemname']
         description = request.form['description']
         error = None
+        file = request.files['photo1']
+        # For only 1 file, if multiple, assume loop through this
+        if file and file.filename != '':
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        # if file == None:
+        #     print("NONE")
+        # print(type(file))
 
         if item_id == '' or item_name == '':
             error = 'Item must have a barcode/id and a name'
             return redirect(url_for('add', error=error))
         if description == '':
-            description = 'null'
+            description = 'none'
 
         query = "INSERT into item(itemid, itemname, pendingdelete, description) values ('{0}', '{1}',  false, '{2}');".format(item_id, item_name, description)
-        # query = " '{{ {0} }}' ".format(filedata)
         print(query)
         # query = None
         try:
@@ -192,13 +204,16 @@ def addItem():
             cursor.execute(query)
             conn.commit()
 
-            image1file = request.form['photo1']
-            if image1file != None:
-                f = open(image1file,'rb')
+            
+            if file.filename != None:
+                f = open("tmp/"+filename,'rb')
                 filedata = f.read()
                 f.close()
                 cursor.execute("UPDATE item SET image[0] = %s WHERE itemid=(%s);", (filedata, item_id))
                 conn.commit()
+
+            os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
 
             #assuming array for multiple upload
             # imagefiles = request.form['photo']
@@ -287,7 +302,7 @@ def getItemInfo(item_id):
             stren = encoded.decode("utf-8")
             imagedata.append(stren)
 
-            # to show image as a seperate pop-up (?) --local
+            # to show image as a seperate pop-up (?) --local only
             # data = base64.b64decode(encoded)
             # image1 = Image.open(BytesIO(image_data))
             # image1.show()

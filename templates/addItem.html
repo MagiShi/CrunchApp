@@ -50,7 +50,7 @@
                     {% if error %}
                 <p class="error" style="color:red;"><strong>*</strong> {{ error }}
             {% endif %}
-            <form method=POST action='/postaddItem'>
+            <form method=POST action='/postaddItem' enctype=multipart/form-data>
                 <!--ITEM NAME INPUT-->
                 <div class="form-group">
                     <input type="text" name="itemname" class="form-control" id="inputItemName" placeholder="Item Name">
