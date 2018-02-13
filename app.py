@@ -1,5 +1,9 @@
-from flask import Flask, flash, redirect, render_template, request, session, abort, url_for, json
+from flask import Flask, flash, redirect, render_template, request, session, abort, url_for, json, send_file
 from flask_mail import Mail, Message
+
+import base64
+from PIL import Image
+from io import BytesIO
 
 import os
 from urllib.parse import urlparse
@@ -171,9 +175,6 @@ def addItem():
         item_id = request.form['barcode']
         item_name = request.form['itemname']
         description = request.form['description']
-        image = 'null'
-        # images = request.form['image']
-        # print (repr(images))
         error = None
 
         if item_id == '' or item_name == '':
@@ -182,12 +183,27 @@ def addItem():
         if description == '':
             description = 'null'
 
-        query = "INSERT into item values ('{0}', '{1}', '{{ {2} }} ', false, '{3}');".format(item_id, item_name, image, description)
+        query = "INSERT into item(itemid, itemname, pendingdelete, description) values ('{0}', '{1}',  false, '{2}');".format(item_id, item_name, description)
+        # query = " '{{ {0} }}' ".format(filedata)
         print(query)
+        # query = None
         try:
+            # print (repr(query))
             cursor.execute(query)
+            conn.commit()
+
+            image1file = request.form['photo1']
+            if image1file != None:
+                f = open(image1file,'rb')
+                filedata = f.read()
+                f.close()
+                cursor.execute("UPDATE item SET image[0] = %s WHERE itemid=(%s);", (filedata, item_id))
+            #cursor.execute("INSERT into item values (%s, %s, '{{ \" %s \" }} ', false, %s);", (item_id, item_name, psycopg2.Binary(filedata), description))
+            # cursor.execute("INSERT into temptable values (%s, %s, %s, false, %s);", (item_id, item_name, psycopg2.Binary(filedata), description))
             # print ("executed")
+
         except Exception as e:
+            print (e)
             query = "rollback;"
             cursor.execute(query)
 
@@ -223,7 +239,8 @@ def deleteItemFlag(item_id):
     conn.commit()
     error = 'Item marked for deletion! Waiting for action by Admin'
     return redirect(url_for('getItemInfo', item_id=item_id, error=error))
-
+# def hexToBase64(data):
+    # return btoa(String.fromCharCode.apply(null, str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" ")));
 @app.route('/itemDetail/<item_id>', methods=['POST', 'GET'])
 def getItemInfo(item_id):
 
@@ -239,13 +256,31 @@ def getItemInfo(item_id):
         cursor.execute("SELECT itemname FROM item WHERE itemid='{0}';".format(item_id))
         itemname = cursor.fetchone()
         cursor.execute("SELECT image FROM item WHERE itemid='{0}';".format(item_id))
-        image = cursor.fetchall()
+        image = cursor.fetchone()
+        # image = list(cursor)
         cursor.execute("SELECT description FROM item WHERE itemid='{0}';".format(item_id))
         description = cursor.fetchone()
         cursor.execute("SELECT pendingdelete FROM item WHERE itemid='{0}';".format(item_id))
         delete = cursor.fetchone()
-        # print ("executed")
+        
+        imagedata = []
+        for i in image[0]:
+            # print (bytes(i))
+            # imgstr = bytes(i)
+            # print(binascii.hexlify(bytes(i)))
+            # # imgstr = 'data:image/jpeg;base64' + base64.b64encode(bytes(i))
+            # imagedata.append(imgstr)
+            image_data = bytes(i)
+            encoded = base64.b64encode(image_data)
+            stren = encoded.decode("utf-8")
+            imagedata.append(stren)
+            # data = base64.b64decode(encoded)
+            # image1 = Image.open(BytesIO(image_data))
+            # image1.show()
+
+        
     except Exception as e: 
+        print (e)
         cursor.execute("rollback;")
 
         ##If item does not exist etc
@@ -253,7 +288,7 @@ def getItemInfo(item_id):
         return redirect(url_for('loggedin', error=error))
 
     #NOTE:  image should be a list/array
-    return render_template('itemDetail.html', itemid=item_id, itemname=itemname, image=image, description=description, delete=delete, error=error)
+    return render_template('itemDetail.html', itemid=item_id, itemname=itemname, image=imagedata, description=description, delete=delete, error=error)
     # print("here")
     # return render_template('itemDetail.html', error=error)
 

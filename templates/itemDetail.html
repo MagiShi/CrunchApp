@@ -55,9 +55,12 @@
     <div class="row">
         <div class="col-md-6">
             <div class="itemImage row">
+
+            {% for i in image %}
                 <div class="col-12">
-                    <img src="http://lorempixel.com/480/640/food">
+                    <img id="ItemPreview" src="data:image/jpeg;base64, {{i}}" />
                 </div>
+            {% endfor %}
             </div>
         </div>
         

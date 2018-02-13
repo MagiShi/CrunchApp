@@ -6,6 +6,8 @@ isAdmin Boolean NOT NULL DEFAULT FALSE );
 Create Table item (itemId varchar(256) PRIMARY KEY NOT NULL, itemName
 varchar(256) NOT NULL, image BYTEA[5], pendingDelete Boolean NOT NULL DEFAULT FALSE, description varchar(256));
 
+Create Table temptable(itemId varchar(256) PRIMARY KEY NOT NULL, name varchar(256), image BYTEA[5]);
+
 Create Table reservation ( email varchar(256) NOT NULL references
 registereduser(email), itemId varchar(256) NOT NULL references
 item(itemId),  startDate TIMESTAMP NOT NULL, endDate TIMESTAMP NOT NULL,
