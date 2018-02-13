@@ -14,7 +14,7 @@ import psycopg2
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
-app.config['UPLOAD_FOLDER'] = "tmp/"
+app.config['UPLOAD_FOLDER'] = "/tmp/"
 app.config.update(
     # DEBUG=True,
 
@@ -204,9 +204,10 @@ def addItem():
             cursor.execute(query)
             conn.commit()
 
-            
+            print ("looking for file: " + "tmp/"+filename )
             if file.filename != None:
-                f = open("tmp/"+filename,'rb')
+                print ("loading file")
+                f = open("/tmp/"+filename,'rb')
                 filedata = f.read()
                 f.close()
                 cursor.execute("UPDATE item SET image[0] = %s WHERE itemid=(%s);", (filedata, item_id))
