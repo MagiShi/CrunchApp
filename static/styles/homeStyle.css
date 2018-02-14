@@ -62,7 +62,8 @@
     transition: 0.3s;
 }
 #menuNavButton:hover {
-    color: #FDDA24;
+    background-color: #FDDA24;
+    color: white;
     border-color: #FDDA24;
     border-radius: 10%;
 }
@@ -77,8 +78,9 @@
     transition: 0.3s;
 }
 #addNavButton:hover {
-    border-color: #FDDA24;
-    color: #FDDA24;
+    border-color: rgba(0, 0, 0, 0);
+    border-radius: 5px;
+    background-color: #FDDA24;
 }
 /*How the add item and user menu button look on small screen*/
 @media screen and (max-width: 575px) {
@@ -177,9 +179,9 @@
 }
 
 .item:hover {
-    -webkit-box-shadow: 2px 1px 10px 0px rgba(0,0,0,0.15);
-    -moz-box-shadow: 2px 1px 10px 0px rgba(0,0,0,0.15);
-    box-shadow: 2px 1px 10px 0px rgba(0,0,0,0.15);
+    -webkit-box-shadow: 2px 1px 10px 0px rgba(0,0,0,0.2);
+    -moz-box-shadow: 2px 1px 10px 0px rgba(0,0,0,0.2);
+    box-shadow: 2px 1px 10px 0px rgba(0,0,0,0.2);
 } 
 
 .item img {
@@ -199,4 +201,13 @@
     cursor: pointer;
     margin-left: 15px;
     margin-bottom: 15px;
+    background-color: white;
+    border: 1px solid #a3a3a3;
+    font-size: 12px;
+    padding: 6px 12px;
+    transition: 0.2s;
+}
+.itemDetailButton:hover {
+    border-color: #0077C8;
+    color: #0077C8
 }

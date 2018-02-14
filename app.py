@@ -128,7 +128,7 @@ def sendMail():
 
 
     error = 'Email sent'
-    return redirect(url_for('home', error=error))
+    return redirect(url_for('welcome', error=error))
 
 @app.route('/postregister', methods=['POST'])
 #def for registering, occurs after clicking registration button
@@ -178,14 +178,22 @@ def add():
 def addItem():
     if request.form.get("addItemButton"):
         item_id = request.form['barcode']
+        print ("here")
         item_name = request.form['itemname']
         description = request.form['description']
         error = None
-        file = request.files['photo1']
+
+        file = None
+        try:
+            file = request.files['photo1']
         # For only 1 file, if multiple, assume loop through this
-        if file and file.filename != '':
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        # print ("file")
+            if file and file.filename != '':
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        except Exception as e:
+            print (e)
+            filename = None
         # if file == None:
         #     print("NONE")
         # print(type(file))
@@ -194,18 +202,22 @@ def addItem():
             error = 'Item must have a barcode/id and a name'
             return redirect(url_for('add', error=error))
         if description == '':
-            description = 'none'
+            description = 'N/A'
 
         query = "INSERT into item(itemid, itemname, pendingdelete, description) values ('{0}', '{1}',  false, '{2}');".format(item_id, item_name, description)
         print(query)
         # query = None
         try:
             # print (repr(query))
+            # print("in try")
             cursor.execute(query)
+            # print("exe")
             conn.commit()
+            # print("conn")
 
-            print ("looking for file: " + "tmp/"+filename )
-            if file.filename != None:
+            
+            if filename != None:
+                print ("looking for file: " + "tmp/"+filename )
                 print ("loading file")
                 f = open("/tmp/"+filename,'rb')
                 filedata = f.read()
@@ -213,7 +225,7 @@ def addItem():
                 cursor.execute("UPDATE item SET image[0] = %s WHERE itemid=(%s);", (filedata, item_id))
                 conn.commit()
 
-            os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
 
             #assuming array for multiple upload
@@ -240,7 +252,7 @@ def addItem():
             error = 'Item creation has failed.'
             return redirect(url_for('add', error=error))
 
-        conn.commit()
+        # conn.commit()
         # print("added Item")
         return redirect(url_for('getItemInfo', item_id=item_id))
 
@@ -290,24 +302,25 @@ def getItemInfo(item_id):
         description = cursor.fetchone()
         cursor.execute("SELECT pendingdelete FROM item WHERE itemid='{0}';".format(item_id))
         delete = cursor.fetchone()
-        
+        # print (image)
         imagedata = []
-        for i in image[0]:
-            # print (bytes(i))
-            # imgstr = bytes(i)
-            # print(binascii.hexlify(bytes(i)))
-            # # imgstr = 'data:image/jpeg;base64' + base64.b64encode(bytes(i))
-            # imagedata.append(imgstr)
-            image_data = bytes(i)
-            encoded = base64.b64encode(image_data)
-            stren = encoded.decode("utf-8")
-            imagedata.append(stren)
+        if image[0] != None:
+            for i in image[0]:
+                # print (bytes(i))
+                # imgstr = bytes(i)
+                # print(binascii.hexlify(bytes(i)))
+                # # imgstr = 'data:image/jpeg;base64' + base64.b64encode(bytes(i))
+                # imagedata.append(imgstr)
+                image_data = bytes(i)
+                encoded = base64.b64encode(image_data)
+                stren = encoded.decode("utf-8")
+                imagedata.append(stren)
 
-            # to show image as a seperate pop-up (?) --local only
-            # data = base64.b64decode(encoded)
-            # image1 = Image.open(BytesIO(image_data))
-            # image1.show()
-
+                # to show image as a seperate pop-up (?) --local only
+                # data = base64.b64decode(encoded)
+                # image1 = Image.open(BytesIO(image_data))
+                # image1.show()
+                print (i)
         
     except Exception as e: 
         print (e)
