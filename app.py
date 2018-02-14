@@ -357,7 +357,21 @@ def edit(item_id):
 
     return render_template('editItem.html', itemid=item_id, itemname=itemname, image=image, description=description, delete=delete, error=error)
     #return redirect(url_for('getItemInfo', item_id=item_id))
+@app.route('/postedit/<item_id>', methods=["POST"])
+	error = request.args.get('error')
+	item_id = item_id
+	itemname = request.form['itemname']
+    description = request.form['description']
 
+    try: 
+        query = ("UPDATE item SET itemname ='{2}', description ='{1}' WHERE itemid='{0}';".format(item_id, itemname, description))
+        cursor.execute(query)
+    except Exception as e: 
+        cursor.execute("rollback;")
+
+        ##If item does not exist etc
+        error = 'Item information cannot be retrieved'
+        return redirect(url_for('loggedin', error=error))
 if __name__ == "__main__":
     app.run()
 
