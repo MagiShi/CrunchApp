@@ -328,21 +328,21 @@ def edit(item_id):
 
     error = request.args.get('error')
     item_id = item_id
-    itemname = None
-    image = None
-    description = None
+    itemname = request.form['itemname']
+    description = request.form['description']
     delete = None
     
     #query = "SELECT * FROM item WHERE itemid='{0}';".format(item_id)
     try: 
-        cursor.execute("SELECT itemname FROM item WHERE itemid='{0}';".format(item_id))
-        itemname = cursor.fetchone()
-        cursor.execute("SELECT image FROM item WHERE itemid='{0}';".format(item_id))
-        image = cursor.fetchall()
-        cursor.execute("SELECT description FROM item WHERE itemid='{0}';".format(item_id))
-        description = cursor.fetchone()
-        cursor.execute("SELECT pendingdelete FROM item WHERE itemid='{0}';".format(item_id))
-        delete = cursor.fetchone()
+        query = ("UPDATE item SET itemname ='{2}', description ='{1}' WHERE itemid='{0}';".format(item_id, itemname, description))
+        cursor.execute(query)
+        #itemname = cursor.fetchone()
+        #cursor.execute("SELECT image FROM item WHERE itemid='{0}';".format(item_id))
+        #image = cursor.fetchall()
+        #cursor.execute("SELECT description FROM item WHERE itemid='{0}';".format(item_id))
+        #description = cursor.fetchone()
+        #cursor.execute("SELECT pendingdelete FROM item WHERE itemid='{0}';".format(item_id))
+        #delete = cursor.fetchone()
         # print ("executed")
     except Exception as e: 
         cursor.execute("rollback;")
@@ -351,7 +351,8 @@ def edit(item_id):
         error = 'Item information cannot be retrieved'
         return redirect(url_for('loggedin', error=error))
 
-    return render_template('editItem.html', itemid=item_id, itemname=itemname, image=image, description=description, delete=delete, error=error)
+    #return render_template('editItem.html', itemid=item_id, itemname=itemname, image=image, description=description, delete=delete, error=error)
+    return redirect(url_for('getItemInfo', item_id=item_id))
 
 if __name__ == "__main__":
     app.run()
