@@ -269,7 +269,7 @@ def deleteItemFlag(item_id):
     error = 'Item marked for deletion! Waiting for action by Admin'
     return redirect(url_for('getItemInfo', item_id=item_id, error=error))
 
-@app.route('/itemDetail/<item_id>', methods=['POST', 'GET'])
+@app.route('/item/<item_id>', methods=['POST', 'GET'])
 def getItemInfo(item_id):
 
     error = request.args.get('error')
@@ -318,9 +318,9 @@ def getItemInfo(item_id):
         return redirect(url_for('loggedin', error=error))
 
     #NOTE:  image should be a list/array
-    return render_template('itemDetail.html', itemid=item_id, itemname=itemname, image=imagedata, description=description, delete=delete, error=error)
+    return render_template('item.html', itemid=item_id, itemname=itemname, image=imagedata, description=description, delete=delete, error=error)
     # print("here")
-    # return render_template('itemDetail.html', error=error)
+    # return render_template('item.html', error=error)
 
 # renders editItem page
 @app.route('/editItem/<item_id>', methods=["POST", "GET"])
