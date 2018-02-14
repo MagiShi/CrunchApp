@@ -352,8 +352,8 @@ def edit(item_id):
         error = 'Item information cannot be retrieved'
         return redirect(url_for('loggedin', error=error))
 
-    #return render_template('editItem.html', itemid=item_id, itemname=itemname, image=image, description=description, delete=delete, error=error)
-    return redirect(url_for('getItemInfo', item_id=item_id))
+    return render_template('editItem.html', itemid=item_id, itemname=itemname, image=image, description=description, delete=delete, error=error)
+    #return redirect(url_for('getItemInfo', item_id=item_id))
 
 if __name__ == "__main__":
     app.run()
