@@ -328,8 +328,11 @@ def edit(item_id):
 
     error = request.args.get('error')
     item_id = item_id
-    itemname = request.form['itemname']
-    description = request.form['description']
+    #itemname = request.form['itemname']
+    #description = request.form['description']
+    itemname = None
+    image = None
+    description = None
     delete = None
     
     #query = "SELECT * FROM item WHERE itemid='{0}';".format(item_id)
@@ -344,7 +347,7 @@ def edit(item_id):
         description = cursor.fetchone()
         cursor.execute("SELECT pendingdelete FROM item WHERE itemid='{0}';".format(item_id))
         delete = cursor.fetchone()
-        print ("executed")
+        #print ("executed")
     except Exception as e: 
         cursor.execute("rollback;")
 
