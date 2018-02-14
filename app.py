@@ -334,16 +334,17 @@ def edit(item_id):
     
     #query = "SELECT * FROM item WHERE itemid='{0}';".format(item_id)
     try: 
-        query = ("UPDATE item SET itemname ='{2}', description ='{1}' WHERE itemid='{0}';".format(item_id, itemname, description))
-        cursor.execute(query)
-        #itemname = cursor.fetchone()
-        #cursor.execute("SELECT image FROM item WHERE itemid='{0}';".format(item_id))
-        #image = cursor.fetchall()
-        #cursor.execute("SELECT description FROM item WHERE itemid='{0}';".format(item_id))
-        #description = cursor.fetchone()
-        #cursor.execute("SELECT pendingdelete FROM item WHERE itemid='{0}';".format(item_id))
-        #delete = cursor.fetchone()
-        # print ("executed")
+        #query = ("UPDATE item SET itemname ='{2}', description ='{1}' WHERE itemid='{0}';".format(item_id, itemname, description))
+        #cursor.execute(query)
+        cursor.execute("SELECT itemname FROM item WHERE itemid='{0}';".format(item_id))
+        itemname = cursor.fetchone()
+        cursor.execute("SELECT image FROM item WHERE itemid='{0}';".format(item_id))
+        image = cursor.fetchall()
+        cursor.execute("SELECT description FROM item WHERE itemid='{0}';".format(item_id))
+        description = cursor.fetchone()
+        cursor.execute("SELECT pendingdelete FROM item WHERE itemid='{0}';".format(item_id))
+        delete = cursor.fetchone()
+        print ("executed")
     except Exception as e: 
         cursor.execute("rollback;")
 
