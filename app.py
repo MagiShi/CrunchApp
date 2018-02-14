@@ -359,10 +359,9 @@ def edit(item_id):
     #return redirect(url_for('getItemInfo', item_id=item_id))
 @app.route('/posteditItem/<item_id>', methods=["POST"])
 def editItem(item_id):
-	item_id = item_id
-	itemname = request.form['itemname']
+    item_id = item_id
+    itemname = request.form['itemname']
     description = request.form['description']
-
     try: 
         query = ("UPDATE item SET itemname ='{2}', description ='{1}' WHERE itemid='{0}';".format(item_id, itemname, description))
         cursor.execute(query)
