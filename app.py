@@ -358,6 +358,7 @@ def edit(item_id):
     return render_template('editItem.html', itemid=item_id, itemname=itemname, image=image, description=description, delete=delete, error=error)
     #return redirect(url_for('getItemInfo', item_id=item_id))
 @app.route('/posteditItem/<item_id>', methods=["POST"])
+def editItem(item_id):
 	item_id = item_id
 	itemname = request.form['itemname']
     description = request.form['description']
