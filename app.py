@@ -363,7 +363,7 @@ def editItem(item_id):
     itemname = request.form['itemname']
     description = request.form['description']
     try: 
-        query = ("UPDATE item SET itemname ='{2}', description ='{1}' WHERE itemid='{0}';".format(item_id, itemname, description))
+        query = ("UPDATE item SET itemname ='{1}', description ='{2}' WHERE itemid='{0}';".format(item_id, itemname, description))
         cursor.execute(query)
     except Exception as e: 
         cursor.execute("rollback;")
