@@ -357,8 +357,7 @@ def edit(item_id):
 
     return render_template('editItem.html', itemid=item_id, itemname=itemname, image=image, description=description, delete=delete, error=error)
     #return redirect(url_for('getItemInfo', item_id=item_id))
-@app.route('/postedit/<item_id>', methods=["POST"])
-	error = request.args.get('error')
+@app.route('/posteditItem/<item_id>', methods=["POST"])
 	item_id = item_id
 	itemname = request.form['itemname']
     description = request.form['description']
@@ -372,6 +371,7 @@ def edit(item_id):
         ##If item does not exist etc
         error = 'Item information cannot be retrieved'
         return redirect(url_for('loggedin', error=error))
+    return redirect(url_for('getItemInfo', item_id=item_id))
 if __name__ == "__main__":
     app.run()
 
