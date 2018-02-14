@@ -269,7 +269,7 @@ def deleteItemFlag(item_id):
     error = 'Item marked for deletion! Waiting for action by Admin'
     return redirect(url_for('getItemInfo', item_id=item_id, error=error))
 
-@app.route('/itemDetail/<item_id>', methods=['POST', 'GET'])
+@app.route('/item/<item_id>', methods=['POST', 'GET'])
 def getItemInfo(item_id):
 
     error = request.args.get('error')
@@ -318,9 +318,9 @@ def getItemInfo(item_id):
         return redirect(url_for('loggedin', error=error))
 
     #NOTE:  image should be a list/array
-    return render_template('itemDetail.html', itemid=item_id, itemname=itemname, image=imagedata, description=description, delete=delete, error=error)
+    return render_template('item.html', itemid=item_id, itemname=itemname, image=imagedata, description=description, delete=delete, error=error)
     # print("here")
-    # return render_template('itemDetail.html', error=error)
+    # return render_template('item.html', error=error)
 
 # renders editItem page
 @app.route('/editItem/<item_id>', methods=["POST", "GET"])
@@ -328,6 +328,8 @@ def edit(item_id):
 
     error = request.args.get('error')
     item_id = item_id
+    #itemname = request.form['itemname']
+    #description = request.form['description']
     itemname = None
     image = None
     description = None
@@ -335,6 +337,8 @@ def edit(item_id):
     
     #query = "SELECT * FROM item WHERE itemid='{0}';".format(item_id)
     try: 
+        #query = ("UPDATE item SET itemname ='{2}', description ='{1}' WHERE itemid='{0}';".format(item_id, itemname, description))
+        #cursor.execute(query)
         cursor.execute("SELECT itemname FROM item WHERE itemid='{0}';".format(item_id))
         itemname = cursor.fetchone()
         cursor.execute("SELECT image FROM item WHERE itemid='{0}';".format(item_id))
@@ -343,7 +347,7 @@ def edit(item_id):
         description = cursor.fetchone()
         cursor.execute("SELECT pendingdelete FROM item WHERE itemid='{0}';".format(item_id))
         delete = cursor.fetchone()
-        # print ("executed")
+        #print ("executed")
     except Exception as e: 
         cursor.execute("rollback;")
 
@@ -352,7 +356,24 @@ def edit(item_id):
         return redirect(url_for('loggedin', error=error))
 
     return render_template('editItem.html', itemid=item_id, itemname=itemname, image=image, description=description, delete=delete, error=error)
+    #return redirect(url_for('getItemInfo', item_id=item_id))
+@app.route('/posteditItem/<item_id>', methods=["POST"])
+def editItem(item_id):
+    item_id = item_id
+    itemname = request.form['itemname']
+    description = request.form['description']
+    try: 
+        query = ("UPDATE item SET itemname ='{1}', description ='{2}' WHERE itemid='{0}';".format(item_id, itemname, description))
+        #query = ("UPDATE item SET itemname = '{1}' WHERE itemid= '{0}';".format(item_id, itemname, description))
+        cursor.execute(query)
+        conn.commit()
+    except Exception as e: 
+        cursor.execute("rollback;")
 
+        ##If item does not exist etc
+        error = 'Item information cannot be retrieved'
+        return redirect(url_for('loggedin', error=error))
+    return redirect(url_for('getItemInfo', item_id=item_id))
 if __name__ == "__main__":
     app.run()
 

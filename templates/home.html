@@ -4,7 +4,7 @@
     <title>Home - UAH Theatre</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/homeStyle.css') }}">
     <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
-    <script src="https://use.fontawesome.com/f26043ee62.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -16,90 +16,88 @@
 
 </head>
 <body>
-
-<nav class="navbar">
     <!--SEARCH BAR-->
-    <form class="form-inline">
-        <a class="navbar-brand" href="home">Thracker</a>
-        <div class="input-group">
-            <div class="input-group-btn search-panel">
-                <button type="button" class="btn">
-                    <span onclick="toggleFilterMenu()">Edit Filters</span>
-                </button>
+    <nav class="navbar fixed-top">
+        <form class="form-inline">
+            <!-- THRACKER -->
+            <a class="navbar-brand" href="home">Thracker</a>
+            <div class="input-group">
+                <!-- FILTER BUTTON -->
+                <div class="input-group-btn search-panel">
+                    <button onclick="toggleFilterMenu()" type="button" class="btn">
+                        <i class="fas fa-sliders-h"></i>
+                    </button>
+                </div>
+                <!-- SEARCH BAR INPUT -->
+                <input id="searchBar" class="form-control" type="text" placeholder="Search by name">
+                <!-- MAGNIFYING GLASS ICON BUTTON -->
+                <span class="input-group-btn">
+                    <button class="btn" type="button"><i class="fas fa-search"></i></button>
+                </span>
             </div>
-            <input id="searchBar" class="form-control" type="text" placeholder="Enter any keywords">
-            <span class="input-group-btn">
-                <button class="btn" type="button">
-                    <i class="fa fa-search" aria-hidden="true"></i>
-                </button>
-            </span>
-            
-
-
-            <div id="menuNavButton">
-                <span style="cursor:pointer" onclick="toggleAccountMenu()">Menu</span>
-            </div>
-            
-            
+            <!-- ADD ITEM BUTTON -->
+            <div id="addNavButton" onclick="location.href='addItem'">Add New Item</div>
+            <!-- MENU BUTTON -->
+            <div onclick="toggleAccountMenu()" id="menuNavButton" class="ml-auto"><i class="fas fa-user-circle"></i>
         </div>
-        
-    </form>
-</nav>
-    
-<div class="container-fluid">
-    <div class="row">
-        <div id="addNavButton">
-            <span style="cursor:pointer" onclick="location.href='addItem'">Add Item</span>
+        </form>
+    </nav>
+    <!-- MAIN PAGE CONTENT -->
+    <div class="allItems container-fluid">
+        <!-- ITEM LIST -->
+        <div class="row">
+            <div class="col-md-6 col-lg-3 itemSummary">
+                <div class="item">
+                    <img src="http://lorempixel.com/480/640/food">
+                    <p>Item Name</p>
+                    <button class="btn itemDetailButton" onclick="location.href='itemDetail'">Details</button>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3 itemSummary">
+                <div class="item">
+                    <img src="http://lorempixel.com/480/640/food">
+                    <p>Item Name</p>
+                    <button class="btn itemDetailButton" onclick="location.href='itemDetail'">Details</button>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3 itemSummary">
+                <div class="item">
+                    <img src="http://lorempixel.com/480/640/food">
+                    <p>Item Name</p>
+                    <button class="btn itemDetailButton" onclick="location.href='itemDetail'">Details</button>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3 itemSummary">
+                <div class="item">
+                    <img src="http://lorempixel.com/480/640/food">
+                    <p>Item Name</p>
+                    <button class="btn itemDetailButton" onclick="location.href='itemDetail'">Details</button>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-4 itemSummary">
-            <img src="http://lorempixel.com/480/640/food">
-            <p>Item Name</p>
-            <button class="btn itemDetailButton">Details</button>
-        </div>
-        
-        <div class="col-md-4 itemSummary">
-            <img src="http://lorempixel.com/480/640/food">
-            <p>Item Name</p>
-            <button class="btn itemDetailButton">Details</button>
-        </div>
-        
-        <div class="col-md-4 itemSummary">
-            <img src="http://lorempixel.com/480/640/food">
-            <p>Item Name</p>
-            <button class="btn itemDetailButton">Details</button>
-        </div>
+    <!-- FILTER MENU -->
+    <div id="filterMenu" class="leftSideNav">
+      <a href="javascript:void(0)" class="closebtn" onclick="toggleFilterMenu()">&times;</a>
+      <a href="#">Characteristic 1</a>
+      <a href="#">Characteristic 2</a>
+      <a href="#">Characteristic 3</a>
+      <a href="#">Characteristic 4</a>
+      <a href="#">Characteristic 5</a>
+      <a href="#">Characteristic 6</a>
+      <a href="#">Characteristic 7</a>
     </div>
-</div>
-
-
-    
-    
-    
-    
-
-
-<div id="filterMenu" class="leftSideNav">
-  <a href="javascript:void(0)" class="closebtn" onclick="toggleFilterMenu()">&times;</a>
-  <a href="#">Characteristic 1</a>
-  <a href="#">Characteristic 2</a>
-  <a href="#">Characteristic 3</a>
-  <a href="#">Characteristic 4</a>
-  <a href="#">Characteristic 5</a>
-  <a href="#">Characteristic 6</a>
-  <a href="#">Characteristic 7</a>
-</div>
-
-
-<div id="accountMenu" class="rightSideNav">
-  <a href="javascript:void(0)" class="closebtn" onclick="toggleAccountMenu()">&times;</a>
-  <a href="#">Reservations</a>
-  <a href="#">My Account</a>
-  <a href="#">Help & FAQ</a>
-  <a href="/logout">Log Out</a>
-</div>
-
+    <!-- ACCOUNT MENU -->
+    <div id="accountMenu" class="rightSideNav">
+      <a href="javascript:void(0)" class="closebtn" onclick="toggleAccountMenu()">&times;</a>
+      <a href="#">Reservations</a>
+      <a href="#">My Account</a>
+      <a href="#">Help & FAQ</a>
+      <a href="/logout">Log Out</a>
+    </div>
 </body>
 </html>
 

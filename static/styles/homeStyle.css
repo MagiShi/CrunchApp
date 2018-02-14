@@ -1,86 +1,126 @@
 .navbar {
-    background-color: #0077C8;
+    background: #7fc1ef;
 }
 .navbar-brand {
+    font-weight: 500;
     color: white;
+    transition: 0.2s;
+}
+@media screen and (min-width: 612px) {
+    .navbar-brand {
+        margin-right: 50px !important;
+    }
 }
 .navbar-brand:hover {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.6);
 }
 /*Text input part of search bar*/
 .navbar #searchBar {
-    background-color: rgba(255, 255, 255, 0);
+    background-color: white;
     border: none;
-    border-bottom: 1px solid white;
-    color: white;
-    margin-left: 2vh;
+    color: black;
+    
+    width: 20vw;
+    transition: 0.2s;
+}
+.navbar #searchBar:focus {
+    -webkit-box-shadow: 5px 7px 30px -7px rgba(0,0,0,0.5);
+    -moz-box-shadow: 5px 7px 30px -7px rgba(0,0,0,0.5);
+    box-shadow: 5px 7px 30px -7px rgba(0,0,0,0.5);
+    width: 30vw;
 }
 .navbar #searchBar::placeholder {
-    color: rgba(255, 255, 255, 0.7);
+    color: #a8a8a8;
 }
 /*Search "Go" button*/
 .navbar .input-group .input-group-btn button {
-    background-color: rgba(255, 255, 255, 0);
-    border-bottom: 1px solid white;
+    background-color: #0077C8;
     color: white;
-    cursor: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.navbar .input-group .input-group-btn button:hover {
+    background-color: #FDDA24;
 }
 /*Edit Filters button*/
 .navbar .input-group .search-panel button {
     border-bottom: none;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: #959595;
     cursor: pointer;
+    transition: 0.3s;
 }
-
+.navbar .input-group .search-panel button:hover {
+    background-color: #FDDA24;
+}
+/* User menu button*/
 #menuNavButton {
-    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 25%;
     padding: 4px 10px;
-    margin-left: 2vh;
-    color: white;
+    color: #0077C8;
+    border: 1px solid #0077C8;
+    cursor: pointer;
+    transition: 0.3s;
 }
-
+#menuNavButton:hover {
+    color: #FDDA24;
+    border-color: #FDDA24;
+    border-radius: 10%;
+}
+/*Add item button*/
 #addNavButton {
-    background-color: grey;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.2);
     padding: 4px 10px;
-    margin: 100px auto;
-    width: 50%;
     text-align: center;
     color: white;
+    cursor: pointer;
+    transition: 0.3s;
 }
-
+#addNavButton:hover {
+    border-color: #FDDA24;
+    color: #FDDA24;
+}
+/*How the add item and user menu button look on small screen*/
+@media screen and (max-width: 575px) {
+    #menuNavButton, #addNavButton {
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+}
+/* Gap before add item button on larger screens */
+@media screen and (min-width: 576px) {
+    #addNavButton {
+        margin-left: 20px;
+    }
+}
 
 
 /*-------------------SIDE MENUS-------------------*/
-
-
 .rightSideNav, .leftSideNav {
     height: 100%;
     width: 0;
     position: fixed;
-    z-index: 999;
+    z-index: 9999;
     top: 0;
     background-color: #111;
     overflow-x: hidden;
-    transition: 0.5s;
+    transition: 0.3s;
     padding-top: 60px;
 }
-
 .rightSideNav {
     right: 0;
 }
 .leftSideNav {
     left: 0;
 }
-
 .rightSideNav a, .leftSideNav a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 18px;
     color: #818181;
     display: block;
-    transition: 0.3s;
+    transition: 0.2s;
 }
-
 .rightSideNav .closebtn {
     position: absolute;
     top: 0;
@@ -88,8 +128,6 @@
     font-size: 36px;
     margin-left: 50px;
 }
-
-
 .leftSideNav .closebtn {
     position: absolute;
     top: 0;
@@ -97,28 +135,68 @@
     font-size: 36px;
     margin-left: 50px;
 }
-
 .rightSideNav a:hover, .leftSideNav a:hover, .offcanvas a:focus{
     text-decoration: none;
     color: #f1f1f1;
 }
-
 @media screen and (max-height: 450px) {
   .rightSideNav, .leftSideNav {padding-top: 15px;}
   .rightSideNav a, .leftSideNav a {font-size: 18px;}
 }
 
+
+/*-------------------ITEM LIST-------------------*/  
+.allItems {
+    padding-top: 5vh;
+    margin-top: 30px;
+}
+@media screen and (min-width: 576px) { 
+    .allItems {
+        padding: 5vh 15vw !important;
+    }
+}
+@media screen and (max-width: 575px) {
+    .allItems {
+        margin-top: 120px;
+    }
+}
 .itemSummary {
-    padding: 0 40px;
+    padding: 20px 40px;
 }
 
-.itemSummary img {
+.item {
+    border: 1px solid #bebebe;
+    border-radius: 3px;
+    box-sizing: border-box;
+    width: 100%;
+    
+    -webkit-box-shadow: 2px 1px 10px 0px rgba(0,0,0,0.06);
+    -moz-box-shadow: 2px 1px 10px 0px rgba(0,0,0,0.06);
+    box-shadow: 2px 1px 10px 0px rgba(0,0,0,0.06);
+    transition: 0.2s;
+}
+
+.item:hover {
+    -webkit-box-shadow: 2px 1px 10px 0px rgba(0,0,0,0.15);
+    -moz-box-shadow: 2px 1px 10px 0px rgba(0,0,0,0.15);
+    box-shadow: 2px 1px 10px 0px rgba(0,0,0,0.15);
+} 
+
+.item img {
     width: 100%;
     max-height: 50vh;
+}
+.item p {
+    margin: 15px;
 }
 
 @media screen and (min-width: 48px) {
     .itemSummary img {
         max-height: 50vh;
     }
+}
+.itemDetailButton {
+    cursor: pointer;
+    margin-left: 15px;
+    margin-bottom: 15px;
 }
