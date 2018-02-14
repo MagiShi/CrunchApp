@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Add Item - UAH Theatre</title>
-    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+    <title>Item Detail - UAH Theatre</title>
     <script src="https://use.fontawesome.com/f26043ee62.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/addStyle.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/homeStyle.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/itemDetailStyle.css') }}">
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
@@ -20,7 +20,7 @@
 <nav class="navbar">
     <!--SEARCH BAR-->
     <form class="form-inline">
-        <a class="navbar-brand" href="home">Thracker</a>
+        <a class="navbar-brand" href="/home">Thracker</a>
         <div class="input-group">
             <div class="input-group-btn search-panel">
                 <button type="button" class="btn">
@@ -34,9 +34,11 @@
                 </button>
             </span>
             
+
+
             <div id="menuNavButton">
-            <span style="cursor:pointer" onclick="toggleAccountMenu()">Menu</span>
-        </div>
+                <span style="cursor:pointer" onclick="toggleAccountMenu()">Menu</span>
+            </div>
             
             
         </div>
@@ -44,91 +46,93 @@
     </form>
 </nav>
     
-<div class="container-fluid">
+<div class="itemDetailContainer container-fluid">
     <div class="row">
-        <div class="add-container offset-2 col-8 offset-md-4 col-md-4">
-                    {% if error %}
+        <div class="col-12">
+<!--             {% if error %}
                 <p class="error" style="color:red;"><strong>*</strong> {{ error }}
-            {% endif %}
-            <form method=POST action='/postaddItem' enctype=multipart/form-data>
-                <!--ITEM NAME INPUT-->
-                <div class="form-group">
-                    <input type="text" name="itemname" class="form-control" id="inputItemName" placeholder="Item Name">
+            {% endif %} -->
+            <p class="itemName">{{ itemname | first }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="itemImage row">
+
+            {% for i in image %}
+                <div class="col-12">
+                    <img id="ItemPreview" src="data:image/jpeg;base64, {{i}}" />
                 </div>
-
-                <!--BARCODE INPUT-->
-                <div class="form-group">
-                    <input type="text" name="barcode" class="form-control" id="inputBarcode" placeholder="Barcode">
+            {% endfor %}
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="reservation row">
+                <div class="col-12">
+                    <p>Reservation Set (Check your profile for more details)</p>
+                    <button class="btn" type="button">Reserve Item</button>
                 </div>
-
-                <!--PHOTO UPLOAD-->
-                <div class="form-group">
-                    <input type="file" name="photo1" accept="image/*" class="form-control" id="inputPhoto" placeholder="Photo">
+            </div>
+            
+            <div class="itemText row">
+                <div class="col-12">
+                    <p>Barcode: {{itemid}}</p>
+                    <p>Color: x, y, z</p>
+                    <p>Condition: Ok</p>
+                    <p>Description: {{description | first}}
+                    <p>Etc: etc</p>
                 </div>
+            </div>
+            
+            <div class="itemAction row">
+                <div class="col-12">
+                    {%if delete | first %}
+                    <p>Deletion Pending</p>
+                    {% endif %}
 
-<!--            Condition Input
-                <div class="radio">
-                <h4>Condition<br></h4>
-                    <input type="radio" name="condition" value="like_new"> Like New<br>
-                    <input type="radio" name="condition" value="very_good"> Very Good<br>
-                    <input type="radio" name="condition" value="good"> Good<br>
-                    <input type="radio" name="condition" value="fair"> Fair<br>
-                    <input type="radio" name="condition" value="poor"> Poor<br>
                 </div>
+                <div class="col-md-5">
 
-                Color input
-                <div class="radio">
-                <h4><br>Color<br></h4>
-                    <input type="checkbox" id="colorSelectRed" name="red" value="red">
-                    <label for="colorSelectRed">Red</label><br>
-                    <input type="checkbox" id="colorSelectOrange" name="orange" value="orange">
-                    <label for="colorSelectOrange">Orange</label><br>
-                    <input type="checkbox" id="colorSelectYellow" name="yellow" value="yellow">
-                    <label for="colorSelectYellow">Yellow</label><br>
-                    <input type="checkbox" id="colorSelectGreen" name="green" value="green">
-                    <label for="colorSelectGreen">Green</label><br>
-                    <input type="checkbox" id="colorSelectBlue" name="blue" value="blue">
-                    <label for="colorSelectBlue">Blue</label><br>
-                    <input type="checkbox" id="colorSelectPurple" name="purple" value="purple">
-                    <label for="colorSelectPurple">Purple</label><br>
-                    <input type="checkbox" id="colorSelectWhite" name="white" value="white">
-                    <label for="colorSelectWhite">White</label><br>
-                    <input type="checkbox" id="colorSelectGray" name="gray" value="gray">
-                    <label for="colorSelectGray">Gray</label><br>
-                    <input type="checkbox" id="colorSelectBlack" name="black" value="black">
-                    <label for="colorSelectBlack">Black</label><br>
-                    <input type="checkbox" id="colorSelectBrown" name="brown" value="brown">
-                    <label for="colorSelectBrown">Brown</label><br>
-                </div> -->
-
-                <!--DESCRIPTION INPUT-->
-                <div class="form-group">
-                    <input type="text" name="description" class="form-control" id="inputDescription" placeholder="Description">
+                <form method=POST action='/editItem/{{itemid}}'>
+                    <button class="btn" id="editItemButton" type="submit" value={{itemid}}>Edit</button>
+                </form>
+                    <!-- <button class="btn" id="editItemButton" type="button" onclick="location.href='/editItem'">Edit Item -->
+                    <!-- </button> -->
                 </div>
+                    {% if delete|first %}
+                <div class="offset-md-2 col-md-5">
+                    <button class="btn" id="deleteItemButton" button style="background-color:grey" type="submit" disabled>Delete Item</button>
+                </div>
+                    {% endif %}
+                    {% if not delete|first %}
+                <div class="offset-md-2 col-md-5">
+                    <button class="btn" id="deleteItemButton" type="submit">Delete Item</button>
+                </div>
+                    {% endif %}
+            </div>
 
-                <!-- Navigate back to home page/ Trigger the confirmation modal -->
-                <button type="submit" name="cancelButton" class="btn" id="cancelButton" value="Cancel">Cancel</button>
-                <!--ADD ITEM BUTTON-->
-                <button type="submit" name="addItemButton" class="btn offset-md-1" id="addItemButton" value="Add">Add Item</button>
-
-            </form>
-
-            <!-- Cancel Confirmation Modal -->
-            <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <!-- Deletion Confirmation Modal -->
+            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Cancel Confirmation</h5>
+                            <h5 class="modal-title">Deletion Confirmation</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body" style="text-align: left;">
-                            You have not submitted the form yet. Are you sure you want to discard the item addition form?
+                            Are you sure you want to delete this item?
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Keep the form</button>
-                            <button type="submit" class="btn btn-primary" id="cancelConfirmed">Discard the form</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+
+                <form method=POST action='/deleteItem/{{itemid}}'>
+                        <button class="btn btn-primary" id="deleteConfirmed" type="submit" value={{itemid}}>Delete</button>
+                </div>
+                </form>
+                            
                         </div>
                     </div>
                 </div>
@@ -139,9 +143,8 @@
 </div>
 
 
-
- 
-
+    
+    
     
     
 
@@ -171,13 +174,8 @@
 
 <script>
     $(document).ready(function() {
-        $('#cancelConfirmed').click(function() {
-            location.href = 'home';
-        });
-
-        $( '#cancelButton' ).click(function() {
-            $('#cancelModal').modal('show');
-            return false;
+        $( '#deleteItemButton' ).click(function() {
+            $('#deleteModal').modal('show');
         });
     });
 
