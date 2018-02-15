@@ -17,8 +17,6 @@ app.secret_key = os.urandom(24)
 app.config['UPLOAD_FOLDER'] = "/tmp/"
 app.config.update(
     # DEBUG=True,
-
-
     #EMAIL SETTINGS
     MAIL_SERVER='smtp.gmail.com',
     MAIL_PORT=465,
@@ -178,7 +176,7 @@ def add():
 def addItem():
     if request.form.get("addItemButton"):
         item_id = request.form['barcode']
-        print ("here")
+        # print ("here")
         item_name = request.form['itemname']
         description = request.form['description']
         error = None
@@ -253,8 +251,8 @@ def addItem():
             return redirect(url_for('add', error=error))
 
         # conn.commit()
-        # print("added Item")
-        return redirect(url_for('getItemInfo', item_id=item_id))
+        error = 'Item successfully added.'
+        return redirect(url_for('getItemInfo', item_id=item_id, error=error))
 
 
 @app.route('/logout')
@@ -380,13 +378,14 @@ def editItem(item_id):
         #query = ("UPDATE item SET itemname = '{1}' WHERE itemid= '{0}';".format(item_id, itemname, description))
         cursor.execute(query)
         conn.commit()
+        error = 'Item successfully edited.'
     except Exception as e: 
         cursor.execute("rollback;")
 
         ##If item does not exist etc
         error = 'Item information cannot be retrieved'
         return redirect(url_for('loggedin', error=error))
-    return redirect(url_for('getItemInfo', item_id=item_id))
+    return redirect(url_for('getItemInfo', item_id=item_id, error=error))
 if __name__ == "__main__":
     app.run()
 

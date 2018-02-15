@@ -49,6 +49,9 @@
 <div class="itemDetailContainer container-fluid">
     <div class="row">
         <div class="col-12">
+            {% if error %}
+                <p class="error" style="color:red;"><strong>*</strong> {{ error }}
+            {% endif %}
             <p class="itemName">{{ itemname | first }}</p>
         </div>
     </div>
