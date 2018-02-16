@@ -1,0 +1,28 @@
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/navbar.css') }}">
+</head>
+<nav class="navbar fixed">
+    <form class="form-inline">
+        <!-- THRACKER -->
+        <a class="navbar-brand" href="home">Thracker</a>
+        <div class="input-group">
+            <!-- FILTER BUTTON -->
+            <div class="input-group-btn search-panel">
+                <button onclick="toggleFilterMenu()" type="button" class="btn">
+                    <i class="fas fa-sliders-h"></i>
+                </button>
+            </div>
+            <!-- SEARCH BAR INPUT -->
+            <input id="searchBar" class="form-control" type="text" placeholder="Search by name">
+            <!-- MAGNIFYING GLASS ICON BUTTON -->
+            <span class="input-group-btn">
+                <button class="btn" type="button"><i class="fas fa-search"></i></button>
+            </span>
+        </div>
+        <!-- ADD ITEM BUTTON -->
+        <div id="addNavButton" onclick="location.href='addItem'">Add New Item</div>
+        <!-- MENU BUTTON -->
+        <div onclick="toggleAccountMenu()" id="menuNavButton" class="ml-auto"><i class="fas fa-user-circle"></i>
+        </div>
+    </form>
+</nav>
