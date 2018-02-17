@@ -65,14 +65,16 @@
                 </div>
                 <div class="col-md-5">
 
-                <form method=POST action='/editItem/{{itemid}}'>
+                
                     {% if delete|first %}
                         <button class="btn" id="editItemButton" button style="background-color:grey" type="submit" disabled>Edit</button>
                     {% endif %}
                     {% if not delete|first %}
-                        <button class="btn" id="editItemButton" type="submit" value={{itemid}}>Edit</button>
+                        <form method=POST action='/editItem/{{itemid}}'>
+                            <button class="btn" id="editItemButton" type="submit" value={{itemid}}>Edit</button>
+                    
+                        </form>
                     {% endif %}
-                </form>
                     <!-- <button class="btn" id="editItemButton" type="button" onclick="location.href='/editItem'">Edit Item -->
                     <!-- </button> -->
                 </div>
