@@ -68,7 +68,7 @@
                 </div>
                 <div class="col-md-5">
                 {%if delete | first %}
-                    <button class="btn" id="editItemButton" type="submit" disabled value={{itemid}}>Edit</button>
+                    <button class="btn" id="editItemButton" button style="background-color:grey" type="submit" disabled value={{itemid}}>Edit</button>
                 {% endif %}
                 {% if not delete|first %}
                     <form method=POST action='/editItem/{{itemid}}'>
