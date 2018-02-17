@@ -70,16 +70,15 @@
                         
                     
                    
-                      <!--   <form method=POST action='/editItem/{{itemid}}'>
-                            <button class="btn" id="editItemButton" type="submit" value={{itemid}}>Edit</button>
+                    <form method=POST action='/editItem/{{itemid}}'>
+                        <button class="btn" id="editItemButton" type="submit" value={{itemid}}>Edit</button>
                     
-                        </form>
-                        -->
+                    </form>
+                    
                     <!-- <button class="btn" id="editItemButton" type="button" onclick="location.href='/editItem'">Edit Item -->
                     <!-- </button> -->
                 </div>
                     {% if delete|first %}
-                    <button class="btn" id="editItemButton" button style="background-color:grey" type="submit" disabled>Edit</button>
                 <div class="offset-md-2 col-md-5">
                     <button class="btn" id="deleteItemButton" button style="background-color:grey" type="submit" disabled>Delete Item</button>
                 </div>
