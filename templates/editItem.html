@@ -1,87 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>Edit Item - UAH Theatre</title>
-    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
-    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/addStyle.css') }}">
-</head>
-<body>
-
-<!--SEARCH BAR-->
-{% include 'navbar.html' %}
-    
-<div class="container-fluid">
-    <div class="row">
-        <div class="add-container offset-2 col-8 offset-md-4 col-md-4">
+    <head>
+        <title>Edit Item - UAH Theatre</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>   
+        <!-- Tether -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+        <!-- Font Awesome -->
+        <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+        <!-- Our CSS -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/addStyle.css') }}">
+    </head>
+    <body>
+        <!--SEARCH BAR-->
+        {% include 'navbar.html' %}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="add-container offset-2 col-8 offset-md-4 col-md-4">
                     {% if error %}
-                <p class="error" style="color:red;"><strong>*</strong> {{ error }}
-            {% endif %}
-            <form method=POST action='/posteditItem/{{itemid}}'>
-                <!--ITEM NAME INPUT-->
-                <div class="form-group">
-                    <input type="text" name="itemname" class="form-control" id="inputItemName" placeholder="ItemName" value="{{itemname|first}}">
-                </div>
-
-                <!--BARCODE INPUT-->
-                <div class="form-group">
-                    <input type="text" name="barcode" class="form-control" id="inputBarcode" placeholder="Barcode" value="{{itemid}}">
-                </div>
-
-                <!--DESCRIPTION INPUT-->
-                <div class="form-group">
-                    <input type="text" name="description" class="form-control" id="inputDescription" placeholder="Description" value="{{description|first}}">
-                </div>
-
-                <!-- Navigate back to home page/ Trigger the confirmation modal -->
-                <button type="submit" name="cancelButton" class="btn" id="cancelButton" value="Cancel">Cancel</button>
-                <!--ADD ITEM BUTTON-->
-                <button type="submit" name="addItemButton" class="btn offset-md-1" id="addItemButton" value="Save">Save Changes</button>
-
-            </form>
-
-            <!-- Cancel Confirmation Modal -->
-            <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Cancel Confirmation</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                        <p class="error" style="color:red;"><strong>*</strong> {{ error }}
+                    {% endif %}
+                    <form method=POST action='/posteditItem/{{itemid}}'>
+                        <!--ITEM NAME INPUT-->
+                        <div class="form-group">
+                            <input type="text" name="itemname" class="form-control" id="inputItemName" placeholder="ItemName" value="{{itemname|first}}">
                         </div>
-                        <div class="modal-body" style="text-align: left;">
-                            You have unsaved changes on this page. Do you want to leave this page and discard your changes or stay on this page?
+                        <!--BARCODE INPUT-->
+                        <div class="form-group">
+                            <input type="text" name="barcode" class="form-control" id="inputBarcode" placeholder="Barcode" value="{{itemid}}">
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Stay & Continue to edit</button>
-                            <button type="submit" class="btn btn-primary" id="cancelConfirmed">Discard changes</button>
+                        <!--DESCRIPTION INPUT-->
+                        <div class="form-group">
+                            <input type="text" name="description" class="form-control" id="inputDescription" placeholder="Description" value="{{description|first}}">
+                        </div>
+                        <!-- Navigate back to home page/ Trigger the confirmation modal -->
+                        <button type="submit" name="cancelButton" class="btn" id="cancelButton" value="Cancel">Cancel</button>
+                        <!--ADD ITEM BUTTON-->
+                        <button type="submit" name="addItemButton" class="btn offset-md-1" id="addItemButton" value="Save">Save Changes</button>
+                    </form>
+                    <!-- Cancel Confirmation Modal -->
+                    <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Cancel Confirmation</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body" style="text-align: left;">
+                                    You have unsaved changes on this page. Do you want to leave this page and discard your changes or stay on this page?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Stay & Continue to edit</button>
+                                    <button type="submit" class="btn btn-primary" id="cancelConfirmed">Discard changes</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
-    </div>
-</div>
-
-</body>
+    </body>
 </html>
-
 <script>
     $(document).ready(function() {
         $('#cancelConfirmed').click(function() {
             location.href = '/item/{{itemid}}';
         });
-
         $( '#cancelButton' ).click(function() {
             $('#cancelModal').modal('show');
             return false;

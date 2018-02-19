@@ -1,99 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>Register - UAH Theatre</title>
-    <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/welcomeStyle.css') }}">
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-
-</head>
-<body>
-
-<div class="container-fluid">
-    <div class="login-header row">
-        <div class="col-12">
-            <h1>Thracker</h1>
-            <h3>A Digital Theatre Inventory</h3>
+    <head>
+        <title>Register - UAH Theatre</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+        <!-- Tether -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+        <!-- Our CSS -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/welcomeStyle.css') }}">
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="login-header row">
+                <div class="col-12">
+                    <h1>Thracker</h1>
+                    <h3>A Digital Theatre Inventory</h3>
+                </div>
+            </div>
+            <!-- LOGIN FORM ROW -->
+            <div class="row">
+                <div class="login-container offset-2 col-8 offset-md-4 col-md-4">
+                    <h3>Create a New Account</h3>
+                    {% if error %}
+                        <p class="error" style="color:red;"><strong>*</strong> {{ error }}
+                    {% endif %}
+                    <form method=POST action='/postregister'>
+                        <div class="form-group">
+                            <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Email">
+                        </div>
+                        <!--USERNAME INPUT-->
+                        <div class="form-group">
+                            <input type="text" name="username" class="form-control" id="inputUsername" placeholder="Username">
+                        </div>
+                        <!--PASSWORD INPUT-->
+                        <div class="form-group">
+                            <input type="password"  name="password" class="form-control" id="inputPassword" placeholder="Password">
+                        </div>            
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="inputPasswordConfirmed" placeholder="Confirm Password">
+                        </div>
+                        <!--ACCOUNT TYPE-->
+                        <div class="form-group row" id="accountTypeDiv">
+                            <div class="navButton col-6 col-md-6">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="radio" name="accountType" id="gridRadios1" value="studentAccount" checked>
+                                        Student Account
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="navButton col-6 col-md-6">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="radio" name="accountType" id="gridRadios2" value="adminAccount">
+                                        Admin Account
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <button onclick="location.href='home.html'" class="btn" id="registerButton">Register</button> -->
+                        <button type="submit" class="btn" id="registerButton">Register</button>
+                        <div id="navButtonDiv">
+                        <!--Go to Normal login page-->
+                            <a href="/" style="float:left;">Returning User?</a>
+                        <!--Use app as Guest-->
+                            <a href="home" style="float:right;">Use as Guest</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        
-    </div>
-
-    <!-- LOGIN FORM ROW -->
-    <div class="row">
-        <div class="login-container offset-2 col-8 offset-md-4 col-md-4">
-            <h3>Create a New Account</h3>
-            {% if error %}
-                <p class="error" style="color:red;"><strong>*</strong> {{ error }}
-            {% endif %}
-            <form method=POST action='/postregister'>
-                <div class="form-group">
-                    <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Email">
-                </div>
-                
-                <!--USERNAME INPUT-->
-                <div class="form-group">
-                    <input type="text" name="username" class="form-control" id="inputUsername" placeholder="Username">
-                </div>
-
-                <!--PASSWORD INPUT-->
-                <div class="form-group">
-                    <input type="password"  name="password" class="form-control" id="inputPassword" placeholder="Password">
-                </div>            
-
-                <div class="form-group">
-                    <input type="password" class="form-control" id="inputPasswordConfirmed" placeholder="Confirm Password">
-                </div>
-                
-                
-                <!--ACCOUNT TYPE-->
-                <div class="form-group row" id="accountTypeDiv">
-                    <div class="navButton col-6 col-md-6">
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="radio" name="accountType" id="gridRadios1" value="studentAccount" checked>
-                                Student Account
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <div class="navButton col-6 col-md-6">
-                        <div class="form-check">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="radio" name="accountType" id="gridRadios2" value="adminAccount">
-                                Admin Account
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- <button onclick="location.href='home.html'" class="btn" id="registerButton">Register</button> -->
-                <button type="submit" class="btn" id="registerButton">Register</button>
-                
-                <div id="navButtonDiv">
-                <!--Go to Normal login page-->
-                    <a href="/" style="float:left;">Returning User?</a>
-                
-                <!--Use app as Guest-->
-                    <a href="home" style="float:right;">Use as Guest</a>
-                </div>
-        </form>
-    </div>
-
-<!--Fake SIGN UP BUTTON-->
-<!-- <div class="row" id="goButtonDiv">
-    <div class="offset-2 col-8 offset-md-3 col-md-6">
-        <button onclick="location.href='home.html'" class="btn">Register</button>
-    </div>
-</div> -->
-</div>
-
-</body>
+    </body>
 </html>
 
