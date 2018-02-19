@@ -1,6 +1,8 @@
 .navbar {
     background: #7fc1ef;
 }
+
+/* "Thracker" */
 .navbar-brand {
     font-weight: 500;
     color: white;
@@ -53,7 +55,7 @@
     background-color: #FDDA24;
 }
 /* User menu button*/
-#menuNavButton {
+#menu-nav-button {
     border-radius: 25%;
     padding: 4px 10px;
     color: #0077C8;
@@ -61,14 +63,14 @@
     cursor: pointer;
     transition: 0.3s;
 }
-#menuNavButton:hover {
+#menu-nav-button:hover {
     background-color: #FDDA24;
     color: white;
     border-color: #FDDA24;
     border-radius: 10%;
 }
 /*Add item button*/
-#addNavButton {
+#add-item-button {
     background-color: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(0, 0, 0, 0.2);
     padding: 4px 10px;
@@ -77,28 +79,28 @@
     cursor: pointer;
     transition: 0.3s;
 }
-#addNavButton:hover {
+#add-item-button:hover {
     border-color: rgba(0, 0, 0, 0);
     border-radius: 5px;
     background-color: #FDDA24;
 }
 /*How the add item and user menu button look on small screen*/
 @media screen and (max-width: 575px) {
-    #menuNavButton, #addNavButton {
+    #menu-nav-button, #add-item-button {
         margin-top: 20px;
         margin-bottom: 10px;
     }
 }
 /* Gap before add item button on larger screens */
 @media screen and (min-width: 576px) {
-    #addNavButton {
+    #add-item-button {
         margin-left: 20px;
     }
 }
 
 
 /*-------------------SIDE MENUS-------------------*/
-.rightSideNav, .leftSideNav {
+.right-side-menu, .left-side-menu {
     height: 100%;
     width: 0;
     position: fixed;
@@ -109,13 +111,13 @@
     transition: 0.3s;
     padding-top: 60px;
 }
-.rightSideNav {
+.right-side-menu {
     right: 0;
 }
-.leftSideNav {
+.left-side-menu {
     left: 0;
 }
-.rightSideNav a, .leftSideNav a {
+.right-side-menu a, .left-side-menu a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 18px;
@@ -123,25 +125,25 @@
     display: block;
     transition: 0.2s;
 }
-.rightSideNav .closebtn {
+.right-side-menu .closebtn {
     position: absolute;
     top: 0;
     right: 25px;
     font-size: 36px;
     margin-left: 50px;
 }
-.leftSideNav .closebtn {
+.left-side-menu .closebtn {
     position: absolute;
     top: 0;
     right: 25px;
     font-size: 36px;
     margin-left: 50px;
 }
-.rightSideNav a:hover, .leftSideNav a:hover, .offcanvas a:focus{
+.right-side-menu a:hover, .left-side-menu a:hover, .offcanvas a:focus{
     text-decoration: none;
     color: #f1f1f1;
 }
 @media screen and (max-height: 450px) {
-  .rightSideNav, .leftSideNav {padding-top: 15px;}
-  .rightSideNav a, .leftSideNav a {font-size: 18px;}
+  .right-side-menu, .left-side-menu {padding-top: 15px;}
+  .right-side-menu a, .left-side-menu a {font-size: 18px;}
 }

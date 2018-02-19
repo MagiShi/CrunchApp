@@ -174,7 +174,7 @@ def add():
 
 @app.route('/postaddItem', methods=['POST'])
 def addItem():
-    if request.form.get("addItemButton"):
+    if request.form.get("add-item-button"):
         item_id = request.form['barcode']
         # print ("here")
         item_name = request.form['itemname']

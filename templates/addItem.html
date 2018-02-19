@@ -31,15 +31,15 @@
                     <form method=POST action='/postaddItem' enctype=multipart/form-data>
                         <!--ITEM NAME INPUT-->
                         <div class="form-group">
-                            <input type="text" name="itemname" class="form-control" id="inputItemName" placeholder="Item Name">
+                            <input type="text" name="itemname" class="form-control" id="input-item-name" placeholder="Item Name">
                         </div>
                         <!--BARCODE INPUT-->
                         <div class="form-group">
-                            <input type="text" name="barcode" class="form-control" id="inputBarcode" placeholder="Barcode">
+                            <input type="text" name="barcode" class="form-control" id="input-barcode" placeholder="Barcode">
                         </div>
                         <!--PHOTO UPLOAD-->
                         <div class="form-group">
-                            <input type="file" name="photo1" accept="image/*" class="form-control" id="inputPhoto" placeholder="Photo">
+                            <input type="file" name="photo1" accept="image/*" class="form-control" id="input-photo" placeholder="Photo">
                         </div>
         <!--            Condition Input
                         <div class="radio">
@@ -77,15 +77,15 @@
                         </div> -->
                         <!--DESCRIPTION INPUT-->
                         <div class="form-group">
-                            <input type="text" name="description" class="form-control" id="inputDescription" placeholder="Description">
+                            <input type="text" name="description" class="form-control" id="input-description" placeholder="Description">
                         </div>
                         <!-- Navigate back to home page/ Trigger the confirmation modal -->
-                        <button type="submit" name="cancelButton" class="btn" id="cancelButton" value="Cancel">Cancel</button>
+                        <button type="submit" name="cancel-button" class="btn" id="cancel-button" value="Cancel">Cancel</button>
                         <!--ADD ITEM BUTTON-->
-                        <button type="submit" name="addItemButton" class="btn offset-md-1" id="addItemButton" value="Add">Add Item</button>
+                        <button type="submit" name="add-item-button" class="btn offset-md-1" id="add-item-button" value="Add">Add Item</button>
                     </form>
                     <!-- Cancel Confirmation Modal -->
-                    <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal fade" id="cancel-modal" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -99,7 +99,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Keep the form</button>
-                                    <button type="submit" class="btn btn-primary" id="cancelConfirmed">Discard the form</button>
+                                    <button type="submit" class="btn btn-primary" id="cancel-confirmed">Discard the form</button>
                                 </div>
                             </div>
                         </div>
@@ -112,11 +112,11 @@
 
 <script>
     $(document).ready(function() {
-        $('#cancelConfirmed').click(function() {
+        $('#cancel-confirmed').click(function() {
             location.href = 'home';
         });
-        $( '#cancelButton' ).click(function() {
-            $('#cancelModal').modal('show');
+        $( '#cancel-button' ).click(function() {
+            $('#cancel-modal').modal('show');
             return false;
         });
     });

@@ -1,28 +1,28 @@
-#addItemButton {
+#add-item-button {
     font-size: 16px;
     background-color: #0275d8;
     margin-top: 3vh;
     margin-bottom: 4vh;
     color: white;
 }
-#addItemButton:hover {
+#add-item-button:hover {
     background-color: #025aa5;
     cursor: pointer;
 }
 
-#cancelButton {
+#cancel-button {
     font-size: 16px;
     background-color: white;
     border: 1px solid #adadad;
     margin-top: 3vh;
     margin-bottom: 4vh;
 }
-#cancelButton:hover {
+#cancel-button:hover {
     background-color: #e6e6e6;
     cursor: pointer;
 }
 
-
+/* The main inputs box */
 .add-container {
     margin-top: 15vh;
     padding: 3vh;
@@ -43,9 +43,10 @@
     width:100%;
 }
 
-#inputBarcode,
-#inputItemName,
-#inputDescription {
+/* Textbox inputs */
+#input-barcode,
+#input-item-name,
+#input-description {
     width: 100%;
 }
 

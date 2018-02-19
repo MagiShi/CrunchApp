@@ -1,6 +1,6 @@
 <head>
     <!-- Our CSS -->
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/navbar.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/navbarStyle.css') }}">
     <script src="{{ url_for('static',filename='navbar.js') }}"></script>
 </head>
 <nav class="navbar fixed-top">
@@ -22,14 +22,14 @@
             </span>
         </div>
         <!-- ADD ITEM BUTTON -->
-        <div id="addNavButton" onclick="location.href='addItem'">Add New Item</div>
+        <div id="add-item-button" onclick="location.href='addItem'">Add New Item</div>
         <!-- MENU BUTTON -->
-        <div onclick="toggleAccountMenu()" id="menuNavButton" class="ml-auto"><i class="fas fa-user-circle"></i>
+        <div onclick="toggleAccountMenu()" id="menu-nav-button" class="ml-auto"><i class="fas fa-user-circle"></i>
         </div>
     </form>
 </nav>
 <!-- FILTER MENU -->
-<div id="filterMenu" class="leftSideNav">
+<div id="filter-menu" class="left-side-menu">
     <a href="javascript:void(0)" class="closebtn" onclick="toggleFilterMenu()">&times;</a>
     <a href="#">Characteristic 1</a>
     <a href="#">Characteristic 2</a>
@@ -40,7 +40,7 @@
     <a href="#">Characteristic 7</a>
 </div>
 <!-- ACCOUNT MENU -->
-<div id="accountMenu" class="rightSideNav">
+<div id="account-menu" class="right-side-menu">
     <a href="javascript:void(0)" class="closebtn" onclick="toggleAccountMenu()">&times;</a>
     <a href="#">Reservations</a>
     <a href="#">My Account</a>

@@ -1,19 +1,21 @@
-/*-------------------ITEM LIST-------------------*/  
-.allItems {
+/* Item list */  
+.all-items {
     padding-top: 5vh;
     margin-top: 30px;
 }
 @media screen and (min-width: 576px) { 
-    .allItems {
+    .all-items {
         padding: 5vh 15vw !important;
     }
 }
 @media screen and (max-width: 575px) {
-    .allItems {
+    .all-items {
         margin-top: 120px;
     }
 }
-.itemSummary {
+
+/* Individual item box */
+.item-summary {
     padding: 20px 40px;
 }
 
@@ -44,11 +46,11 @@
 }
 
 @media screen and (min-width: 48px) {
-    .itemSummary img {
+    .item-summary img {
         max-height: 50vh;
     }
 }
-.itemDetailButton {
+.item-detail-button {
     cursor: pointer;
     margin-left: 15px;
     margin-bottom: 15px;
@@ -58,7 +60,7 @@
     padding: 6px 12px;
     transition: 0.2s;
 }
-.itemDetailButton:hover {
+.item-detail-button:hover {
     border-color: #0077C8;
     color: #0077C8
 }
