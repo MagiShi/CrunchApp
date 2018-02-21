@@ -1,28 +1,28 @@
-.itemDetailContainer {
+.item-detail-container {
     padding: 5vw 20vw !important;
 }
 @media screen and (max-width: 640px) {
-    .itemDetailContainer {
+    .item-detail-container {
         padding: 5vh 15vw !important;
     }
 }
 
 @media screen and (max-width: 450px) {
-    .itemDetailContainer {
+    .item-detail-container {
         padding: 5vh 10vw !important;
     }
 }
 
-.itemName {
+.item-name {
     font-weight: 600;
     font-size: 2rem;
 }
 
-.itemImage {
+.item-image {
     text-align: center;
 }
 
-.itemImage img {
+.item-image img {
     width: 100%;
 }
 
@@ -32,33 +32,45 @@
     font-style: italic;
     color: #8b8b8b;
 }
+.reservation .btn {
+    background-color: white;
+    border: 1px solid grey;
+}
+.reservation .btn:hover {
+    background-color: #FDDA24;
+    border-color: #FDDA24;
+}
 
-.itemAction {
+.item-action {
     text-align: center;
     margin-top: 40px;
 }
 
-.itemAction button {
+.item-action button {
     width: 80%;
     color: white;
 }
-#editItemButton {
-    background-color: #b0d8a6;
+#edit-item-button {
+    background-color: #0077C8;
 }
-#deleteItemButton {
-    background-color: #e89797;
+#delete-item-button {
+    background-color: #f55f5f;
 }
-.itemAction p {
+#edit-item-button:hover,
+#delete-item-button:hover {
+    background-color: #FDDA24;
+}
+.item-action p {
     color: #e89797;
     font-style: italic;
 }
 
-#deleteConfirmed {
+#delete-confirmed {
     background-color: #ff4646;
     border: none;
 }
 
-#deleteConfirmed:hover {
+#delete-confirmed:hover {
     background-color: #cc2828;
     border: none;
 }

@@ -22,21 +22,21 @@
     <body>
         <!--SEARCH BAR-->
         {% include 'navbar.html' %}
-        <div class="itemDetailContainer container-fluid">
+        <div class="item-detail-container container-fluid">
             <div class="row">
                 <div class="col-12">
                     {% if error %}
                         <p class="error" style="color:red;"><strong>*</strong> {{ error }}
                     {% endif %}
-                    <p class="itemName">{{ itemname | first }}</p>
+                    <p class="item-name">{{ itemname | first }}</p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <div class="itemImage row">
+                    <div class="item-image row">
                     {% for i in image %}
                         <div class="col-12">
-                            <img id="ItemPreview" src="data:image/jpeg;base64, {{i}}" />
+                            <img id="item-preview" src="data:image/jpeg;base64, {{i}}" />
                         </div>
                     {% endfor %}
                     </div>
@@ -48,7 +48,7 @@
                             <button class="btn" type="button">Reserve Item</button>
                         </div>
                     </div>
-                    <div class="itemText row">
+                    <div class="item-text row">
                         <div class="col-12">
                             <p>Barcode: {{itemid}}</p>
                             <p>Color: x, y, z</p>
@@ -57,7 +57,7 @@
                             <p>Etc: etc</p>
                         </div>
                     </div>
-                    <div class="itemAction row">
+                    <div class="item-action row">
                         <div class="col-12">
                             {%if delete | first %}
                             <p>Deletion Pending</p>
@@ -65,24 +65,22 @@
                         </div>
                         <div class="col-md-5">
                         {%if delete | first %}
-                            <button class="btn" id="editItemButton" button style="background-color:grey" type="submit" disabled value={{itemid}}>Edit</button>
+                            <button class="btn" id="edit-item-button" button style="background-color:grey" type="submit" disabled value={{itemid}}>Edit</button>
                         {% endif %}
                         {% if not delete|first %}
                             <form method=POST action='/editItem/{{itemid}}'>
-                                <button class="btn" id="editItemButton" type="submit" value={{itemid}}>Edit</button>
+                                <button class="btn" id="edit-item-button" type="submit" value={{itemid}}>Edit</button>
                             </form>
                         {% endif %}
-                            <!-- <button class="btn" id="editItemButton" type="button" onclick="location.href='/editItem'">Edit Item -->
-                            <!-- </button> -->
                         </div>
                             {% if delete|first %}
                         <div class="offset-md-2 col-md-5">
-                            <button class="btn" id="deleteItemButton" button style="background-color:grey" type="submit" disabled>Delete Item</button>
+                            <button class="btn" id="delete-item-button" button style="background-color:grey" type="submit" disabled>Delete Item</button>
                         </div>
                             {% endif %}
                             {% if not delete|first %}
                         <div class="offset-md-2 col-md-5">
-                            <button class="btn" id="deleteItemButton" type="submit">Delete Item</button>
+                            <button class="btn" id="delete-item-button" type="submit">Delete Item</button>
                         </div>
                             {% endif %}
                     </div>
@@ -103,7 +101,7 @@
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                 </div>
                                 <form method=POST action='/deleteItem/{{itemid}}'>
-                                        <button class="btn btn-primary" id="deleteConfirmed" type="submit" value={{itemid}}>Delete</button>
+                                        <button class="btn btn-primary" id="delete-confirmed" type="submit" value={{itemid}}>Delete</button>
                                 </form>
                             </div>
                         </div>
@@ -115,7 +113,7 @@
 </html>
 <script>
     $(document).ready(function() {
-        $( '#deleteItemButton' ).click(function() {
+        $( '#delete-item-button' ).click(function() {
             $('#deleteModal').modal('show');
         });
     });
