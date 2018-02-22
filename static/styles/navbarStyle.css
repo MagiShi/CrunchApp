@@ -70,7 +70,7 @@
     border-radius: 10%;
 }
 /*Add item button*/
-#add-item-button {
+#add-item-page-button {
     background-color: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(0, 0, 0, 0.2);
     padding: 4px 10px;
@@ -79,21 +79,21 @@
     cursor: pointer;
     transition: 0.3s;
 }
-#add-item-button:hover {
+#add-item-page-button:hover {
     border-color: rgba(0, 0, 0, 0);
     border-radius: 5px;
     background-color: #FDDA24;
 }
 /*How the add item and user menu button look on small screen*/
 @media screen and (max-width: 575px) {
-    #menu-nav-button, #add-item-button {
+    #menu-nav-button, #add-item-page-button {
         margin-top: 20px;
         margin-bottom: 10px;
     }
 }
 /* Gap before add item button on larger screens */
 @media screen and (min-width: 576px) {
-    #add-item-button {
+    #add-item-page-button {
         margin-left: 20px;
     }
 }
