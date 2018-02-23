@@ -63,3 +63,11 @@
 .radio {
     text-align: left;
 }
+
+.input-title {
+    text-align: left;
+}
+
+.input-subtitle {
+    font-size: small;
+}

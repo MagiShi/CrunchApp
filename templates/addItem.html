@@ -29,30 +29,74 @@
                         <p class="error" style="color:red;"><strong>*</strong> {{ error }}
                     {% endif %}
                     <form method=POST action='/postaddItem' enctype=multipart/form-data>
+
                         <!--ITEM NAME INPUT-->
                         <div class="form-group">
                             <input type="text" name="itemname" class="form-control" id="input-item-name" placeholder="Item Name">
                         </div>
+
                         <!--BARCODE INPUT-->
                         <div class="form-group">
                             <input type="text" name="barcode" class="form-control" id="input-barcode" placeholder="Barcode">
                         </div>
+
                         <!--PHOTO UPLOAD-->
                         <div class="form-group">
-                            <input type="file" name="photo1" accept="image/*" class="form-control" id="input-photo" placeholder="Photo">
+                        <div class="input-title">
+                            <h6>Photo Upload
+                            <div class="input-subtitle">
+                                Upload up to 3 photos.
+                            </div></h6>
                         </div>
-        <!--            Condition Input
-                        <div class="radio">
-                        <h4>Condition<br></h4>
-                            <input type="radio" name="condition" value="like_new"> Like New<br>
-                            <input type="radio" name="condition" value="very_good"> Very Good<br>
-                            <input type="radio" name="condition" value="good"> Good<br>
-                            <input type="radio" name="condition" value="fair"> Fair<br>
-                            <input type="radio" name="condition" value="poor"> Poor<br>
+                            <input type="file" name="photo1" accept="image/*" class="form-control" id="input-photo-1" placeholder="Photo">
+                        </div>
+                        <div class="form-group">
+                            <input type="file" name="photo2" accept="image/*" class="form-control" id="input-photo-2" placeholder="Photo">
+                        </div>
+                        <div class="form-group">
+                            <input type="file" name="photo3" accept="image/*" class="form-control" id="input-photo-3" placeholder="Photo">
                         </div>
 
-                        Color input
-                        <div class="radio">
+                        <!-- CONDITION INPUT -->
+                        <div class="form-group">
+                            <div class="input-title">
+                            <h6>Condition</h6>
+                            </div>
+                            <div class="form-control">
+                                <div class="radio">
+                                    <input type="radio" name="condition" value="like_new"> Like New<br>
+                                    <input type="radio" name="condition" value="very_good"> Very Good<br>
+                                    <input type="radio" name="condition" value="good"> Good<br>
+                                    <input type="radio" name="condition" value="fair"> Fair<br>
+                                    <input type="radio" name="condition" value="poor"> Poor<br>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- COLOR INPUT -->
+                        <div class="form-group">
+                            <div class="input-title">
+                            <h6>Color</h6>
+                            </div>
+                            <div class="form-control">
+                                <div class="radio">
+                                    <input type="checkbox" name="colorSelect" value="red"> Red<br>
+                                    <input type="checkbox" name="colorSelect" value="orange"> Orange<br>
+                                    <input type="checkbox" name="colorSelect" value="yellow"> Yellow<br>
+                                    <input type="checkbox" name="colorSelect" value="green"> Green<br>
+                                    <input type="checkbox" name="colorSelect" value="blue"> Blue<br>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+                        <!-- Color input -->
+<!--                         <div class="radio">
                         <h4><br>Color<br></h4>
                             <input type="checkbox" id="colorSelectRed" name="red" value="red">
                             <label for="colorSelectRed">Red</label><br>
@@ -75,9 +119,10 @@
                             <input type="checkbox" id="colorSelectBrown" name="brown" value="brown">
                             <label for="colorSelectBrown">Brown</label><br>
                         </div> -->
+
                         <!--DESCRIPTION INPUT-->
-                        <div class="form-group">
-                            <input type="text" name="description" class="form-control" id="input-description" placeholder="Description">
+                        <div class="form-group">                   
+                            <textarea name="description" class="form-control" id="input-description" placeholder="Description"></textarea>
                         </div>
                         <!-- Navigate back to home page/ Trigger the confirmation modal -->
                         <button type="submit" name="cancel-button" class="btn" id="cancel-button" value="Cancel">Cancel</button>
