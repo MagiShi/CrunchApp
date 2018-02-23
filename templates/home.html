@@ -25,100 +25,21 @@
         <div class="all-items container-fluid">
             <!-- ITEM LIST -->
             <div class="row">
-                <div class="col-md-6 col-lg-3 item-summary">
-                    <div class="item">
-                        {% for item in itemname %}
-
-                            <img id="item-preview" src="data:image/jpeg;base64, {{image[loop.index0]}}" />
-                            <p>{{item[0]}}
-                                {{image[loop.index0]}}
-                            </p>
+                
+                {% for item in itemname %}
+                    <div class="col-md-6 col-lg-3 item-summary">
+                        <div class="item">
+                        <!--<img id="item-preview" src="data:image/jpeg;base64, {{image[loop.index0]}}" />-->
+                        <!-- for img preview need to add in app.py a similar thing to imageData in item detail, however workign with a 2d array instead of 1d -->
+                            <img src="http://lorempixel.com/480/640/food">
+                            <p>{{item[0]}}</p>
                             <button class="btn item-detail-button" onclick="location.href='item/{{itemid[loop.index0][0]}}'">Details</button>
-                        {% endfor %}
+            
                         <!--<button class="btn item-detail-button" onclick="location.href='/item/{{itemid}}'">Details</button>-->
+                        </div>
                     </div>
-                </div>
-                <!--<div class="col-md-6 col-lg-3 item-summary">
-                    <div class="item">
-                        <img src="http://lorempixel.com/480/640/food">
-                        <p>Item Name</p>
-                        <button class="btn item-detail-button" onclick="location.href='itemDetail'">Details</button>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3 item-summary">
-                    <div class="item">
-                        <img src="http://lorempixel.com/480/640/food">
-                        <p>Item Name</p>
-                        <button class="btn item-detail-button" onclick="location.href='itemDetail'">Details</button>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3 item-summary">
-                    <div class="item">
-                        <img src="http://lorempixel.com/480/640/food">
-                        <p>Item Name</p>
-                        <button class="btn item-detail-button" onclick="location.href='itemDetail'">Details</button>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 col-lg-3 item-summary">
-                    <div class="item">
-                        <img src="http://lorempixel.com/480/640/food">
-                        <p>Item Name</p>
-                        <button class="btn item-detail-button" onclick="location.href='itemDetail'">Details</button>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3 item-summary">
-                    <div class="item">
-                        <img src="http://lorempixel.com/480/640/food">
-                        <p>Item Name</p>
-                        <button class="btn item-detail-button" onclick="location.href='itemDetail'">Details</button>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3 item-summary">
-                    <div class="item">
-                        <img src="http://lorempixel.com/480/640/food">
-                        <p>Item Name</p>
-                        <button class="btn item-detail-button" onclick="location.href='itemDetail'">Details</button>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3 item-summary">
-                    <div class="item">
-                        <img src="http://lorempixel.com/480/640/food">
-                        <p>Item Name</p>
-                        <button class="btn item-detail-button" onclick="location.href='itemDetail'">Details</button>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 col-lg-3 item-summary">
-                    <div class="item">
-                        <img src="http://lorempixel.com/480/640/food">
-                        <p>Item Name</p>
-                        <button class="btn item-detail-button" onclick="location.href='itemDetail'">Details</button>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3 item-summary">
-                    <div class="item">
-                        <img src="http://lorempixel.com/480/640/food">
-                        <p>Item Name</p>
-                        <button class="btn item-detail-button" onclick="location.href='itemDetail'">Details</button>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3 item-summary">
-                    <div class="item">
-                        <img src="http://lorempixel.com/480/640/food">
-                        <p>Item Name</p>
-                        <button class="btn item-detail-button" onclick="location.href='itemDetail'">Details</button>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3 item-summary">
-                    <div class="item">
-                        <img src="http://lorempixel.com/480/640/food">
-                        <p>Item Name</p>
-                        <button class="btn item-detail-button" onclick="location.href='itemDetail'">Details</button>
-                    </div>
-                </div>
+                {% endfor %}
+                
             </div>
         </div>
     </body>
