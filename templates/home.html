@@ -27,13 +27,16 @@
             <div class="row">
                 <div class="col-md-6 col-lg-3 item-summary">
                     <div class="item">
-                        <img src="http://lorempixel.com/480/640/food">
-                        <p>Item Name</p>
-                        <button class="btn item-detail-button" onclick="location.href='itemDetail'">Details</button>
+                        {% for item in itemid %}
+
+                            <img src="http://lorempixel.com/480/640/food">
+                            <p>{{itemid}}</p>
+                            <button class="btn item-detail-button" onclick="location.href='itemDetail'">Details</button>
+                        {% endfor %}
                         <!--<button class="btn item-detail-button" onclick="location.href='/item/{{itemid}}'">Details</button>-->
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-3 item-summary">
+                <!--<div class="col-md-6 col-lg-3 item-summary">
                     <div class="item">
                         <img src="http://lorempixel.com/480/640/food">
                         <p>Item Name</p>
