@@ -27,10 +27,10 @@
             <div class="row">
                 <div class="col-md-6 col-lg-3 item-summary">
                     <div class="item">
-                        {% for item in itemid %}
+                        {% for item in itemname %}
 
                             <img src="http://lorempixel.com/480/640/food">
-                            <p>{{itemid}}</p>
+                            <p>{{item}}</p>
                             <button class="btn item-detail-button" onclick="location.href='itemDetail'">Details</button>
                         {% endfor %}
                         <!--<button class="btn item-detail-button" onclick="location.href='/item/{{itemid}}'">Details</button>-->
