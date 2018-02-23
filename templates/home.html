@@ -29,7 +29,7 @@
                     <div class="item">
                         {% for item in itemname %}
 
-                            <img src="http://lorempixel.com/480/640/food">
+                            <img id="item-preview" src="data:image/jpeg;base64, {{image[loop.index0]}}" >
                             <p>{{item[0]}}</p>
                             <button class="btn item-detail-button" onclick="location.href='item/{{itemid[loop.index0][0]}}'">Details</button>
                         {% endfor %}
