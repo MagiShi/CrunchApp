@@ -79,7 +79,20 @@ def login():
 
 @app.route('/home')
 def loggedin():
-    return render_template('home.html')
+    itemname = None
+    image = None
+    itemid = None
+    itemidQuery = "SELECT itemid FROM item;"
+    itemNameQuery = "SELECT itemname FROM item;"
+    imageQuery = "SELECT image FROM item;"
+    cursor.execute(itemidQuery)
+    itemid = cursor.fetchall()
+    cursor.execute(itemNameQuery)
+    itemname = cursor.fetchall()
+    cursor.execute(imageQuery)
+    image = cursor.fetchall()
+
+    return render_template('home.html', itemid=itemid, itemname=itemname, image=image)
 def guest():
     # should look different than a registered user (not able to add, delete, etc)
     return render_template('home.html')
