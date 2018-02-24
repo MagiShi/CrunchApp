@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Production Folders - UAH Theatre</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+        <!-- Tether -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+        <!-- Font Awesome -->
+        <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+        <meta charset="utf-8">
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+        <!-- Our CSS -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/folderStyle.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/addStyle.css') }}">
+
+    </head>
+    <body>
+        <!--SEARCH BAR-->
+        {% include 'navbar.html' %}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="add-container offset-2 col-8 offset-md-4 col-md-4">
+                    {% if error %}
+                        <p class="error" style="color:red;"><strong>*</strong> {{ error }}
+                    {% endif %}
+                    <form method=POST action='/postaddItem' enctype=multipart/form-data>
+                        <!-- TO DO: ROUTING -->
+
+                        <div class="form-group">
+                            <div class="input-title">
+                                <h6>Select a Production Folder</h6>
+                            </div>
+                            <div class="list-group">
+                                <div class="btn-gtoup" data-toggle="buttons">
+                                    <label class="btn list-group-item list-group-item-action">
+                                        <input type="radio" name="options" id="option1" autocomplete="off"> Folder 1
+                                    </label>
+                                    <label class="btn list-group-item list-group-item-action">
+                                        <input type="radio" name="options" id="option2" autocomplete="off"> Folder 2
+                                    </label>
+                                    <label class="btn list-group-item list-group-item-action">
+                                        <input type="radio" name="options" id="option3" autocomplete="off"> Folder 3
+                                    </label>
+                                    <label class="btn list-group-item list-group-item-action">
+                                        <input type="radio" name="options" id="option1" autocomplete="off"> Folder 4
+                                    </label>
+                                    <label class="btn list-group-item list-group-item-action">
+                                        <input type="radio" name="options" id="option1" autocomplete="off"> Folder 5
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--VIEW CONTENTS BUTTON-->
+                        <button type="submit" name="view-contents-button" class="btn" id="view-contents-button" value="View">View Contents</button>
+                        <!--DELETE FOLDER BUTTON-->
+                        <!-- Trigger the confirmation modal -->
+                        <button type="submit" name="delete-button" class="btn offset-md-1" id="delete-button" value="Delete">Delete Folder</button>
+
+                        <!-- CREATE NEW FOLDER BUTTON -->
+                        <button type="submit" name="create-folder-button" class="btn" id="create-folder-button" value="Create">Create New Folder</button>
+                    </form>
+
+
+                    <!-- TO DO: FOLDER DELETION -->
+                    <!-- Deletion Confirmation Modal -->
+                    <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Deletion Confirmation</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body" style="text-align: left;">
+                                    Are you sure you want to delete this folder?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    <form method=POST action='/deleteFolder/{{folderid}}'>
+<!--                                             <button class="btn btn-primary" id="delete-confirmed" type="submit" value={{folderid}}>Delete</button>
+ -->                                 
+                                        <button class="btn btn-primary" id="delete-confirmed" type="submit">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
+<script>
+    $(document).ready(function() {
+        $('#delete-confirmed').click(function() {
+            location.href = 'folders';
+        });
+        $( '#delete-button' ).click(function() {
+            $('#delete-modal').modal('show');
+            return false;
+        });
+    });
+</script>

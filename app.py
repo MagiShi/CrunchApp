@@ -15,14 +15,15 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
 app.config['UPLOAD_FOLDER'] = "/tmp/"
+
 app.config.update(
     # DEBUG=True,
     #EMAIL SETTINGS
     MAIL_SERVER='smtp.gmail.com',
     MAIL_PORT=465,
     MAIL_USE_SSL=True,
-    MAIL_USERNAME = 'crunch.thracker@gmail.com',
     MAIL_PASSWORD = os.environ['epassword']
+    MAIL_PASSWORD = 'thracker'
     )
 mail = Mail(app)
 
@@ -272,6 +273,10 @@ def addItem():
 def logout():
     session.pop('user', None)
     return redirect('/')
+
+@app.route('/folders')
+def prodFolders():
+    return render_template('prodFolders.html')
 
 @app.route('/deleteItem/<item_id>', methods=['POST'])
 def deleteItemFlag(item_id):
