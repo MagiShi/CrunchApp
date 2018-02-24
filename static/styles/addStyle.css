@@ -37,6 +37,12 @@
     }
 }
 
+.add-container h3 {
+    color: #6a6a6a;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
 .add-container form {
     display:inline-block; 
     text-align:center; 
