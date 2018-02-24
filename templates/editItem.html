@@ -28,18 +28,162 @@
                         <p class="error" style="color:red;"><strong>*</strong> {{ error }}
                     {% endif %}
                     <form method=POST action='/posteditItem/{{itemid}}'>
+
                         <!--ITEM NAME INPUT-->
                         <div class="form-group">
+                            <div class="input-title">
+                            <h6>Item Name</h6>
+                            </div>
                             <input type="text" name="itemname" class="form-control" id="input-item-name" placeholder="Item Name" value="{{itemname|first}}">
                         </div>
+
                         <!--BARCODE INPUT-->
                         <div class="form-group">
+                            <div class="input-title">
+                            <h6>Barcode</h6>
+                            </div>
                             <input type="text" name="barcode" class="form-control" id="input-barcode" placeholder="Barcode" value="{{itemid}}">
                         </div>
+
+                        <!--PHOTO UPLOAD-->
+                        <div class="form-group">
+                        <div class="input-title">
+                            <h6>Photo Upload
+                            <div class="input-subtitle">
+                                Upload up to 3 photos.
+                            </div></h6>
+                        </div>
+                            <input type="file" name="photo1" accept="image/*" class="form-control" id="input-photo-1" placeholder="Photo">
+                        </div>
+                        <div class="form-group">
+                            <input type="file" name="photo2" accept="image/*" class="form-control" id="input-photo-2" placeholder="Photo">
+                        </div>
+                        <div class="form-group">
+                            <input type="file" name="photo3" accept="image/*" class="form-control" id="input-photo-3" placeholder="Photo">
+                        </div>
+
+                        <!-- CONDITION INPUT -->
+                        <div class="form-group">
+                            <div class="input-title">
+                            <h6>Condition</h6>
+                            </div>
+                            <div class="form-control">
+                                <div class="radio">
+                                    <input type="radio" name="condition" value="like_new"> Like New<br>
+                                    <input type="radio" name="condition" value="very_good"> Very Good<br>
+                                    <input type="radio" name="condition" value="good"> Good<br>
+                                    <input type="radio" name="condition" value="fair"> Fair<br>
+                                    <input type="radio" name="condition" value="poor"> Poor<br>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- COLOR INPUT -->
+                        <div class="form-group">
+                            <div class="input-title">
+                            <h6>Color</h6>
+                            </div>
+                            <div class="form-control">
+                                <div class="radio">
+                                    <input type="checkbox" name="colorSelect" value="red"> Red<br>
+                                    <input type="checkbox" name="colorSelect" value="orange"> Orange<br>
+                                    <input type="checkbox" name="colorSelect" value="yellow"> Yellow<br>
+                                    <input type="checkbox" name="colorSelect" value="green"> Green<br>
+                                    <input type="checkbox" name="colorSelect" value="blue"> Blue<br>
+                                    <input type="checkbox" name="colorSelect" value="purple"> Purple<br>
+                                    <input type="checkbox" name="colorSelect" value="white"> White<br>
+                                    <input type="checkbox" name="colorSelect" value="black"> Black<br>
+                                    <input type="checkbox" name="colorSelect" value="brown"> Brown<br>
+                                    <input type="checkbox" name="colorSelect" value="gray"> Gray<br>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SIZE INPUT -->
+                        <div class="form-group">
+                            <div class="input-title">
+                            <h6>Size</h6>
+                            </div>
+                            <div class="form-control">
+                                <div class="radio">
+                                    <input type="radio" name="sizeSelect" value="xxs"> &ltXS<br>
+                                    <input type="radio" name="sizeSelect" value="xs"> XS<br>
+                                    <input type="radio" name="sizeSelect" value="s"> S<br>
+                                    <input type="radio" name="sizeSelect" value="m"> M<br>
+                                    <input type="radio" name="sizeSelect" value="l"> L<br>
+                                    <input type="radio" name="sizeSelect" value="xl"> XL<br>
+                                    <input type="radio" name="sizeSelect" value="xxl"> >XL<br>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- GENDER INPUT -->
+                        <div class="form-group">
+                            <div class="input-title">
+                            <h6>Gender</h6>
+                            </div>
+                            <div class="form-control">
+                                <div class="radio">
+                                    <input type="radio" name="genderSelect" value="male"> Male<br>
+                                    <input type="radio" name="genderSelect" value="female"> Female<br>
+                                    <input type="radio" name="genderSelect" value="unisex"> Unisex<br>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CLOTHING INPUT -->
+                        <div class="form-group">
+                            <div class="input-title">
+                            <h6>Clothing Type</h6>
+                            </div>
+                            <div class="form-control">
+                                <div class="radio">
+                                    <input type="radio" name="clothingSelect" value="outerwear"> Outerwear<br>
+                                    <input type="radio" name="clothingSelect" value="tops"> Tops<br>
+                                    <input type="radio" name="clothingSelect" value="pants"> Pants<br>
+                                    <input type="radio" name="clothingSelect" value="skirt"> Skirt<br>
+                                    <input type="radio" name="clothingSelect" value="dress"> Dress<br>
+                                    <input type="radio" name="clothingSelect" value="footwear"> Footwear<br>
+                                    <input type="radio" name="clothingSelect" value="accessories"> Accessories<br>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TIME PERIOD INPUT -->
+                        <div class="form-group">
+                            <div class="input-title">
+                            <h6>Time Period</h6>
+                            </div>
+                            <div class="form-control">
+                                <div class="radio">
+                                    <input type="checkbox" name="timeSelect" value="prehistoric"> Prehistoric<br>
+                                    <input type="checkbox" name="timeSelect" value="modern"> Modern<br>
+                                    <input type="checkbox" name="timeSelect" value="futuristic"> Futuristic<br>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PROP/CONSTUME INPUT -->
+                        <div class="form-group">
+                            <div class="input-title">
+                            <h6>Item Type</h6>
+                            </div>
+                            <div class="form-control">
+                                <div class="radio">
+                                    <input type="radio" name="typeSelect" value="prop"> Prop<br>
+                                    <input type="radio" name="typeSelect" value="costume"> Costume<br>
+                                </div>
+                            </div>
+                        </div>
+
                         <!--DESCRIPTION INPUT-->
                         <div class="form-group">
-                            <input type="text" name="description" class="form-control" id="input-description" placeholder="Description" value="{{description|first}}">
+                            <div class="input-title">
+                            <h6>Description</h6>
+                            </div>
+                            <textarea name="description" class="form-control" id="input-description" placeholder="Description" value="{{description|first}}"></textarea>
                         </div>
+
                         <!-- Navigate back to home page/ Trigger the confirmation modal -->
                         <button type="submit" name="cancel-button" class="btn" id="cancel-button" value="Cancel">Cancel</button>
                         <!--ADD ITEM BUTTON-->
