@@ -274,6 +274,10 @@ def logout():
     session.pop('user', None)
     return redirect('/')
 
+@app.route('/editFolders', methods=['POST'])
+def editProdFolders():
+    return render_template('editProdFolders.html')
+
 @app.route('/folders')
 def prodFolders():
     return render_template('prodFolders.html')
