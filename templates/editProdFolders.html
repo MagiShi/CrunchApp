@@ -59,38 +59,33 @@
                             </div>
                         </div>
 
-                        <!--VIEW CONTENTS BUTTON-->
-                        <button type="submit" name="view-contents-button" class="btn" id="view-contents-button" value="View">View Contents</button>
-                        <!--DELETE FOLDER BUTTON-->
+                        <!-- CANCEL BUTTON -->
                         <!-- Trigger the confirmation modal -->
-                        <button type="submit" name="delete-button" class="btn offset-md-1" id="delete-button" value="Delete">Delete Folder</button>
+                        <button type="submit" name="cancel-button" class="btn" id="cancel-button" value="Cancel">Cancel</button>
+
+                        <!--VIEW CONTENTS BUTTON-->
+                        <button type="submit" name="add-to-folder-button" class="btn offset-md-1" id="add-to-folder-button" value="Add">Add to Selected Folder(s)</button>
 
                         <!-- CREATE NEW FOLDER BUTTON -->
                         <button type="submit" name="create-folder-button" class="btn" id="create-folder-button" value="Create">Create New Folder</button>
+
                     </form>
-
-
-                    <!-- TO DO: FOLDER DELETION -->
-                    <!-- Deletion Confirmation Modal -->
-                    <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                    <!-- Cancel Confirmation Modal -->
+                    <div class="modal fade" id="cancel-modal" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title">Deletion Confirmation</h5>
+                                    <h5 class="modal-title">Cancel Confirmation</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body" style="text-align: left;">
-                                    Are you sure you want to delete this folder?
+                                    You have not submitted the form yet. Are you sure you want to discard the form?
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                    <form method=POST action='/deleteFolder/{{folderid}}'>
-<!--                                             <button class="btn btn-primary" id="delete-confirmed" type="submit" value={{folderid}}>Delete</button>
- -->                                 
-                                        <button class="btn btn-primary" id="delete-confirmed" type="submit">Delete</button>
-                                    </form>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Keep the form</button>
+                                    <button type="submit" class="btn btn-primary" id="cancel-confirmed">Discard the form</button>
                                 </div>
                             </div>
                         </div>
@@ -103,11 +98,11 @@
 
 <script>
     $(document).ready(function() {
-        $('#delete-confirmed').click(function() {
-            location.href = 'folders';
+        $('#cancel-confirmed').click(function() {
+            location.href = '/item/{{itemid}}';
         });
-        $( '#delete-button' ).click(function() {
-            $('#delete-modal').modal('show');
+        $( '#cancel-button' ).click(function() {
+            $('#cancel-modal').modal('show');
             return false;
         });
     });
