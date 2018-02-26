@@ -48,6 +48,15 @@
                             <button class="btn" type="button">Reserve Item</button>
                         </div>
                     </div>
+
+                    <div class="prod-folder row">
+                        <div class="col-12">
+                            <form method=POST action='/editFolders'>
+                                <button class="btn" id="prod-folder-button" type="submit">Add to Production Folder</button>
+                            </form>
+                        </div>
+                    </div>
+
                     <div class="item-text row">
                         <div class="col-12">
                             <p>Barcode: {{itemid}}</p>
@@ -61,6 +70,7 @@
                             <p>Description: {{description | first}}
                         </div>
                     </div>
+
                     <div class="item-action row">
                         <div class="col-12">
                             {%if delete | first %}

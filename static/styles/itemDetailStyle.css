@@ -26,16 +26,21 @@
     width: 100%;
 }
 
+.prod-folder,
 .reservation {
     margin: 20px;
     text-align: center;
     font-style: italic;
     color: #8b8b8b;
 }
+
+.prod-folder .btn,
 .reservation .btn {
-    background-color: white;
-    border: 1px solid grey;
+    color: white;
+    background-color: #0077C8;
 }
+
+.prod-folder .btn:hover,
 .reservation .btn:hover {
     background-color: #FDDA24;
     border-color: #FDDA24;
@@ -50,12 +55,14 @@
     width: 80%;
     color: white;
 }
+
 #edit-item-button {
     background-color: #0077C8;
 }
 #delete-item-button {
     background-color: #f55f5f;
 }
+
 #edit-item-button:hover,
 #delete-item-button:hover {
     background-color: #FDDA24;
