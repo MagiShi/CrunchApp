@@ -274,9 +274,17 @@ def logout():
     session.pop('user', None)
     return redirect('/')
 
-@app.route('/editFolders', methods=['POST'])
-def editProdFolders():
-    return render_template('editProdFolders.html')
+@app.route('/editFolders/<item_id>', methods=["POST", "GET"])
+def toEditProdFolders(item_id):
+    item_id = item_id
+    error = None
+    return render_template('editProdFolders.html', itemid=item_id, error=error)
+
+@app.route('/posteditFolders/<item_id>', methods=['POST'])
+def editProdFolders(item_id):
+    item_id = item_id
+    error = None
+    return redirect(url_for('getItemInfo', item_id=item_id, error=error))
 
 @app.route('/folders')
 def prodFolders():
