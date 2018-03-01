@@ -278,7 +278,22 @@ def logout():
 def toEditProdFolders(item_id):
     item_id = item_id
     error = None
-    return render_template('editProdFolders.html', itemid=item_id, error=error)
+    itemname = None
+    
+    #query = "SELECT * FROM item WHERE itemid='{0}';".format(item_id)
+    try: 
+        cursor.execute("SELECT itemname FROM item WHERE itemid='{0}';".format(item_id))
+        itemname = cursor.fetchone()
+        
+    except Exception as e: 
+        print (e)
+        # cursor.execute("rollback;")
+
+        # ##If item does not exist etc
+        # error = 'Item information cannot be retrieved'
+        # return redirect(url_for('loggedin', error=error))
+
+    return render_template('editProdFolders.html', itemid=item_id, itemname=itemname, error=error)
 
 @app.route('/posteditFolders/<item_id>', methods=['POST'])
 def editProdFolders(item_id):
