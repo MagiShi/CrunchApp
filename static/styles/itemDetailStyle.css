@@ -1,15 +1,21 @@
 .item-detail-container {
-    padding: 5vw 20vw !important;
+    padding: calc(54px + 40px) 20vw !important; /* navbar 1 row height is 54px */
 }
 @media screen and (max-width: 640px) {
     .item-detail-container {
-        padding: 5vh 15vw !important;
+        padding: calc(54px + 40px) 15vw !important; /* navbar 3 rows height is 54px */
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .item-detail-container {
+        padding: calc(156px + 20px) 15vw !important;
     }
 }
 
 @media screen and (max-width: 450px) {
     .item-detail-container {
-        padding: 5vh 10vw !important;
+        padding: calc(156px + 20px) 10vw !important;
     }
 }
 

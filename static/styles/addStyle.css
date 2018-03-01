@@ -23,18 +23,22 @@
 }
 
 /* The main inputs box */
+.container-fluid {
+    margin-top: calc(54px + 40px);
+}
+
+@media screen and (max-width: 575px) {
+    .container-fluid {
+        margin-top: calc(156px + 20px);
+    }
+}
+
 .add-container {
-    margin-top: 15vh;
     padding: 3vh;
     display: inline-block;
     background-color: #FFF;
     border-radius: 2px;
     box-shadow: 0px 0px 6px #aaaaaa;
-}
-@media screen and (max-width: 581px) {
-    .add-container {
-        margin-top: 25vh;
-    }
 }
 
 .add-container h3 {
