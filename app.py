@@ -284,7 +284,7 @@ def toEditProdFolders(item_id):
     try: 
         cursor.execute("SELECT itemname FROM item WHERE itemid='{0}';".format(item_id))
         itemname = cursor.fetchone()
-        
+
     except Exception as e: 
         print (e)
         # cursor.execute("rollback;")
