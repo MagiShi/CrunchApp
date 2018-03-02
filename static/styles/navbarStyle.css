@@ -147,3 +147,6 @@
   .right-side-menu, .left-side-menu {padding-top: 15px;}
   .right-side-menu a, .left-side-menu a {font-size: 18px;}
 }
+.left-side-menu {
+    color: white;
+}

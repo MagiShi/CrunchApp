@@ -31,13 +31,65 @@
 <!-- FILTER MENU -->
 <div id="filter-menu" class="left-side-menu">
     <a href="javascript:void(0)" class="closebtn" onclick="toggleFilterMenu()">&times;</a>
-    <a href="#">Characteristic 1</a>
-    <a href="#">Characteristic 2</a>
-    <a href="#">Characteristic 3</a>
-    <a href="#">Characteristic 4</a>
-    <a href="#">Characteristic 5</a>
-    <a href="#">Characteristic 6</a>
-    <a href="#">Characteristic 7</a>
+    <form method=POST action='/postlogin'>
+        <div class="row">
+            <div class="col-4 item-type-select">
+                <p>Item Type</p>
+                <input type="checkbox" id="item-type-select-prop" name="item-type" value="new" checked> Prop <br>
+                <input type="checkbox" id="item-type-select-costume" name="item-type" value="costume" checked> Costume <br>
+            </div>
+            <div class="col-4 condition-select">
+                <p>Condition</p>
+                <input type="checkbox" id="condition-select-new" name="condition" value="new" checked> New <br>
+                <input type="checkbox" id="condition-select-very-good" name="condition" value="very-good" checked> Very Good <br>
+                <input type="checkbox" id="condition-select-good" name="condition" value="good" checked> Good <br>
+                <input type="checkbox" id="condition-select-fair" name="condition" value="fair" checked> Fair <br>
+                <input type="checkbox" id="condition-select-poor" name="condition" value="poor" checked> Poor <br>
+            </div>
+            <div class="col-4 gender-select">
+                <p>Gender</p>
+                <input type="checkbox" id="gender-select-male" name="gender" value="male" checked> Male <br>
+                <input type="checkbox" id="gender-select-female" name="gender" value="female" checked> Female <br>
+                <input type="checkbox" id="gender-select-unisex" name="gender" value="unisex" checked> Unisex <br>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4 color-select">
+                <p>Color</p>
+                <input type="checkbox" id="color-select-red" name="color" value="red" checked> Red <br>
+                <input type="checkbox" id="color-select-orange" name="color" value="orange" checked> Orange <br>
+                <input type="checkbox" id="color-select-yellow" name="color" value="yellow" checked> Yellow <br>
+                <input type="checkbox" id="color-select-green" name="color" value="green" checked> Green <br>
+                <input type="checkbox" id="color-select-blue" name="color" value="blue" checked> Blue <br>
+                <input type="checkbox" id="color-select-purple" name="color" value="purple" checked> Purple <br>
+                <input type="checkbox" id="color-select-white" name="color" value="white" checked> White <br>
+                <input type="checkbox" id="color-select-black" name="color" value="black" checked> Black <br>
+                <input type="checkbox" id="color-select-brown" name="color" value="brown" checked> Brown <br>
+                <input type="checkbox" id="color-select-gray" name="color" value="gray" checked> Gray <br>
+            </div>
+            <div class="col-4 size-select">
+                <p>Size</p>
+                <input type="checkbox" id="size-select-xxs" name="size" value="xxs" checked> &lt;XS <br>
+                <input type="checkbox" id="size-select-xs" name="size" value="xs" checked> XS <br>
+                <input type="checkbox" id="size-select-s" name="size" value="s" checked> S <br>
+                <input type="checkbox" id="size-select-m" name="size" value="m" checked> M <br>
+                <input type="checkbox" id="size-select-l" name="size" value="l" checked> L <br>
+                <input type="checkbox" id="size-select-xl" name="size" value="xl" checked> XL <br>
+                <input type="checkbox" id="size-select-xxl" name="size" value="xxl" checked> &gt;XL <br>
+            </div>
+            <div class="col-4 clothing-type-select">
+                <p>Clothing Type</p>
+                <input type="checkbox" id="clothing-type-select-outerwear" name="clothing-type" value="outerwear" checked> Outerwear <br>
+                <input type="checkbox" id="clothing-type-select-top" name="clothing-type" value="top" checked> Top <br>
+                <input type="checkbox" id="clothing-type-select-pants" name="clothing-type" value="pants" checked> Pants <br>
+                <input type="checkbox" id="clothing-type-select-skirt" name="clothing-type" value="skirt" checked> Skirt <br>
+                <input type="checkbox" id="clothing-type-select-dress" name="clothing-type" value="dress" checked> Dress <br>
+                <input type="checkbox" id="clothing-type-select-footwear" name="clothing-type" value="footwear" checked> Footwear <br>
+                <input type="checkbox" id="clothing-type-select-accessory" name="clothing-type" value="accessory" checked> Accessory <br>
+            </div>
+        </div>
+        
+    </form>
 </div>
 <!-- ACCOUNT MENU -->
 <div id="account-menu" class="right-side-menu">
