@@ -26,3 +26,32 @@
     background-color: #FDDA24;
     cursor: pointer;
 }
+
+.folder-name {
+    color: black;
+}
+.folder-name:hover {
+    text-decoration: none;
+    color: #0275d8;
+}
+
+.icon-button {
+    border: none;
+    padding: 0;
+    margin: 0;
+    background: none;
+}
+.icon-button:hover {
+    cursor: pointer;
+}
+.icon-button:focus {
+    outline:none !important;
+}
+
+#delete-folder-style:hover .hover-red {
+    fill:red;
+}
+
+#edit-folder-style:hover .hover-blue {
+    fill:#0275d8;
+}

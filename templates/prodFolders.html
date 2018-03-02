@@ -38,32 +38,28 @@
                             <div class="input-title">
                                 <h6>Select a Production Folder</h6>
                             </div>
-                            <div class="list-group">
-                                <div class="btn-gtoup" data-toggle="buttons">
-                                    <label class="btn list-group-item list-group-item-action">
-                                        <input type="radio" name="options" id="option1" autocomplete="off"> Folder 1
-                                    </label>
-                                    <label class="btn list-group-item list-group-item-action">
-                                        <input type="radio" name="options" id="option2" autocomplete="off"> Folder 2
-                                    </label>
-                                    <label class="btn list-group-item list-group-item-action">
-                                        <input type="radio" name="options" id="option3" autocomplete="off"> Folder 3
-                                    </label>
-                                    <label class="btn list-group-item list-group-item-action">
-                                        <input type="radio" name="options" id="option1" autocomplete="off"> Folder 4
-                                    </label>
-                                    <label class="btn list-group-item list-group-item-action">
-                                        <input type="radio" name="options" id="option1" autocomplete="off"> Folder 5
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
 
-                        <!--VIEW CONTENTS BUTTON-->
-                        <button type="submit" name="view-contents-button" class="btn" id="view-contents-button" value="View">View Contents</button>
-                        <!--DELETE FOLDER BUTTON-->
-                        <!-- Trigger the confirmation modal -->
-                        <button type="submit" name="delete-button" class="btn offset-md-1" id="delete-button" value="Delete">Delete Folder</button>
+                            <ul class="list-group">
+                                <li class="list-group-item list-group-item-action flex-column">
+                                    <div class="d-flex w-100 justify-content-between" style="text-align: left;"">
+                                        <a href="/home" class="folder-name">
+                                            Production Folder 1
+                                        </a>
+                                    
+                                    <div style="min-width: 50px;">
+                                        <!--VIEW CONTENTS BUTTON-->
+                                        <button type="button" id="edit-folder-style" class="icon-button">
+                                            {% include 'icon/pencil.svg' %}
+                                        </button>
+                                        <!--DELETE FOLDER BUTTON-->
+                                        <button type="button" id="delete-folder-style" class="icon-button"
+                                        style="margin-left:5px;" data-toggle="modal" data-target="#delete-modal">
+                                            {% include 'icon/delete.svg' %}
+                                        </button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
 
                         <!-- CREATE NEW FOLDER BUTTON -->
                         <button type="submit" name="create-folder-button" class="btn" id="create-folder-button" value="Create">Create New Folder</button>
@@ -105,10 +101,6 @@
     $(document).ready(function() {
         $('#delete-confirmed').click(function() {
             location.href = 'folders';
-        });
-        $( '#delete-button' ).click(function() {
-            $('#delete-modal').modal('show');
-            return false;
         });
     });
 </script>
