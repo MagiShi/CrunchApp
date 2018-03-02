@@ -31,6 +31,7 @@
                     {% if error %}
                         <p class="error" style="color:red;"><strong>*</strong> {{ error }}
                     {% endif %}
+
                     <form method=POST action='/postaddItem' enctype=multipart/form-data>
                         <!-- TO DO: ROUTING -->
 
@@ -40,11 +41,10 @@
                             </div>
 
                             <ul class="list-group">
+                                {% for folder in foldername %}
                                 <li class="list-group-item list-group-item-action flex-column">
                                     <div class="d-flex w-100 justify-content-between" style="text-align: left;"">
-                                        <a href="/home" class="folder-name">
-                                            Production Folder 1
-                                        </a>
+                                        <a href="/home" class="folder-name">{{folder[0]}}</a>
                                     
                                     <div style="min-width: 50px;">
                                         <!--VIEW CONTENTS BUTTON-->
@@ -58,6 +58,7 @@
                                         </button>
                                     </div>
                                 </li>
+                                {% endfor %}
                             </ul>
                         </div>
 

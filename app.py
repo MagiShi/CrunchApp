@@ -303,7 +303,16 @@ def editProdFolders(item_id):
 
 @app.route('/folders')
 def prodFolders():
-    return render_template('prodFolders.html')
+    foldername = None
+    folderid = None
+    folderidQuery = "SELECT folderid FROM folder;"
+    folderNameQuery = "SELECT foldername FROM folder;"
+    cursor.execute(folderidQuery)
+    folderid = cursor.fetchall()
+    cursor.execute(folderNameQuery)
+    foldername = cursor.fetchall()
+
+    return render_template('prodFolders.html', folderid=folderid, foldername=foldername)
 
 @app.route('/deleteItem/<item_id>', methods=['POST'])
 def deleteItemFlag(item_id):
