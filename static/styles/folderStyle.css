@@ -60,10 +60,10 @@
     fill:#0275d8;
 }
 
-#save-name-button {
+#save-name-button, #add-folder-button {
     background-color: #0275d8;
 }
-#save-name-button:hover {
+#save-name-button:hover, #add-folder-button:hover {
     background-color: #0042A5;
 }
 
