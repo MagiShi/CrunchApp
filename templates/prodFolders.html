@@ -141,7 +141,9 @@
 
     function rename_folder(folder_name) {
         $('#rename-modal').on('show.bs.modal', function(e) {
-            $(this).find('#input-folder-name-1').val(jQuery(folder_name).find( "a.folder-name").text());
+            folderid = folder_name.id.split("_")[1];
+            $(this).find("input").val(jQuery(folder_name).find( "a.folder-name").text());
+            $(this).find("#save-name-button").val(folderid);
         });
     }
 
