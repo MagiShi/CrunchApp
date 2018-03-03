@@ -11,6 +11,8 @@ import psycopg2
 import base64
 from io import BytesIO
 
+import functions
+
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
@@ -29,8 +31,7 @@ app.config.update(
 mail = Mail(app)
 
 #configuring database url and path
-# url = urlparse(os.environ['DATABASE_URL'])
-url = urlparse("postgres://mbgugkwmyyrgpp:08f1f171ba8df81468de5e7d166069757cc545fb163d5cc820407068513b101d@ec2-54-163-237-249.compute-1.amazonaws.com:5432/da0io40vrbg6u0")
+url = urlparse(os.environ['DATABASE_URL'])
 db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname)
 schema = "schema.sql"
 #connecting a cursor for the database
@@ -57,7 +58,6 @@ def login():
     # errors = {"error": "The username or password you have entered is incorrect."}
     try:
         cursor.execute(query)
-        # print (cursor.fetchone())
         tup = cursor.fetchone()
 
         if tup is None:
@@ -114,7 +114,6 @@ def forgotPass():
 @app.route('/forgotpass', methods=['POST'])
 def sendMail():
     email = request.form['email']
-
     query = "Select password from registereduser Where email = '{0}';".format(email)
 
     try: 
@@ -435,7 +434,6 @@ def deleteItemFlag(item_id):
     query = "UPDATE item set pendingdelete=true where itemid='{0}';".format(item_id)
     try: 
         cursor.execute(query)
-        # print ("executed")
     except Exception as e: 
         query = "rollback;"
         cursor.execute(query)
@@ -471,67 +469,21 @@ def getItemInfo(item_id):
     isavailable = None
     
     try: 
-        # Look into doing a single select *, or separate method
-        cursor.execute("SELECT itemname FROM item WHERE itemid='{0}';".format(item_id))
-        itemname = cursor.fetchone()
-        cursor.execute("SELECT image1 FROM item WHERE itemid='{0}';".format(item_id))
-        image1 = cursor.fetchone()
-        cursor.execute("SELECT image2 FROM item WHERE itemid='{0}';".format(item_id))
-        image2 = cursor.fetchone()
-        cursor.execute("SELECT image3 FROM item WHERE itemid='{0}';".format(item_id))
-        image3 = cursor.fetchone()
-        cursor.execute("SELECT description FROM item WHERE itemid='{0}';".format(item_id))
-        description = cursor.fetchone()
-        cursor.execute("SELECT pendingdelete FROM item WHERE itemid='{0}';".format(item_id))
-        pendingdelete = cursor.fetchone()
-        cursor.execute("SELECT sex FROM item WHERE itemid='{0}';".format(item_id))
-        sex = cursor.fetchone()
-        # cursor.execute("SELECT condition FROM item WHERE itemid='{0}';".format(item_id))
-        # condition = cursor.fetchone()
-        # cursor.execute("SELECT timeperiod FROM item WHERE itemid='{0}';".format(item_id))
-        # timeperiod = cursor.fetchone()
-        # cursor.execute("SELECT culture FROM item WHERE itemid='{0}';".format(item_id))
-        # culture = cursor.fetchone()
-        cursor.execute("SELECT color FROM item WHERE itemid='{0}';".format(item_id))
-        color = cursor.fetchone()
-        cursor.execute("SELECT size FROM item WHERE itemid='{0}';".format(item_id))
-        size = cursor.fetchone()
-        cursor.execute("SELECT itemtype FROM item WHERE itemid='{0}';".format(item_id))
-        itemtype = cursor.fetchone()
-        # cursor.execute("SELECT itype FROM item WHERE itemid='{0}';".format(item_id))
-        # itype = cursor.fetchone()
-        cursor.execute("SELECT isavailable FROM item WHERE itemid='{0}';".format(item_id))
-        isavailable = cursor.fetchone()
-
-        # print (image1)
+        # calls functions.py method
+        itemname, image1, image2, image3, description, pendingdelete, sex, color, size, itemtype, isavailable = functions.getInfo(item_id, cursor)
+        # itemname, image1, image2, image3, description, pendingdelete, sex, condition, timeperiod, culture, color, size, itemtype, itype, isavailable = getInfo(item_id)
 
         imagedata1 = []
         if image1[0] != None:
-            for i in image1:
-                image_data = bytes(i)
-                encoded = base64.b64encode(image_data)
-                stren = encoded.decode("utf-8")
-                imagedata1.append(stren)
+            imagedata1 = functions.getImagedata(image1)
 
-                # to show image as a seperate pop-up (?) --local only
-                # data = base64.b64decode(encoded)
-                # image1 = Image.open(BytesIO(image_data))
-                # image1.show()
         imagedata2 = []
         if image2[0] != None:
-            for i in image2:
-                image_data = bytes(i)
-                encoded = base64.b64encode(image_data)
-                stren = encoded.decode("utf-8")
-                imagedata2.append(stren)
+            imagedata2 = functions.getImagedata(image2)
 
         imagedata3 = []
         if image3[0] != None:
-            for i in image3:
-                image_data = bytes(i)
-                encoded = base64.b64encode(image_data)
-                stren = encoded.decode("utf-8")
-                imagedata3.append(stren)
+            imagedata3 = functions.getImagedata(image3)
         
     except Exception as e: 
         print (e)
@@ -567,35 +519,11 @@ def edit(item_id):
     # itype = None
     isavailable = None
     
-    #query = "SELECT * FROM item WHERE itemid='{0}';".format(item_id)
     try: 
-        cursor.execute("SELECT itemname FROM item WHERE itemid='{0}';".format(item_id))
-        itemname = cursor.fetchone()
-        cursor.execute("SELECT image1 FROM item WHERE itemid='{0}';".format(item_id))
+        # calls functions.py method
+        itemname, _, _, _, description, pendingdelete, sex, color, size, itemtype, isavailable = functions.getInfo(item_id, cursor)
+        # itemname, image1, image2, image3, description, pendingdelete, sex, condition, timeperiod, culture, color, size, itemtype, itype, isavailable = getInfo(item_id)
 
-        #needed later?
-        # image1 = cursor.fetchone()
-        # cursor.execute("SELECT image2 FROM item WHERE itemid='{0}';".format(item_id))
-        # image2 = cursor.fetchone()
-        # cursor.execute("SELECT image3 FROM item WHERE itemid='{0}';".format(item_id))
-        # image3 = cursor.fetchone()
-
-        cursor.execute("SELECT description FROM item WHERE itemid='{0}';".format(item_id))
-        description = cursor.fetchone()
-        cursor.execute("SELECT pendingdelete FROM item WHERE itemid='{0}';".format(item_id))
-        pendingdelete = cursor.fetchone()
-        cursor.execute("SELECT sex FROM item WHERE itemid='{0}';".format(item_id))
-        sex = cursor.fetchone()
-        # cursor.execute("SELECT condition FROM item WHERE itemid='{0}';".format(item_id))
-        # condition = cursor.fetchone()
-        cursor.execute("SELECT color FROM item WHERE itemid='{0}';".format(item_id))
-        color = cursor.fetchone()
-        cursor.execute("SELECT size FROM item WHERE itemid='{0}';".format(item_id))
-        size = cursor.fetchone()
-        cursor.execute("SELECT itemtype FROM item WHERE itemid='{0}';".format(item_id))
-        itemtype = cursor.fetchone()
-        cursor.execute("SELECT isavailable FROM item WHERE itemid='{0}';".format(item_id))
-        isavailable = cursor.fetchone()
         #print ("executed")
     except Exception as e: 
         cursor.execute("rollback;")
@@ -629,4 +557,6 @@ def editItem(item_id):
     return redirect(url_for('getItemInfo', item_id=item_id, error=error))
 if __name__ == "__main__":
     app.run()
+
+
 
