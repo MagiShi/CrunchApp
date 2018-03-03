@@ -397,6 +397,7 @@ def editProdFolders(item_id):
     error = None
     return redirect(url_for('getItemInfo', item_id=item_id, error=error))
 
+# render Production Folders page with all folders in the database
 @app.route('/folders', methods=['POST', 'GET'])
 def prodFolders():
     foldername = None
@@ -411,9 +412,12 @@ def prodFolders():
 
     return render_template('prodFolders.html', folderid=folderid, foldername=foldername, error=error)
 
+# Update the name of production folder
 @app.route('/postrenameFolders', methods=['POST'])
 def renameFolders():
+    # get the folder new name from the user's input
     foldername = request.form['foldername']
+    # get the folder id from the value of 'Save' button
     folderid = request.form['saveNameButton']
     try:
         query = "UPDATE folder SET foldername ='{1}' WHERE folderid='{0}';".format(folderid, foldername)
@@ -425,6 +429,7 @@ def renameFolders():
         ##If folder does not exist etc
         error = 'Folder information cannot be retrieved'
         return redirect(url_for('prodFolders', error=error))
+    # Refresh the Production Folders page with the updated name of the folder
     return redirect(url_for('prodFolders'))
 
 
