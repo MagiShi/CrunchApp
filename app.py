@@ -1,19 +1,20 @@
 from flask import Flask, flash, redirect, render_template, request, session, abort, url_for, json, send_file
 from flask_mail import Mail, Message
-
 from werkzeug.utils import secure_filename
-
-import base64
-from PIL import Image
-from io import BytesIO
-
 import os
 from urllib.parse import urlparse
 import psycopg2
 
+## only for local image rendering
+# from PIL import Image
+
+import base64
+from io import BytesIO
+
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
+#configuring upload_folder variable
 app.config['UPLOAD_FOLDER'] = "/tmp/"
 
 app.config.update(
@@ -23,28 +24,27 @@ app.config.update(
     MAIL_PORT=465,
     MAIL_USE_SSL=True,
     MAIL_USERNAME = 'crunch.thracker@gmail.com',
-    MAIL_PASSWORD = os.environ['epassword']
+    # MAIL_PASSWORD = os.environ['epassword']
     )
 mail = Mail(app)
 
-url = urlparse(os.environ['DATABASE_URL'])
-
-
+#configuring database url and path
+# url = urlparse(os.environ['DATABASE_URL'])
+url = urlparse("postgres://mbgugkwmyyrgpp:08f1f171ba8df81468de5e7d166069757cc545fb163d5cc820407068513b101d@ec2-54-163-237-249.compute-1.amazonaws.com:5432/da0io40vrbg6u0")
 db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname)
 schema = "schema.sql"
+#connecting a cursor for the database
 conn = psycopg2.connect(db)
 cursor = conn.cursor()
 
+#welcome page rendering
 @app.route('/')
 def welcome():
-    # if request.args.get('error') == None:
-        # print("here")
-        # return render_template('login.html')
     error = request.args.get('error')
     print (repr(error))
-    # return render_template('login.html', error=json.loads(error))
     return render_template('login.html', error=error)
 
+#method after clicking on login button
 @app.route('/postlogin', methods=['POST'])
 #method for logging in, on home page.
 def login():
@@ -63,21 +63,18 @@ def login():
         if tup is None:
             ##Error message for wrong password/username
             error = 'The username or password you have entered is incorrect.'
-            # errors =  json.dumps(errors)
-            # return redirect(url_for('home', error=errors))
             return redirect(url_for('welcome', error=error))
         else:
         	session['user'] = True;
     except: 
-        ##Any errors (there shouldn't be) should be handled here
+        ##Any errors should be handled here
         query = "rollback;"
         cursor.execute(query)
-        # errors =  json.dumps(errors)
-        # return redirect(url_for('home', error=errors))
         error = 'The username or password you have entered is incorrect.'
         return redirect(url_for('welcome', error=error))
     return redirect(url_for('loggedin'))
 
+#rendering home page after logging in
 @app.route('/home')
 def loggedin():
     itemname = None
@@ -85,7 +82,7 @@ def loggedin():
     itemid = None
     itemidQuery = "SELECT itemid FROM item;"
     itemNameQuery = "SELECT itemname FROM item;"
-    imageQuery = "SELECT image FROM item;"
+    imageQuery = "SELECT image1 FROM item;"
     cursor.execute(itemidQuery)
     itemid = cursor.fetchall()
     cursor.execute(itemNameQuery)
@@ -98,20 +95,22 @@ def guest():
     # should look different than a registered user (not able to add, delete, etc)
     return render_template('home.html')
 
+#rendering registration page
 @app.route('/register')
 def newUser():
     error = request.args.get('error')
     return render_template('register.html', error=error)
 
+#rendering forgot password page
 @app.route('/forgotpass')
 def forgotPass():
-
     if request.args.get('error') is None:
         error = 'Please enter email address'
     else:
         error = request.args.get('error')
     return render_template('forgotpass.html', error=error)
 
+#For after clicking on forgot password button 
 @app.route('/forgotpass', methods=['POST'])
 def sendMail():
     email = request.form['email']
@@ -126,7 +125,6 @@ def sendMail():
             ##Error message for wrong password/username
 
             error = 'The email you have entered is unregistered.'
-            # return render_template('forgotpass.html', error=error)
             return redirect(url_for('forgotPass', error=error))
 
         msg = Message("Your password is {0}".format(tup), sender=("crunch.thracker@gmail.com"), recipients=["{0}".format(email)])
@@ -137,13 +135,11 @@ def sendMail():
         cursor.execute(query)
         error = 'Please enter an email'
         return redirect(url_for('forgotPass', error=error))
-
-
     error = 'Email sent'
     return redirect(url_for('welcome', error=error))
 
-@app.route('/postregister', methods=['POST'])
 #def for registering, occurs after clicking registration button
+@app.route('/postregister', methods=['POST'])
 def register():
     # print ("in here")
     username = request.form['username']
@@ -176,7 +172,6 @@ def register():
         return redirect(url_for('newUser', error=error))
 
     conn.commit()
-
     return redirect(url_for('loggedin'))
 
 # renders addItem page
@@ -185,30 +180,81 @@ def add():
     error = request.args.get('error')
     return render_template('addItem.html', error=error)
 
-
+# Add item to the database, after button is clicked on add item page.
 @app.route('/postaddItem', methods=['POST'])
 def addItem():
     if request.form.get("add-item-button"):
+
+        #initialize all values from the html form here
         item_id = request.form['barcode']
-        # print ("here")
         item_name = request.form['itemname']
         description = request.form['description']
-        error = None
-
-        file = None
+        try: 
+            sex = request.form['genderSelect']
+        except: 
+            sex = None
+        
+        try: 
+            condition = request.form['condition']
+        except: 
+            condition = None
+        # timeperiod = request.form['timeSelect']
+        # culture = request.form['culture']
         try:
-            file = request.files['photo1']
-        # For only 1 file, if multiple, assume loop through this
-        # print ("file")
-            if file and file.filename != '':
-                filename = secure_filename(file.filename)
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            color = request.form['colorSelect']
+        except:
+            color = None
+        try:
+            size = request.form['sizeSelect']
+        except:
+            size = None
+        try:        
+            itemtype = request.form['typeSelect']
+        except:
+            itemtype = None
+ 
+        # itype = request.form['itypeSelect']
+        error = None
+        file1 = None
+        file2 = None
+        file3 = None
+
+        #for image1, temp image upload
+        try:
+            file1 = request.files['photo1']
+            if file1 != None and file1.filename != '':
+                filename1 = secure_filename(file1.filename)
+                file1.save(os.path.join(app.config['UPLOAD_FOLDER'], filename1))
+            else:
+                filename1 = None
         except Exception as e:
-            print (e)
-            filename = None
-        # if file == None:
-        #     print("NONE")
-        # print(type(file))
+            print ("file1", e)
+            filename1 = None
+        
+        #for image2, temp image upload
+        try:
+            file2 = request.files['photo2']
+            if file2 != None and file2.filename != '':
+                filename2 = secure_filename(file2.filename)
+                file2.save(os.path.join(app.config['UPLOAD_FOLDER'], filename2))
+            else:
+                filename2 = None
+        except Exception as e:
+            print ("file2", e)
+            filename2 = None
+        
+        #for image3, temp image upload
+        try:
+            file3 = request.files['photo3']
+            if file3 != None and file3.filename != '':
+                print (file3)
+                filename3 = secure_filename(file3.filename)
+                file3.save(os.path.join(app.config['UPLOAD_FOLDER'], filename3))
+            else:
+                filename3 = None
+        except Exception as e:
+            print ("file3", e)
+            filename3 = None
 
         if item_id == '' or item_name == '':
             error = 'Item must have a barcode/id and a name'
@@ -216,44 +262,54 @@ def addItem():
         if description == '':
             description = 'N/A'
 
-        query = "INSERT into item(itemid, itemname, pendingdelete, description) values ('{0}', '{1}',  false, '{2}');".format(item_id, item_name, description)
-        print(query)
-        # query = None
-        try:
-            # print (repr(query))
-            # print("in try")
-            cursor.execute(query)
-            # print("exe")
-            conn.commit()
-            # print("conn")
+        # query = "INSERT into item(itemid, itemname, pendingdelete, description, sex, condition, timeperiod, culture, color, size, itemtype, itype, isavailable) values ('{0}', '{1}',  false, '{2}');".format(item_id, item_name, description)
 
-            
-            if filename != None:
-                print ("looking for file: " + "tmp/"+filename )
+        charlist = [item_id, item_name, description, sex, condition, color, size, itemtype]
+        query = "INSERT into item(itemid, itemname, description, sex, condition, color, size, itemtype, isavailable, pendingdelete) values ("
+
+
+        for char in charlist:
+            if char != None:
+                query += "'{0}', ".format(char)
+            else:
+                query += " NULL, "
+
+        query += " true, false);"
+
+        print(query)
+        try:
+            cursor.execute(query)
+            conn.commit()
+
+            if filename1 != None:
+                print ("looking for file: " + "tmp/"+ filename1 )
                 print ("loading file")
-                f = open("/tmp/"+filename,'rb')
+                f = open("/tmp/"+filename1,'rb')
                 filedata = f.read()
                 f.close()
-                cursor.execute("UPDATE item SET image[0] = %s WHERE itemid=(%s);", (filedata, item_id))
+                cursor.execute("UPDATE item SET image1 = %s WHERE itemid=(%s);", (filedata, item_id))
                 conn.commit()
+                os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename1))
 
-                os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            if filename2 != None:
+                print ("looking for file: " + "tmp/"+ filename2 )
+                print ("loading file")
+                f = open("/tmp/"+filename2,'rb')
+                filedata = f.read()
+                f.close()
+                cursor.execute("UPDATE item SET image2 = %s WHERE itemid=(%s);", (filedata, item_id))
+                conn.commit()
+                os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename2))
 
-
-            #assuming array for multiple upload
-            # imagefiles = request.form['photo']
-            # i = 0
-            # for image in imagefiles:
-            #     f = open(image1file,'rb')
-            #     filedata = f.read()
-            #     f.close()
-            #     cursor.execute("UPDATE item SET image[%d] = %s WHERE itemid=(%s);", (i,filedata, item_id))
-            #     conn.commit()
-            #     i += 1
-
-            #cursor.execute("INSERT into item values (%s, %s, '{{ \" %s \" }} ', false, %s);", (item_id, item_name, psycopg2.Binary(filedata), description))
-            # cursor.execute("INSERT into temptable values (%s, %s, %s, false, %s);", (item_id, item_name, psycopg2.Binary(filedata), description))
-            # print ("executed")
+            if filename3 != None:
+                print ("looking for file: " + "tmp/"+ filename3 )
+                print ("loading file")
+                f = open("/tmp/"+filename3,'rb')
+                filedata = f.read()
+                f.close()
+                cursor.execute("UPDATE item SET image3 = %s WHERE itemid=(%s);", (filedata, item_id))
+                conn.commit()
+                os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename3))
 
         except Exception as e:
             print (e)
@@ -264,7 +320,6 @@ def addItem():
             error = 'Item creation has failed.'
             return redirect(url_for('add', error=error))
 
-        # conn.commit()
         error = 'Item successfully added.'
         return redirect(url_for('getItemInfo', item_id=item_id, error=error))
 
@@ -351,46 +406,84 @@ def deleteItemFlag(item_id):
     error = 'Item marked for deletion! Waiting for action by Admin'
     return redirect(url_for('getItemInfo', item_id=item_id, error=error))
 
+#pre-loading information for a specific item
 @app.route('/item/<item_id>', methods=['POST', 'GET'])
 def getItemInfo(item_id):
-
+    # declare all variables
     error = request.args.get('error')
     item_id = item_id
     itemname = None
-    image = None
+    image1 = None
+    image2 = None
+    image3 = None
     description = None
-    delete = None
+    pendingdelete = None
+    sex = None
+    condition = None
+    # timeperiod = None
+    # culture = None
+    color = None
+    size = None
+    itemtype = None
+    # itype = None
+    isavailable = None
     
-    #query = "SELECT * FROM item WHERE itemid='{0}';".format(item_id)
     try: 
+        # Look into doing a single select *, or separate method
         cursor.execute("SELECT itemname FROM item WHERE itemid='{0}';".format(item_id))
         itemname = cursor.fetchone()
-        cursor.execute("SELECT image FROM item WHERE itemid='{0}';".format(item_id))
-        image = cursor.fetchone()
-        # image = list(cursor)
+        cursor.execute("SELECT image1 FROM item WHERE itemid='{0}';".format(item_id))
+        image1 = cursor.fetchone()
+        cursor.execute("SELECT image2 FROM item WHERE itemid='{0}';".format(item_id))
+        image2 = cursor.fetchone()
+        cursor.execute("SELECT image3 FROM item WHERE itemid='{0}';".format(item_id))
+        image3 = cursor.fetchone()
         cursor.execute("SELECT description FROM item WHERE itemid='{0}';".format(item_id))
         description = cursor.fetchone()
         cursor.execute("SELECT pendingdelete FROM item WHERE itemid='{0}';".format(item_id))
-        delete = cursor.fetchone()
-        # print (image)
-        imagedata = []
-        if image[0] != None:
-            for i in image[0]:
-                # print (bytes(i))
-                # imgstr = bytes(i)
-                # print(binascii.hexlify(bytes(i)))
-                # # imgstr = 'data:image/jpeg;base64' + base64.b64encode(bytes(i))
-                # imagedata.append(imgstr)
+        pendingdelete = cursor.fetchone()
+        cursor.execute("SELECT sex FROM item WHERE itemid='{0}';".format(item_id))
+        sex = cursor.fetchone()
+        cursor.execute("SELECT condition FROM item WHERE itemid='{0}';".format(item_id))
+        condition = cursor.fetchone()
+        cursor.execute("SELECT color FROM item WHERE itemid='{0}';".format(item_id))
+        color = cursor.fetchone()
+        cursor.execute("SELECT size FROM item WHERE itemid='{0}';".format(item_id))
+        size = cursor.fetchone()
+        cursor.execute("SELECT itemtype FROM item WHERE itemid='{0}';".format(item_id))
+        itemtype = cursor.fetchone()
+        cursor.execute("SELECT isavailable FROM item WHERE itemid='{0}';".format(item_id))
+        isavailable = cursor.fetchone()
+
+        # print (image1)
+
+        imagedata1 = []
+        if image1[0] != None:
+            for i in image1:
                 image_data = bytes(i)
                 encoded = base64.b64encode(image_data)
                 stren = encoded.decode("utf-8")
-                imagedata.append(stren)
+                imagedata1.append(stren)
 
                 # to show image as a seperate pop-up (?) --local only
                 # data = base64.b64decode(encoded)
                 # image1 = Image.open(BytesIO(image_data))
                 # image1.show()
-                print (i)
+        imagedata2 = []
+        if image2[0] != None:
+            for i in image2:
+                image_data = bytes(i)
+                encoded = base64.b64encode(image_data)
+                stren = encoded.decode("utf-8")
+                imagedata2.append(stren)
+
+        imagedata3 = []
+        if image3[0] != None:
+            for i in image3:
+                image_data = bytes(i)
+                encoded = base64.b64encode(image_data)
+                stren = encoded.decode("utf-8")
+                imagedata3.append(stren)
         
     except Exception as e: 
         print (e)
@@ -400,36 +493,59 @@ def getItemInfo(item_id):
         error = 'Item information cannot be retrieved'
         return redirect(url_for('loggedin', error=error))
 
-    #NOTE:  image should be a list/array
-    return render_template('item.html', itemid=item_id, itemname=itemname, image=imagedata, description=description, delete=delete, error=error)
-    # print("here")
-    # return render_template('item.html', error=error)
+    return render_template('item.html', itemid=item_id, itemname=itemname, image=imagedata1, image2=imagedata2, image3=imagedata3, description=description, delete=pendingdelete, sex=sex, condition=condition, color=color, size=size, itemtype=itemtype, isavailable=isavailable, error=error)
 
 # renders editItem page
 @app.route('/editItem/<item_id>', methods=["POST", "GET"])
 def edit(item_id):
-
+    # declare all variables
     error = request.args.get('error')
     item_id = item_id
-    #itemname = request.form['itemname']
-    #description = request.form['description']
     itemname = None
-    image = None
+    image1 = None
+    image2 = None
+    image3 = None
     description = None
-    delete = None
+    pendingdelete = None
+    sex = None
+    condition = None
+    # timeperiod = None
+    # culture = None
+    color = None
+    size = None
+    itemtype = None
+    # itype = None
+    isavailable = None
     
     #query = "SELECT * FROM item WHERE itemid='{0}';".format(item_id)
     try: 
-        #query = ("UPDATE item SET itemname ='{2}', description ='{1}' WHERE itemid='{0}';".format(item_id, itemname, description))
-        #cursor.execute(query)
         cursor.execute("SELECT itemname FROM item WHERE itemid='{0}';".format(item_id))
         itemname = cursor.fetchone()
-        cursor.execute("SELECT image FROM item WHERE itemid='{0}';".format(item_id))
-        image = cursor.fetchall()
+        cursor.execute("SELECT image1 FROM item WHERE itemid='{0}';".format(item_id))
+
+        #needed later?
+        # image1 = cursor.fetchone()
+        # cursor.execute("SELECT image2 FROM item WHERE itemid='{0}';".format(item_id))
+        # image2 = cursor.fetchone()
+        # cursor.execute("SELECT image3 FROM item WHERE itemid='{0}';".format(item_id))
+        # image3 = cursor.fetchone()
+
         cursor.execute("SELECT description FROM item WHERE itemid='{0}';".format(item_id))
         description = cursor.fetchone()
         cursor.execute("SELECT pendingdelete FROM item WHERE itemid='{0}';".format(item_id))
-        delete = cursor.fetchone()
+        pendingdelete = cursor.fetchone()
+        cursor.execute("SELECT sex FROM item WHERE itemid='{0}';".format(item_id))
+        sex = cursor.fetchone()
+        cursor.execute("SELECT condition FROM item WHERE itemid='{0}';".format(item_id))
+        condition = cursor.fetchone()
+        cursor.execute("SELECT color FROM item WHERE itemid='{0}';".format(item_id))
+        color = cursor.fetchone()
+        cursor.execute("SELECT size FROM item WHERE itemid='{0}';".format(item_id))
+        size = cursor.fetchone()
+        cursor.execute("SELECT itemtype FROM item WHERE itemid='{0}';".format(item_id))
+        itemtype = cursor.fetchone()
+        cursor.execute("SELECT isavailable FROM item WHERE itemid='{0}';".format(item_id))
+        isavailable = cursor.fetchone()
         #print ("executed")
     except Exception as e: 
         cursor.execute("rollback;")
@@ -438,8 +554,8 @@ def edit(item_id):
         error = 'Item information cannot be retrieved'
         return redirect(url_for('loggedin', error=error))
 
-    return render_template('editItem.html', itemid=item_id, itemname=itemname, image=image, description=description, delete=delete, error=error)
-    #return redirect(url_for('getItemInfo', item_id=item_id))
+    return render_template('editItem.html', itemid=item_id, itemname=itemname, description=description, delete=pendingdelete, sex=sex, condition=condition, color=color, size=size, itemtype=itemtype, isavailable=isavailable, error=error)
+
 @app.route('/posteditItem/<item_id>', methods=["POST"])
 def editItem(item_id):
     item_id = item_id
