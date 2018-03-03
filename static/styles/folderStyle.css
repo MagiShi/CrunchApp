@@ -27,6 +27,10 @@
     cursor: pointer;
 }
 
+.list-group-item {
+    padding: 0.75rem 1.0rem;
+}
+
 .folder-name {
     color: black;
 }
@@ -48,10 +52,25 @@
     outline:none !important;
 }
 
-#delete-folder-style:hover .hover-red {
+.icon-button.delete-folder:hover .hover-red {
     fill:red;
 }
 
-#edit-folder-style:hover .hover-blue {
+.icon-button.rename-folder:hover .hover-blue {
     fill:#0275d8;
+}
+
+#save-name-button {
+    background-color: #0275d8;
+}
+#save-name-button:hover {
+    background-color: #0042A5;
+}
+
+#input-folder-name {
+    padding: 0.5rem 0.5rem;
+}
+
+.hide {
+    display: none;
 }
