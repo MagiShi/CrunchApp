@@ -301,7 +301,7 @@ def editProdFolders(item_id):
     error = None
     return redirect(url_for('getItemInfo', item_id=item_id, error=error))
 
-@app.route('/folders')
+@app.route('/folders', methods=['POST', 'GET'])
 def prodFolders():
     foldername = None
     folderid = None
@@ -311,8 +311,26 @@ def prodFolders():
     folderid = cursor.fetchall()
     cursor.execute(folderNameQuery)
     foldername = cursor.fetchall()
+    error = request.args.get('error')
 
-    return render_template('prodFolders.html', folderid=folderid, foldername=foldername)
+    return render_template('prodFolders.html', folderid=folderid, foldername=foldername, error=error)
+
+@app.route('/postrenameFolders', methods=['POST'])
+def renameFolders():
+    foldername = request.form['foldername']
+    folderid = request.form['saveNameButton']
+    try:
+        query = "UPDATE folder SET foldername ='{1}' WHERE folderid='{0}';".format(folderid, foldername)
+        cursor.execute(query)
+        conn.commit()
+    except Exception as e:
+        cursor.execute("rollback;")
+
+        ##If folder does not exist etc
+        error = 'Folder information cannot be retrieved'
+        return redirect(url_for('prodFolders', error=error))
+    return redirect(url_for('prodFolders'))
+
 
 @app.route('/deleteItem/<item_id>', methods=['POST'])
 def deleteItemFlag(item_id):

@@ -107,17 +107,18 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="modal-body" style="text-align: left;">
-                                    <div class="form-group">
-                                        <input type="text" name="foldername" class="form-control" id="input-folder-name-1" placeholder="Folder Name">
+
+                                <form method=POST action="{{ url_for('renameFolders') }}">
+                                    <div class="modal-body" style="text-align: left;">
+                                        <div class="form-group">
+                                            <input type="text" name="foldername" class="form-control" id="input-folder-name-1" placeholder="Folder Name">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                    <!-- <form method=POST action='/deleteFolder/{{folderid}}'>    -->
-                                        <button class="btn btn-primary" id="save-name-button" type="submit">Save changes</button>
-                                    <!-- </form> -->
-                                </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                        <button class="btn btn-primary" name="saveNameButton" id="save-name-button" type="submit">Save changes</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
