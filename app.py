@@ -194,16 +194,51 @@ def addItem():
         except: 
             sex = None
         
-        try: 
-            condition = request.form['condition']
-        except: 
-            condition = None
-        # timeperiod = request.form['timeSelect']
-        # culture = request.form['culture']
+        # try: 
+        #     condition = request.form['condition']
+        # except: 
+        #     condition = None
+
+        # try:
+        #     timeperiodL = request.form.getlist('colorSelect')
+        #     # print (colorL)
+        #     timeperiod = '{'
+        #     for c in range(len(timeperiodL)):
+        #         if c >= len(timeperiodL) -1:
+        #             timeperiod += '{0}'.format(timeperiodL[c])
+        #         else: 
+        #             timeperiod += '{0}, '.format(timeperiodL[c])
+        #     timeperiod += '}'
+        # except:
+        #     timeperiod = None
+
+        # try:
+        #     cultureL = request.form.getlist('colorSelect')
+        #     # print (colorL)
+        #     culture = '{'
+        #     for c in range(len(cultureL)):
+        #         if c >= len(cultureL) -1:
+        #             culture += '{0}'.format(cultureL[c])
+        #         else: 
+        #             culture += '{0}, '.format(cultureL[c])
+        #     culture += '}'
+        # except:
+        #     culture = None
+
         try:
-            color = request.form['colorSelect']
+            colorL = request.form.getlist('colorSelect')
+            # print (colorL)
+            color = '{'
+            for c in range(len(colorL)):
+                if c >= len(colorL) -1:
+                    color += '{0}'.format(colorL[c])
+                else: 
+                    color += '{0}, '.format(colorL[c])
+            color += '}'
+            # print (color)
         except:
             color = None
+
         try:
             size = request.form['sizeSelect']
         except:
@@ -212,8 +247,10 @@ def addItem():
             itemtype = request.form['typeSelect']
         except:
             itemtype = None
- 
-        # itype = request.form['itypeSelect']
+        # try:
+        #     itype = request.form['itypeSelect']
+        # except:
+        #     itype = None
         error = None
         file1 = None
         file2 = None
@@ -252,6 +289,7 @@ def addItem():
                 file3.save(os.path.join(app.config['UPLOAD_FOLDER'], filename3))
             else:
                 filename3 = None
+
         except Exception as e:
             print ("file3", e)
             filename3 = None
@@ -264,8 +302,12 @@ def addItem():
 
         # query = "INSERT into item(itemid, itemname, pendingdelete, description, sex, condition, timeperiod, culture, color, size, itemtype, itype, isavailable) values ('{0}', '{1}',  false, '{2}');".format(item_id, item_name, description)
 
-        charlist = [item_id, item_name, description, sex, condition, color, size, itemtype]
-        query = "INSERT into item(itemid, itemname, description, sex, condition, color, size, itemtype, isavailable, pendingdelete) values ("
+        # charlist = [item_id, item_name, description, sex, condition, timeperiod, culture, color, size, itemtype, itype]
+        # query = "INSERT into item(itemid, itemname, description, sex, condition, timeperiod, culture, color, size, itemtype, itype, isavailable, pendingdelete) values ("
+
+        #for mult
+        charlist = [item_id, item_name, description, sex, color, size, itemtype]
+        query = "INSERT into item(itemid, itemname, description, sex, color, size, itemtype, isavailable, pendingdelete) values ("
 
 
         for char in charlist:
@@ -419,7 +461,7 @@ def getItemInfo(item_id):
     description = None
     pendingdelete = None
     sex = None
-    condition = None
+    # condition = None
     # timeperiod = None
     # culture = None
     color = None
@@ -444,14 +486,20 @@ def getItemInfo(item_id):
         pendingdelete = cursor.fetchone()
         cursor.execute("SELECT sex FROM item WHERE itemid='{0}';".format(item_id))
         sex = cursor.fetchone()
-        cursor.execute("SELECT condition FROM item WHERE itemid='{0}';".format(item_id))
-        condition = cursor.fetchone()
+        # cursor.execute("SELECT condition FROM item WHERE itemid='{0}';".format(item_id))
+        # condition = cursor.fetchone()
+        # cursor.execute("SELECT timeperiod FROM item WHERE itemid='{0}';".format(item_id))
+        # timeperiod = cursor.fetchone()
+        # cursor.execute("SELECT culture FROM item WHERE itemid='{0}';".format(item_id))
+        # culture = cursor.fetchone()
         cursor.execute("SELECT color FROM item WHERE itemid='{0}';".format(item_id))
         color = cursor.fetchone()
         cursor.execute("SELECT size FROM item WHERE itemid='{0}';".format(item_id))
         size = cursor.fetchone()
         cursor.execute("SELECT itemtype FROM item WHERE itemid='{0}';".format(item_id))
         itemtype = cursor.fetchone()
+        # cursor.execute("SELECT itype FROM item WHERE itemid='{0}';".format(item_id))
+        # itype = cursor.fetchone()
         cursor.execute("SELECT isavailable FROM item WHERE itemid='{0}';".format(item_id))
         isavailable = cursor.fetchone()
 
@@ -493,7 +541,9 @@ def getItemInfo(item_id):
         error = 'Item information cannot be retrieved'
         return redirect(url_for('loggedin', error=error))
 
-    return render_template('item.html', itemid=item_id, itemname=itemname, image=imagedata1, image2=imagedata2, image3=imagedata3, description=description, delete=pendingdelete, sex=sex, condition=condition, color=color, size=size, itemtype=itemtype, isavailable=isavailable, error=error)
+    ##culture, color, timeperiod are all arrays
+    return render_template('item.html', itemid=item_id, itemname=itemname, image=imagedata1, image2=imagedata2, image3=imagedata3, description=description, delete=pendingdelete, sex=sex, color=color, size=size, itemtype=itemtype, isavailable=isavailable, error=error)
+    # return render_template('item.html', itemid=item_id, itemname=itemname, image=imagedata1, image2=imagedata2, image3=imagedata3, description=description, delete=pendingdelete, sex=sex, condition=condition, timeperiod=timeperiod, culture=culture color=color, size=size, itemtype=itemtype, itype=itype, isavailable=isavailable, error=error)
 
 # renders editItem page
 @app.route('/editItem/<item_id>', methods=["POST", "GET"])
@@ -508,7 +558,7 @@ def edit(item_id):
     description = None
     pendingdelete = None
     sex = None
-    condition = None
+    # condition = None
     # timeperiod = None
     # culture = None
     color = None
@@ -536,8 +586,8 @@ def edit(item_id):
         pendingdelete = cursor.fetchone()
         cursor.execute("SELECT sex FROM item WHERE itemid='{0}';".format(item_id))
         sex = cursor.fetchone()
-        cursor.execute("SELECT condition FROM item WHERE itemid='{0}';".format(item_id))
-        condition = cursor.fetchone()
+        # cursor.execute("SELECT condition FROM item WHERE itemid='{0}';".format(item_id))
+        # condition = cursor.fetchone()
         cursor.execute("SELECT color FROM item WHERE itemid='{0}';".format(item_id))
         color = cursor.fetchone()
         cursor.execute("SELECT size FROM item WHERE itemid='{0}';".format(item_id))
@@ -554,7 +604,10 @@ def edit(item_id):
         error = 'Item information cannot be retrieved'
         return redirect(url_for('loggedin', error=error))
 
-    return render_template('editItem.html', itemid=item_id, itemname=itemname, description=description, delete=pendingdelete, sex=sex, condition=condition, color=color, size=size, itemtype=itemtype, isavailable=isavailable, error=error)
+    ##culture, color, timeperiod are all arrays
+    return render_template('editItem.html', itemid=item_id, itemname=itemname, description=description, delete=pendingdelete, sex=sex, color=color, size=size, itemtype=itemtype, isavailable=isavailable, error=error)
+    # return render_template('editItem.html', itemid=item_id, itemname=itemname, description=description, delete=pendingdelete, sex=sex, condition=condition, timeperiod=timeperiod, culture=culture color=color, size=size, itemtype=itemtype, itype=itype, isavailable=isavailable, error=error)
+    # return render_template('editItem.html', itemid=item_id, itemname=itemname, image=imagedata1, image2=imagedata2, image3=imagedata3, description=description, delete=pendingdelete, sex=sex, condition=condition, timeperiod=timeperiod, culture=culture color=color, size=size, itemtype=itemtype, itype=itype, isavailable=isavailable, error=error)
 
 @app.route('/posteditItem/<item_id>', methods=["POST"])
 def editItem(item_id):
