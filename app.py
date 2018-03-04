@@ -19,6 +19,7 @@ app.secret_key = os.urandom(24)
 #configuring upload_folder variable
 app.config['UPLOAD_FOLDER'] = "/tmp/"
 
+
 app.config.update(
     # DEBUG=True,
     #EMAIL SETTINGS
@@ -26,12 +27,13 @@ app.config.update(
     MAIL_PORT=465,
     MAIL_USE_SSL=True,
     MAIL_USERNAME = 'crunch.thracker@gmail.com',
-    # MAIL_PASSWORD = os.environ['epassword']
+    MAIL_PASSWORD = os.environ['epassword']
     )
 mail = Mail(app)
 
 #configuring database url and path
 url = urlparse(os.environ['DATABASE_URL'])
+
 db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname)
 schema = "schema.sql"
 #connecting a cursor for the database
@@ -375,6 +377,17 @@ def toEditProdFolders(item_id):
     item_id = item_id
     error = None
     itemname = None
+    foldername = None
+    folderid = None
+
+    folderidQuery = "SELECT folderid FROM folder;"
+    folderNameQuery = "SELECT foldername FROM folder;"
+    cursor.execute(folderidQuery)
+    folderid = cursor.fetchall()
+    cursor.execute(folderNameQuery)
+    foldername = cursor.fetchall()
+    error = request.args.get('error')
+
     
     #query = "SELECT * FROM item WHERE itemid='{0}';".format(item_id)
     try: 
@@ -389,7 +402,7 @@ def toEditProdFolders(item_id):
         # error = 'Item information cannot be retrieved'
         # return redirect(url_for('loggedin', error=error))
 
-    return render_template('editProdFolders.html', itemid=item_id, itemname=itemname, error=error)
+    return render_template('editProdFolders.html', itemid=item_id, itemname=itemname, folderid=folderid, foldername=foldername, error=error)
 
 @app.route('/posteditFolders/<item_id>', methods=['POST'])
 def editProdFolders(item_id):

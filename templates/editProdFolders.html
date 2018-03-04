@@ -39,22 +39,13 @@
                                 <h6>Choose which folders you want to add/remove {{ itemname | first }} from</h6>
                             </div>
                             <div class="list-group">
+                                <!-- TO DO: AutoSelect Folders item belongs to -->
                                 <div class="btn-gtoup" data-toggle="buttons">
+                                    {% for folder in foldername %}
                                     <label class="btn list-group-item list-group-item-action">
-                                        <input type="checkbox" name="options" id="option1" autocomplete="off"> Folder 1
+                                        <input type="checkbox" name="options" id="folder_{{folderid[loop.index0][0]}}" autocomplete="off"> {{folder[0]}}
                                     </label>
-                                    <label class="btn list-group-item list-group-item-action">
-                                        <input type="checkbox" name="options" id="option2" autocomplete="off"> Folder 2
-                                    </label>
-                                    <label class="btn list-group-item list-group-item-action">
-                                        <input type="checkbox" name="options" id="option3" autocomplete="off"> Folder 3
-                                    </label>
-                                    <label class="btn list-group-item list-group-item-action">
-                                        <input type="checkbox" name="options" id="option1" autocomplete="off"> Folder 4
-                                    </label>
-                                    <label class="btn list-group-item list-group-item-action">
-                                        <input type="checkbox" name="options" id="option1" autocomplete="off"> Folder 5
-                                    </label>
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>
