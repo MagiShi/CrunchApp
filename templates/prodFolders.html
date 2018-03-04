@@ -33,8 +33,7 @@
                         <p class="error" style="color:red;"><strong>*</strong> {{ error }}
                     {% endif %}
 
-                    <!-- <form method=POST action='/postaddItem' enctype=multipart/form-data> -->
-                        <!-- TO DO: ROUTING -->
+                    <form method=POST action='/folders'>
 
                         <div class="form-group">
                             <div class="input-title">
@@ -67,9 +66,8 @@
                         </div>
 
                         <!-- CREATE NEW FOLDER BUTTON -->
-                        <button type="submit" name="create-folder-button" class="btn" id="create-folder-button" value="Create" data-toggle="modal" data-target="#add-folder-modal">Create New Folder</button>
-                    <!-- </form> -->
-
+                        <button type="button" name="create-folder-button" class="btn" id="create-folder-button" value="Create" data-toggle="modal" data-target="#add-folder-modal">Create New Folder</button>
+                    </form>
 
                     <!-- TO DO: FOLDER DELETION -->
                     <!-- Deletion Confirmation Modal -->
@@ -158,6 +156,14 @@
     $(document).ready(function() {
         $('#delete-confirmed').click(function() {
             location.href = 'folders';
+        });
+
+        $('#add-folder-button').click(function() {
+            location.href = '/folders';
+        });
+        $( '#add-folder-button' ).click(function() {
+            $('#add-folder-modal-modal').modal('show');
+            return false;
         });
     });
 

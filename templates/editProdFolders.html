@@ -19,6 +19,7 @@
         <!-- Our CSS -->
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/folderStyle.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/addStyle.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/modalStyle.css') }}">
 
     </head>
     <body>
@@ -40,6 +41,7 @@
                                 <!-- TO DO: AutoSelect Folders item belongs to -->
                                 <div class="btn-gtoup" data-toggle="buttons">
                                     {% for folder in foldername %}
+                                    <!-- class="active" -->
                                     <label class="btn list-group-item list-group-item-action">
                                         <input type="checkbox" name="options" id="folder_{{folderid[loop.index0][0]}}" autocomplete="off"> {{folder[0]}}
                                     </label>
@@ -123,7 +125,6 @@
             $('#cancel-modal').modal('show');
             return false;
         });
-
 
         $('#add-folder-button').click(function() {
             location.href = '/editFolders/{{itemid}}';
