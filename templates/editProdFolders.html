@@ -63,7 +63,7 @@
 
                         <!-- CANCEL BUTTON -->
                         <!-- Trigger the confirmation modal -->
-                        <button type="submit" name="cancel-button" class="btn" id="cancel-button" value="Cancel">Cancel</button>
+                        <button type="button" name="cancel-button" class="btn" id="cancel-button" value="Cancel" data-toggle="modal" data-target="#cancel-modal">Cancel</button>
 
                         <!--ADD/REMOVE BUTTON-->
                         <button type="submit" name="add-to-folder-button" class="btn offset-md-1" id="add-to-folder-button" value="Add">Add to Selected Folder(s)</button>
@@ -132,17 +132,9 @@
         $('#cancel-confirmed').click(function() {
             location.href = '/item/{{itemid}}';
         });
-        $( '#cancel-button' ).click(function() {
-            $('#cancel-modal').modal('show');
-            return false;
-        });
 
         $('#add-folder-button').click(function() {
             location.href = '/editFolders/{{itemid}}';
-        });
-        $( '#add-folder-button' ).click(function() {
-            $('#add-folder-modal-modal').modal('show');
-            return false;
         });
     });
 </script>

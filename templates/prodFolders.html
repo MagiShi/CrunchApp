@@ -33,8 +33,7 @@
                         <p class="error" style="color:red;"><strong>*</strong> {{ error }}
                     {% endif %}
 
-                    <form method=POST action='/folders'>
-
+                    <div style="text-align:center;">
                         <div class="form-group">
                             <div class="input-title">
                                 <h6>Select a Production Folder</h6>
@@ -46,19 +45,18 @@
                                     <div class="d-flex w-100 justify-content-between" style="text-align:left;">
                                         <!-- TO DO: link to Production Folder Contents Page-->
                                         <a href="/home" class="folder-name">{{folder[0]}}</a>
-                                        <!-- The inline editing <input>. Either this or #rename-modal! -->
-                                        <input type="text" name="foldername" class="form-control hide" id="input-folder-name" placeholder="Folder Name" value="{{folder[0]}}">
                                     
-                                    <div style="min-width:51px; margin-left:13px;">
-                                        <!--EDIT NAME BUTTON-->
-                                        <button type="button" id="rename_{{folderid[loop.index0][0]}}" class="icon-button rename-folder" onclick="activate_rename_field(folder_{{folderid[loop.index0][0]}});" data-toggle="modal" data-target="#rename-modal">
-                                            {% include 'icon/pencil.svg' %}
-                                        </button>
-                                        <!--DELETE FOLDER BUTTON-->
-                                        <button type="button" id="{{folderid[loop.index0][0]}}" class="icon-button delete-folder"
-                                        data-toggle="modal" data-target="#delete-modal" style="margin-left: 5px;"">
-                                            {% include 'icon/delete.svg' %}
-                                        </button>
+                                        <div style="min-width:51px; margin-left:13px;">
+                                            <!--EDIT NAME BUTTON-->
+                                            <button type="button" id="rename_{{folderid[loop.index0][0]}}" class="icon-button rename-folder" onclick="activate_rename_field(folder_{{folderid[loop.index0][0]}});" data-toggle="modal" data-target="#rename-modal">
+                                                {% include 'icon/pencil.svg' %}
+                                            </button>
+                                            <!--DELETE FOLDER BUTTON-->
+                                            <button type="button" id="{{folderid[loop.index0][0]}}" class="icon-button delete-folder"
+                                            data-toggle="modal" data-target="#delete-modal" style="margin-left: 5px;"">
+                                                {% include 'icon/delete.svg' %}
+                                            </button>
+                                        </div>
                                     </div>
                                 </li>
                                 {% endfor %}
@@ -67,7 +65,7 @@
 
                         <!-- CREATE NEW FOLDER BUTTON -->
                         <button type="button" name="create-folder-button" class="btn" id="create-folder-button" value="Create" data-toggle="modal" data-target="#add-folder-modal">Create New Folder</button>
-                    </form>
+                    </div>
 
                     <!-- TO DO: FOLDER DELETION -->
                     <!-- Deletion Confirmation Modal -->
@@ -157,20 +155,7 @@
         $('#delete-confirmed').click(function() {
             location.href = 'folders';
         });
-
-        $('#add-folder-button').click(function() {
-            location.href = '/folders';
-        });
-        $( '#add-folder-button' ).click(function() {
-            $('#add-folder-modal-modal').modal('show');
-            return false;
-        });
     });
-
-    // function activate_rename_field(folder_name) {
-    //     jQuery(folder_name).find( "a.folder-name").toggleClass( "hide" );
-    //     jQuery(folder_name).find( "#input-folder-name").toggleClass( "hide" );
-    // }
 
     function activate_rename_field(folder_name) {
         $('#rename-modal').on('show.bs.modal', function(e) {
