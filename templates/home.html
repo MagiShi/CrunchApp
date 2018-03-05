@@ -20,13 +20,13 @@
         <!-- Home page functions -->
         <script src="{{ url_for('static',filename='homepage.js') }}"></script>
     </head>
-    <body onload="homepageFilterMenuSetup()">
+    <body onload="setupHomepageFilterMenu()">
         <!--SEARCH BAR-->
         {% include 'navbar.html' %}
         <!-- MAIN PAGE CONTENT -->
         <div class="all-items container-fluid">
-            <div class="row" id="current-filters" onclick="updateCurrentFilters()">
-                Retrieving current filters...
+            <div class="row" id="current-filters">
+               (Current filters appear here)
             </div>
             <!-- ITEM LIST -->
             <div class="row">
