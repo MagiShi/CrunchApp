@@ -1,8 +1,8 @@
 // For the opening and closing of the left filter menu
 function toggleFilterMenu() {
     if (document.getElementById("filter-menu").style.width == "300px") {
-        var menuItems = document.getElementById("filter-menu").getElementsByTagName('a');
-        for (var i = 1; i < menuItems.length; i++) {
+        var menuItems = document.getElementById("filter-menu").getElementsByTagName('input');
+        for (var i = 0; i < menuItems.length; i++) {
             menuItems[i].style.opacity = 0;
         }
         document.getElementById("filter-menu").style.width = "0";
@@ -11,8 +11,8 @@ function toggleFilterMenu() {
             toggleAccountMenu();
         }
 
-        var menuItems = document.getElementById("filter-menu").getElementsByTagName('a');
-        for (var i = 1; i < menuItems.length; i++) {
+        var menuItems = document.getElementById("filter-menu").getElementsByTagName('input');
+        for (var i = 0; i < menuItems.length; i++) {
             menuItems[i].style.opacity = 1;
         }
         document.getElementById("filter-menu").style.width = "300px";

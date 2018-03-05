@@ -1,37 +1,30 @@
 /* Filter Menu's "Accordion" Panels */
-.accordion {
-    background-color: #eee;
-    color: #444;
+.filter-menu-title {
+    background-color: #2a2a2a;
+    color: white;
     cursor: pointer;
-    padding: 18px;
+    padding: 8px 15px;
     width: 100%;
     border: none;
     text-align: left;
-    outline: none;
     font-size: 15px;
-    transition: 0.4s;
+    transition: 0.3s;
 }
-
-.active, .accordion:hover {
-    background-color: #ccc;
+/* Filter Menu Title on Hover */
+.active, .filter-menu-title:hover {
+    background-color: #5d5d5d;
 }
-
-.accordion:after {
-    color: #777;
-    font-weight: bold;
-    float: right;
-    margin-left: 5px;
-}
-
+/* Container holding all the filter options */
 .panel {
     padding: 0 18px;
-    color: black;
-    background-color: white;
+    color: color;
+    background-color: black;
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.1s;
 }
 
+/* Main Navigation Bar color */
 .navbar {
     background: #7fc1ef;
 }
@@ -140,7 +133,7 @@
     position: fixed;
     z-index: 9999;
     top: 0;
-    background-color: #111;
+    background-color: #2a2a2a;
     overflow-x: hidden;
     transition: 0.3s;
     padding-top: 60px;
