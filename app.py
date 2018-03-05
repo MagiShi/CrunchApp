@@ -32,7 +32,7 @@ app.config.update(
 mail = Mail(app)
 
 #configuring database url and path
-url = urlparse(os.environ(['DATAPATH_URL']))
+url = urlparse(os.environ['DATABASE_URL'])
 
 db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname)
 schema = "schema.sql"
