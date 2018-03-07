@@ -378,12 +378,8 @@ def toEditProdFolders(item_id):
     error = None
     itemname = None
     foldername = None
-    folderid = None
 
-    folderidQuery = "SELECT folderid FROM folder;"
     folderNameQuery = "SELECT foldername FROM folder;"
-    cursor.execute(folderidQuery)
-    folderid = cursor.fetchall()
     cursor.execute(folderNameQuery)
     foldername = cursor.fetchall()
     error = request.args.get('error')
@@ -402,7 +398,7 @@ def toEditProdFolders(item_id):
         # error = 'Item information cannot be retrieved'
         # return redirect(url_for('loggedin', error=error))
 
-    return render_template('editProdFolders.html', itemid=item_id, itemname=itemname, folderid=folderid, foldername=foldername, error=error)
+    return render_template('editProdFolders.html', itemid=item_id, itemname=itemname, foldername=foldername, error=error)
 
 @app.route('/posteditFolders/<item_id>', methods=['POST'])
 def editProdFolders(item_id):
@@ -413,27 +409,23 @@ def editProdFolders(item_id):
 # render Production Folders page with all folders in the database
 @app.route('/folders', methods=['POST', 'GET'])
 def prodFolders():
-    foldername = None
-    folderid = None
-    folderidQuery = "SELECT folderid FROM folder;"
+    foldernames = None
     folderNameQuery = "SELECT foldername FROM folder;"
-    cursor.execute(folderidQuery)
-    folderid = cursor.fetchall()
     cursor.execute(folderNameQuery)
-    foldername = cursor.fetchall()
+    foldernames = cursor.fetchall()
     error = request.args.get('error')
 
-    return render_template('prodFolders.html', folderid=folderid, foldername=foldername, error=error)
+    return render_template('prodFolders.html', foldernames=foldernames, error=error)
 
 # Update the name of production folder
-@app.route('/postrenameFolders', methods=['POST'])
-def renameFolders():
+@app.route('/postrenameFolder', methods=['POST'])
+def renameFolder():
     # get the folder new name from the user's input
-    foldername = request.form['foldername']
+    folderNewName = request.form['foldername']
     # get the folder id from the value of 'Save' button
-    folderid = request.form['saveNameButton']
+    folderCurrentname = request.form['saveNameButton']
     try:
-        query = "UPDATE folder SET foldername ='{1}' WHERE folderid='{0}';".format(folderid, foldername)
+        query = "UPDATE folder SET foldername ='{1}' WHERE foldername='{0}';".format(folderCurrentname, folderNewName)
         cursor.execute(query)
         conn.commit()
     except Exception as e:

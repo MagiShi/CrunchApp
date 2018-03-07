@@ -40,20 +40,19 @@
                             </div>
 
                             <ul class="list-group">
-                                {% for folder in foldername %}
-                                <li id="folder_{{folderid[loop.index0][0]}}" class="list-group-item list-group-item-action flex-column">
+                                {% for foldername in foldernames %}
+                                <li id="folder_{{foldername[0]}}" class="list-group-item list-group-item-action flex-column">
                                     <div class="d-flex w-100 justify-content-between" style="text-align:left;">
                                         <!-- TO DO: link to Production Folder Contents Page-->
-                                        <a href="folders/{{folder[0]}}" class="folder-name">{{folder[0]}}</a>
+                                        <a href="folders/{{foldername[0]}}" class="folder-name">{{foldername[0]}}</a>
                                     
                                         <div style="min-width:51px; margin-left:13px;">
                                             <!--EDIT NAME BUTTON-->
-                                            <button type="button" id="rename_{{folderid[loop.index0][0]}}" class="icon-button rename-folder" onclick="activate_rename_field(folder_{{folderid[loop.index0][0]}});" data-toggle="modal" data-target="#rename-modal">
+                                            <button type="button" class="icon-button rename-folder" onclick="activate_rename_field('{{foldername[0]}}');" data-toggle="modal" data-target="#rename-modal">
                                                 {% include 'icon/pencil.svg' %}
                                             </button>
                                             <!--DELETE FOLDER BUTTON-->
-                                            <button type="button" id="{{folderid[loop.index0][0]}}" class="icon-button delete-folder"
-                                            data-toggle="modal" data-target="#delete-modal" style="margin-left: 5px;"">
+                                            <button type="button" class="icon-button delete-folder" data-toggle="modal" data-target="#delete-modal" style="margin-left: 5px;">
                                                 {% include 'icon/delete.svg' %}
                                             </button>
                                         </div>
@@ -103,7 +102,7 @@
                                     </button>
                                 </div>
 
-                                <form method=POST action="{{ url_for('renameFolders') }}">
+                                <form method=POST action="{{ url_for('renameFolder') }}">
                                     <div class="modal-body" style="text-align: left;">
                                         <div class="form-group">
                                             <input type="text" name="foldername" class="form-control" id="input-folder-name-1" placeholder="Folder Name">
@@ -159,9 +158,8 @@
 
     function activate_rename_field(folder_name) {
         $('#rename-modal').on('show.bs.modal', function(e) {
-            folderid = folder_name.id.split("_")[1];
-            $(this).find("input").val(jQuery(folder_name).find( "a.folder-name").text());
-            $(this).find("#save-name-button").val(folderid);
+            $(this).find("input").val(folder_name);
+            $(this).find("#save-name-button").val(folder_name);
         });
     }
 
