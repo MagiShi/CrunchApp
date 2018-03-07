@@ -445,6 +445,19 @@ def renameFolders():
     # Refresh the Production Folders page with the updated name of the folder
     return redirect(url_for('prodFolders'))
 
+@app.route('/folders/<foldername>', methods=['POST', 'GET'])
+def folderContents(foldername):
+    error = request.args.get('error')
+    foldername = foldername
+    # try:
+    # except Exception as e:
+    #     cursor.execute("rollback;")
+
+    #     ##If folder does not exist etc
+    #     error = 'Folder information cannot be retrieved'
+    #     return redirect(url_for('prodFolders', error=error))
+    # # Refresh the Production Folders page with the updated name of the folder
+    return render_template('prodFolderContents.html', error=error, foldername = foldername)
 
 @app.route('/deleteItem/<item_id>', methods=['POST'])
 def deleteItemFlag(item_id):
