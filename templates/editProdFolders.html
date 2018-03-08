@@ -53,7 +53,7 @@
                                     {% endif %} -->
 
 
-                                    <label class="btn list-group-item list-group-item-action">
+                                    <label class="btn list-group-item list-group-item-action" id="folder_{{folder[0]}}">
                                         <input type="checkbox" name="options" autocomplete="off"> {{folder[0]}}
                                     </label>
                                     {% endfor %}
@@ -110,7 +110,7 @@
                                 <!-- <form method=POST action="/addFolders"> -->
                                     <div class="modal-body">
                                         <div class="form-group">
-                                            <input type="text" name="foldername" class="form-control" id="input-folder-name-1" placeholder="Folder Name">
+                                            <input type="text" name="foldername" class="form-control" id="input-new-folder" placeholder="Folder Name">
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -134,7 +134,35 @@
         });
 
         $('#add-folder-button').click(function() {
-            location.href = '/editFolders/{{itemid}}';
+            //remove trailing space and tab from the beginning and end of the name string
+            var name_input = $('#input-new-folder').val().trim();
+            $('#input-new-folder').val(name_input);
+
+            if ( name_input.length === 0) {
+                $('#add-folder-button').prop('type', 'button');
+                alert("The name either is empty or contains only white spaces. Please input the eligible name for the folder. Example: Folder number 12");
+                return;
+            } else {
+                alert_text = "There is an existing folder with that name. Please use the different name for the folder you are creating."
+                check_duplicate_folder_name("#add-folder-button", name_input, alert_text);
+            }
         });
     });
+
+    function check_duplicate_folder_name(button_id, name_input, alert_text) {
+        var is_duplicate = false;
+        $( '.list-group-item' ).each(function() {
+            var foldername = $(this).attr('id').split("_")[1];
+            if (foldername === name_input) {
+                alert(alert_text);
+                $(button_id).prop('type', 'button');
+                is_duplicate = true;
+            }
+        });
+
+        if (!is_duplicate) {
+            $(button_id).prop('type', 'submit');
+            location.href = '/editFolders/{{itemid}}';
+        }
+    }
 </script>

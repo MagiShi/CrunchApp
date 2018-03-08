@@ -205,18 +205,21 @@
     }
 
     function check_duplicate_folder_name(button_id, name_input, alert_text) {
+        var is_duplicate = false;
         $( '.list-group-item' ).each(function() {
             var foldername = $(this).attr('id').split("_")[1];
             if (foldername !== current_renamed_folder) {
                 if (foldername === name_input) {
                     alert(alert_text);
                     $(button_id).prop('type', 'button');
-                    return;
-                } else {
-                    $(button_id).prop('type', 'submit');
+                    is_duplicate = true;
                 }
             }
         });
+
+        if (!is_duplicate) {
+            $(button_id).prop('type', 'submit');
+        }
     }
 
 </script>
