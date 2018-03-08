@@ -31,159 +31,161 @@
 <!-- FILTER MENU -->
 <div id="filter-menu" class="left-side-menu">
     <a href="javascript:void(0)" class="closebtn" onclick="toggleFilterMenu()">&times;</a>
-    <!-- Apply Filters Button -->
-    <button class="btn">Apply Filters</button>
-    <!-- Prop Type -->
-    <button class="filter-menu-title" onclick="toggleAccordion(this)">Prop Type</button>
-    <div class="panel" id="prop-type-select">
-        <input type="checkbox" id="prop-type-select-hand" name="prop-type" value="hand" checked> Hand
-        <br>
-        <input type="checkbox" id="prop-type-select-personal" name="prop-type" value="personal" checked> Personal
-        <br>
-        <input type="checkbox" id="prop-type-select-set" name="prop-type" value="set" checked> Set
-        <br>
-        <input type="checkbox" id="prop-type-select-trim" name="prop-type" value="trims" checked> Trims
-        <br>
-        <input type="checkbox" id="prop-type-select-set-dressing" name="prop-type" value="set-dressing" checked> Set Dressing
-        <br>
-        <input type="checkbox" id="prop-type-select-greens" name="prop-type" value="greens" checked> Greens
-        <br>
-        <input type="checkbox" id="prop-type-select-fx" name="prop-type" value="fx" checked> FX
-    </div>
-    <!-- Costume Type -->
-    <button class="filter-menu-title" onclick="toggleAccordion(this)">Clothing Type</button>
-    <div class="panel" id="costume-type-select">
-        <input type="checkbox" id="costume-type-select-outer" name="costume-type" value="outer" checked> Outerwear
-        <br>
-        <input type="checkbox" id="costume-type-select-top" name="costume-type" value="top" checked> Top
-        <br>
-        <input type="checkbox" id="costume-type-select-pants" name="costume-type" value="pants" checked> Pants
-        <br>
-        <input type="checkbox" id="costume-type-select-skirt" name="costume-type" value="skirt" checked> Skirt
-        <br>
-        <input type="checkbox" id="costume-type-select-dress" name="costume-type" value="dress" checked> Dress
-        <br>
-        <input type="checkbox" id="costume-type-select-under" name="costume-type" value="under" checked> Underwear
-        <br>
-        <input type="checkbox" id="costume-type-select-footwear" name="costume-type" value="footwear" checked> Footwear
-        <br>
-        <input type="checkbox" id="costume-type-select-other" name="costume-type" value="other" checked> Other
-        <br>
-    </div>
-    <!-- Time Period -->
-    <button class="filter-menu-title" onclick="toggleAccordion(this)">Time Period</button>
-    <div class="panel" id="time-period-select">
-        <input type="checkbox" id="time-period-select-ancient" name="time-period" value="ancient" checked> Ancient
-        <br>
-        <input type="checkbox" id="time-period-select-classical" name="time-period" value="classical" checked> Classical
-        <br>
-        <input type="checkbox" id="time-period-select-early-modern" name="time-period" value="early-modern" checked> Early Modern
-        <br>
-        <input type="checkbox" id="time-period-select-late-modern" name="time-period" value="late-modern" checked> Late Modern
-        <br>
-        <input type="checkbox" id="time-period-select-contemporary" name="time-period" value="contemporary" checked> Contemporary
-        <br>
-        <input type="checkbox" id="time-period-select-future" name="time-period" value="future" checked> Future
-        <br>
-        <input type="checkbox" id="time-period-select-other" name="time-period" value="other" checked> Other
-        <br>
-    </div>
-    <!-- Region -->
-    <button class="filter-menu-title" onclick="toggleAccordion(this)">Region</button>
-    <div class="panel" id="region-select">
-        <input type="checkbox" id="region-select-north-america" name="region" value="north-america" checked> N. America
-        <br>
-        <input type="checkbox" id="region-select-south-america" name="region" value="south-america" checked> S. America
-        <br>
-        <input type="checkbox" id="region-select-asia" name="region" value="asia" checked> Asia
-        <br>
-        <input type="checkbox" id="region-select-europe" name="region" value="europe" checked> Asia
-        <br>
-        <input type="checkbox" id="region-select-africa" name="region" value="africa" checked> Africa
-        <br>
-        <input type="checkbox" id="region-select-australia" name="region" value="australia" checked> Australia
-        <br>
-        <input type="checkbox" id="region-select-fantasy" name="region" value="other" checked> Fantasy
-        <br>
-        <input type="checkbox" id="region-select-sci-fi" name="region" value="other" checked> Sci-Fi
-        <br>
-        <input type="checkbox" id="region-select-other" name="region" value="other" checked> Other
-        <br>
-    </div>
-    <!-- Sex -->
-    <button class="filter-menu-title" onclick="toggleAccordion(this)">Sex</button>
-    <div class="panel" id="sex-select">
-        <input type="checkbox" id="sex-select-male" name="sex" value="male" checked> Male
-        <br>
-        <input type="checkbox" id="sex-select-female" name="sex" value="female" checked> Female
-        <br>
-        <input type="checkbox" id="sex-select-unisex" name="sex" value="unisex" checked> Unisex
-        <br>
-    </div>
-    <!-- Color -->
-    <button class="filter-menu-title" onclick="toggleAccordion(this)">Color</button>
-    <div class="panel" id="color-select">
-        <input type="checkbox" id="color-select-red" name="color" value="red" checked> Red
-        <br>
-        <input type="checkbox" id="color-select-orange" name="color" value="orange" checked> Orange
-        <br>
-        <input type="checkbox" id="color-select-yellow" name="color" value="yellow" checked> Yellow
-        <br>
-        <input type="checkbox" id="color-select-green" name="color" value="green" checked> Green
-        <br>
-        <input type="checkbox" id="color-select-Blue" name="color" value="blue" checked> Blue
-        <br>
-        <input type="checkbox" id="color-select-purple" name="color" value="purple" checked> Purple
-        <br>
-        <input type="checkbox" id="color-select-pink" name="color" value="pink" checked> Pink
-        <br>
-        <input type="checkbox" id="color-select-brown" name="color" value="brown" checked> Brown
-        <br>
-        <input type="checkbox" id="color-select-gray" name="color" value="gray" checked> Gray
-        <br>
-        <input type="checkbox" id="color-select-white" name="color" value="white" checked> White
-        <br>
-        <input type="checkbox" id="color-select-black" name="color" value="black" checked> Black
-        <br>
-    </div>
-    <!-- Size -->
-    <button class="filter-menu-title" onclick="toggleAccordion(this)">Size</button>
-    <div class="panel" id="size-select">
-        <input type="checkbox" id="size-select-xxs" name="size" value="xxs" checked> &lt;XS
-        <br>
-        <input type="checkbox" id="size-select-xs" name="size" value="xs" checked> XS
-        <br>
-        <input type="checkbox" id="size-select-s" name="size" value="s" checked> S
-        <br>
-        <input type="checkbox" id="size-select-m" name="size" value="m" checked> M
-        <br>
-        <input type="checkbox" id="size-select-l" name="size" value="l" checked> L
-        <br>
-        <input type="checkbox" id="size-select-xl" name="size" value="xl" checked> XL
-        <br>
-        <input type="checkbox" id="size-select-xxl" name="size" value="xxl" checked> &gt;XL
-        <br>
-    </div>
-    <!-- Condition -->
-    <button class="filter-menu-title" onclick="toggleAccordion(this)">Condition</button>
-    <div class="panel" id="condition-select">
-        <input type="checkbox" id="condition-select-new" name="condition" value="new" checked> New
-        <br>
-        <input type="checkbox" id="condition-select-good" name="condition" value="good" checked> Good
-        <br>
-        <input type="checkbox" id="condition-select-used" name="condition" value="used" checked> Used
-        <br>
-        <input type="checkbox" id="condition-select-poor" name="condition" value="poor" checked> Poor
-        <br>
-    </div>
-    <!-- Availability -->
-    <button class="filter-menu-title" onclick="toggleAccordion(this)">Availability</button>
-    <div class="panel" id="availability-select">
-        <input type="checkbox" id="availability-select-unavailable" name="availability" value="unavailable" checked> Unavailable
-        <br>
-        <input type="checkbox" id="availability-select-available" name="availability" value="available" checked> Available
-        <br>
-    </div>
+    <form>
+        <!-- Apply Filters Button -->
+        <input type="submit" value="Apply Filters">
+        <!-- Prop Type -->
+        <button class="filter-menu-title" onclick="toggleAccordion(this)">Prop Type</button>
+        <div class="panel" id="prop-type-select">
+            <input type="checkbox" id="prop-type-select-hand" name="prop-type" value="hand" checked> Hand
+            <br>
+            <input type="checkbox" id="prop-type-select-personal" name="prop-type" value="personal" checked> Personal
+            <br>
+            <input type="checkbox" id="prop-type-select-set" name="prop-type" value="set" checked> Set
+            <br>
+            <input type="checkbox" id="prop-type-select-trim" name="prop-type" value="trims" checked> Trims
+            <br>
+            <input type="checkbox" id="prop-type-select-set-dressing" name="prop-type" value="set-dressing" checked> Set Dressing
+            <br>
+            <input type="checkbox" id="prop-type-select-greens" name="prop-type" value="greens" checked> Greens
+            <br>
+            <input type="checkbox" id="prop-type-select-fx" name="prop-type" value="fx" checked> FX
+        </div>
+        <!-- Costume Type -->
+        <button class="filter-menu-title" onclick="toggleAccordion(this)">Clothing Type</button>
+        <div class="panel" id="costume-type-select">
+            <input type="checkbox" id="costume-type-select-outer" name="costume-type" value="outer" checked> Outerwear
+            <br>
+            <input type="checkbox" id="costume-type-select-top" name="costume-type" value="top" checked> Top
+            <br>
+            <input type="checkbox" id="costume-type-select-pants" name="costume-type" value="pants" checked> Pants
+            <br>
+            <input type="checkbox" id="costume-type-select-skirt" name="costume-type" value="skirt" checked> Skirt
+            <br>
+            <input type="checkbox" id="costume-type-select-dress" name="costume-type" value="dress" checked> Dress
+            <br>
+            <input type="checkbox" id="costume-type-select-under" name="costume-type" value="under" checked> Underwear
+            <br>
+            <input type="checkbox" id="costume-type-select-footwear" name="costume-type" value="footwear" checked> Footwear
+            <br>
+            <input type="checkbox" id="costume-type-select-other" name="costume-type" value="other" checked> Other
+            <br>
+        </div>
+        <!-- Time Period -->
+        <button class="filter-menu-title" onclick="toggleAccordion(this)">Time Period</button>
+        <div class="panel" id="time-period-select">
+            <input type="checkbox" id="time-period-select-ancient" name="time-period" value="ancient" checked> Ancient
+            <br>
+            <input type="checkbox" id="time-period-select-classical" name="time-period" value="classical" checked> Classical
+            <br>
+            <input type="checkbox" id="time-period-select-early-modern" name="time-period" value="early-modern" checked> Early Modern
+            <br>
+            <input type="checkbox" id="time-period-select-late-modern" name="time-period" value="late-modern" checked> Late Modern
+            <br>
+            <input type="checkbox" id="time-period-select-contemporary" name="time-period" value="contemporary" checked> Contemporary
+            <br>
+            <input type="checkbox" id="time-period-select-future" name="time-period" value="future" checked> Future
+            <br>
+            <input type="checkbox" id="time-period-select-other" name="time-period" value="other" checked> Other
+            <br>
+        </div>
+        <!-- Region -->
+        <button class="filter-menu-title" onclick="toggleAccordion(this)">Region</button>
+        <div class="panel" id="region-select">
+            <input type="checkbox" id="region-select-north-america" name="region" value="north-america" checked> N. America
+            <br>
+            <input type="checkbox" id="region-select-south-america" name="region" value="south-america" checked> S. America
+            <br>
+            <input type="checkbox" id="region-select-asia" name="region" value="asia" checked> Asia
+            <br>
+            <input type="checkbox" id="region-select-europe" name="region" value="europe" checked> Asia
+            <br>
+            <input type="checkbox" id="region-select-africa" name="region" value="africa" checked> Africa
+            <br>
+            <input type="checkbox" id="region-select-australia" name="region" value="australia" checked> Australia
+            <br>
+            <input type="checkbox" id="region-select-fantasy" name="region" value="other" checked> Fantasy
+            <br>
+            <input type="checkbox" id="region-select-sci-fi" name="region" value="other" checked> Sci-Fi
+            <br>
+            <input type="checkbox" id="region-select-other" name="region" value="other" checked> Other
+            <br>
+        </div>
+        <!-- Sex -->
+        <button class="filter-menu-title" onclick="toggleAccordion(this)">Sex</button>
+        <div class="panel" id="sex-select">
+            <input type="checkbox" id="sex-select-male" name="sex" value="male" checked> Male
+            <br>
+            <input type="checkbox" id="sex-select-female" name="sex" value="female" checked> Female
+            <br>
+            <input type="checkbox" id="sex-select-unisex" name="sex" value="unisex" checked> Unisex
+            <br>
+        </div>
+        <!-- Color -->
+        <button class="filter-menu-title" onclick="toggleAccordion(this)">Color</button>
+        <div class="panel" id="color-select">
+            <input type="checkbox" id="color-select-red" name="color" value="red" checked> Red
+            <br>
+            <input type="checkbox" id="color-select-orange" name="color" value="orange" checked> Orange
+            <br>
+            <input type="checkbox" id="color-select-yellow" name="color" value="yellow" checked> Yellow
+            <br>
+            <input type="checkbox" id="color-select-green" name="color" value="green" checked> Green
+            <br>
+            <input type="checkbox" id="color-select-Blue" name="color" value="blue" checked> Blue
+            <br>
+            <input type="checkbox" id="color-select-purple" name="color" value="purple" checked> Purple
+            <br>
+            <input type="checkbox" id="color-select-pink" name="color" value="pink" checked> Pink
+            <br>
+            <input type="checkbox" id="color-select-brown" name="color" value="brown" checked> Brown
+            <br>
+            <input type="checkbox" id="color-select-gray" name="color" value="gray" checked> Gray
+            <br>
+            <input type="checkbox" id="color-select-white" name="color" value="white" checked> White
+            <br>
+            <input type="checkbox" id="color-select-black" name="color" value="black" checked> Black
+            <br>
+        </div>
+        <!-- Size -->
+        <button class="filter-menu-title" onclick="toggleAccordion(this)">Size</button>
+        <div class="panel" id="size-select">
+            <input type="checkbox" id="size-select-xxs" name="size" value="xxs" checked> &lt;XS
+            <br>
+            <input type="checkbox" id="size-select-xs" name="size" value="xs" checked> XS
+            <br>
+            <input type="checkbox" id="size-select-s" name="size" value="s" checked> S
+            <br>
+            <input type="checkbox" id="size-select-m" name="size" value="m" checked> M
+            <br>
+            <input type="checkbox" id="size-select-l" name="size" value="l" checked> L
+            <br>
+            <input type="checkbox" id="size-select-xl" name="size" value="xl" checked> XL
+            <br>
+            <input type="checkbox" id="size-select-xxl" name="size" value="xxl" checked> &gt;XL
+            <br>
+        </div>
+        <!-- Condition -->
+        <button class="filter-menu-title" onclick="toggleAccordion(this)">Condition</button>
+        <div class="panel" id="condition-select">
+            <input type="checkbox" id="condition-select-new" name="condition" value="new" checked> New
+            <br>
+            <input type="checkbox" id="condition-select-good" name="condition" value="good" checked> Good
+            <br>
+            <input type="checkbox" id="condition-select-used" name="condition" value="used" checked> Used
+            <br>
+            <input type="checkbox" id="condition-select-poor" name="condition" value="poor" checked> Poor
+            <br>
+        </div>
+        <!-- Availability -->
+        <button class="filter-menu-title" onclick="toggleAccordion(this)">Availability</button>
+        <div class="panel" id="availability-select">
+            <input type="checkbox" id="availability-select-unavailable" name="availability" value="unavailable" checked> Unavailable
+            <br>
+            <input type="checkbox" id="availability-select-available" name="availability" value="available" checked> Available
+            <br>
+        </div>
+    </form>
 </div>
 <!-- ACCOUNT MENU -->
 <div id="account-menu" class="right-side-menu">
