@@ -31,11 +31,11 @@
 <!-- FILTER MENU -->
 <div id="filter-menu" class="left-side-menu">
     <a href="javascript:void(0)" class="closebtn" onclick="toggleFilterMenu()">&times;</a>
-    <form>
+    <form method=POST action='/filtered'>
         <!-- Apply Filters Button -->
         <input type="submit" value="Apply Filters">
         <!-- Prop Type -->
-        <button class="filter-menu-title" onclick="toggleAccordion(this)">Prop Type</button>
+        <button type='button' class="filter-menu-title" onclick="toggleAccordion(this)">Prop Type</button>
         <div class="panel" id="prop-type-select">
             <input type="checkbox" id="prop-type-select-hand" name="prop-type" value="hand" checked> Hand
             <br>
@@ -52,7 +52,7 @@
             <input type="checkbox" id="prop-type-select-fx" name="prop-type" value="fx" checked> FX
         </div>
         <!-- Costume Type -->
-        <button class="filter-menu-title" onclick="toggleAccordion(this)">Clothing Type</button>
+        <button type='button' class="filter-menu-title" onclick="toggleAccordion(this)">Clothing Type</button>
         <div class="panel" id="costume-type-select">
             <input type="checkbox" id="costume-type-select-outer" name="costume-type" value="outer" checked> Outerwear
             <br>
@@ -72,15 +72,15 @@
             <br>
         </div>
         <!-- Time Period -->
-        <button class="filter-menu-title" onclick="toggleAccordion(this)">Time Period</button>
+        <button type='button' class="filter-menu-title" onclick="toggleAccordion(this)">Time Period</button>
         <div class="panel" id="time-period-select">
             <input type="checkbox" id="time-period-select-ancient" name="time-period" value="ancient" checked> Ancient
             <br>
             <input type="checkbox" id="time-period-select-classical" name="time-period" value="classical" checked> Classical
             <br>
-            <input type="checkbox" id="time-period-select-early-modern" name="time-period" value="early-modern" checked> Early Modern
+            <input type="checkbox" id="time-period-select-early-modern" name="time-period" value="earlymodern" checked> Early Modern
             <br>
-            <input type="checkbox" id="time-period-select-late-modern" name="time-period" value="late-modern" checked> Late Modern
+            <input type="checkbox" id="time-period-select-late-modern" name="time-period" value="latemodern" checked> Late Modern
             <br>
             <input type="checkbox" id="time-period-select-contemporary" name="time-period" value="contemporary" checked> Contemporary
             <br>
@@ -90,7 +90,7 @@
             <br>
         </div>
         <!-- Region -->
-        <button class="filter-menu-title" onclick="toggleAccordion(this)">Region</button>
+        <button type='button' class="filter-menu-title" onclick="toggleAccordion(this)">Region</button>
         <div class="panel" id="region-select">
             <input type="checkbox" id="region-select-north-america" name="region" value="north-america" checked> N. America
             <br>
@@ -112,7 +112,7 @@
             <br>
         </div>
         <!-- Sex -->
-        <button class="filter-menu-title" onclick="toggleAccordion(this)">Sex</button>
+        <button type='button' class="filter-menu-title" onclick="toggleAccordion(this)">Sex</button>
         <div class="panel" id="sex-select">
             <input type="checkbox" id="sex-select-male" name="sex" value="male" checked> Male
             <br>
@@ -122,7 +122,7 @@
             <br>
         </div>
         <!-- Color -->
-        <button class="filter-menu-title" onclick="toggleAccordion(this)">Color</button>
+        <button type='button' class="filter-menu-title" onclick="toggleAccordion(this)">Color</button>
         <div class="panel" id="color-select">
             <input type="checkbox" id="color-select-red" name="color" value="red" checked> Red
             <br>
@@ -148,7 +148,7 @@
             <br>
         </div>
         <!-- Size -->
-        <button class="filter-menu-title" onclick="toggleAccordion(this)">Size</button>
+        <button type='button' class="filter-menu-title" onclick="toggleAccordion(this)">Size</button>
         <div class="panel" id="size-select">
             <input type="checkbox" id="size-select-xxs" name="size" value="xxs" checked> &lt;XS
             <br>
@@ -178,7 +178,7 @@
             <br>
         </div>
         <!-- Availability -->
-        <button class="filter-menu-title" onclick="toggleAccordion(this)">Availability</button>
+        <button type='button' class="filter-menu-title" onclick="toggleAccordion(this)">Availability</button>
         <div class="panel" id="availability-select">
             <input type="checkbox" id="availability-select-unavailable" name="availability" value="unavailable" checked> Unavailable
             <br>
