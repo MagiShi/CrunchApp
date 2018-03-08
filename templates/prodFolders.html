@@ -166,6 +166,7 @@
                 $('#save-name-button').prop('type', 'button');
                 alert("The name either is empty or contains only white spaces. Please input the eligible name for the folder. Example: Folder number 12");
                 return;
+            //Check if the name is unchanged. It just closes the modal.
             } else if (name_input === current_renamed_folder) {
                 $('#save-name-button').prop('type', 'button');
                 $('#rename-modal').modal('hide');
@@ -173,6 +174,24 @@
             } else {
                 alert_text = "There is an existing folder with that name. Please use the different name for the folder you are renaming."
                 check_duplicate_folder_name("#save-name-button", name_input, alert_text);
+            }
+        });
+
+        $('#add-folder-button').click(function() {
+            //Reset current renamed folder to pass the first if statement and take all folders into account.
+            current_renamed_folder = '';
+
+            //remove trailing space and tab from the beginning and end of the name string
+            var name_input = $('#input-new-folder').val().trim();
+            $('#input-new-folder').val(name_input);
+
+            if ( name_input.length === 0) {
+                $('#add-folder-button').prop('type', 'button');
+                alert("The name either is empty or contains only white spaces. Please input the eligible name for the folder. Example: Folder number 12");
+                return;
+            } else {
+                alert_text = "There is an existing folder with that name. Please use the different name for the folder you are creating."
+                check_duplicate_folder_name("#add-folder-button", name_input, alert_text);
             }
         });
     });
