@@ -1,5 +1,6 @@
 import base64
 from io import BytesIO
+import os
 
 def getInfo(item_id, cursor):
     cursor.execute("SELECT itemname FROM item WHERE itemid='{0}';".format(item_id))
@@ -50,3 +51,19 @@ def getImagedata(image):
     # image1 = Image.open(BytesIO(image_data))
     # image1.show()
     return imagedata
+
+def setImageInDatabase(filename, item_id, cursor, conn, up_folder):
+    try: 
+        print ("looking for file: " + "tmp/"+ filename )
+        print ("loading file")
+        f = open("/tmp/"+filename,'rb')
+        filedata = f.read()
+        f.close()
+        cursor.execute("UPDATE item SET image1 = %s WHERE itemid=(%s);", (filedata, item_id))
+        conn.commit()
+        os.remove(os.path.join(up_folder, filename))
+    except Exception as e:
+        print (e)
+        cursor.execute("rollback;")
+        raise e
+
