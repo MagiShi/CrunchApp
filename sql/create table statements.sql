@@ -2,16 +2,13 @@
 
 #Registered User
 Create Table registeredUser (email varchar(256) PRIMARY KEY NOT
-NULL, username varchar(256) NOT NULL, password varchar(256) NOT NULL,
-isAdmin Boolean NOT NULL DEFAULT FALSE );
+NULL, username varchar(256) NOT NULL, password varchar(256) NOT NULL, isAdmin Boolean NOT NULL DEFAULT FALSE );
 
 #item table with add characteristics
-Create Table item (itemId varchar(256) PRIMARY KEY NOT NULL, itemName
-varchar(256) NOT NULL, image1 BYTEA, image2 BYTEA, image3 BYTEA, pendingDelete Boolean NOT NULL DEFAULT FALSE, description varchar(256), sex sex, condition condition, timeperiod timeperiod[], culture culture[], color color[], size size, itemtype itemtype, itype itype, isAvailable Boolean DEFAULT TRUE);
+Create Table item (itemId varchar(256) PRIMARY KEY NOT NULL, itemName varchar(256) NOT NULL, image1 BYTEA, image2 BYTEA, image3 BYTEA, pendingDelete Boolean NOT NULL DEFAULT FALSE, description varchar(256), sex sex, condition condition, timeperiod timeperiod[], culture culture[], color color[], size size, itemtype itemtype, itype itype, isAvailable Boolean DEFAULT TRUE);
 
 #Folder
-Create Table folder (folderId varchar(256) PRIMARY KEY, folderName
-varchar(256));
+Create Table folder(folderName varchar(256) PRIMARY KEY, pendingDelete Boolean NOT NULL DEFAULT FALSE);
 
 #ItemInFolder
 Create Table iteminfolder(folderId varchar(256) references folder(folderId), itemId varchar(256) references item(itemId), PRIMARY KEY(folderId, itemId));
