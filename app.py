@@ -33,7 +33,6 @@ mail = Mail(app)
 
 #configuring database url and path
 url = urlparse(os.environ['DATABASE_URL'])
-
 db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname)
 schema = "schema.sql"
 #connecting a cursor for the database
@@ -195,23 +194,23 @@ def addItem():
         except: 
             sex = None
         
-        # try: 
-        #     condition = request.form['condition']
-        # except: 
-        #     condition = None
+        try: 
+            condition = request.form['condition']
+        except: 
+            condition = None
 
-        # try:
-        #     timeperiodL = request.form.getlist('colorSelect')
-        #     # print (colorL)
-        #     timeperiod = '{'
-        #     for c in range(len(timeperiodL)):
-        #         if c >= len(timeperiodL) -1:
-        #             timeperiod += '{0}'.format(timeperiodL[c])
-        #         else: 
-        #             timeperiod += '{0}, '.format(timeperiodL[c])
-        #     timeperiod += '}'
-        # except:
-        #     timeperiod = None
+        try:
+            timeperiodL = request.form.getlist('timeSelect')
+            # print (colorL)
+            timeperiod = '{'
+            for c in range(len(timeperiodL)):
+                if c >= len(timeperiodL) -1:
+                    timeperiod += '{0}'.format(timeperiodL[c])
+                else: 
+                    timeperiod += '{0}, '.format(timeperiodL[c])
+            timeperiod += '}'
+        except:
+            timeperiod = None
 
         # try:
         #     cultureL = request.form.getlist('colorSelect')
@@ -307,8 +306,8 @@ def addItem():
         # query = "INSERT into item(itemid, itemname, description, sex, condition, timeperiod, culture, color, size, itemtype, itype, isavailable, pendingdelete) values ("
 
         #for mult
-        charlist = [item_id, item_name, description, sex, color, size, itemtype]
-        query = "INSERT into item(itemid, itemname, description, sex, color, size, itemtype, isavailable, pendingdelete) values ("
+        charlist = [item_id, item_name, description, sex, condition, timeperiod, color, size, itemtype]
+        query = "INSERT into item(itemid, itemname, description, sex, condition, timeperiod, color, size, itemtype, isavailable, pendingdelete) values ("
 
 
         for char in charlist:
@@ -325,34 +324,13 @@ def addItem():
             conn.commit()
 
             if filename1 != None:
-                print ("looking for file: " + "tmp/"+ filename1 )
-                print ("loading file")
-                f = open("/tmp/"+filename1,'rb')
-                filedata = f.read()
-                f.close()
-                cursor.execute("UPDATE item SET image1 = %s WHERE itemid=(%s);", (filedata, item_id))
-                conn.commit()
-                os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename1))
+                functions.setImageInDatabase(filename1, item_id, cursor, conn, app.config['UPLOAD_FOLDER'])
 
             if filename2 != None:
-                print ("looking for file: " + "tmp/"+ filename2 )
-                print ("loading file")
-                f = open("/tmp/"+filename2,'rb')
-                filedata = f.read()
-                f.close()
-                cursor.execute("UPDATE item SET image2 = %s WHERE itemid=(%s);", (filedata, item_id))
-                conn.commit()
-                os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename2))
+                functions.setImageInDatabase(filename2, item_id, cursor, conn, app.config['UPLOAD_FOLDER'])
 
             if filename3 != None:
-                print ("looking for file: " + "tmp/"+ filename3 )
-                print ("loading file")
-                f = open("/tmp/"+filename3,'rb')
-                filedata = f.read()
-                f.close()
-                cursor.execute("UPDATE item SET image3 = %s WHERE itemid=(%s);", (filedata, item_id))
-                conn.commit()
-                os.remove(os.path.join(app.config['UPLOAD_FOLDER'], filename3))
+                functions.setImageInDatabase(filename3, item_id, cursor, conn, app.config['UPLOAD_FOLDER'])
 
         except Exception as e:
             print (e)
@@ -578,6 +556,116 @@ def editItem(item_id):
         error = 'Item information cannot be retrieved'
         return redirect(url_for('loggedin', error=error))
     return redirect(url_for('getItemInfo', item_id=item_id, error=error))
+
+@app.route('/filtered', methods=["POST"])
+def filterItems():
+    # proptype = request.form.getlist('prop-type')
+    # clothingtype = request.form.getlist('clothing-type')
+    timeperiod = request.form.getlist('time-period')
+    # culture = request.form.getlist('region')
+    sex = request.form.getlist('sex')
+    color = request.form.getlist('color')
+    size = request.form.getlist('size')
+    condition = request.form.getlist('condition')
+    availability = request.form.getlist('availability')
+    isavailable = []
+    for a in availability:
+        if a == 'available':
+            isavailable.append(True)
+        elif a == 'unavailable':
+            isavailable.append(False)
+
+
+    char2val = {}
+    char2val['timeperiod'] = timeperiod
+    char2val['sex'] = sex
+    char2val['color'] = color
+    char2val['size'] = size
+    char2val['condition'] = condition
+    char2val['isavailable'] = isavailable
+
+    # charlist = [proptype, clothingtype, timeperiod, culture, sex, color, size, condition, availability]
+    char_array_enum_list = ['timeperiod', 'color']
+    char_enum_list = ['sex', 'size', 'condition', 'isavailable']
+    charArrayBool = False
+    charBool = False
+
+    for c in char_array_enum_list:
+        if char2val.get(c):
+            charArrayBool = True
+    for c in char_enum_list:
+        if char2val.get(c):
+            charBool = True
+    # print (charArrayBool)
+    # print (charBool)
+
+    query = "SELECT itemid FROM item" 
+
+    if charBool or charArrayBool:
+        query += " WHERE "
+
+    newQ = True #flag for new query
+
+    ##Deal with those stored as arrays ['timeperiod', 'color']
+    if charArrayBool:
+        for c in char_array_enum_list:
+            filterCharList = char2val.get(c)
+            # print (c, "   ", filterCharList)
+
+            newChar = True #flag for filterCharList, new char
+            for char in filterCharList:
+
+                #if first query part
+                if newQ:
+                    query += "('{0}' = ANY({1})".format(char, c)
+                    newQ = False
+                    newChar = False
+                #if first for the particular characteristic
+                elif newChar:
+                    query += " AND ('{0}' = ANY({1})".format(char, c)
+                    newChar = False
+                else:
+                    query += " OR '{0}' = ANY({1})".format(char, c)
+            if filterCharList:
+                query += ")"
+
+    #Filtering based on other attributes ['sex', 'size', 'condition', 'isavailable']
+    if charBool:
+        for c in char_enum_list:
+            filterCharList = char2val.get(c)
+            # print (filterCharList)
+            newChar = True #counter for filterCharList
+            for char in filterCharList:
+
+                #if first query part
+                if newQ:
+                    query += "({0} = '{1}'".format(c, char)
+                    newQ = False
+                    newChar = False
+                #if first for the particular characteristic
+                elif newChar:
+                    query += " AND ({0} = '{1}'".format(c, char)
+                    newChar = False
+                else:
+                    query += " OR {0} = '{1}'".format(c, char)
+            if filterCharList:
+                query += ")"
+
+    query += ";"
+
+    try: 
+        #query = ("UPDATE item SET itemname = '{1}' WHERE itemid= '{0}';".format(item_id, itemname, description))
+        cursor.execute(query)
+        conn.commit()
+        error = 'Items filtered (temp message)'
+    except Exception as e: 
+        cursor.execute("rollback;")
+
+        ##Error
+        error = 'Cannot filter'
+        return redirect(url_for('loggedin', error=error))
+    return redirect(url_for('loggedin', error=error))
+
 if __name__ == "__main__":
     app.run()
 
