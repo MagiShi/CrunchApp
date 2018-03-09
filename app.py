@@ -654,7 +654,6 @@ def filterItems():
     query += ";"
 
     try: 
-        #query = ("UPDATE item SET itemname = '{1}' WHERE itemid= '{0}';".format(item_id, itemname, description))
         cursor.execute(query)
         conn.commit()
         error = 'Items filtered (temp message)'
@@ -665,6 +664,25 @@ def filterItems():
         error = 'Cannot filter'
         return redirect(url_for('loggedin', error=error))
     return redirect(url_for('loggedin', error=error))
+
+@app.route('/addFolder', methods=["POST"])
+def addFolder():
+    foldername = request.form['foldername']
+    query = "INSERT into folder VALUES ('{0}', false);".format(foldername)
+    print (request.form)
+    try: 
+        cursor.execute(query)
+        conn.commit()
+        error = "Folder '{0}' added".format(foldername) #Temp message?
+    except Exception as e: 
+        cursor.execute("rollback;")
+
+        ##If item does not exist etc
+        error = 'Folder cannot be added'
+        return redirect(url_for('loggedin', error=error))
+
+    return redirect(url_for('prodFolders', error=error))
+
 
 if __name__ == "__main__":
     app.run()
