@@ -48,12 +48,14 @@
                                     
                                         <div style="min-width:51px; margin-left:13px;">
                                             <!--EDIT NAME BUTTON-->
-                                            <button type="button" class="icon-button rename-folder" onclick="activate_rename_field('{{foldername[0]}}');" data-toggle="modal" data-target="#rename-modal">
+                                            <button type="button" class="icon-button rename-folder" data-toggle="modal" data-target="#rename-modal" onclick="activate_rename_field('{{foldername[0]}}');"  data-tooltip="tooltip" data-placement="top" title="Rename Folder">
                                                 {% include 'icon/pencil.svg' %}
                                             </button>
+
                                             <!--DELETE FOLDER BUTTON-->
-                                            <button type="button" class="icon-button delete-folder" onclick="get_delete_name('{{foldername|first}}');"
-                                            data-toggle="modal" data-target="#delete-modal" style="margin-left: 5px;">
+                                            <button type="button" class="icon-button delete-folder" data-toggle="modal" data-target="#delete-modal" onclick="get_delete_name('{{foldername|first}}');"
+                                            style="margin-left: 5px;" data-tooltip="tooltip" data-placement="top"
+                                            title="Delete Folder">
                                                 {% include 'icon/delete.svg' %}
                                             </button>
                                         </div>
@@ -195,6 +197,8 @@
                 check_duplicate_folder_name("#add-folder-button", name_input, alert_text);
             }
         });
+
+        $('[data-tooltip="tooltip"]').tooltip({trigger: "hover"});
     });
 
     function activate_rename_field(folder_name) {
