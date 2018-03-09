@@ -10,6 +10,25 @@
     font-size: 15px;
     transition: 0.3s;
 }
+
+/*"Apply Filters" button*/
+#filter-menu-apply-button {
+    background-color: #5d5d5d;
+    border: 1px solid #5d5d5d;
+    padding: 4px 10px;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 5px;
+}
+
+#filter-menu-apply-button:hover {
+    border-color: #FDDA24;
+    border-radius: 5px;
+    background-color: #FDDA24;
+}
+
 /* Filter Menu Title on Hover */
 .active, .filter-menu-title:hover {
     background-color: #5d5d5d;
@@ -83,7 +102,7 @@
 }
 /* User menu button*/
 #menu-nav-button {
-    border-radius: 25%;
+    border-radius: 5px;
     padding: 4px 10px;
     color: #0077C8;
     border: 1px solid #0077C8;
@@ -94,7 +113,7 @@
     background-color: #FDDA24;
     color: white;
     border-color: #FDDA24;
-    border-radius: 10%;
+    border-radius: 5px;
 }
 /*Add item button*/
 #add-item-page-button {
@@ -105,6 +124,7 @@
     color: white;
     cursor: pointer;
     transition: 0.3s;
+    border-radius: 5px;
 }
 #add-item-page-button:hover {
     border-color: rgba(0, 0, 0, 0);
@@ -148,7 +168,7 @@
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 18px;
-    color: #818181;
+    color: white;
     display: block;
     transition: 0.2s;
 }
@@ -170,6 +190,7 @@
     text-decoration: none;
     color: #f1f1f1;
 }
+
 @media screen and (max-height: 450px) {
   .right-side-menu, .left-side-menu {padding-top: 15px;}
   .right-side-menu a, .left-side-menu a {font-size: 18px;}
