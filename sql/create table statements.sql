@@ -11,7 +11,7 @@ Create Table item (itemId varchar(256) PRIMARY KEY NOT NULL, itemName varchar(25
 Create Table folder(folderName varchar(256) PRIMARY KEY, pendingDelete Boolean NOT NULL DEFAULT FALSE);
 
 #ItemInFolder
-Create Table iteminfolder(folderId varchar(256) references folder(folderId), itemId varchar(256) references item(itemId), PRIMARY KEY(folderId, itemId));
+Create Table iteminfolder(folderId varchar(256) references folder(folderName), itemId varchar(256) references item(itemId), PRIMARY KEY(folderName, itemId));
 
 
 ## Sprint 1&2
