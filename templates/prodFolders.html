@@ -41,6 +41,7 @@
 
                             <ul class="list-group">
                                 {% for foldername in foldernames %}
+
                                 <li id="folder_{{foldername[0]}}" class="list-group-item list-group-item-action flex-column">
                                     <div class="d-flex w-100 justify-content-between" style="text-align:left;">
                                         <a href="folders/{{foldername[0]}}" class="folder-name">{{foldername[0]}}</a>
@@ -51,7 +52,8 @@
                                                 {% include 'icon/pencil.svg' %}
                                             </button>
                                             <!--DELETE FOLDER BUTTON-->
-                                            <button type="button" class="icon-button delete-folder" data-toggle="modal" data-target="#delete-modal" style="margin-left: 5px;">
+                                            <button type="button" class="icon-button delete-folder" onclick="get_delete_name('{{foldername|first}}');"
+                                            data-toggle="modal" data-target="#delete-modal" style="margin-left: 5px;">
                                                 {% include 'icon/delete.svg' %}
                                             </button>
                                         </div>
@@ -65,7 +67,6 @@
                         <button type="button" name="create-folder-button" class="btn" id="create-folder-button" value="Create" data-toggle="modal" data-target="#add-folder-modal">Create New Folder</button>
                     </div>
 
-                    <!-- TO DO: FOLDER DELETION -->
                     <!-- Deletion Confirmation Modal -->
                     <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -81,9 +82,10 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-<!--                                             <button class="btn btn-primary" id="delete-confirmed" type="submit" value={{folderid}}>Delete</button>
- -->                                 <form method=POST action='/deleteFolder/{{folderid}}'>
+                                            <!-- <button class="btn btn-primary" id="delete-confirmed" type="submit" value={{folderid}}>Delete</button> -->
+                                 <form method=POST action='/deleteFolder/{{fname}}'>
                                         <button class="btn btn-primary" id="delete-confirmed" type="submit">Delete</button>
+                                            <input type="hidden" name="foldername" class="form-control" id="deleted-foldername" >
                                     </form>
                                 </div>
                             </div>
@@ -116,7 +118,6 @@
                         </div>
                     </div>
 
-                    <!-- TO DO: Add the new folder to db and update the folders list-->
                     <!-- Create new folder pop-up -->
                     <div class="modal fade" id="add-folder-modal" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -201,6 +202,13 @@
             $(this).find("input").val(folder_name);
             $(this).find("#save-name-button").val(folder_name);
             current_renamed_folder =  folder_name;
+        });
+    }
+
+    function get_delete_name(folder_name) {
+        $('#delete-modal').on('show.bs.modal', function(e) {
+            $(this).find("input").val(folder_name);
+            $(this).find("#delete-confirmed").val(folder_name);
         });
     }
 

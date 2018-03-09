@@ -357,7 +357,7 @@ def toEditProdFolders(item_id):
     itemname = None
     foldername = None
 
-    folderNameQuery = "SELECT foldername FROM folder;"
+    folderNameQuery = "SELECT foldername FROM folder where pendingdelete=false;"
     cursor.execute(folderNameQuery)
     foldername = cursor.fetchall()
     error = request.args.get('error')
@@ -388,10 +388,11 @@ def editProdFolders(item_id):
 @app.route('/folders', methods=['POST', 'GET'])
 def prodFolders():
     foldernames = None
-    folderNameQuery = "SELECT foldername FROM folder;"
+    folderNameQuery = "SELECT foldername FROM folder where pendingdelete=false;"
     cursor.execute(folderNameQuery)
     foldernames = cursor.fetchall()
     error = request.args.get('error')
+    print (foldernames)
 
     return render_template('prodFolders.html', foldernames=foldernames, error=error)
 
@@ -691,9 +692,31 @@ def addFolder():
     else:
         return redirect(url_for('prodFolders', error=error))
 
+#Deleting a new folder 
+@app.route('/deleteFolder/', methods=["POST"])
+def deleteFolder():
+    foldername = request.form['foldername']
+    # print (request.form)
+    try: 
+        query = "UPDATE folder set pendingdelete=true where foldername='{0}';".format(foldername)
+        cursor.execute(query)
+        conn.commit()
+
+        # functions.createNewFolder(foldername, cursor, conn)
+        error = "Folder '{0}' pending deletion".format(foldername) #Temp message
+    except Exception as e: 
+        cursor.execute("rollback;")
+
+        ##If folder should not have passed checks (should not happen)
+        error = 'Cannot delete folder'
+        return redirect(url_for('loggedin', error=error))
+
+    # checking to see where redirect, depending on if there is an item_id
+    return redirect(url_for('prodFolders', error=error))
 
 
 if __name__ == "__main__":
+    app.jinja_env.add_extension('jinja2.ext.do')
     app.run()
 
 
