@@ -107,7 +107,7 @@
                                     </button>
                                 </div>
 
-                                <!-- <form method=POST action="/addFolders"> -->
+                                <form method=POST action="/addFolder">
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <input type="text" name="foldername" class="form-control" id="input-new-folder" placeholder="Folder Name">
@@ -115,9 +115,9 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                        <button class="btn btn-primary" name="addFolderButton" id="add-folder-button" type="submit">Create</button>
+                                        <button class="btn btn-primary" name="addFolderButton" id="add-folder-button" type="submit" value='{{itemid}}'>Create</button>
                                     </div>
-                                <!-- </form> -->
+                                </form>
                             </div>
                         </div>
                     </div>

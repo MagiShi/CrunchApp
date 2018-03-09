@@ -665,23 +665,32 @@ def filterItems():
         return redirect(url_for('loggedin', error=error))
     return redirect(url_for('loggedin', error=error))
 
+#Adding a new folder 
 @app.route('/addFolder', methods=["POST"])
 def addFolder():
     foldername = request.form['foldername']
-    query = "INSERT into folder VALUES ('{0}', false);".format(foldername)
-    print (request.form)
     try: 
+        query = "INSERT into folder VALUES ('{0}', false);".format(foldername)
         cursor.execute(query)
         conn.commit()
+
+        # functions.createNewFolder(foldername, cursor, conn)
         error = "Folder '{0}' added".format(foldername) #Temp message?
     except Exception as e: 
         cursor.execute("rollback;")
 
-        ##If item does not exist etc
+        ##If folder should not have passed checks (should not happen)
         error = 'Folder cannot be added'
         return redirect(url_for('loggedin', error=error))
 
-    return redirect(url_for('prodFolders', error=error))
+    item_id = request.form.get('addFolderButton')
+
+    # checking to see where redirect, depending on if there is an item_id
+    if item_id:
+        return redirect(url_for('toEditProdFolders', item_id=item_id, error=error))
+    else:
+        return redirect(url_for('prodFolders', error=error))
+
 
 
 if __name__ == "__main__":

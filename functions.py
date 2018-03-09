@@ -67,3 +67,14 @@ def setImageInDatabase(filename, item_id, cursor, conn, up_folder):
         cursor.execute("rollback;")
         raise e
 
+# def createNewFolder(foldername, cursor, conn):
+#     try: 
+#         query = "INSERT into folder VALUES ('{0}', false);".format(foldername)
+#         cursor.execute(query)
+#         conn.commit()
+#     except Exception as e: 
+#         cursor.execute("rollback;")
+
+#         ##If folder should not have passed checks (should not happen)
+#         raise Exception
+
