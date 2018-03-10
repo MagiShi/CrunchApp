@@ -19,7 +19,6 @@ app.secret_key = os.urandom(24)
 #configuring upload_folder variable
 app.config['UPLOAD_FOLDER'] = "/tmp/"
 
-
 app.config.update(
     # DEBUG=True,
     #EMAIL SETTINGS
@@ -33,6 +32,7 @@ mail = Mail(app)
 
 #configuring database url and path
 url = urlparse(os.environ['DATABASE_URL'])
+
 db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname)
 schema = "schema.sql"
 #connecting a cursor for the database
@@ -429,6 +429,11 @@ def folderContents(foldername):
     #     return redirect(url_for('prodFolders', error=error))
     # # Refresh the Production Folders page with the updated name of the folder
     return render_template('prodFolderContents.html', error=error, foldername = foldername)
+
+# render My Reservations page with all reservations in the database for that user
+@app.route('/reservations', methods=['POST', 'GET'])
+def reservations():
+    return render_template('reservations.html')
 
 @app.route('/deleteItem/<item_id>', methods=['POST'])
 def deleteItemFlag(item_id):
