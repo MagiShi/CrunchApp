@@ -9,12 +9,14 @@ var size = "(all sizes); ";
 var condition = "(all conditions); ";
 var availability = "(all availabilities); ";
 
-// Set up the filter menu so that when its checkboxes are clicked, the list of filters on the home page updates
-function setupHomepageFilterMenu() {
-    updateCurrentFiltersList();
+// Update the homepage's text representing the current filters
+function updateFiltersList() {
+    // Loop through all the filters and check the checked checkboxess
     for (var i = 0; i < allFilters.length; i++) {
-        allFilters[i].setAttribute("onclick", "updateFilterSection(" + i +")");
-    }    
+        updateFilterSelection(i);
+    }
+    // Update the homepage text
+    document.getElementById("current-filters").innerHTML = "Filtering by: " + prop + costume + timePeriod + region + sex + color + size + condition + availability;
 }
 
 // Update a specific filter section (e.g. color, size, condition) based on the currently selected checkboxes
@@ -68,12 +70,11 @@ function updateFilterSection(i) {
     }
     if (count != 0) {
         if (count == currType.length) {
-            resultingString += allFiltersString;
+            resultingString += allFiltersString + "; ";
         } else {
-            resultingString += currFilters;
+            resultingString += currFilters + "; ";
         }
     }
-    resultingString += "; ";
     
     switch (i) {
         case 0:
@@ -104,10 +105,4 @@ function updateFilterSection(i) {
             availability = resultingString;
             break;
     }
-    updateCurrentFiltersList();
-}
-
-// Update the homepage's text representing the current filters
-function updateCurrentFiltersList() {
-    document.getElementById("current-filters").innerHTML = "Filtering by: " + prop + costume + timePeriod + region + sex + color + size + condition + availability;
 }
