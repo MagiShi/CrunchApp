@@ -26,12 +26,12 @@ app.config.update(
     MAIL_PORT=465,
     MAIL_USE_SSL=True,
     MAIL_USERNAME = 'crunch.thracker@gmail.com',
-    MAIL_PASSWORD = 'crunchthracker'
+    MAIL_PASSWORD = os.environ['epassword']
     )
 mail = Mail(app)
 
 #configuring database url and path
-url = urlparse('postgres://mbgugkwmyyrgpp:08f1f171ba8df81468de5e7d166069757cc545fb163d5cc820407068513b101d@ec2-54-163-237-249.compute-1.amazonaws.com:5432/da0io40vrbg6u0')
+url = urlparse(os.environ['DATABASE_URL'])
 
 db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname)
 schema = "schema.sql"
