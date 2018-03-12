@@ -32,7 +32,6 @@ mail = Mail(app)
 
 #configuring database url and path
 url = urlparse(os.environ['DATABASE_URL'])
-
 db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname)
 schema = "schema.sql"
 #connecting a cursor for the database
@@ -391,10 +390,15 @@ def prodFolders():
     folderNameQuery = "SELECT foldername FROM folder where pendingdelete=false;"
     cursor.execute(folderNameQuery)
     foldernames = cursor.fetchall()
-    error = request.args.get('error')
-    print (foldernames)
 
-    return render_template('prodFolders.html', foldernames=foldernames, error=error)
+    query = "SELECT foldername FROM folder where pendingdelete=true;"
+    cursor.execute(query)
+    deletedfolders = cursor.fetchall()
+
+    error = request.args.get('error')
+    # print (foldernames)
+
+    return render_template('prodFolders.html', foldernames=foldernames, deletedfolders=deletedfolders, error=error)
 
 # Update the name of production folder
 @app.route('/postrenameFolder', methods=['POST'])
@@ -686,8 +690,8 @@ def addFolder():
         cursor.execute("rollback;")
 
         ##If folder should not have passed checks (should not happen)
-        error = 'Folder cannot be added'
-        return redirect(url_for('loggedin', error=error))
+        error = 'Folder cannot be created'
+        return redirect(url_for('addFolderButton', error=error))
 
     item_id = request.form.get('addFolderButton')
 
