@@ -54,21 +54,24 @@
                         </div>
 
                         <!--PHOTO UPLOAD-->
-                        <div class="form-group">
                         <div class="input-title">
-                            <h6>Photo Upload
+                            <h6>Photo Upload</h6>
                             <div class="input-subtitle">
                                 Upload up to 3 photos.
-                            </div></h6>
+                            </div>
                         </div>
-                            <input type="file" name="photo1" accept="image/*" class="form-control" id="input-photo-1" placeholder="Photo">
+                        <div class="row">
+                            <div class="col-lg-4 form-group">
+                                <input type="file" name="photo1" accept="image/*" class="form-control" id="input-photo-1" placeholder="Photo">
+                            </div>
+                            <div class="col-lg-4 form-group">
+                                <input type="file" name="photo2" accept="image/*" class="form-control" id="input-photo-2" placeholder="Photo">
+                            </div>
+                            <div class="col-lg-4 form-group">
+                                <input type="file" name="photo3" accept="image/*" class="form-control" id="input-photo-3" placeholder="Photo">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input type="file" name="photo2" accept="image/*" class="form-control" id="input-photo-2" placeholder="Photo">
-                        </div>
-                        <div class="form-group">
-                            <input type="file" name="photo3" accept="image/*" class="form-control" id="input-photo-3" placeholder="Photo">
-                        </div>
+                        
 
                         <!-- CONDITION INPUT -->
                         <div class="form-group">
@@ -76,11 +79,19 @@
                             <h6>Condition</h6>
                             </div>
                             <div class="form-control">
-                                <div class="radio">
-                                    <input type="radio" name="condition" value="new"> New<br>
-                                    <input type="radio" name="condition" value="good"> Good<br>
-                                    <input type="radio" name="condition" value="used"> Used<br>
-                                    <input type="radio" name="condition" value="poor"> Poor<br>
+                                <div class="row radio">
+                                    <div class="col-6 col-md-3">
+                                        <input type="radio" name="condition" value="new"> New<br>
+                                    </div>
+                                    <div class="col-6 col-md-3">
+                                        <input type="radio" name="condition" value="good"> Good<br>
+                                    </div>
+                                    <div class="col-6 col-md-3">
+                                        <input type="radio" name="condition" value="used"> Used<br>
+                                    </div>
+                                    <div class="col-6 col-md-3">
+                                        <input type="radio" name="condition" value="poor"> Poor<br>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -91,17 +102,27 @@
                             <h6>Color</h6>
                             </div>
                             <div class="form-control">
-                                <div class="radio">
-                                    <input type="checkbox" name="color" value="red"> Red<br>
-                                    <input type="checkbox" name="color" value="orange"> Orange<br>
-                                    <input type="checkbox" name="color" value="yellow"> Yellow<br>
-                                    <input type="checkbox" name="color" value="green"> Green<br>
-                                    <input type="checkbox" name="color" value="blue"> Blue<br>
-                                    <input type="checkbox" name="color" value="purple"> Purple<br>
-                                    <input type="checkbox" name="color" value="white"> White<br>
-                                    <input type="checkbox" name="color" value="black"> Black<br>
-                                    <input type="checkbox" name="color" value="brown"> Brown<br>
-                                    <input type="checkbox" name="color" value="gray"> Gray<br>
+                                <div class="radio row">
+                                    <div class="col-6 col-sm-4 col-lg-2">
+                                        <input type="checkbox" name="color" value="red"> Red<br>
+                                        <input type="checkbox" name="color" value="orange"> Orange<br>
+                                    </div>
+                                    <div class="col-6 col-sm-4 col-lg-2">
+                                        <input type="checkbox" name="color" value="yellow"> Yellow<br>
+                                        <input type="checkbox" name="color" value="green"> Green<br>
+                                    </div>
+                                    <div class="col-6 col-sm-4 col-lg-2">
+                                        <input type="checkbox" name="color" value="blue"> Blue<br>
+                                        <input type="checkbox" name="color" value="purple"> Purple<br>
+                                    </div>
+                                    <div class="col-6 col-sm-4 col-lg-2">
+                                        <input type="checkbox" name="color" value="white"> White<br>
+                                        <input type="checkbox" name="color" value="black"> Black<br>
+                                    </div>
+                                    <div class="col-6 col-sm-4 col-lg-2">
+                                        <input type="checkbox" name="color" value="brown"> Brown<br>
+                                        <input type="checkbox" name="color" value="gray"> Gray<br>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -112,14 +133,18 @@
                             <h6>Size</h6>
                             </div>
                             <div class="form-control">
-                                <div class="radio">
-                                    <input type="radio" name="size" value="xxs"> &lt;XS<br>
-                                    <input type="radio" name="size" value="xs"> XS<br>
-                                    <input type="radio" name="size" value="s"> S<br>
-                                    <input type="radio" name="size" value="m"> M<br>
-                                    <input type="radio" name="size" value="l"> L<br>
-                                    <input type="radio" name="size" value="xl"> XL<br>
-                                    <input type="radio" name="size" value="xxl"> &gt;XL<br>
+                                <div class="row radio">
+                                    <div class="col-6 col-md-4">
+                                        <input type="radio" name="size" value="xxs"> &lt;XS<br>
+                                        <input type="radio" name="size" value="xs"> XS<br>
+                                        <input type="radio" name="size" value="s"> S<br>
+                                        <input type="radio" name="size" value="m"> M<br>
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <input type="radio" name="size" value="l"> L<br>
+                                        <input type="radio" name="size" value="xl"> XL<br>
+                                        <input type="radio" name="size" value="xxl"> &gt;XL<br>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -130,10 +155,16 @@
                             <h6>Gender</h6>
                             </div>
                             <div class="form-control">
-                                <div class="radio">
-                                    <input type="radio" name="gender" value="male"> Male<br>
-                                    <input type="radio" name="genderSelect" value="gender"> Female<br>
-                                    <input type="radio" name="genderSelect" value="gender"> Unisex<br>
+                                <div class="row radio">
+                                    <div class="col-sm-4">
+                                        <input type="radio" name="gender" value="male"> Male<br>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input type="radio" name="gender" value="gender"> Female<br>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input type="radio" name="gender" value="gender"> Unisex<br>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -144,14 +175,20 @@
                             <h6>Prop Type</h6>
                             </div>
                             <div class="form-control">
-                                <div class="radio">
-                                    <input type="radio" name="prop-type" value="hand"> Hand<br>
-                                    <input type="radio" name="prop-type" value="personal"> Personal<br>
-                                    <input type="radio" name="prop-type" value="set"> Set<br>
-                                    <input type="radio" name="prop-type" value="trims"> Trims<br>
-                                    <input type="radio" name="prop-type" value="set-dressing"> Set Dressing<br>
-                                    <input type="radio" name="prop-type" value="greens"> Greens<br>
-                                    <input type="radio" name="prop-type" value="fx"> FX<br>
+                                <div class="row radio">
+                                    <div class="col-md-4">
+                                        <input type="radio" name="prop-type" value="hand"> Hand<br>
+                                        <input type="radio" name="prop-type" value="personal"> Personal<br>
+                                        <input type="radio" name="prop-type" value="set"> Set<br>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="radio" name="prop-type" value="trims"> Trims<br>
+                                        <input type="radio" name="prop-type" value="set-dressing"> Set Dressing<br>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="radio" name="prop-type" value="greens"> Greens<br>
+                                        <input type="radio" name="prop-type" value="fx"> FX<br>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -162,14 +199,20 @@
                             <h6>Costume Type</h6>
                             </div>
                             <div class="form-control">
-                                <div class="radio">
-                                    <input type="radio" name="clothing" value="outerwear"> Outerwear<br>
-                                    <input type="radio" name="clothing" value="tops"> Tops<br>
-                                    <input type="radio" name="clothing" value="pants"> Pants<br>
-                                    <input type="radio" name="clothing" value="skirt"> Skirt<br>
-                                    <input type="radio" name="clothing" value="dress"> Dress<br>
-                                    <input type="radio" name="clothing" value="footwear"> Footwear<br>
-                                    <input type="radio" name="clothing" value="other"> Other<br>
+                                <div class="row radio">
+                                    <div class="col-md-4">
+                                        <input type="radio" name="clothing" value="outerwear"> Outerwear<br>
+                                        <input type="radio" name="clothing" value="tops"> Tops<br>
+                                        <input type="radio" name="clothing" value="pants"> Pants<br>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="radio" name="clothing" value="skirt"> Skirt<br>
+                                        <input type="radio" name="clothing" value="dress"> Dress<br>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="radio" name="clothing" value="footwear"> Footwear<br>
+                                        <input type="radio" name="clothing" value="other"> Other<br>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -180,14 +223,20 @@
                             <h6>Time Period</h6>
                             </div>
                             <div class="form-control">
-                                <div class="radio">
-                                    <input type="checkbox" name="time-period" value="ancient"> Ancient<br>
-                                    <input type="checkbox" name="time-period" value="classical"> Classical<br>
-                                    <input type="checkbox" name="time-period" value="early-modern"> Early Modern<br>
-                                    <input type="checkbox" name="time-period" value="late-modern"> Late Modern<br>
-                                    <input type="checkbox" name="time-period" value="contemporary"> Contemporary<br>
-                                    <input type="checkbox" name="time-period" value="future"> Future<br>
-                                    <input type="checkbox" name="time-period" value="other"> Other<br>
+                                <div class="row radio">
+                                    <div class="col-md-4">
+                                        <input type="checkbox" name="time-period" value="ancient"> Ancient<br>
+                                        <input type="checkbox" name="time-period" value="classical"> Classical<br>
+                                        <input type="checkbox" name="time-period" value="early-modern"> Early Modern<br>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" name="time-period" value="late-modern"> Late Modern<br>
+                                        <input type="checkbox" name="time-period" value="contemporary"> Contemporary<br>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" name="time-period" value="future"> Future<br>
+                                        <input type="checkbox" name="time-period" value="other"> Other<br>
+                                    </div>
                                 </div>
                             </div>
                         </div>
