@@ -41,10 +41,6 @@
 
                             <ul class="list-group">
                                 {% for foldername in foldernames %}
-                                <!-- Testing to see if deletedfolders gives name of all delete pending -->
-                                <!-- {% for foldername in deletedfolders %} -->
-
-
                                 <li id="folder_{{foldername[0]}}" class="list-group-item list-group-item-action flex-column">
                                     <div class="d-flex w-100 justify-content-between" style="text-align:left;">
                                         <a href="folders/{{foldername[0]}}" class="folder-name">{{foldername[0]}}</a>
@@ -91,7 +87,7 @@
                                  <form method=POST action='/deleteFolder/{{fname}}'>
                                         <button class="btn btn-primary" id="delete-confirmed" type="submit">Delete</button>
                                             <input type="hidden" name="foldername" class="form-control" id="deleted-foldername" >
-                                    </form>
+                                </form>
                                 </div>
                             </div>
                         </div>
@@ -111,6 +107,7 @@
                                 <form method=POST action="{{ url_for('renameFolder') }}">
                                     <div class="modal-body" style="text-align: left;">
                                         <div class="form-group">
+                                            <p class="error-message"></p>
                                             <input type="text" name="foldername" class="form-control" id="input-new-foldername" placeholder="Folder Name">
                                         </div>
                                     </div>
@@ -137,6 +134,7 @@
                                 <form method=POST action="/addFolder">
                                     <div class="modal-body">
                                         <div class="form-group">
+                                            <p class="error-message"></p>
                                             <input type="text" name="foldername" class="form-control" id="input-new-folder" placeholder="Folder Name">
                                         </div>
                                     </div>
@@ -162,6 +160,11 @@
             location.href = 'folders';
         });
 
+        $('#create-folder-button').click(function() {
+            //Reset the error message to empty string
+            $( '.error-message' ).text('');
+        });
+
         $('#save-name-button').click(function() {
             //remove trailing space and tab from the beginning and end of the name string
             var name_input = $('#input-new-foldername').val().trim();
@@ -170,7 +173,7 @@
             //Check if input is empty or contains just white spaces only
             if ( name_input.length === 0) {
                 $('#save-name-button').prop('type', 'button');
-                alert("The name either is empty or contains only white spaces. Please input the eligible name for the folder. Example: Folder number 12");
+                $( '.error-message' ).text("* The name either is empty or contains only white spaces. Please input the eligible name for the folder. Example: Folder number 12");
                 return;
             //Check if the name is unchanged. It just closes the modal.
             } else if (name_input === current_renamed_folder) {
@@ -178,8 +181,7 @@
                 $('#rename-modal').modal('hide');
                 return;
             } else {
-                alert_text = "There is an existing folder with that name. Please use the different name for the folder you are renaming."
-                check_duplicate_folder_name("#save-name-button", name_input, alert_text);
+                check_duplicate_folder_name("#save-name-button", name_input);
             }
         });
 
@@ -193,14 +195,14 @@
 
             if ( name_input.length === 0) {
                 $('#add-folder-button').prop('type', 'button');
-                alert("The name either is empty or contains only white spaces. Please input the eligible name for the folder. Example: Folder number 12");
+                $( '.error-message' ).text("* The name either is empty or contains only white spaces. Please input the eligible name for the folder. Example: Folder number 12");
                 return;
             } else {
-                alert_text = "There is an existing folder with that name. Please use the different name for the folder you are creating."
-                check_duplicate_folder_name("#add-folder-button", name_input, alert_text);
+                check_duplicate_folder_name("#add-folder-button", name_input);
             }
         });
 
+        // Tooltip for the icon buttons
         $('[data-tooltip="tooltip"]').tooltip({trigger: "hover"});
     });
 
@@ -209,6 +211,8 @@
             $(this).find("input").val(folder_name);
             $(this).find("#save-name-button").val(folder_name);
             current_renamed_folder =  folder_name;
+            //Reset the error message to empty string
+            $( '.error-message' ).text('');
         });
     }
 
@@ -219,16 +223,29 @@
         });
     }
 
-    function check_duplicate_folder_name(button_id, name_input, alert_text) {
+    function check_duplicate_folder_name(button_id, name_input) {
         var is_duplicate = false;
+
+        // Check if the input name is duplicate with any existing folders (not deleted-pending)
         $( '.list-group-item' ).each(function() {
             var foldername = $(this).attr('id').split("_")[1];
             if (foldername !== current_renamed_folder) {
                 if (foldername === name_input) {
-                    alert(alert_text);
+                    $( '.error-message' ).text("* There is an existing folder with that name. Please use the different name for the folder.");
                     $(button_id).prop('type', 'button');
                     is_duplicate = true;
                 }
+
+            }
+        });
+
+        // Check if the input name is duplicate with any deleted-pending folders
+        var deleted_folders = {{ deletedfolders|safe }};
+        deleted_folders.forEach(function(e) {
+            if (e === name_input) {
+                $( '.error-message' ).text("* There is a pending deleted folder with that name. Please use the different name for the folder.");
+                $(button_id).prop('type', 'button');
+                is_duplicate = true;
             }
         });
 

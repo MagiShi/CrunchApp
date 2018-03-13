@@ -393,7 +393,9 @@ def prodFolders():
 
     query = "SELECT foldername FROM folder where pendingdelete=true;"
     cursor.execute(query)
-    deletedfolders = cursor.fetchall()
+    # code bellow converts the tuple into a simple arraylist in order to pass the data directly into JS.
+    # ex: [('Folder 1',),('Folder 2',)] -> ['Folder 1', 'Folder 2']
+    deletedfolders = [ x[0] for x in cursor.fetchall()]
 
     error = request.args.get('error')
     # print (foldernames)

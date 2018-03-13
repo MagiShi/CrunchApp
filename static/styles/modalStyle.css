@@ -2,6 +2,11 @@
     width: initial;
 }
 
+.modal .error-message {
+	text-align: left;
+	color: red;
+}
+
 .modal-footer {
 	border: none;
 }
