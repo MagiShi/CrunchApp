@@ -58,8 +58,9 @@
 }
 
 .item-action button {
-    width: 80%;
+    width: 100%;
     color: white;
+    margin-bottom: 40px;
 }
 
 #edit-item-button {

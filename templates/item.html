@@ -77,7 +77,7 @@
                             <p>Deletion Pending</p>
                             {% endif %}
                         </div>
-                        <div class="col-md-5">
+                        <div class="col-lg-5">
                         {%if delete | first %}
                             <button class="btn" id="edit-item-button" button style="background-color:grey" type="submit" disabled value={{itemid}}>Edit</button>
                         {% endif %}
@@ -88,12 +88,12 @@
                         {% endif %}
                         </div>
                             {% if delete|first %}
-                        <div class="offset-md-2 col-md-5">
+                        <div class="offset-lg-1 col-lg-6">
                             <button class="btn" id="delete-item-button" button style="background-color:grey" type="submit" disabled>Delete Item</button>
                         </div>
                             {% endif %}
                             {% if not delete|first %}
-                        <div class="offset-md-2 col-md-5">
+                        <div class="offset-lg-1 col-lg-6">
                             <button class="btn" id="delete-item-button" type="submit">Delete Item</button>
                         </div>
                             {% endif %}
