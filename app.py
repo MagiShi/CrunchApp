@@ -359,6 +359,11 @@ def toEditProdFolders(item_id):
     folderNameQuery = "SELECT foldername FROM folder where pendingdelete=false;"
     cursor.execute(folderNameQuery)
     foldername = cursor.fetchall()
+    query = "SELECT foldername FROM folder where pendingdelete=true;"
+    cursor.execute(query)
+    # code bellow converts the tuple into a simple arraylist in order to pass the data directly into JS.
+    # ex: [('Folder 1',),('Folder 2',)] -> ['Folder 1', 'Folder 2']
+    deletedfolders = [ x[0] for x in cursor.fetchall()]
     error = request.args.get('error')
 
     
@@ -375,7 +380,7 @@ def toEditProdFolders(item_id):
         # error = 'Item information cannot be retrieved'
         # return redirect(url_for('loggedin', error=error))
 
-    return render_template('editProdFolders.html', itemid=item_id, itemname=itemname, foldername=foldername, error=error)
+    return render_template('editProdFolders.html', itemid=item_id, itemname=itemname, foldername=foldername, deletedfolders=deletedfolders, error=error)
 
 @app.route('/posteditFolders/<item_id>', methods=['POST'])
 def editProdFolders(item_id):

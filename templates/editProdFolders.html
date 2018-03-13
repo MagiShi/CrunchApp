@@ -109,6 +109,7 @@
                                 <form method=POST action="/addFolder">
                                     <div class="modal-body">
                                         <div class="form-group">
+                                            <p class="error-message"></p>
                                             <input type="text" name="foldername" class="form-control" id="input-new-folder" placeholder="Folder Name">
                                         </div>
                                     </div>
@@ -139,21 +140,30 @@
 
             if ( name_input.length === 0) {
                 $('#add-folder-button').prop('type', 'button');
-                alert("The name either is empty or contains only white spaces. Please input the eligible name for the folder. Example: Folder number 12");
+                $( '.error-message' ).text("* The name either is empty or contains only white spaces. Please input the eligible name for the folder. Example: Folder number 12");
                 return;
             } else {
-                alert_text = "There is an existing folder with that name. Please use the different name for the folder you are creating."
-                check_duplicate_folder_name("#add-folder-button", name_input, alert_text);
+                check_duplicate_folder_name("#add-folder-button", name_input);
             }
         });
     });
 
-    function check_duplicate_folder_name(button_id, name_input, alert_text) {
+    function check_duplicate_folder_name(button_id, name_input) {
         var is_duplicate = false;
         $( '.list-group-item' ).each(function() {
             var foldername = $(this).attr('id').split("_")[1];
             if (foldername === name_input) {
-                alert(alert_text);
+                $( '.error-message' ).text("* There is an existing folder with that name. Please use the different name for the folder.");
+                $(button_id).prop('type', 'button');
+                is_duplicate = true;
+            }
+        });
+
+         // Check if the input name is duplicate with any deleted-pending folders
+        var deleted_folders = {{ deletedfolders|safe }};
+        deleted_folders.forEach(function(e) {
+            if (e === name_input) {
+                $( '.error-message' ).text("* There is a pending deleted folder with that name. Please use the different name for the folder.");
                 $(button_id).prop('type', 'button');
                 is_duplicate = true;
             }
