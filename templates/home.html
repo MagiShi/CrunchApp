@@ -33,7 +33,7 @@
                 {% for item in itemname %}
                     <div class="col-md-6 col-lg-3 item-summary">
                         <div class="item">
-                            {% for i in image[loop.index0] %}
+                            {% for i in image[1] %}
                                 <img id="item-preview" src="data:image/jpeg;base64, {{i}}" />
                             {% endfor %}
                         <!-- for img preview need to add in app.py a similar thing to imageData in item detail, however workign with a 2d array instead of 1d -->
