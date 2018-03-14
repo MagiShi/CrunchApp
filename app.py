@@ -89,6 +89,11 @@ def loggedin():
     itemname = cursor.fetchall()
     cursor.execute(imageQuery)
     image = cursor.fetchall()
+    for x in image:
+        imagedata = []
+        if x[0] != None:
+            imagedata = functions.getImagedata(image1)
+            x = imagedata
 
     return render_template('home.html', itemid=itemid, itemname=itemname, image=image)
 def guest():
