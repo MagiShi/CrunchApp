@@ -21,14 +21,15 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/folderStyle.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/modalStyle.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/reservationStyle.css') }}">
-
+        <!-- Calendar functions -->
+        <script src="{{ url_for('static',filename='calendar.js') }}"></script>
     </head>
     <body>
         <!--NAV BAR-->
         {% include 'navbar.html' %}
         <div class="container-fluid">
             <div class="row">
-                <div class="add-container offset-2 col-8 offset-md-4 col-md-4">
+                <div class="add-container offset-1 col-10 offset-md-2 col-md-8">
                     <h3>My Reservations</h3>
                     {% if error %}
                         <p class="error" style="color:red;"><strong>*</strong> {{ error }}
@@ -36,16 +37,34 @@
 
                     <div class="form-group">
                         <ul class="list-group">
-                            <label class="list-group-item" id="reservation1">
-                                Reservation1
-                            </label>
-                            <label class="list-group-item" id="reservation2">
-                                Reservation1
-                            </label>
-                            <label class="list-group-item" id="reservation3">
-                                Reservation1
-                            </label>
+                            Current Reservations
+                            
+                            <li class="list-group-item list-group-item-action flex-column">
+                                <div class="d-flex w-100 justify-content-between" style="text-align:left;">
+                                    <!-- LINK TO ITEM'S DETAIL PAGE-->
+                                    <a href="">Item name</a>
+                                    <!-- START DATE -->
+                                    MM/DD/YY
+                                    <!--EDIT START DATE BUTTON-->
+                                    <button type="button" class="icon-button rename-folder" data-toggle="modal" data-tooltip="tooltip" data-placement="top" title="Change Date" onclick="showCalendar()">
+                                        {% include 'icon/pencil.svg' %}
+                                    </button>
+                                    <!-- END DATE -->
+                                    MM/DD/YY
+                                    <!--EDIT END DATE BUTTON-->
+                                    <button type="button" class="icon-button rename-folder" data-toggle="modal" data-tooltip="tooltip" data-placement="top" title="Change Date" onclick="showCalendar()">
+                                        {% include 'icon/pencil.svg' %}
+                                    </button>
+
+                                    <!--DELETE RESERVATION BUTTON-->
+                                    <button type="button" class="icon-button delete-folder" data-toggle="modal" data-tooltip="tooltip" data-placement="top"
+                                    title="Delete Reservation">
+                                        {% include 'icon/delete.svg' %}
+                                    </button>
+                                </div>
+                            </li>
                         </ul>
+                        
                     </div>
                 </div>
             </div>
