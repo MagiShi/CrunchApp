@@ -42,8 +42,124 @@
                     </select>
                             
                     <div class="form-group">
-                        <ul class="list-group">
+                        <!-- CURRENT RESERVATIONS-->
+                        <ul id="current-reservations" class="list-group">
                             Current Reservations
+                            <!-- One reservation list item-->
+                            <li class="row list-group-item list-group-item-action">
+                                <div class="col-sm-4">
+                                    <!--DELETE RESERVATION BUTTON-->
+                                    <button type="button" class="icon-button delete-folder" data-toggle="modal" data-tooltip="tooltip" data-placement="top"
+                                    title="Delete Reservation">
+                                        {% include 'icon/delete.svg' %}
+                                    </button>
+                                    <!-- LINK TO ITEM'S DETAIL PAGE-->
+                                    <a href="">Item name</a>
+                                </div>
+                                <div class="col-sm-8">
+                                    <!-- START DATE -->
+                                    MM/DD/YY
+                                    <!--EDIT START DATE BUTTON-->
+                                    <button type="button" class="icon-button rename-folder" data-toggle="modal" data-tooltip="tooltip" data-placement="top" title="Change Date" onclick="showCalendar()">
+                                        {% include 'icon/pencil.svg' %}
+                                    </button>
+                                    <!-- END DATE -->
+                                    MM/DD/YY
+                                    <!--EDIT END DATE BUTTON-->
+                                    <button type="button" class="icon-button rename-folder" data-toggle="modal" data-tooltip="tooltip" data-placement="top" title="Change Date" onclick="showCalendar()">
+                                        {% include 'icon/pencil.svg' %}
+                                    </button>
+                                </div>
+                            </li>
+                            
+                            <!-- Another reservation list item-->
+                            <li class="row list-group-item list-group-item-action">
+                                <div class="col-sm-4">
+                                    <!--DELETE RESERVATION BUTTON-->
+                                    <button type="button" class="icon-button delete-folder" data-toggle="modal" data-tooltip="tooltip" data-placement="top"
+                                    title="Delete Reservation">
+                                        {% include 'icon/delete.svg' %}
+                                    </button>
+                                    <!-- LINK TO ITEM'S DETAIL PAGE-->
+                                    <a href="">Item name</a>
+                                </div>
+                                <div class="col-sm-8">
+                                    <!-- START DATE -->
+                                    MM/DD/YY
+                                    <!--EDIT START DATE BUTTON-->
+                                    <button type="button" class="icon-button rename-folder" data-toggle="modal" data-tooltip="tooltip" data-placement="top" title="Change Date" onclick="showCalendar()">
+                                        {% include 'icon/pencil.svg' %}
+                                    </button>
+                                    <!-- END DATE -->
+                                    MM/DD/YY
+                                    <!--EDIT END DATE BUTTON-->
+                                    <button type="button" class="icon-button rename-folder" data-toggle="modal" data-tooltip="tooltip" data-placement="top" title="Change Date" onclick="showCalendar()">
+                                        {% include 'icon/pencil.svg' %}
+                                    </button>
+                                </div>
+                            </li>
+                            
+                            <!-- another -->
+                            <li class="row list-group-item list-group-item-action">
+                                <div class="col-sm-4">
+                                    <!--DELETE RESERVATION BUTTON-->
+                                    <button type="button" class="icon-button delete-folder" data-toggle="modal" data-tooltip="tooltip" data-placement="top"
+                                    title="Delete Reservation">
+                                        {% include 'icon/delete.svg' %}
+                                    </button>
+                                    <!-- LINK TO ITEM'S DETAIL PAGE-->
+                                    <a href="">Item name</a>
+                                </div>
+                                <div class="col-sm-8">
+                                    <!-- START DATE -->
+                                    MM/DD/YY
+                                    <!--EDIT START DATE BUTTON-->
+                                    <button type="button" class="icon-button rename-folder" data-toggle="modal" data-tooltip="tooltip" data-placement="top" title="Change Date" onclick="showCalendar()">
+                                        {% include 'icon/pencil.svg' %}
+                                    </button>
+                                    <!-- END DATE -->
+                                    MM/DD/YY
+                                    <!--EDIT END DATE BUTTON-->
+                                    <button type="button" class="icon-button rename-folder" data-toggle="modal" data-tooltip="tooltip" data-placement="top" title="Change Date" onclick="showCalendar()">
+                                        {% include 'icon/pencil.svg' %}
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
+                        
+                        <!-- UPCOMING RESERVATIONS -->
+                        <ul id="upcoming-reservations" class="list-group">
+                            Upcoming Reservations
+                            <li class="row list-group-item list-group-item-action">
+                                <div class="col-sm-4">
+                                    <!--DELETE RESERVATION BUTTON-->
+                                    <button type="button" class="icon-button delete-folder" data-toggle="modal" data-tooltip="tooltip" data-placement="top"
+                                    title="Delete Reservation">
+                                        {% include 'icon/delete.svg' %}
+                                    </button>
+                                    <!-- LINK TO ITEM'S DETAIL PAGE-->
+                                    <a href="">Item name</a>
+                                </div>
+                                <div class="col-sm-8">
+                                    <!-- START DATE -->
+                                    MM/DD/YY
+                                    <!--EDIT START DATE BUTTON-->
+                                    <button type="button" class="icon-button rename-folder" data-toggle="modal" data-tooltip="tooltip" data-placement="top" title="Change Date" onclick="showCalendar()">
+                                        {% include 'icon/pencil.svg' %}
+                                    </button>
+                                    <!-- END DATE -->
+                                    MM/DD/YY
+                                    <!--EDIT END DATE BUTTON-->
+                                    <button type="button" class="icon-button rename-folder" data-toggle="modal" data-tooltip="tooltip" data-placement="top" title="Change Date" onclick="showCalendar()">
+                                        {% include 'icon/pencil.svg' %}
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
+                        
+                        <!-- PAST RESERVATIONS -->
+                        <ul id="past-reservations" class="list-group">
+                            Past Reservations
                             <li class="row list-group-item list-group-item-action">
                                 <div class="col-sm-4">
                                     <!--DELETE RESERVATION BUTTON-->
