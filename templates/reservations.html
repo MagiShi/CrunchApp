@@ -23,6 +23,10 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/reservationStyle.css') }}">
         <!-- Calendar functions -->
         <script src="{{ url_for('static',filename='calendar.js') }}"></script>
+        <!-- Misc Links for Calendar Function -->
+        <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+        <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
     </head>
     <body>
         <!--NAV BAR-->
@@ -40,7 +44,7 @@
                         <option value="end-date">By End Date</option>
                         <option value="alphabetical">By Item Name</option>
                     </select>
-                            
+                    
                     <div class="form-group">
                         <!-- CURRENT RESERVATIONS-->
                         <ul id="current-reservations" class="list-group">
@@ -57,18 +61,8 @@
                                     <a href="">Item name</a>
                                 </div>
                                 <div class="col-sm-8">
-                                    <!-- START DATE -->
-                                    MM/DD/YY
-                                    <!--EDIT START DATE BUTTON-->
-                                    <button type="button" class="icon-button rename-folder" data-toggle="modal" data-tooltip="tooltip" data-placement="top" title="Change Date" onclick="showCalendar()">
-                                        {% include 'icon/pencil.svg' %}
-                                    </button>
-                                    <!-- END DATE -->
-                                    MM/DD/YY
-                                    <!--EDIT END DATE BUTTON-->
-                                    <button type="button" class="icon-button rename-folder" data-toggle="modal" data-tooltip="tooltip" data-placement="top" title="Change Date" onclick="showCalendar()">
-                                        {% include 'icon/pencil.svg' %}
-                                    </button>
+                                    <!-- PICK DATE -->
+                                    <input type="text" name="daterange" value="01/01/2018 - 01/31/2018" />
                                 </div>
                             </li>
                             
@@ -84,18 +78,8 @@
                                     <a href="">Item name</a>
                                 </div>
                                 <div class="col-sm-8">
-                                    <!-- START DATE -->
-                                    MM/DD/YY
-                                    <!--EDIT START DATE BUTTON-->
-                                    <button type="button" class="icon-button rename-folder" data-toggle="modal" data-tooltip="tooltip" data-placement="top" title="Change Date" onclick="showCalendar()">
-                                        {% include 'icon/pencil.svg' %}
-                                    </button>
-                                    <!-- END DATE -->
-                                    MM/DD/YY
-                                    <!--EDIT END DATE BUTTON-->
-                                    <button type="button" class="icon-button rename-folder" data-toggle="modal" data-tooltip="tooltip" data-placement="top" title="Change Date" onclick="showCalendar()">
-                                        {% include 'icon/pencil.svg' %}
-                                    </button>
+                                    <!-- PICK DATE -->
+                                    <input type="text" name="daterange" value="01/01/2018 - 01/31/2018" />
                                 </div>
                             </li>
                             
@@ -111,18 +95,8 @@
                                     <a href="">Item name</a>
                                 </div>
                                 <div class="col-sm-8">
-                                    <!-- START DATE -->
-                                    MM/DD/YY
-                                    <!--EDIT START DATE BUTTON-->
-                                    <button type="button" class="icon-button rename-folder" data-toggle="modal" data-tooltip="tooltip" data-placement="top" title="Change Date" onclick="showCalendar()">
-                                        {% include 'icon/pencil.svg' %}
-                                    </button>
-                                    <!-- END DATE -->
-                                    MM/DD/YY
-                                    <!--EDIT END DATE BUTTON-->
-                                    <button type="button" class="icon-button rename-folder" data-toggle="modal" data-tooltip="tooltip" data-placement="top" title="Change Date" onclick="showCalendar()">
-                                        {% include 'icon/pencil.svg' %}
-                                    </button>
+                                    <!-- PICK DATE -->
+                                    <input type="text" name="daterange" value="01/01/2018 - 01/31/2018" />
                                 </div>
                             </li>
                         </ul>
@@ -141,18 +115,8 @@
                                     <a href="">Item name</a>
                                 </div>
                                 <div class="col-sm-8">
-                                    <!-- START DATE -->
-                                    MM/DD/YY
-                                    <!--EDIT START DATE BUTTON-->
-                                    <button type="button" class="icon-button rename-folder" data-toggle="modal" data-tooltip="tooltip" data-placement="top" title="Change Date" onclick="showCalendar()">
-                                        {% include 'icon/pencil.svg' %}
-                                    </button>
-                                    <!-- END DATE -->
-                                    MM/DD/YY
-                                    <!--EDIT END DATE BUTTON-->
-                                    <button type="button" class="icon-button rename-folder" data-toggle="modal" data-tooltip="tooltip" data-placement="top" title="Change Date" onclick="showCalendar()">
-                                        {% include 'icon/pencil.svg' %}
-                                    </button>
+                                    <!-- PICK DATE -->
+                                    <input type="text" name="daterange" value="01/01/2018 - 01/31/2018" />
                                 </div>
                             </li>
                         </ul>
@@ -171,18 +135,8 @@
                                     <a href="">Item name</a>
                                 </div>
                                 <div class="col-sm-8">
-                                    <!-- START DATE -->
-                                    MM/DD/YY
-                                    <!--EDIT START DATE BUTTON-->
-                                    <button type="button" class="icon-button rename-folder" data-toggle="modal" data-tooltip="tooltip" data-placement="top" title="Change Date" onclick="showCalendar()">
-                                        {% include 'icon/pencil.svg' %}
-                                    </button>
-                                    <!-- END DATE -->
-                                    MM/DD/YY
-                                    <!--EDIT END DATE BUTTON-->
-                                    <button type="button" class="icon-button rename-folder" data-toggle="modal" data-tooltip="tooltip" data-placement="top" title="Change Date" onclick="showCalendar()">
-                                        {% include 'icon/pencil.svg' %}
-                                    </button>
+                                    <!-- PICK DATE -->
+                                    <input type="text" name="daterange" value="01/01/2018 - 01/31/2018" />
                                 </div>
                             </li>
                         </ul>
