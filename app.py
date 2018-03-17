@@ -458,11 +458,12 @@ def reservations():
         # per user needs to be checked because a status has been changed to past
         changedpast = False
 
-        # if the date is different, we need to update the statuses
+        # if the date is different, we need to update the statuses, 
         if changedday:
             changedpast = functions.updateReservationStatus(cursor, conn, day)
         # print (changedpast)
 
+        # if changedpast return true, this means that we need to check to see that there are only 3 past reservations per user.
         if changedpast:
             functions.checkNumOfPastReservations(cursor, conn)
 

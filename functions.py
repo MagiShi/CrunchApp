@@ -102,8 +102,10 @@ def updateLastAccess(cursor, conn):
         cursor.execute("rollback;")
         print(e)
 
+#updates the status column for the reservation table. ('past', 'current', future)
 def updateReservationStatus(cursor, conn, day):
     try:
+        #flag for whether or not a status was changed to 'past'
         changedpast = False
         cursor.execute("SELECT * from reservation;")
         rlist = cursor.fetchall()
@@ -129,11 +131,7 @@ def updateReservationStatus(cursor, conn, day):
                 cursor.execute(query)
                 conn.commit()
                 # print ("future", sdate)
-            # else:
-                ##returns false if nothing changed
-                # return False;
 
-        #if return changedpast, this means that we need to check to see that there are only 3 past reservations per user.
         return changedpast
 
     except Exception as e:
@@ -141,17 +139,24 @@ def updateReservationStatus(cursor, conn, day):
         print(e)
 
 
-# If the # of past resrevations for a specific user goes past 3, this function deletes the oldest reservations.
+# If the # of past reservations for a specific user goes past 3, this function deletes the oldest reservations.
 def checkNumOfPastReservations(cursor, conn):
     try:
-        cursor.execute("select email, count(*) from reservation where status='past' group by email;")
+        # get the number of past reservations each user has
+        cursor.execute("SELECT email, count(*) FROM reservation WHERE status='past' GROUP BY email;")
         pastcount = cursor.fetchall()
-        # print(pastcount)
+        # print(pastcount) 
+        ## [('a@email.com', 3), ('bb@email.com', 4)]
+
+        #loop through all tuples
         for email, count in pastcount:
             if count > 3:
+
+                # Delete from table if more than 3.  Inner query returns all but the most recent three, which are all deleted.
                 query = "DELETE FROM reservation WHERE (email,itemid,startdate) IN (SELECT email, itemid, startdate FROM reservation WHERE email='{0}' ORDER BY enddate DESC OFFSET 3);".format(email)
                 cursor.execute(query)
                 conn.commit()
+
     except Exception as e:
         cursor.execute("rollback;")
         print(e)
