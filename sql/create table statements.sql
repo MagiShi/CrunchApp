@@ -13,6 +13,15 @@ Create Table folder(folderName varchar(256) PRIMARY KEY, pendingDelete Boolean N
 #ItemInFolder
 Create Table iteminfolder(folderName varchar(256) references folder(folderName), itemId varchar(256) references item(itemId), PRIMARY KEY(folderName, itemId));
 
+#Reservation (check enum list for reservationstatus ['past', 'current', 'future'])
+#NOTE: startdate and enddate are DATE only, no time. [Ex: 'Mar-01-2018']
+Create Table reservation ( email varchar(256) NOT NULL references registereduser(email), itemId varchar(256) NOT NULL references item(itemId),  startDate DATE NOT NULL, endDate DATE NOT NULL, status reservationstatus NOT NULL, PRIMARY KEY(email, itemId, startDate) );
+
+# Should only have one row, this is used as a flag to decide whether
+# or not to recreate a view for reservation (curr, past, futre)
+Create Table lastaccess (day DATE PRIMARY KEY);
+
+
 
 ## Sprint 1&2
 -- Create Table registeredUser (email varchar(256) PRIMARY KEY NOT

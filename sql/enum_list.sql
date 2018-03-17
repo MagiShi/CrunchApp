@@ -8,5 +8,8 @@ CREATE TYPE SIZE AS ENUM('xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl');
 CREATE TYPE ITEMTYPE AS ENUM('prop', 'costume');
 CREATE TYPE ITYPE AS ENUM('outer', 'top', 'pants', 'skirts', 'dress', 'under', 'footwear', 'other', 'hand', 'personal', 'set', 'trim', 'setdressing', 'greens', 'mfx');
 
+#ENUM for reservation status
+CREATE TYPE reservationstatus AS ENUM ('past', 'current', 'future');
+
 #EX: To see enums for size:
 -- select enumlabel from pg_enum where enumtypid = 'size'::regtype;
