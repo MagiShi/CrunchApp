@@ -449,6 +449,29 @@ def folderContents(foldername):
 # render My Reservations page with all reservations in the database for that user
 @app.route('/reservations', methods=['POST', 'GET'])
 def reservations():
+    try:
+
+        # checks to see if the reservation statuses need to be updated.
+        changedday, day = functions.updateLastAccess(cursor, conn)
+
+        # changedpast: a bool value to see if the number of past reservations 
+        # per user needs to be checked because a status has been changed to past
+        changedpast = False
+
+        # if the date is different, we need to update the statuses
+        if changedday:
+            changedpast = functions.updateReservationStatus(cursor, conn, day)
+        # print (changedpast)
+
+        if changedpast:
+            functions.checkNumOfPastReservations(cursor, conn)
+
+        #At this point, all updates have been done for the database.
+
+
+    except Exception as e:
+        print(e)
+
     return render_template('reservations.html')
 
 @app.route('/deleteItem/<item_id>', methods=['POST'])

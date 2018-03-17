@@ -78,3 +78,80 @@ def setImageInDatabase(filename, item_id, cursor, conn, up_folder):
 #         ##If folder should not have passed checks (should not happen)
 #         raise Exception
 
+
+def updateLastAccess(cursor, conn):
+    try:
+
+        #check to see if need to update reservation status. Possibly move to app.py
+        cursor.execute("SELECT * from lastaccess WHERE day=CURRENT_DATE;")
+        # cursor.execute("SELECT * from lastaccess WHERE day='Mar-03-2018'::date;")
+        day = cursor.fetchone()
+        # print (day)
+        if day == None:
+            cursor.execute("UPDATE lastaccess set day=CURRENT_DATE;")
+            conn.commit()
+
+            cursor.execute("SELECT CURRENT_DATE;")
+            currd = cursor.fetchone()[0]
+            # print(currd)
+
+            return True, currd
+        return False, day[0]
+
+    except Exception as e:
+        cursor.execute("rollback;")
+        print(e)
+
+def updateReservationStatus(cursor, conn, day):
+    try:
+        changedpast = False
+        cursor.execute("SELECT * from reservation;")
+        rlist = cursor.fetchall()
+        # print(rlist)
+        for email, item, sdate, edate, status in rlist:
+            # print (sdate)
+            if sdate < day and edate > day and status != "current":
+                query = "UPDATE reservation set status='current' where email='{0}' and itemid='{1}' and startdate='{2}';".format(email, item, sdate)
+                print(query)
+                cursor.execute(query)
+                conn.commit()
+                # print ("current", sdate)
+            elif sdate < day and status != "past": 
+                query = "UPDATE reservation set status='past' where email='{0}' and itemid='{1}' and startdate='{2}';".format(email, item, sdate)
+                print(query)
+                cursor.execute(query)
+                conn.commit()
+                changedpast = True
+                # print ("past", sdate)
+            elif edate > day and status != "future":
+                query = "UPDATE reservation set status='future' where email='{0}' and itemid='{1}' and startdate='{2}';".format(email, item, sdate)
+                print(query)
+                cursor.execute(query)
+                conn.commit()
+                # print ("future", sdate)
+            # else:
+                ##returns false if nothing changed
+                # return False;
+
+        #if return changedpast, this means that we need to check to see that there are only 3 past reservations per user.
+        return changedpast
+
+    except Exception as e:
+        cursor.execute("rollback;")
+        print(e)
+
+
+# If the # of past resrevations for a specific user goes past 3, this function deletes the oldest reservations.
+def checkNumOfPastReservations(cursor, conn):
+    try:
+        cursor.execute("select email, count(*) from reservation where status='past' group by email;")
+        pastcount = cursor.fetchall()
+        # print(pastcount)
+        for email, count in pastcount:
+            if count > 3:
+                query = "DELETE FROM reservation WHERE (email,itemid,startdate) IN (SELECT email, itemid, startdate FROM reservation WHERE email='{0}' ORDER BY enddate DESC OFFSET 3);".format(email)
+                cursor.execute(query)
+                conn.commit()
+    except Exception as e:
+        cursor.execute("rollback;")
+        print(e)
