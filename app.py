@@ -53,19 +53,21 @@ def login():
     password = request.form['password']
     error = None
 
-    query = "SELECT * FROM registereduser WHERE username = '{0}' AND password = '{1}';".format(username, password)
+    query = "SELECT email FROM registereduser WHERE username = '{0}' AND password = '{1}';".format(username, password)
     print (query)
     # errors = {"error": "The username or password you have entered is incorrect."}
     try:
         cursor.execute(query)
-        tup = cursor.fetchone()
+        email_list = cursor.fetchone()
 
-        if tup is None:
+        # print (email_list)
+
+        if email_list is None:
             ##Error message for wrong password/username
             error = 'The username or password you have entered is incorrect.'
             return redirect(url_for('welcome', error=error))
         else:
-        	session['user'] = True;
+        	session['user'] = email_list[0];
     except: 
         ##Any errors should be handled here
         query = "rollback;"
@@ -469,11 +471,53 @@ def reservations():
 
         #At this point, all updates have been done for the database.
 
+        #get the email of the user
+        email = session['user']
+        # print (email)
+
+        #returns all of the current user's reservations
+        query = "SELECT * from reservation where email='{0}';".format(email)
+        # print (query)
+        cursor.execute(query)
+        user_reservations = cursor.fetchall()
+
+        # ##OR if prefer this: (Uncomment and use the other return statement if so)
+        # # query for all past reservations for a user
+        # query = "SELECT * from reservation where email='{0}' and status='past';".format(email)
+        # # print (query)
+        # cursor.execute(query)
+        # past_user_reservations = cursor.fetchall()
+
+        # # query for all current reservations for a user
+        # query = "SELECT * from reservation where email='{0}' and status='current';".format(email)
+        # # print (query)
+        # cursor.execute(query)
+        # current_user_reservations = cursor.fetchall()
+
+        # # query for all future reservations for a user
+        # query = "SELECT * from reservation where email='{0}' and status='future';".format(email)
+        # # print (query)
+        # cursor.execute(query)
+        # future_user_reservations = cursor.fetchall()
+
+
+        #returns all reservations as a whole (needed to know item availability)
+        query = "SELECT * from reservation;"
+        cursor.execute(query)
+        all_reservations = cursor.fetchall()
+
 
     except Exception as e:
+        cursor.execute("rollback;")
         print(e)
+        error = "Cannot find your reservations"
+        return render_template('reservations.html', error=error)
 
-    return render_template('reservations.html')
+    # userreservations gives all reservations for a user
+    # allreservations gives all reservations in the system
+    return render_template('reservations.html', user_reservations=user_reservations, all_reservations=all_reservations)
+    # return render_template('reservations.html', past_user_reservations=past_user_reservations,  current_user_reservations=current_user_reservations,  future_user_reservations=future_user_reservations, all_reservations=all_reservations)
+
 
 @app.route('/deleteItem/<item_id>', methods=['POST'])
 def deleteItemFlag(item_id):
