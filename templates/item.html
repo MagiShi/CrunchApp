@@ -44,8 +44,15 @@
                 <div class="col-md-6">
                     <p>Reservation Set</p>
                     <div class="reservation-and-folder row">
-                        <div class="reservation col-xl-6">
+
+                        <!-- <div class="reservation col-xl-6">
                             <button class="btn" type="button">Reserve Item</button>
+                        </div> -->
+
+                        <div class="reservation col-xl-6">
+                            <form method=POST action='/setReservation/{{itemid}}'>
+                                <button class="btn" id="prod-folder-button" type="submit" value={{itemid}}>Reserve Item</button>
+                            </form>
                         </div>
 
                         <div class="prod-folder col-xl-6">

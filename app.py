@@ -32,6 +32,7 @@ mail = Mail(app)
 
 #configuring database url and path
 url = urlparse(os.environ['DATABASE_URL'])
+
 db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname)
 schema = "schema.sql"
 #connecting a cursor for the database
@@ -355,6 +356,21 @@ def addItem():
 def logout():
     session.pop('user', None)
     return redirect('/')
+
+@app.route('/setReservation/<item_id>', methods=["POST", "GET"])
+def reserveItem(item_id):
+    itemid = item_id
+    error = None
+
+    try:
+        #returns all reservations with that item id
+        cursor.execute("SELECT * from reservation where itemid='{0}';".format(item_id))
+        all_reservations = cursor.fetchall()
+    except Exception as e:
+        print(e)
+
+    return render_template('setReservation.html', itemid=item_id, all_reservations=all_reservations, error=error)
+
 
 @app.route('/editFolders/<item_id>', methods=["POST", "GET"])
 def toEditProdFolders(item_id):
