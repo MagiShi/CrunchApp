@@ -38,22 +38,31 @@
                     {% if error %}
                         <p class="error" style="color:red;"><strong>*</strong> {{ error }}
                     {% endif %}
-                    
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                Select a date range
+
+                    <!-- TO DO: Route back to Item Detail page with confirmation -->
+                    <form method=POST action='/postaddItem' enctype=multipart/form-data><form>
+                        <div class="form-group">
+
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label>Select a date range</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!-- select start and end date -->
+                                <div class="col-sm-5">
+                                    <!-- PICK DATE -->
+                                    <!-- TO DO: Show already reserved dates as unavailable -->
+                                    <input type="text" name="daterange" value="01/01/2018 - 01/31/2018" />
+                                </div>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <!-- select start and end date -->
-                            <div class="col-sm-8">
-                                <!-- PICK DATE -->
-                                <input type="text" name="daterange" value="01/01/2018 - 01/31/2018" />
-                            </div>
-                        </div>
-                    </div>
+                        <!-- Navigate back to home page/ Trigger the confirmation modal -->
+                        <button type="submit" name="cancel-button" class="btn" id="cancel-button" value="Cancel">Cancel</button>
+                        <!--ADD ITEM BUTTON-->
+                        <button type="submit" name="reserve-item-button" class="btn offset-md-1" id="reserve-item-button" value="Reserve">Reserve Item</button>
+                    </form>
                 </div>
             </div>
         </div>
