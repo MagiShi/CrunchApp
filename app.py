@@ -491,37 +491,55 @@ def reservations():
         email = session['user']
         # print (email)
 
-        #returns all of the current user's reservations
-        query = "SELECT * from reservation where email='{0}';".format(email)
+        # #returns all of the current user's reservations
+        # query = "SELECT * from reservation where email='{0}';".format(email)
+        # # print (query)
+        # cursor.execute(query)
+        # user_reservations = cursor.fetchall()
+        # index = 0
+        # for c in user_reservations:
+        #     user_reservations[index] = c[:2] + (c[2].strftime('%m/%d/%Y'), c[3].strftime('%m/%d/%Y')) + c[4:]
+        #     index += 1
+
+        ##OR if prefer this: (Uncomment and use the other return statement if so)
+        # query for all past reservations for a user
+        query = "SELECT * from reservation where email='{0}' and status='past';".format(email)
         # print (query)
         cursor.execute(query)
-        user_reservations = cursor.fetchall()
+        past_user_reservations = cursor.fetchall()
+        index = 0
+        for c in past_user_reservations:
+            past_user_reservations[index] = c[:2] + (c[2].strftime('%m/%d/%Y'), c[3].strftime('%m/%d/%Y')) + c[4:]
+            index += 1
 
-        # ##OR if prefer this: (Uncomment and use the other return statement if so)
-        # # query for all past reservations for a user
-        # query = "SELECT * from reservation where email='{0}' and status='past';".format(email)
-        # # print (query)
-        # cursor.execute(query)
-        # past_user_reservations = cursor.fetchall()
+        # query for all current reservations for a user
+        query = "SELECT * from reservation where email='{0}' and status='current';".format(email)
+        # print (query)
+        cursor.execute(query)
+        current_user_reservations = cursor.fetchall()
+        index = 0
+        for c in current_user_reservations:
+            current_user_reservations[index] = c[:2] + (c[2].strftime('%m/%d/%Y'), c[3].strftime('%m/%d/%Y')) + c[4:]
+            index += 1
 
-        # # query for all current reservations for a user
-        # query = "SELECT * from reservation where email='{0}' and status='current';".format(email)
-        # # print (query)
-        # cursor.execute(query)
-        # current_user_reservations = cursor.fetchall()
-
-        # # query for all future reservations for a user
-        # query = "SELECT * from reservation where email='{0}' and status='future';".format(email)
-        # # print (query)
-        # cursor.execute(query)
-        # future_user_reservations = cursor.fetchall()
-
+        # query for all future reservations for a user
+        query = "SELECT * from reservation where email='{0}' and status='future';".format(email)
+        # print (query)
+        cursor.execute(query)
+        future_user_reservations = cursor.fetchall()
+        index = 0
+        for c in future_user_reservations:
+            future_user_reservations[index] = c[:2] + (c[2].strftime('%m/%d/%Y'), c[3].strftime('%m/%d/%Y')) + c[4:]
+            index += 1
 
         #returns all reservations as a whole (needed to know item availability)
         query = "SELECT * from reservation;"
         cursor.execute(query)
         all_reservations = cursor.fetchall()
-
+        index = 0
+        for c in all_reservations:
+            all_reservations[index] = c[:2] + (c[2].strftime('%m/%d/%Y'), c[3].strftime('%m/%d/%Y')) + c[4:]
+            index += 1
 
     except Exception as e:
         cursor.execute("rollback;")
@@ -531,8 +549,8 @@ def reservations():
 
     # userreservations gives all reservations for a user
     # allreservations gives all reservations in the system
-    return render_template('reservations.html', user_reservations=user_reservations, all_reservations=all_reservations)
-    # return render_template('reservations.html', past_user_reservations=past_user_reservations,  current_user_reservations=current_user_reservations,  future_user_reservations=future_user_reservations, all_reservations=all_reservations)
+    # return render_template('reservations.html', user_reservations=user_reservations, all_reservations=all_reservations)
+    return render_template('reservations.html', past_user_reservations=past_user_reservations,  current_user_reservations=current_user_reservations,  future_user_reservations=future_user_reservations, all_reservations=all_reservations)
 
 
 @app.route('/deleteItem/<item_id>', methods=['POST'])
