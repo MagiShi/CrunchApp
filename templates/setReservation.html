@@ -59,10 +59,31 @@
                         </div>
 
                         <!-- Navigate back to home page/ Trigger the confirmation modal -->
-                        <button type="submit" name="cancel-button" class="btn" id="cancel-button" value="Cancel">Cancel</button>
+                        <button type="button" name="cancel-button" class="btn" id="cancel-button" value="Cancel" data-toggle="modal" data-target="#cancel-modal">Cancel</button>
                         <!--ADD ITEM BUTTON-->
                         <button type="submit" name="reserve-item-button" class="btn offset-md-1" id="reserve-item-button" value="Reserve">Reserve Item</button>
                     </form>
+
+                    <!-- Cancel Confirmation Modal -->
+                    <div class="modal fade" id="cancel-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Cancel Confirmation</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body" style="text-align: left;">
+                                    You have not submitted the reservation form yet. Are you sure you want to discard the form?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Keep the form</button>
+                                    <button type="submit" class="btn btn-primary" id="cancel-confirmed" onclick="location.href='/item/{{itemid}}'">Discard the form</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
