@@ -12,6 +12,7 @@ import base64
 from io import BytesIO
 
 import functions
+import json
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -528,18 +529,28 @@ def reservations():
         cursor.execute(query)
         future_user_reservations = cursor.fetchall()
         index = 0
+        editable_reservations = []
         for c in future_user_reservations:
             future_user_reservations[index] = c[:2] + (c[2].strftime('%m/%d/%Y'), c[3].strftime('%m/%d/%Y')) + c[4:]
             index += 1
+            if c[1] not in editable_reservations:
+                editable_reservations.append(c[1])
 
         #returns all reservations as a whole (needed to know item availability)
-        query = "SELECT * from reservation;"
+        #but only contains items in user has reserved, excluding the past reservations
+        query = "SELECT * from reservation where status='future' or status='current';"
         cursor.execute(query)
         all_reservations = cursor.fetchall()
         index = 0
         for c in all_reservations:
-            all_reservations[index] = c[:2] + (c[2].strftime('%m/%d/%Y'), c[3].strftime('%m/%d/%Y')) + c[4:]
-            index += 1
+            if c[1] in editable_reservations:
+                all_reservations[index] = c[:2] + (c[2].strftime('%Y-%m-%d'), c[3].strftime('%Y-%m-%d')) + c[4:]
+                index += 1
+            else:
+                all_reservations.pop(index)
+        ## Convert the list of tuples to JSON so it can be readable in JavaScript.
+        ## [('a','b'),('d','c')] -> [['a','b],['c','d']]
+        all_reservations = json.dumps(all_reservations)
 
     except Exception as e:
         cursor.execute("rollback;")

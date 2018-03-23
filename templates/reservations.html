@@ -62,7 +62,7 @@
                                 </div>
                                 <div class="col-sm-8">
                                     <!-- PICK DATE -->
-                                    <input type="text" name="daterange" value="{{reservation[2]}} - {{reservation[3]}}" />
+                                    <input class="{{reservation[1]}}" type="text" name="daterange" value="{{reservation[2]}} - {{reservation[3]}}" />
                                 </div>
                             </li>
                             {% endfor %}
@@ -84,7 +84,7 @@
                                 </div>
                                 <div class="col-sm-8">
                                     <!-- PICK DATE -->
-                                    <input type="text" name="daterange" value="{{reservation[2]}} - {{reservation[3]}}" />
+                                    <input class="{{reservation[1]}}" type="text" name="daterange" value="{{reservation[2]}} - {{reservation[3]}}" />
                                 </div>
                             </li>
                             {% endfor %}
@@ -145,5 +145,14 @@
     $(document).ready(function() {
         // Tooltip for the icon buttons
         $('[data-tooltip="tooltip"]').tooltip({trigger: "hover"});
+        initialize_calendar_setting(); // in calendar.js
+
+        // Give id for each future reservation
+        $('#upcoming-reservations input[name="daterange"]').each(function(index, input) {
+            $(input).attr('id', 'future_' + index);
+        });
+
+        var all = {{all_reservations|safe}};
+        greyout_taken_dates_in_my_reservations(all); // in calendar.js
     });
 </script>
