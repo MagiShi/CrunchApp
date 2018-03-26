@@ -1,6 +1,5 @@
 function initialize_calendar_setting() {
     $('input[name="daterange"]').daterangepicker({
-    "autoApply": true,
     "linkedCalendars": false,
     "showCustomRangeLabel": false
     });
