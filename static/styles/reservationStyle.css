@@ -19,5 +19,5 @@
 }
 
 .calendar.right .calendar-table {
-    display: none;
+    display: none !important;
 }
