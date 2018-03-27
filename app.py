@@ -791,6 +791,7 @@ def filterItems():
     try: 
         cursor.execute(query)
         conn.commit()
+        itemid = cursor.fetchall()
         error = 'Items filtered (temp message)'
     except Exception as e: 
         cursor.execute("rollback;")
@@ -798,7 +799,7 @@ def filterItems():
         ##Error
         error = 'Cannot filter'
         return redirect(url_for('loggedin', error=error))
-    return redirect(url_for('loggedin', error=error))
+    return render_template('home.html', itemid=itemid, error=error)
 
 #Adding a new folder 
 @app.route('/addFolder', methods=["POST"])
