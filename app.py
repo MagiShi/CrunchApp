@@ -734,7 +734,7 @@ def filterItems():
     # print (charArrayBool)
     # print (charBool)
 
-    query = "SELECT itemname FROM item" 
+    query = "SELECT itemid FROM item" 
 
     if charBool or charArrayBool:
         query += " WHERE "
@@ -799,7 +799,7 @@ def filterItems():
         ##Error
         error = 'Cannot filter'
         return redirect(url_for('loggedin', error=error))
-    return render_template('home.html', itemname=itemid, error=error)
+    return render_template('home.html', itemid=itemid, error=error)
 
 #Adding a new folder 
 @app.route('/addFolder', methods=["POST"])
