@@ -799,7 +799,7 @@ def filterItems():
         ##Error
         error = 'Cannot filter'
         return redirect(url_for('loggedin', error=error))
-    return render_template('home.html', itemid=itemid, itemname=itemid, error=error)
+    return render_template('home.html', itemid=itemid, error=error)
 
 #Adding a new folder 
 @app.route('/addFolder', methods=["POST"])
