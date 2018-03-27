@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Home - UAH Theatre</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+        <!-- Tether -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+        <!-- Font Awesome -->
+        <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+        <!-- Our CSS -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/homeStyle.css') }}">
+        <!-- Home page functions -->
+        <script src="{{ url_for('static',filename='homepage.js') }}"></script>
+    </head>
+    <body onload="updateFiltersList()">
+        <!--SEARCH BAR-->
+        {% include 'navbar.html' %}
+        <!-- MAIN PAGE CONTENT -->
+        <div class="all-items container-fluid">
+            <div class="row" id="current-filters">
+               (Applied filters appear here)
+            </div>
+            {{itemid}}
+            <!-- ITEM LIST -->
+            <div class="row">
+                {% for item in itemid %}
+                    <div class="col-md-6 col-lg-3 item-summary">
+                        <div class="item">
+                            <!--{% for i in image[1] %} -->
+                               <!-- <img id="item-preview" src="data:image/jpeg;base64, {{i}}" /> -->
+                            <!--  {% endfor %}-->
+    
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/No_image_available_600_x_450.svg">
+                            <p>{{item[0]}}</p>
+                            <button class="btn item-detail-button" onclick="location.href='item/{{itemid[loop.index0][0]}}'">Details</button>
+                        <!--<button class="btn item-detail-button" onclick="location.href='/item/{{itemid}}'">Details</button>-->
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </body>
+</html>
