@@ -790,7 +790,7 @@ def filterItems():
 
     try: 
         cursor.execute(query)
-        conn.commit()
+        #conn.commit()
         itemid = cursor.fetchall()
         error = 'Items filtered (temp message)'
     except Exception as e: 
