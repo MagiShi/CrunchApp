@@ -367,11 +367,19 @@ def reserveItem(item_id):
     try:
         #returns all reservations with that item id
         cursor.execute("SELECT * from reservation where itemid='{0}';".format(item_id))
-        all_reservations = cursor.fetchall()
+        all_reservations_this_item = cursor.fetchall()
+        index = 0
+        for c in all_reservations_this_item:
+            all_reservations_this_item[index] = c[:2] + (c[2].strftime('%Y-%m-%d'), c[3].strftime('%Y-%m-%d')) + c[4:]
+            index += 1
+        ## Convert the list of tuples to JSON so it can be readable in JavaScript.
+        ## [('a','b'),('d','c')] -> [['a','b],['c','d']]
+        ## default=str turns datetime.date into str, because it is not JSON serializable
+        all_reservations_this_item = json.dumps(all_reservations_this_item, default=str)
     except Exception as e:
         print(e)
 
-    return render_template('setReservation.html', itemid=item_id, all_reservations=all_reservations, error=error)
+    return render_template('setReservation.html', itemid=item_id, all_reservations_this_item=all_reservations_this_item, error=error)
 
 
 @app.route('/editFolders/<item_id>', methods=["POST", "GET"])

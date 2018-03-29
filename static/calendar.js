@@ -30,3 +30,22 @@ function greyout_taken_dates_in_my_reservations(all) {
         });
     });
 }
+
+function greyout_taken_dates_in_new_reservation(all) {
+    // 'all' array: [[0:email, 1:item_id, 2:start, 3:end, 4:status_enum: current,past,future]]
+    var today = moment().format('MM/DD/YYYY');
+    $('input[name="daterange"]').each(function(index, input) {
+        var takenDateRanges = [];
+        $(input).daterangepicker({
+            isInvalidDate: function(date) {
+                all.forEach(function(reservation) {
+                    takenDateRanges.push({"start": reservation[2], "end": reservation[3]});
+                });
+                return takenDateRanges.reduce(function(bool, range) {
+                    return bool || (date >= moment(range.start) && date <= moment(range.end));
+                }, false);
+            },
+            "minDate": today
+        });
+    });
+}
