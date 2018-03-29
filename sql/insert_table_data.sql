@@ -19,6 +19,7 @@ Insert into reservation values ('a@email.com', 'b_item1', 'Mar-08-2018', 'Mar-19
 Insert into reservation values ('a@email.com', 'b_item2', 'Mar-10-2018', 'Mar-19-2018', 'current'), ('a@email.com', 'b_item1', 'Jan-08-2018', 'Jan-19-2018', 'current');
 Insert into reservation values ('bb@email.com', 'b_item1', 'Feb-08-2018', 'Feb-19-2018', 'current'), ('bb@email.com', 'b_item1', 'Feb-06-2018', 'Feb-07-2018', 'current'), ('bb@email.com', 'b_item2', 'Feb-20-2018', 'Feb-21-2018', 'current'), ('bb@email.com', 'b_item2', 'Feb-16-2018', 'Feb-18-2018', 'current'), ('bb@email.com', 'b_item1', 'Feb-01-2018', 'Feb-05-2018', 'current');
 
+Insert into reservation values ('a@email.com', 'b_item1', 'Mar-08-2016', 'Mar-19-2016', 'current'), ('a@email.com', 'b_item2', 'Apr-08-2016', 'Apr-19-2016', 'current'), ('a@email.com', 'b_item1', 'May-08-2016', 'May-19-2016', 'current');
 
 # For testing for the 3 past limit, also use:
 UPDATE lastaccess set day='Mar-10-2017'::date;

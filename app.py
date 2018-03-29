@@ -69,7 +69,8 @@ def login():
             error = 'The username or password you have entered is incorrect.'
             return redirect(url_for('welcome', error=error))
         else:
-        	session['user'] = email_list[0];
+            ## Else set session value as the user email
+            session['user'] = email_list[0]
     except: 
         ##Any errors should be handled here
         query = "rollback;"
@@ -489,23 +490,10 @@ def reservations():
         #At this point, all updates have been done for the database.
 
         #get the email of the user
-        email = session['user']
-        # print (email)
+        email = session.get('user')
 
-        # #returns all of the current user's reservations
-        # query = "SELECT * from reservation where email='{0}';".format(email)
-        # # print (query)
-        # cursor.execute(query)
-        # user_reservations = cursor.fetchall()
-        # index = 0
-        # for c in user_reservations:
-        #     user_reservations[index] = c[:2] + (c[2].strftime('%m/%d/%Y'), c[3].strftime('%m/%d/%Y')) + c[4:]
-        #     index += 1
-
-        ##OR if prefer this: (Uncomment and use the other return statement if so)
         # query for all past reservations for a user
         query = "SELECT * from reservation where email='{0}' and status='past';".format(email)
-        # print (query)
         cursor.execute(query)
         past_user_reservations = cursor.fetchall()
         index = 0
@@ -515,7 +503,6 @@ def reservations():
 
         # query for all current reservations for a user
         query = "SELECT * from reservation where email='{0}' and status='current';".format(email)
-        # print (query)
         cursor.execute(query)
         current_user_reservations = cursor.fetchall()
         index = 0
@@ -525,7 +512,6 @@ def reservations():
 
         # query for all future reservations for a user
         query = "SELECT * from reservation where email='{0}' and status='future';".format(email)
-        # print (query)
         cursor.execute(query)
         future_user_reservations = cursor.fetchall()
         index = 0
@@ -548,19 +534,22 @@ def reservations():
                 index += 1
             else:
                 all_reservations.pop(index)
+
         ## Convert the list of tuples to JSON so it can be readable in JavaScript.
         ## [('a','b'),('d','c')] -> [['a','b],['c','d']]
-        all_reservations = json.dumps(all_reservations)
+        ## default=str turns datetime.date into str, because it is not JSON serializable
+        all_reservations = json.dumps(all_reservations, default=str)
 
     except Exception as e:
         cursor.execute("rollback;")
-        print(e)
+        print("Error: ", e)
         error = "Cannot find your reservations"
         return render_template('reservations.html', error=error)
 
-    # userreservations gives all reservations for a user
     # allreservations gives all reservations in the system
-    # return render_template('reservations.html', user_reservations=user_reservations, all_reservations=all_reservations)
+    # past_user_reservations gives the specific user's past reservations (should only have last 3)
+    # current gives the specific user's current reservations 
+    # future gives the specific user's future reservations  
     return render_template('reservations.html', past_user_reservations=past_user_reservations,  current_user_reservations=current_user_reservations,  future_user_reservations=future_user_reservations, all_reservations=all_reservations)
 
 

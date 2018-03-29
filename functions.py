@@ -112,25 +112,28 @@ def updateReservationStatus(cursor, conn, day):
         # print(rlist)
         for email, item, sdate, edate, status in rlist:
             # print (sdate)
-            if sdate < day and edate > day and status != "current":
-                query = "UPDATE reservation set status='current' where email='{0}' and itemid='{1}' and startdate='{2}';".format(email, item, sdate)
-                print(query)
-                cursor.execute(query)
-                conn.commit()
-                # print ("current", sdate)
-            elif sdate < day and status != "past": 
-                query = "UPDATE reservation set status='past' where email='{0}' and itemid='{1}' and startdate='{2}';".format(email, item, sdate)
-                print(query)
-                cursor.execute(query)
-                conn.commit()
-                changedpast = True
-                # print ("past", sdate)
-            elif edate > day and status != "future":
-                query = "UPDATE reservation set status='future' where email='{0}' and itemid='{1}' and startdate='{2}';".format(email, item, sdate)
-                print(query)
-                cursor.execute(query)
-                conn.commit()
-                # print ("future", sdate)
+            if sdate <= day and edate >= day:
+                if status != "current":
+                    query = "UPDATE reservation set status='current' where email='{0}' and itemid='{1}' and startdate='{2}';".format(email, item, sdate)
+                    print(query)
+                    cursor.execute(query)
+                    conn.commit()
+                print ("current", sdate)
+            elif sdate < day :
+                if status != "past": 
+                    query = "UPDATE reservation set status='past' where email='{0}' and itemid='{1}' and startdate='{2}';".format(email, item, sdate)
+                    print(query)
+                    cursor.execute(query)
+                    conn.commit()
+                    changedpast = True
+                print ("past", sdate)
+            elif edate > day :
+                if status != "future":
+                    query = "UPDATE reservation set status='future' where email='{0}' and itemid='{1}' and startdate='{2}';".format(email, item, sdate)
+                    print(query)
+                    cursor.execute(query)
+                    conn.commit()
+                print ("future", sdate)
 
         return changedpast
 
@@ -142,6 +145,7 @@ def updateReservationStatus(cursor, conn, day):
 # If the # of past reservations for a specific user goes past 3, this function deletes the oldest reservations.
 def checkNumOfPastReservations(cursor, conn):
     try:
+
         # get the number of past reservations each user has
         cursor.execute("SELECT email, count(*) FROM reservation WHERE status='past' GROUP BY email;")
         pastcount = cursor.fetchall()
