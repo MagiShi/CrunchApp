@@ -1,3 +1,9 @@
+/* Current filter list */
+#current-filters {
+    color: #848d9b;
+    padding-left: 20px;
+}
+
 /* Item list */  
 @media screen and (min-width: 576px) { 
     .all-items {
@@ -12,7 +18,7 @@
 
 /* Individual item box */
 .item-summary {
-    padding: 20px 40px;
+    padding: 20px 20px;
 }
 
 .item {
