@@ -35,12 +35,13 @@
             <div class="row">
                 <div class="add-container offset-1 col-10 offset-md-2 col-md-8">
                     <h3>Reserve Item</h3>
+
                     {% if error %}
                         <p class="error" style="color:red;"><strong>*</strong> {{ error }}
                     {% endif %}
 
                     <!-- TO DO: Route back to Item Detail page with confirmation -->
-                    <form method=POST action='/reservations' enctype=multipart/form-data><form>
+                    <form method=POST action='/postSetReservation/{{itemid}}' enctype=multipart/form-data><form>
                         <div class="form-group">
 
                             <div class="row">
@@ -61,7 +62,7 @@
                         <!-- Navigate back to home page/ Trigger the confirmation modal -->
                         <button type="button" name="cancel-button" class="btn" id="cancel-button" value="Cancel" data-toggle="modal" data-target="#cancel-modal">Cancel</button>
                         <!--ADD ITEM BUTTON-->
-                        <button type="submit" name="reserve-item-button" class="btn offset-md-1" id="reserve-item-button" value="Reserve">Reserve Item</button>
+                        <button type="submit" name="reserve-item-button" class="btn offset-md-1" id="reserve-item-button" value="{{itemid}}">Reserve Item</button>
                     </form>
 
                     <!-- Cancel Confirmation Modal -->

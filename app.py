@@ -11,8 +11,13 @@ import psycopg2
 import base64
 from io import BytesIO
 
+#file with helper functions
 import functions
+
 import json
+
+#for current date
+import datetime
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -361,17 +366,79 @@ def logout():
 
 @app.route('/setReservation/<item_id>', methods=["POST", "GET"])
 def reserveItem(item_id):
-    itemid = item_id
+    # print ("pe", passed_error)
     error = None
+    # passed_error = None
+    # if type(item_id) == list:
+    #     itemid = item_id[0]
+    #     passed_error = item_id[1]
+    # else: 
+    #     itemid = item_id
 
+    # print(error)
     try:
         #returns all reservations with that item id
         cursor.execute("SELECT * from reservation where itemid='{0}';".format(item_id))
         all_reservations = cursor.fetchall()
-    except Exception as e:
-        print(e)
 
+    except Exception as e:
+        cursor.execute("rollback;")
+        print(e)
+        # if passed_error:
+            # error = passed_error
+        # else: 
+        error = "Cannot retrieve reservation information for item {0}.".format(itemid)
+        return render_template('setReservation.html', itemid=item_id, error=error)
     return render_template('setReservation.html', itemid=item_id, all_reservations=all_reservations, error=error)
+
+@app.route('/postSetReservation/<item_id>', methods=["POST", "GET"])
+def postReserveItem(item_id):
+    #retreive information for reservation creation
+    itemid = item_id
+    email = session.get('user')
+
+    #formatting the date; currently placeholder string
+    start_date = "01/01/2020"
+    start_date = datetime.datetime.strptime(start_date, '%d/%m/%Y')
+    end_date = "01/02/2020"
+    end_date = datetime.datetime.strptime(end_date, '%d/%m/%Y')
+
+    # This does not check for past, because users should not be able to make reservations that start in the past
+    # This would also mess with the scheduler if "past" status tuple are reserved.
+    status = None
+    if start_date <= datetime.datetime.now():
+        status="current"
+    else: 
+        status="future"
+    error = None
+
+    try:
+        #returns all reservations with that item id
+        query = "INSERT into reservation VALUES ('{0}', '{1}', '{2}', '{3}', '{4}');".format(email, item_id, start_date, end_date, status)
+        print (query)
+        cursor.execute(query)
+        conn.commit()
+        error = "Your reservation for item with barcode {0} has been reserved from {1} to {2}".format(itemid, start_date, end_date)
+
+    except Exception as e:
+        cursor.execute("rollback;")
+        # print("Error on item reservation page:", e)
+        passed_error = "Your reservation for item with barcode {0} cannot be created for dates {1} to {2}".format(itemid, start_date, end_date)
+        try:
+            #returns all reservations with that item id
+            cursor.execute("SELECT * from reservation where itemid='{0}';".format(item_id))
+            all_reservations = cursor.fetchall()
+
+        except Exception as e:
+            cursor.execute("rollback;")
+            print(e)
+
+            error = "Cannot retrieve reservation information for item {0}.".format(itemid)
+            return render_template('setReservation.html', itemid=item_id, error=error)
+
+        return render_template('setReservation.html', itemid=item_id, all_reservations=all_reservations, error=passed_error)
+
+    return redirect(url_for('getItemInfo', item_id=itemid, error=error))
 
 
 @app.route('/editFolders/<item_id>', methods=["POST", "GET"])
