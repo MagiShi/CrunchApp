@@ -61,8 +61,7 @@
                                     <a href="" style="margin-left: 15px;">{{reservation[1]}}</a>
                                 </div>
                                 <div class="col-sm-8">
-                                    <!-- PICK DATE -->
-                                    <input class="{{reservation[1]}}" type="text" readonly="true" name="daterange" value="{{reservation[2]}} - {{reservation[3]}}" />
+                                    <p>{{reservation[2]}} - {{reservation[3]}}</p>
                                 </div>
                             </li>
                             {% endfor %}
@@ -84,7 +83,7 @@
                                 </div>
                                 <div class="col-sm-8">
                                     <!-- PICK DATE -->
-                                    <input class="{{reservation[1]}}" readonly="true" name="daterange" value="{{reservation[2]}} - {{reservation[3]}}" />
+                                    <input class="{{reservation[1]}}" type="text" readonly="true" name="daterange" value="{{reservation[2]}} - {{reservation[3]}}" />
                                 </div>
                             </li>
                             {% endfor %}
@@ -106,7 +105,7 @@
                                 </div>
                                 <div class="col-sm-8">
                                     <!-- PICK DATE -->
-                                    <input readonly="true" name="daterange" value="{{reservation[2]}} - {{reservation[3]}}" />
+                                    <p>{{reservation[2]}} - {{reservation[3]}}</p>
                                 </div>
                             </li>
                             {% endfor %}
@@ -128,7 +127,8 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                 <form method=POST action=''>
+                                <!-- TO DO: delete the reservation-->
+                                <form method=POST action=''>
                                         <button class="btn btn-primary" id="delete-confirmed" type="submit">Delete</button>
                                 </form>
                                 </div>

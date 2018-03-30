@@ -40,8 +40,9 @@
                         <p class="error" style="color:red;"><strong>*</strong> {{ error }}
                     {% endif %}
 
-                    <!-- TO DO: Route back to Item Detail page with confirmation -->
+
                     <form method=POST action='/postSetReservation/{{itemid}}' enctype=multipart/form-data><form>
+
                         <div class="form-group">
 
                             <div class="row">
@@ -54,18 +55,18 @@
                                 <div class="col-sm-5">
                                     <!-- PICK DATE -->
                                     <!-- TO DO: Show already reserved dates as unavailable -->
-                                    <input type="text" name="daterange" value="01/01/2018 - 01/31/2018" />
+                                    <input readonly="true" name="daterange" value="" />
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Navigate back to home page/ Trigger the confirmation modal -->
+                        <!-- Trigger the confirmation modal -->
                         <button type="button" name="cancel-button" class="btn" id="cancel-button" value="Cancel" data-toggle="modal" data-target="#cancel-modal">Cancel</button>
                         <!--ADD ITEM BUTTON-->
                         <button type="submit" name="reserve-item-button" class="btn offset-md-1" id="reserve-item-button" value="{{itemid}}">Reserve Item</button>
                     </form>
 
-                    <!-- Cancel Confirmation Modal -->
+                    <!-- Cancel Confirmation Modal / Navigate back to Item Detail page/ -->
                     <div class="modal fade" id="cancel-modal" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -90,3 +91,15 @@
         </div>
     </body>
 </html>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        // Tooltip for the icon buttons
+        $('[data-tooltip="tooltip"]').tooltip({trigger: "hover"});
+        initialize_calendar_setting(); // in calendar.js
+
+        var this_item_reservations = {{all_reservations_this_item|safe}};
+        greyout_taken_dates_in_new_reservation(this_item_reservations); // in calendar.js
+
+    });
+</script>
