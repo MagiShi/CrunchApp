@@ -7,6 +7,12 @@ function initialize_calendar_setting() {
     });
 }
 
+// Function called when the Apply button is clicked
+$(document).on('click','.daterangepicker .applyBtn',function(){
+    //alert("Apply Clicked");
+});
+
+
 function greyout_taken_dates_in_my_reservations(all) {
     // 'all' array: [[0:email, 1:item_id, 2:start, 3:end, 4:status_enum: current,past,future]]
     var today = moment().format('MM/DD/YYYY');
