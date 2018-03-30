@@ -19,6 +19,7 @@
         <!--SEARCH BAR-->
         {% include 'navbar.html' %}
         <div class="item-detail-container container-fluid">
+            <!-- ITEM NAME -->
             <div class="row">
                 <div class="col-12">
                     {% if error %}
@@ -28,6 +29,7 @@
                 </div>
             </div>
             <div class="row">
+                <!-- IMAGES -->
                 <div class="col-md-6">
                     <div class="item-image row">
                     {% for i in image %}
@@ -38,25 +40,22 @@
                     </div>
                 </div>
                 <div class="col-md-6">
+                    <!-- RESERVATION -->
                     <p>Reservation Set</p>
                     <div class="reservation-and-folder row">
-
-                        <!-- <div class="reservation col-xl-6">
-                            <button class="btn" type="button">Reserve Item</button>
-                        </div> -->
-
                         <div class="reservation col-xl-6">
                             <form method=POST action='/setReservation/{{itemid}}'>
                                 <button class="btn" id="prod-folder-button" type="submit" value={{itemid}}>Reserve Item</button>
                             </form>
                         </div>
-
+                        <!-- PRODUCTION FOLDERS -->
                         <div class="prod-folder col-xl-6">
                             <form method=POST action='/editFolders/{{itemid}}'>
                                 <button class="btn" id="prod-folder-button" type="submit" value={{itemid}}>Add to Production Folder</button>
                             </form>
                         </div>
                     </div>
+                    <!-- ITEM DETAILS -->
                     <div class="item-text row">
                         <div class="col-12">
                             <p>Barcode: {{itemid}}</p>
@@ -71,6 +70,7 @@
                         </div>
                     </div>
 
+                    <!-- EDITING AND DELETING -->
                     <div class="item-action row">
                         <div class="col-12">
                             {%if delete | first %}

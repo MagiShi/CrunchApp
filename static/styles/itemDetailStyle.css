@@ -43,6 +43,7 @@
 .reservation .btn {
     color: white;
     background-color: #0077C8;
+    cursor: pointer;
 }
 
 .prod-folder .btn:hover,
@@ -64,6 +65,7 @@
     margin-bottom: 15px;
     box-sizing: border-box;
     margin-right: 15px;
+    cursor: pointer;
 }
 
 #edit-item-button {
