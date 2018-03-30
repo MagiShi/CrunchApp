@@ -685,7 +685,7 @@ def getItemInfo(item_id):
     
     try: 
         # calls functions.py method
-        itemname, image1, image2, image3, description, pendingdelete, sex, color, size, itemtype, isavailable = functions.getInfo(item_id, cursor)
+        itemname, image1, image2, image3, description, pendingdelete, sex, color, size, itemtype, isavailable, enddate = functions.getInfo(item_id, cursor)
         # itemname, image1, image2, image3, description, pendingdelete, sex, condition, timeperiod, culture, color, size, itemtype, itype, isavailable = getInfo(item_id)
 
         imagedata1 = []
@@ -709,7 +709,7 @@ def getItemInfo(item_id):
         return redirect(url_for('loggedin', error=error))
 
     ##culture, color, timeperiod are all arrays
-    return render_template('item.html', itemid=item_id, itemname=itemname, image=imagedata1, image2=imagedata2, image3=imagedata3, description=description, delete=pendingdelete, sex=sex, color=color, size=size, itemtype=itemtype, isavailable=isavailable, error=error)
+    return render_template('item.html', itemid=item_id, itemname=itemname, image=imagedata1, image2=imagedata2, image3=imagedata3, description=description, delete=pendingdelete, sex=sex, color=color, size=size, itemtype=itemtype, isavailable=isavailable, enddate=enddate, error=error)
     # return render_template('item.html', itemid=item_id, itemname=itemname, image=imagedata1, image2=imagedata2, image3=imagedata3, description=description, delete=pendingdelete, sex=sex, condition=condition, timeperiod=timeperiod, culture=culture color=color, size=size, itemtype=itemtype, itype=itype, isavailable=isavailable, error=error)
 
 # renders editItem page

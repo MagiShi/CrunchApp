@@ -36,8 +36,11 @@ def getInfo(item_id, cursor):
     cursor.execute("SELECT isavailable FROM item WHERE itemid='{0}';".format(item_id))
     isavailable = cursor.fetchone()
 
+    cursor.execute("SELECT enddate FROM reservation WHERE itemid='{0}' AND status='{1}';".format(item_id, "current"))
+    enddate = cursor.fetchone()
+
     # return itemname, image1, image2, image3, description, pendingdelete, sex, condition, timeperiod, culture, color, size, itemtype, itype, isavailable
-    return itemname, image1, image2, image3, description, pendingdelete, sex, color, size, itemtype, isavailable
+    return itemname, image1, image2, image3, description, pendingdelete, sex, color, size, itemtype, isavailable, enddate
 
 def getImagedata(image):
     imagedata = []
