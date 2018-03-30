@@ -48,7 +48,7 @@
                             <li class="row list-group-item list-group-item-action">
                                 <div class="col-sm-4">
                                     <!--DELETE RESERVATION BUTTON-->
-                                    <button type="button" class="icon-button delete-folder" data-tooltip="tooltip" data-placement="top" data-toggle="modal" data-target="#delete-modal"
+                                    <button type="button" class="icon-button delete-folder" data-tooltip="tooltip" data-placement="top" data-toggle="modal" data-target="#delete-modal" onclick="get_delete_name('{{reservation[0]}} {{reservation[1]}} {{reservation[2]}} {{reservation[3]}}');"
                                     title="Delete Reservation">
                                         {% include 'icon/delete.svg' %}
                                     </button>
@@ -69,7 +69,7 @@
                             <li class="row list-group-item list-group-item-action">
                                 <div class="col-sm-4">
                                     <!--DELETE RESERVATION BUTTON-->
-                                    <button type="button" class="icon-button delete-folder" data-tooltip="tooltip" data-placement="top" data-toggle="modal" data-target="#delete-modal"
+                                    <button type="button" class="icon-button delete-folder" data-tooltip="tooltip" data-placement="top" data-toggle="modal" data-target="#delete-modal" onclick="get_delete_name('{{reservation[0]}} {{reservation[1]}} {{reservation[2]}} {{reservation[3]}}');"
                                     title="Delete Reservation">
                                         {% include 'icon/delete.svg' %}
                                     </button>
@@ -91,7 +91,7 @@
                             <li class="row list-group-item list-group-item-action">
                                 <div class="col-sm-4">
                                     <!--DELETE RESERVATION BUTTON-->
-                                    <button type="button" class="icon-button delete-folder" data-tooltip="tooltip" data-placement="top" data-toggle="modal" data-target="#delete-modal"
+                                    <button type="button" class="icon-button delete-folder" data-tooltip="tooltip" data-placement="top" data-toggle="modal" data-target="#delete-modal" onclick="get_delete_name('{{reservation[0]}} {{reservation[1]}} {{reservation[2]}} {{reservation[3]}}');"
                                     title="Delete Reservation">
                                         {% include 'icon/delete.svg' %}
                                     </button>
@@ -124,6 +124,9 @@
                                 <!-- TO DO: delete the reservation-->
                                 <form method=POST action=''>
                                         <button class="btn btn-primary" id="delete-confirmed" type="submit">Delete</button>
+                                        <!-- The input field contains a string of info which is passed to backend when delete button (above) is clicked. String format: "email itemid start end".
+                                            use .split(' ') in backend to convert string into an array of 4 elements.-->
+                                        <input type="hidden" name="delreservation" class="form-control" id="deleted-reservation" >
                                 </form>
                                 </div>
                             </div>
@@ -149,4 +152,10 @@
         var all = {{all_reservations|safe}};
         greyout_taken_dates_in_my_reservations(all); // in calendar.js
     });
+
+    function get_delete_name(reservation_info) {
+        $('#delete-modal').on('show.bs.modal', function(e) {
+            $(this).find("input").val(reservation_info);
+        });
+    }
 </script>
