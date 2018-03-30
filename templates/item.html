@@ -41,9 +41,9 @@
                 </div>
                 <div class="col-md-6">
                     <!-- RESERVATION -->
-                    {% if enddate != None %}
-                        <p>This item is currently reserved until {{enddate}}.</p>
-                    {% endif %}
+                        {%if iscurrentlyreserved %}
+                        <p style="color:red;" style="font-size:160%;"> Currently reserved: {{r_start}} to {{r_end}} </p>
+                        {% endif %}
 
                     <div class="reservation-and-folder row">
                         <div class="reservation col-xl-6">
