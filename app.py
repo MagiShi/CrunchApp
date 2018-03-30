@@ -405,13 +405,12 @@ def postReserveItem(item_id):
     #retreive information for reservation creation
     itemid = item_id
     email = session.get('user')
-    print (session.get('daterange'))
+    unformatted_date = (request.form.get('daterange').split())
+    start_date = unformatted_date[0]
+    end_date = unformatted_date[2]
 
-    #formatting the date; currently placeholder string
-    start_date = "01/01/2020"
-    start_date = datetime.datetime.strptime(start_date, '%d/%m/%Y')
-    end_date = "01/02/2020"
-    end_date = datetime.datetime.strptime(end_date, '%d/%m/%Y')
+    start_date = datetime.datetime.strptime(start_date, '%m/%d/%Y').date()
+    end_date = datetime.datetime.strptime(end_date, '%m/%d/%Y').date()
 
     # This does not check for past, because users should not be able to make reservations that start in the past
     # This would also mess with the scheduler if "past" status tuple are reserved.
@@ -682,6 +681,11 @@ def getItemInfo(item_id):
     itemtype = None
     # itype = None
     isavailable = None
+
+    start_date = None
+    end_date = None
+    is_reserved=False
+
     
     try: 
         # calls functions.py method
@@ -699,7 +703,18 @@ def getItemInfo(item_id):
         imagedata3 = []
         if image3[0] != None:
             imagedata3 = functions.getImagedata(image3)
-        
+
+        query = "SELECT startdate, enddate FROM reservation WHERE itemid='{0}' and status='current';".format(item_id)
+        cursor.execute(query)
+        # print (query)
+        current_reservation = cursor.fetchone()
+        print(current_reservation)
+        if current_reservation != None:
+
+            start_date = str(current_reservation[0])
+            end_date = str(current_reservation[1])
+            is_reserved = True
+
     except Exception as e: 
         print (e)
         cursor.execute("rollback;")
@@ -709,7 +724,7 @@ def getItemInfo(item_id):
         return redirect(url_for('loggedin', error=error))
 
     ##culture, color, timeperiod are all arrays
-    return render_template('item.html', itemid=item_id, itemname=itemname, image=imagedata1, image2=imagedata2, image3=imagedata3, description=description, delete=pendingdelete, sex=sex, color=color, size=size, itemtype=itemtype, isavailable=isavailable, error=error)
+    return render_template('item.html', itemid=item_id, itemname=itemname, image=imagedata1, image2=imagedata2, image3=imagedata3, description=description, delete=pendingdelete, sex=sex, color=color, size=size, itemtype=itemtype, isavailable=isavailable, error=error, r_start=start_date, r_end=end_date, iscurrentlyreserved=is_reserved)
     # return render_template('item.html', itemid=item_id, itemname=itemname, image=imagedata1, image2=imagedata2, image3=imagedata3, description=description, delete=pendingdelete, sex=sex, condition=condition, timeperiod=timeperiod, culture=culture color=color, size=size, itemtype=itemtype, itype=itype, isavailable=isavailable, error=error)
 
 # renders editItem page

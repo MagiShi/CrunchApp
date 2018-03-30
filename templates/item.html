@@ -43,6 +43,10 @@
                     <!-- RESERVATION -->
                     <div class="reservation-and-folder row">
                         <div class="reservation col-xl-6">
+                        {%if iscurrentlyreserved %}
+                        <p style="color:red;" style="font-size:160%;"> Currently reserved: {{r_start}} to {{r_end}} </p>
+                        {% endif %}
+
                             {%if delete | first %}
                                 <button class="btn" id="reserve-item-button" button type="submit" disabled value={{itemid}}>Reserve Item</button>
                             {% endif %}
