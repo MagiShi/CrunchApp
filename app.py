@@ -378,7 +378,7 @@ def reserveItem(item_id):
     # print(error)
     try:
         #returns all reservations with that item id
-        cursor.execute("SELECT * from reservation where itemid='{0}';".format(item_id))
+        cursor.execute("SELECT * from reservation where itemid='{0}' and (status='current' or status='future');".format(item_id))
 
         all_reservations_this_item = cursor.fetchall()
         index = 0
@@ -405,6 +405,7 @@ def postReserveItem(item_id):
     #retreive information for reservation creation
     itemid = item_id
     email = session.get('user')
+    print (session.get('daterange'))
 
     #formatting the date; currently placeholder string
     start_date = "01/01/2020"
