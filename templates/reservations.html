@@ -11,22 +11,17 @@
         <!-- Bootstrap -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-        <!-- Font Awesome -->
-        <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-        <meta charset="utf-8">
-        <!-- Google Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
         <!-- Our CSS -->
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/addStyle.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/folderStyle.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/modalStyle.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/reservationStyle.css') }}">
-        <!-- Calendar functions -->
-        <script src="{{ url_for('static',filename='calendar.js') }}"></script>
         <!-- Misc Links for Calendar Function -->
         <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
         <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+        <!-- Our Calendar functions -->
+        <script src="{{ url_for('static',filename='calendar.js') }}"></script>
     </head>
     <body>
         <!--NAV BAR-->
@@ -83,7 +78,7 @@
                                 </div>
                                 <div class="col-sm-8">
                                     <!-- PICK DATE -->
-                                    <input class="{{reservation[1]}}" type="text" readonly="true" name="daterange" value="{{reservation[2]}} - {{reservation[3]}}" />
+                                    <input class="{{reservation[1]}}" type="text" name="daterange" value="{{reservation[2]}} - {{reservation[3]}}" />
                                 </div>
                             </li>
                             {% endfor %}

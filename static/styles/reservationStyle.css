@@ -18,6 +18,7 @@
     cursor: pointer;
 }
 
-.calendar.right .calendar-table {
+/*Hide the text input of the dates in calendar popup*/
+.daterangepicker_input {
     display: none !important;
 }
