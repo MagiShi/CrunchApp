@@ -26,6 +26,7 @@
     border-radius: 3px;
     box-sizing: border-box;
     width: 100%;
+    cursor: pointer;
     
     -webkit-box-shadow: 2px 1px 10px 0px rgba(0,0,0,0.06);
     -moz-box-shadow: 2px 1px 10px 0px rgba(0,0,0,0.06);
@@ -51,18 +52,4 @@
     .item-summary img {
         max-height: 50vh;
     }
-}
-.item-detail-button {
-    cursor: pointer;
-    margin-left: 15px;
-    margin-bottom: 15px;
-    background-color: white;
-    border: 1px solid #a3a3a3;
-    font-size: 12px;
-    padding: 6px 12px;
-    transition: 0.2s;
-}
-.item-detail-button:hover {
-    border-color: #0077C8;
-    color: #0077C8
 }
