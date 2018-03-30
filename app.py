@@ -460,6 +460,7 @@ def postReserveItem(item_id):
     return redirect(url_for('getItemInfo', item_id=itemid, error=error))
 
 
+
 @app.route('/editFolders/<item_id>', methods=["POST", "GET"])
 def toEditProdFolders(item_id):
     item_id = item_id
