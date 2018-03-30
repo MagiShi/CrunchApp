@@ -689,7 +689,7 @@ def getItemInfo(item_id):
     
     try: 
         # calls functions.py method
-        itemname, image1, image2, image3, description, pendingdelete, sex, color, size, itemtype, isavailable, enddate = functions.getInfo(item_id, cursor)
+        itemname, image1, image2, image3, description, pendingdelete, sex, color, size, itemtype, isavailable = functions.getInfo(item_id, cursor)
         # itemname, image1, image2, image3, description, pendingdelete, sex, condition, timeperiod, culture, color, size, itemtype, itype, isavailable = getInfo(item_id)
 
         imagedata1 = []
