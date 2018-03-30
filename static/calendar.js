@@ -1,8 +1,9 @@
 function initialize_calendar_setting() {
     $('input[name="daterange"]').daterangepicker({
-    "linkedCalendars": false,
-    "autoUpdateInput": false,
-    "showCustomRangeLabel": false
+        "linkedCalendars": false,
+        "autoUpdateInput": false,
+        "showCustomRangeLabel": false,
+        beforeShow: function(){$('input').blur();}
     });
 }
 
