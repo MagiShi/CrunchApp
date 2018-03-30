@@ -41,18 +41,28 @@
                 </div>
                 <div class="col-md-6">
                     <!-- RESERVATION -->
-                    <p>Reservation Set</p>
                     <div class="reservation-and-folder row">
                         <div class="reservation col-xl-6">
-                            <form method=POST action='/setReservation/{{itemid}}'>
-                                <button class="btn" id="prod-folder-button" type="submit" value={{itemid}}>Reserve Item</button>
-                            </form>
+                            {%if delete | first %}
+                                <button class="btn" id="reserve-item-button" button type="submit" disabled value={{itemid}}>Reserve Item</button>
+                            {% endif %}
+                            {% if not delete|first %}
+                                <form method=POST action='/setReservation/{{itemid}}'>
+                                    <button class="btn" id="reserve-item-button" type="submit" value={{itemid}}>Reserve Item</button>
+                                </form>
+                            {% endif %}
                         </div>
+
                         <!-- PRODUCTION FOLDERS -->
                         <div class="prod-folder col-xl-6">
-                            <form method=POST action='/editFolders/{{itemid}}'>
-                                <button class="btn" id="prod-folder-button" type="submit" value={{itemid}}>Add to Production Folder</button>
-                            </form>
+                            {%if delete | first %}
+                                <button class="btn" id="prod-folder-button" button type="submit" disabled value={{itemid}}>Add to Production Folder</button>
+                            {% endif %}
+                            {% if not delete|first %}
+                                <form method=POST action='/editFolders/{{itemid}}'>
+                                    <button class="btn" id="prod-folder-button" type="submit" value={{itemid}}>Add to Production Folder</button>
+                                </form>
+                            {% endif %}
                         </div>
                     </div>
                     <!-- ITEM DETAILS -->
@@ -79,7 +89,7 @@
                         </div>
                         <div class="col-lg-6">
                         {%if delete | first %}
-                            <button class="btn" id="edit-item-button" button style="background-color:grey" type="submit" disabled value={{itemid}}>Edit</button>
+                            <button class="btn" id="edit-item-button" button type="submit" disabled value={{itemid}}>Edit</button>
                         {% endif %}
                         {% if not delete|first %}
                             <form method=POST action='/editItem/{{itemid}}'>
@@ -89,7 +99,7 @@
                         </div>
                             {% if delete|first %}
                         <div class="col-lg-6">
-                            <button class="btn" id="delete-item-button" button style="background-color:grey" type="submit" disabled>Delete Item</button>
+                            <button class="btn" id="delete-item-button" button type="submit" disabled>Delete Item</button>
                         </div>
                             {% endif %}
                             {% if not delete|first %}

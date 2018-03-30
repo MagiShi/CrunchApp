@@ -52,6 +52,19 @@
     border-color: #FDDA24;
 }
 
+.prod-folder .btn:disabled,
+.reservation .btn:disabled,
+#edit-item-button:disabled,
+#delete-item-button:disabled,
+#edit-item-button:hover:disabled,
+#delete-item-button:hover:disabled,
+.prod-folder .btn:hover:disabled,
+.reservation .btn:hover:disabled {
+    background-color: grey;
+    border-color: grey;
+    cursor: no-drop;
+}
+
 .item-action {
     text-align: center;
     margin-top: 40px;
