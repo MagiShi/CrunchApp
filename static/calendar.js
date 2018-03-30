@@ -14,7 +14,7 @@ $(document).on('click','.daterangepicker .applyBtn',function(){
 
 
 function greyout_taken_dates_in_my_reservations(all) {
-    // 'all' array: [[0:email, 1:item_id, 2:start, 3:end, 4:status_enum: current,past,future]]
+    // 'all' array: [[0:email, 1:item_id, 2:start, 3:end, 4:status_enum: current,past,future], 5:item name]
     var today = moment().format('MM/DD/YYYY');
     $('#upcoming-reservations input[name="daterange"]').each(function(index, input) {
         var item_id = $(input).attr('class');
