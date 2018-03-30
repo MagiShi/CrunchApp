@@ -32,13 +32,12 @@ app.config.update(
     MAIL_PORT=465,
     MAIL_USE_SSL=True,
     MAIL_USERNAME = 'crunch.thracker@gmail.com',
-    # MAIL_PASSWORD = os.environ['epassword']
+    MAIL_PASSWORD = os.environ['epassword']
     )
 mail = Mail(app)
 
 #configuring database url and path
-# url = urlparse(os.environ['DATABASE_URL'])
-url = urlparse("postgres://mbgugkwmyyrgpp:08f1f171ba8df81468de5e7d166069757cc545fb163d5cc820407068513b101d@ec2-54-163-237-249.compute-1.amazonaws.com:5432/da0io40vrbg6u0")
+url = urlparse(os.environ['DATABASE_URL'])
 
 db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname)
 schema = "schema.sql"
@@ -580,7 +579,8 @@ def reservations():
         email = session.get('user')
 
         # query for all past reservations for a user
-        query = "SELECT * from reservation where email='{0}' and status='past';".format(email)
+        # query = "SELECT * from reservation where email='{0}' and status='past';".format(email)
+        query = "SELECT email, reservation.itemid, startdate, enddate, status, itemname FROM reservation, item WHERE email='{0}' and item.itemid=reservation.itemid and status='past';".format(email)
         cursor.execute(query)
         past_user_reservations = cursor.fetchall()
         index = 0
@@ -588,8 +588,10 @@ def reservations():
             past_user_reservations[index] = c[:2] + (c[2].strftime('%m/%d/%Y'), c[3].strftime('%m/%d/%Y')) + c[4:]
             index += 1
 
+            # print c
+
         # query for all current reservations for a user
-        query = "SELECT * from reservation where email='{0}' and status='current';".format(email)
+        query = "SELECT email, reservation.itemid, startdate, enddate, status, itemname FROM reservation, item WHERE email='{0}' and item.itemid=reservation.itemid and status='current';".format(email)
         cursor.execute(query)
         current_user_reservations = cursor.fetchall()
         index = 0
@@ -598,7 +600,7 @@ def reservations():
             index += 1
 
         # query for all future reservations for a user
-        query = "SELECT * from reservation where email='{0}' and status='future';".format(email)
+        query = "SELECT email, reservation.itemid, startdate, enddate, status, itemname FROM reservation, item WHERE email='{0}' and item.itemid=reservation.itemid and status='future';".format(email)
         cursor.execute(query)
         future_user_reservations = cursor.fetchall()
         index = 0
@@ -611,7 +613,7 @@ def reservations():
 
         #returns all reservations as a whole (needed to know item availability)
         #but only contains items in user has reserved, excluding the past reservations
-        query = "SELECT * from reservation where status='future' or status='current';"
+        query = "SELECT email, reservation.itemid, startdate, enddate, status, itemname FROM reservation, item WHERE  item.itemid=reservation.itemid and (status='current' or status='future');".format(email)
         cursor.execute(query)
         all_reservations = cursor.fetchall()
         index = 0
