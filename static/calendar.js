@@ -4,11 +4,7 @@ function initialize_calendar_setting() {
         "autoUpdateInput": false,
         "showCustomRangeLabel": false,
         beforeShow: function(){$('input').blur();}
-    }, function(start, end) {
-        $('input[name="daterange"]').html(start.format('D MMMM YYYY') + ' - ' + end.format('D MMMM YYYY'));
-        startDate = start;
-        endDate = end;
-   });
+    });
 }
 
 // Function called when the Apply button is clicked
