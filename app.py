@@ -19,6 +19,8 @@ import json
 #for current date
 import datetime
 
+import ast
+
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
@@ -458,6 +460,40 @@ def postReserveItem(item_id):
 
     return redirect(url_for('getItemInfo', item_id=itemid, error=error))
 
+@app.route('/editReservation/<path:data>', methods=["POST", "GET"])
+def editReservation(data): 
+
+    import ast
+    d = ast.literal_eval(data)
+
+    error = None
+    email = session.get('user')
+    item_id = d.get('itemId').split()[1]
+
+    calendar = d.get('calendarResult')
+    split_cal = calendar.split()
+    start_date = split_cal[0]
+    end_date = split_cal[2]
+    old_start_date = d.get('prev_start').split()[0]
+
+    # print(item_id)
+    # print(start_date)
+    # print(end_date)
+    # print(old_start_date)
+    
+    try:
+        query = "UPDATE reservation SET startdate='{0}' , enddate='{1}' WHERE email='{2}' and itemid='{3}' and startdate='{4}';".format(start_date, end_date, email, item_id, old_start_date)
+        print(query)
+        cursor.execute(query)
+        conn.commit()
+        error = "Update successful!"
+    except Exception as e:
+        cursor.execute("rollback;")
+        print(e)
+        error = "Cannot update date"
+        return redirect(url_for('reservations', error=error))
+    return redirect(url_for('reservations', error=error))
+ 
 
 
 @app.route('/editFolders/<item_id>', methods=["POST", "GET"])

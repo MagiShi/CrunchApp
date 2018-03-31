@@ -1,5 +1,6 @@
 // hold the values of the dates in all the input boxes
 var calendarValues = [];
+var itemIds = [];
 
 function initialize_calendar_setting() {
     $('input[name="daterange"]').daterangepicker({
@@ -29,6 +30,8 @@ $(document).on('click','#my-reservations-page-body .daterangepicker .applyBtn',f
     
     // Next line selects the calendar value of that number calendar
     var calendarResult = $('.calendar-picker-input').eq(calendarDivIndex).val();
+
+    prev_start= calendarValues [calendarDivIndex];
     // Update the array of calendar values
     calendarValues[calendarDivIndex] = calendarResult;
     
@@ -36,6 +39,20 @@ $(document).on('click','#my-reservations-page-body .daterangepicker .applyBtn',f
     for (i = 0; i < calendarValues.length; i++) {
         console.log(i + ": " + calendarValues[i]);
     }
+
+    // alert(itemIds);
+    // alert(calendarResult);
+    // alert(prev_start);
+    // alert("/editReservation?daterange=" + calendarResult);
+    var nospace = calendarResult.replace(/\s/g, '');
+    // return [itemIds[calendarDivIndex], calendarResult, prev_start];
+    var jsonobj= JSON.stringify({itemId: itemIds[calendarDivIndex], calendarResult: calendarResult, prev_start: prev_start});
+    // alert(jsonobj);
+    var strJSON = encodeURIComponent(jsonobj);
+    // alert(strJSON)
+
+
+    window.location.replace("/editReservation/"+strJSON);
 });
 
 
@@ -44,6 +61,7 @@ function greyout_taken_dates_in_my_reservations(all) {
     var today = moment().format('MM/DD/YYYY');
     $('#upcoming-reservations input[name="daterange"]').each(function(index, input) {
         var item_id = $(input).attr('class');
+        itemIds.push(item_id);
         var current_reserved_time = $(input).val();
         var takenDateRanges = [];
         $(input).daterangepicker({
