@@ -91,8 +91,7 @@
         // Tooltip for the icon buttons
         $('[data-tooltip="tooltip"]').tooltip({trigger: "hover"});
 
-        initialize_calendar_setting(); // in calendar.js
-        set_default_start_end("{{default_start|safe}}");
+        set_default_start_end("{{default_start|safe}}"); // in calendar.js
 
         var this_item_reservations = {{all_reservations|safe}};
         greyout_taken_dates_in_new_reservation(this_item_reservations); // in calendar.js

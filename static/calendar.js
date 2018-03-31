@@ -104,6 +104,9 @@ function greyout_taken_dates_in_new_reservation(all) {
 
 function set_default_start_end(date) {
     $('input[name="daterange"]').daterangepicker({
+        "linkedCalendars": false,
+        "autoUpdateInput": false,
+        "showCustomRangeLabel": false,
         "startDate": date,
         "endDate": date
     });
