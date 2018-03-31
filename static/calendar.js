@@ -8,8 +8,8 @@ function initialize_calendar_setting() {
 }
 
 // Function called when the Apply button is clicked
-$(document).on('click','.daterangepicker .applyBtn',function(){
-    //alert("Apply Clicked");
+$(document).on('click','#my-reservations-page-body .daterangepicker .applyBtn',function(){
+    alert("Apply Clicked");
 });
 
 
