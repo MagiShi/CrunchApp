@@ -4,12 +4,23 @@ function initialize_calendar_setting() {
         "autoUpdateInput": false,
         "showCustomRangeLabel": false,
         beforeShow: function(){$('input').blur();}
-    });
+    }, function(start, end) {
+        $('input[name="daterange"]').html(start.format('D MMMM YYYY') + ' - ' + end.format('D MMMM YYYY'));
+        startDate = start;
+        endDate = end;
+   });
 }
 
 // Function called when the Apply button is clicked
 $(document).on('click','#my-reservations-page-body .daterangepicker .applyBtn',function(){
-    alert("Apply Clicked");
+    // calendarDivIndex is the index regarding body as a parent
+    // CURRENTLY the calendars are the 8th, 9th, 10th, ... children of <body>, so if we want the first (index 0) calendar, we would do calendarDivIndex - 8. This means the next line is hardcoded and a bit ridiculous
+    // (Sorry, I couldn't figure out how to get which number Apply Button was clicked)
+    var calendarDivIndex = $(this).parent().parent().parent().index() - 8;
+    
+    // Next line selects the calendar value of that number calendar
+    var calendarResult = $('.calendar-picker-input').eq(calendarDivIndex).val();
+    console.log(calendarResult);
 });
 
 
