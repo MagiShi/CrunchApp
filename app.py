@@ -379,6 +379,24 @@ def reserveItem(item_id):
 
     # print(error)
     try:
+        # checks to see if the reservation statuses need to be updated.
+        changedday, day = functions.updateLastAccess(cursor, conn)
+
+        # changedpast: a bool value to see if the number of past reservations 
+        # per user needs to be checked because a status has been changed to past
+        changedpast = False
+
+        # if the date is different, we need to update the statuses, 
+        if changedday:
+            changedpast = functions.updateReservationStatus(cursor, conn, day)
+        # print (changedpast)
+
+        # if changedpast return true, this means that we need to check to see that there are only 3 past reservations per user.
+        if changedpast:
+            functions.checkNumOfPastReservations(cursor, conn)
+
+        #At this point, all updates have been done for the database.
+
         #returns all reservations with that item id
         cursor.execute("SELECT * from reservation where itemid='{0}' and (status='current' or status='future');".format(item_id))
 
@@ -391,6 +409,37 @@ def reserveItem(item_id):
         ## [('a','b'),('d','c')] -> [['a','b],['c','d']]
         ## default=str turns datetime.date into str, because it is not JSON serializable
         all_reservations_this_item = json.dumps(all_reservations_this_item, default=str)
+
+        ## The datepicker bootstrap automatically chooses today as start and end date in setReservation page.
+        ## Ensure the default start and end dates are valid. They are should be the closest available date to today.
+        cursor.execute("SELECT * from reservation where itemid='{0}' and status='current';".format(item_id))
+        # only get the start, and end. This list of tuples should have length of 1.
+        current_item_reservation = [ (x[2],x[3]) for x in cursor.fetchall()]
+
+        cursor.execute("SELECT * from reservation where itemid='{0}' and status='future';".format(item_id))
+        # only get the start, and end.
+        future_item_reservations = [ (x[2],x[3]) for x in cursor.fetchall()]
+        # sort the list by the ascending start date.
+        future_item_reservations = sorted(future_item_reservations)
+
+        # today's date. Type: datetime.date ; Format: '%Y-%m-%d'
+        today = datetime.datetime.now()
+        today = today.date()
+
+        default_start = today
+        if len(current_item_reservation) > 0:
+            default_start = current_item_reservation[0][1] + datetime.timedelta(days=1)
+
+        if len(future_item_reservations) > 0:
+            index = 0
+            for c in future_item_reservations:
+                if c[0] == default_start:
+                    default_start = c[1] + datetime.timedelta(days=1)
+                else:
+                    break
+
+        default_start = default_start.strftime('%m/%d/%Y')
+
     except Exception as e:
         cursor.execute("rollback;")
         print(e)
@@ -399,7 +448,7 @@ def reserveItem(item_id):
         # else: 
         error = "Cannot retrieve reservation information for item {0}.".format(itemid)
         return render_template('setReservation.html', itemid=item_id, error=error)
-    return render_template('setReservation.html', itemid=item_id, all_reservations=all_reservations_this_item, error=error)
+    return render_template('setReservation.html', itemid=item_id, all_reservations=all_reservations_this_item, default_start=default_start, error=error)
 
 
 @app.route('/postSetReservation/<item_id>', methods=["POST", "GET"])
@@ -449,36 +498,6 @@ def postReserveItem(item_id):
             ## default=str turns datetime.date into str, because it is not JSON serializable
             all_reservations_this_item = json.dumps(all_reservations_this_item, default=str)
 
-            ## The datepicker bootstrap automatically chooses today as start and end date in setReservation page.
-            ## Ensure the default start and end dates are valid. They are should be the closest available date to today.
-            cursor.execute("SELECT * from reservation where itemid='{0}' and status='current';".format(item_id))
-            # only get the start, and end. This list of tuples should have length of 1.
-            current_item_reservation = [ (x[2],x[3]) for x in cursor.fetchall()]
-
-            cursor.execute("SELECT * from reservation where itemid='{0}' and status='future';".format(item_id))
-            # only get the start, and end.
-            future_item_reservations = [ (x[2],x[3]) for x in cursor.fetchall()]
-            # sort the list by the ascending start date.
-            future_item_reservations = sorted(future_item_reservations)
-
-            # today's date. Type: datetime.date ; Format: '%Y-%m-%d'
-            today = datetime.datetime.now()
-            today = today.date()
-
-            default_start = today
-            if len(current_item_reservation) > 0:
-                default_start = current_item_reservation[0][1] + datetime.timedelta(days=1)
-
-            if len(future_item_reservations) > 0:
-                index = 0
-                for c in future_item_reservations:
-                    if c[0] == default_start:
-                        default_start = c[1] + datetime.timedelta(days=1)
-                    else:
-                        break
-
-            default_start = default_start.strftime('%m/%d/%Y')
-
         except Exception as e:
             cursor.execute("rollback;")
             print(e)
@@ -486,7 +505,7 @@ def postReserveItem(item_id):
             error = "Cannot retrieve reservation information for item {0}.".format(item_id)
             return render_template('setReservation.html', itemid=item_id, error=error)
 
-        return render_template('setReservation.html', itemid=item_id, all_reservations=all_reservations_this_item, default_start=default_start, error=passed_error)
+        return render_template('setReservation.html', itemid=item_id, all_reservations=all_reservations_this_item, error=passed_error)
 
     return redirect(url_for('getItemInfo', item_id=itemid, error=error))
 
