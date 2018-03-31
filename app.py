@@ -449,14 +449,44 @@ def postReserveItem(item_id):
             ## default=str turns datetime.date into str, because it is not JSON serializable
             all_reservations_this_item = json.dumps(all_reservations_this_item, default=str)
 
+            ## The datepicker bootstrap automatically chooses today as start and end date in setReservation page.
+            ## Ensure the default start and end dates are valid. They are should be the closest available date to today.
+            cursor.execute("SELECT * from reservation where itemid='{0}' and status='current';".format(item_id))
+            # only get the start, and end. This list of tuples should have length of 1.
+            current_item_reservation = [ (x[2],x[3]) for x in cursor.fetchall()]
+
+            cursor.execute("SELECT * from reservation where itemid='{0}' and status='future';".format(item_id))
+            # only get the start, and end.
+            future_item_reservations = [ (x[2],x[3]) for x in cursor.fetchall()]
+            # sort the list by the ascending start date.
+            future_item_reservations = sorted(future_item_reservations)
+
+            # today's date. Type: datetime.date ; Format: '%Y-%m-%d'
+            today = datetime.datetime.now()
+            today = today.date()
+
+            default_start = today
+            if len(current_item_reservation) > 0:
+                default_start = current_item_reservation[0][1] + datetime.timedelta(days=1)
+
+            if len(future_item_reservations) > 0:
+                index = 0
+                for c in future_item_reservations:
+                    if c[0] == default_start:
+                        default_start = c[1] + datetime.timedelta(days=1)
+                    else:
+                        break
+
+            default_start = default_start.strftime('%m/%d/%Y')
+
         except Exception as e:
             cursor.execute("rollback;")
             print(e)
 
-            error = "Cannot retrieve reservation information for item {0}.".format(itemid)
+            error = "Cannot retrieve reservation information for item {0}.".format(item_id)
             return render_template('setReservation.html', itemid=item_id, error=error)
 
-        return render_template('setReservation.html', itemid=item_id, all_reservations=all_reservations_this_item, error=passed_error)
+        return render_template('setReservation.html', itemid=item_id, all_reservations=all_reservations_this_item, default_start=default_start, error=passed_error)
 
     return redirect(url_for('getItemInfo', item_id=itemid, error=error))
 
