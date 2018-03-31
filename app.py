@@ -466,7 +466,7 @@ def postReserveItem(item_id):
     # This does not check for past, because users should not be able to make reservations that start in the past
     # This would also mess with the scheduler if "past" status tuple are reserved.
     status = None
-    if start_date <= datetime.datetime.now():
+    if start_date <= datetime.datetime.now().date():
         status="current"
     else: 
         status="future"
