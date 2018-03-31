@@ -1,3 +1,6 @@
+// hold the values of the dates in all the input boxes
+var calendarValues = [];
+
 function initialize_calendar_setting() {
     $('input[name="daterange"]').daterangepicker({
         "linkedCalendars": false,
@@ -5,10 +8,20 @@ function initialize_calendar_setting() {
         "showCustomRangeLabel": false,
         beforeShow: function(){$('input').blur();}
     });
+    
+    // store original values of the calendars
+    $('.calendar-picker-input').each(function() {
+        calendarValues.push($(this).val());
+    });
 }
 
 // Function called when the Apply button is clicked
 $(document).on('click','#my-reservations-page-body .daterangepicker .applyBtn',function(){
+    console.log("Old calendar values: ");
+    for (i = 0; i < calendarValues.length; i++) {
+        console.log(i + ": " + calendarValues[i]);
+    }
+    
     // calendarDivIndex is the index regarding body as a parent
     // CURRENTLY the calendars are the 8th, 9th, 10th, ... children of <body>, so if we want the first (index 0) calendar, we would do calendarDivIndex - 8. This means the next line is hardcoded and a bit ridiculous
     // (Sorry, I couldn't figure out how to get which number Apply Button was clicked)
@@ -16,7 +29,13 @@ $(document).on('click','#my-reservations-page-body .daterangepicker .applyBtn',f
     
     // Next line selects the calendar value of that number calendar
     var calendarResult = $('.calendar-picker-input').eq(calendarDivIndex).val();
-    console.log(calendarResult);
+    // Update the array of calendar values
+    calendarValues[calendarDivIndex] = calendarResult;
+    
+    console.log("New calendar values: ");
+    for (i = 0; i < calendarValues.length; i++) {
+        console.log(i + ": " + calendarValues[i]);
+    }
 });
 
 
