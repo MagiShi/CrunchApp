@@ -22,7 +22,7 @@ import datetime
 import ast
 
 app = Flask(__name__)
-app.secret_key = os.urandom(24)
+app.secret_key = os.environ['SECRET_KEY']
 
 #configuring upload_folder variable
 app.config['UPLOAD_FOLDER'] = "/tmp/"
@@ -40,6 +40,7 @@ mail = Mail(app)
 
 #configuring database url and path
 url = urlparse(os.environ['DATABASE_URL'])
+
 
 db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname)
 schema = "schema.sql"
