@@ -142,7 +142,7 @@
     $(document).ready(function() {
         // Tooltip for the icon buttons
         $('[data-tooltip="tooltip"]').tooltip({trigger: "hover"});
-        initialize_calendar_setting(); // in calendar.js
+        store_original_date_future_reservations();
 
         // Give id for each future reservation
         $('#upcoming-reservations input[name="daterange"]').each(function(index, input) {

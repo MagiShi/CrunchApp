@@ -91,14 +91,6 @@
         // Tooltip for the icon buttons
         $('[data-tooltip="tooltip"]').tooltip({trigger: "hover"});
 
-        // set_default_start_end("{{default_start|safe}}"); // in calendar.js
-
-        $('input[name="daterange"]').daterangepicker({
-            "linkedCalendars": false,
-            "autoUpdateInput": false,
-            "showCustomRangeLabel": false
-        });
-
         var this_item_reservations = {{all_reservations|safe}};
         greyout_taken_dates_in_new_reservation(this_item_reservations, "{{default_start|safe}}"); // in calendar.js
 

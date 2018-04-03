@@ -518,7 +518,7 @@ def editReservation(data):
 
     error = None
     email = session.get('user')
-    item_id = d.get('itemId').split()[1]
+    item_id = d.get('itemId')
 
     calendar = d.get('calendarResult')
     split_cal = calendar.split()

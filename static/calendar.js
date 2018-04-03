@@ -2,14 +2,7 @@
 var calendarValues = [];
 var itemIds = [];
 
-function initialize_calendar_setting() {
-    $('input[name="daterange"]').daterangepicker({
-        "linkedCalendars": false,
-        "autoUpdateInput": false,
-        "showCustomRangeLabel": false,
-        beforeShow: function(){$('input').blur();}
-    });
-    
+function store_original_date_future_reservations() {
     // store original values of the calendars
     $('.calendar-picker-input').each(function() {
         calendarValues.push($(this).val());
@@ -31,7 +24,7 @@ $(document).on('click','#my-reservations-page-body .daterangepicker .applyBtn',f
     // Next line selects the calendar value of that number calendar
     var calendarResult = $('.calendar-picker-input').eq(calendarDivIndex).val();
 
-    prev_start= calendarValues [calendarDivIndex];
+    prev_start= calendarValues[calendarDivIndex];
     // Update the array of calendar values
     calendarValues[calendarDivIndex] = calendarResult;
     
@@ -61,6 +54,7 @@ function greyout_taken_dates_in_my_reservations(all) {
     var today = moment().format('MM/DD/YYYY');
     $('#upcoming-reservations input[name="daterange"]').each(function(index, input) {
         var item_id = $(input).attr('class');
+        item_id = item_id.split(' ')[1];
         itemIds.push(item_id);
         var current_reserved_time = $(input).val();
         var takenDateRanges = [];
@@ -78,7 +72,12 @@ function greyout_taken_dates_in_my_reservations(all) {
                     return bool || (date >= moment(range.start) && date <= moment(range.end));
                 }, false);
             },
-            "minDate": today
+            "minDate": today,
+            "linkedCalendars": false,
+            // Note: seem like when autoUpdateInput is false, calendarResult gets the old calendar values instead of the new ones.
+            // "autoUpdateInput": false,
+            "showCustomRangeLabel": false,
+            beforeShow: function(){$('input').blur();}
         });
     });
 }
@@ -99,7 +98,10 @@ function greyout_taken_dates_in_new_reservation(all, date) {
             },
             "startDate": date,
             "endDate": date,
-            "minDate": today
+            "minDate": today,
+            "linkedCalendars": false,
+            "autoUpdateInput": false,
+            "showCustomRangeLabel": false,
         });
     });
 }
