@@ -51,23 +51,32 @@ $(document).on('click','#my-reservations-page-body .daterangepicker .applyBtn',f
 
 function greyout_taken_dates_in_my_reservations(all) {
     // 'all' array: [[0:email, 1:item_id, 2:start, 3:end, 4:status_enum: current,past,future], 5:item name]
+
+    // get Today's date
     var today = moment().format('MM/DD/YYYY');
     $('#upcoming-reservations input[name="daterange"]').each(function(index, input) {
+        // get class of input element, return "calendar-picker-input item_id"
         var item_id = $(input).attr('class');
+        // get item_id of reservation from the string of input's class
         item_id = item_id.split(' ')[1];
         itemIds.push(item_id);
+        // get the original start and end of reservation.
         var current_reserved_time = $(input).val();
         var takenDateRanges = [];
         $(input).daterangepicker({
             isInvalidDate: function(date) {
                 takenDateRanges = [];
                 all.forEach(function(reservation) {
+                    // only get the reservations that have same item with the input.
                     if (item_id === reservation[1]) {
+                        // check if the reservation in the list is the reservation of the input. If it is, then bypass so it
+                        // does not grey out the original time. If not, then put that period of time into the takenDateRanges array.
                         if (moment(reservation[2]).format('MM/DD/YYYY') !== current_reserved_time.substring(0,10)) {
                             takenDateRanges.push({"start": reservation[2], "end": reservation[3]});
                         }
                     }
                 });
+                // grey out all the periods of time in takenDateRanges array
                 return takenDateRanges.reduce(function(bool, range) {
                     return bool || (date >= moment(range.start) && date <= moment(range.end));
                 }, false);

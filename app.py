@@ -428,14 +428,17 @@ def reserveItem(item_id):
         today = today.date()
 
         default_start = today
+        # if there is the current reservation. Set default_start to a day after enddate of current reservation.
         if len(current_item_reservation) > 0:
             default_start = current_item_reservation[0][1] + datetime.timedelta(days=1)
 
+        # if there are any future reservations for that item
         if len(future_item_reservations) > 0:
-            index = 0
             for c in future_item_reservations:
+                # if startdate of the reservation is same date with default_start, set default_start to a day after enddate of reservation.
                 if c[0] == default_start:
                     default_start = c[1] + datetime.timedelta(days=1)
+                # break the loop at the moment when startdate of the reservation is not as same as default_start.
                 else:
                     break
 
