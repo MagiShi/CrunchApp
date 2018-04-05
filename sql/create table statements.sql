@@ -4,7 +4,7 @@
 Create Table registeredUser (email varchar(256) PRIMARY KEY NOT
 NULL, username varchar(256) NOT NULL, password varchar(256) NOT NULL, isAdmin Boolean NOT NULL DEFAULT FALSE );
 
-#item table with add characteristics
+#item table with enum characteristics
 Create Table item (itemId varchar(256) PRIMARY KEY NOT NULL, itemName varchar(256) NOT NULL, image1 BYTEA, image2 BYTEA, image3 BYTEA, pendingDelete Boolean NOT NULL DEFAULT FALSE, description varchar(256), sex sex, condition condition, timeperiod timeperiod[], culture culture[], color color[], size size, itemtype itemtype, itype itype, isAvailable Boolean DEFAULT TRUE);
 
 #Folder
@@ -15,7 +15,7 @@ Create Table iteminfolder(folderName varchar(256) references folder(folderName),
 
 #Reservation (check enum list for reservationstatus ['past', 'current', 'future'])
 #NOTE: startdate and enddate are DATE only, no time. [Ex: 'Mar-01-2018']
-Create Table reservation ( email varchar(256) NOT NULL references registereduser(email), itemId varchar(256) NOT NULL references item(itemId),  startDate DATE NOT NULL, endDate DATE NOT NULL, status reservationstatus NOT NULL, PRIMARY KEY(email, itemId, startDate) );
+Create Table reservation (email varchar(256) NOT NULL references registereduser(email), itemId varchar(256) NOT NULL references item(itemId),  startDate DATE NOT NULL, endDate DATE NOT NULL, status reservationstatus NOT NULL, PRIMARY KEY(email, itemId, startDate) );
 
 # Should only have one row, this is used as a flag to decide whether
 # or not to recreate a view for reservation (curr, past, futre)
