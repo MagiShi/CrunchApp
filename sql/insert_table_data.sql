@@ -27,6 +27,10 @@ UPDATE lastaccess set day='Mar-10-2017'::date;
 #and if there are not enough past reservations, use the following (NOTE: this sets ALL reservation statuses to current.)
 UPDATE reservation set status='current';
 
+# For production folders (folderId should not change, and only eight values total as of now; can change folder name) 
+Insert into productionfolders(folderName, folderId) values ('Name1', 'f1'), ('Name2', 'f2'), ('Name3', 'f3'), ('Name4', 'f4'), ('Name5', 'f5'), ('Name6', 'f6'), ('Name7', 'f7'), ('Name8', 'f8');
+
+
 
 
 -- ## These are all for sprint 1 & 2, because of table changes, see sprint 3, to be added above.

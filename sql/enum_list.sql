@@ -11,5 +11,8 @@ CREATE TYPE ITYPE AS ENUM('outer', 'top', 'pants', 'skirts', 'dress', 'under', '
 #ENUM for reservation status
 CREATE TYPE reservationstatus AS ENUM ('past', 'current', 'future');
 
+#ENUM for productionFolderId
+CREATE TYPE folderId AS ENUM('f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'f7', 'f8');
+
 #EX: To see enums for size:
 -- select enumlabel from pg_enum where enumtypid = 'size'::regtype;
