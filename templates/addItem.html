@@ -59,15 +59,17 @@
                         <div class="row">
                             <div class="col-lg-4 form-group">
                                 <input type="file" name="photo1" accept="image/*" class="form-control" id="input-photo-1" placeholder="Photo">
+                                <img class="form-control" id="photo1" src="#" alt="photo 1" style="display:none;" />
                             </div>
                             <div class="col-lg-4 form-group">
                                 <input type="file" name="photo2" accept="image/*" class="form-control" id="input-photo-2" placeholder="Photo">
+                                <img class="form-control" id="photo2" src="#" alt="photo 2" style="display:none;" />
                             </div>
                             <div class="col-lg-4 form-group">
                                 <input type="file" name="photo3" accept="image/*" class="form-control" id="input-photo-3" placeholder="Photo">
+                                <img class="form-control" id="photo3" src="#" alt="photo 3" style="display:none;" />
                             </div>
                         </div>
-                        
 
                         <!-- CONDITION INPUT -->
                         <div class="form-group">
@@ -280,6 +282,18 @@
         $( '#cancel-button' ).click(function() {
             $('#cancel-modal').modal('show');
             return false;
+        });
+
+        $(":file").change(function (e) {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                $('#'+ $(this).attr('name')).css('display','initial');
+                var img = $('#'+ $(this).attr('name'));
+                reader.onload = function (e) {
+                    img.attr('src', e.target.result);
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
         });
     });
 </script>
