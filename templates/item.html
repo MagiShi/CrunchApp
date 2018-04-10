@@ -73,13 +73,13 @@
                     <div class="item-text row">
                         <div class="col-12">
                             <p>Barcode: {{itemid}}</p>
-                            <p>Condition: TO DO</p>
-                            <p>Color:  {{color}}</p>
-                            <p>Size: {{size}}</p>
-                            <p>Gender: {{sex}}</p>
-                            <p>Clothing  Type: TO DO</p>
-                            <p>Time Period: TO DO</p>
-                            <p>Item Type: TO DO</p>
+                            <p>Condition: TO DO</p> <!-- {{condition | first}} -->
+                            <p>Gender: {{sex | first}}</p>
+                            <p>Size: {{size | first}}</p>
+                            <p>Color:  {{color | first}}</p>
+                            <p>Clothing  Type: TO DO</p> <!-- {{itype | first}} -->
+                            <p>Time Period: TO DO</p> <!-- {{timeperiod | first}} -->
+                            <p>Item Type: {{itemtype | first}}</p>
                             <p>Description: {{description | first}}
                         </div>
                     </div>
