@@ -1,3 +1,10 @@
+.folder-contents {
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.1s;
+}
+
 #delete-button {
     font-size: 16px;
     background-color: #f55f5f;
