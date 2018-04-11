@@ -26,12 +26,21 @@
                     {% endif %}
                     <form method=POST action='/posteditItem/{{itemid}}'>
 
+
+                    <!-- Example of how to display image -->
+<!--                     {% for i in phfront %}
+
+                    <div class="col-12">
+                            <img id="item-preview" src="data:image/jpeg;base64, {{i}}" />
+                        </div>
+                        {% endfor %} -->
+
                         <!--ITEM NAME INPUT-->
                         <div class="form-group">
                             <div class="input-title">
                             <h6>Item Name</h6>
                             </div>
-                            <input type="text" name="itemname" class="form-control" id="input-item-name" placeholder="Item Name">
+                            <input type="text" name="itemname" class="form-control" id="input-item-name" placeholder="Item Name" value="{{itemname}}">
                         </div>
 
                         <!--BARCODE INPUT-->
@@ -39,7 +48,7 @@
                             <div class="input-title">
                             <h6>Barcode</h6>
                             </div>
-                            <input type="text" name="barcode" class="form-control" id="input-barcode" placeholder="Barcode">
+                            <input type="text" name="barcode" class="form-control" id="input-barcode" placeholder="Barcode" value="{{itemid}}">
                         </div>
                         
                         <!--DESCRIPTION INPUT-->
@@ -47,128 +56,61 @@
                             <div class="input-title">
                             <h6>Description</h6>
                             </div>
-                            <textarea name="description" class="form-control" id="input-description" placeholder="Description"></textarea>
+                            <textarea name="description" class="form-control" id="input-description" placeholder="Description"\> {{description}}</textarea>
                         </div>
 
                         <!--PHOTO UPLOAD-->
                         <div class="input-title">
                             <h6>Photo Upload</h6>
                             <div class="input-subtitle">
-                                Upload up to 3 photos.
+                                Upload up to 6 photos.
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-4 form-group">
+                                <div class="input-title">
+                                Front
+                                </div>
                                 <input type="file" name="photo1" accept="image/*" class="form-control" id="input-photo-1" placeholder="Photo">
+                                <img class="form-control" id="photo1" src="#" alt="photo 1" style="display:none;" />
                             </div>
                             <div class="col-lg-4 form-group">
+                                <div class="input-title">
+                                Back
+                                </div>
                                 <input type="file" name="photo2" accept="image/*" class="form-control" id="input-photo-2" placeholder="Photo">
+                                <img class="form-control" id="photo2" src="#" alt="photo 2" style="display:none;" />
                             </div>
                             <div class="col-lg-4 form-group">
+                                <div class="input-title">
+                                Top
+                                </div>
                                 <input type="file" name="photo3" accept="image/*" class="form-control" id="input-photo-3" placeholder="Photo">
+                                <img class="form-control" id="photo3" src="#" alt="photo 3" style="display:none;" />
+                            </div>
+                            <div class="col-lg-4 form-group">
+                                <div class="input-title">
+                                Bottom
+                                </div>
+                                <input type="file" name="photo4" accept="image/*" class="form-control" id="input-photo-4" placeholder="Photo">
+                                <img class="form-control" id="photo4" src="#" alt="photo 4" style="display:none;" />
+                            </div>
+                            <div class="col-lg-4 form-group">
+                                <div class="input-title">
+                                Side1 (Left)
+                                </div>
+                                <input type="file" name="photo5" accept="image/*" class="form-control" id="input-photo-5" placeholder="Photo">
+                                <img class="form-control" id="photo5" src="#" alt="photo 5" style="display:none;" />
+                            </div>
+                            <div class="col-lg-4 form-group">
+                                <div class="input-title">
+                                Side2 (Right)
+                                </div>
+                                <input type="file" name="photo6" accept="image/*" class="form-control" id="input-photo-6" placeholder="Photo">
+                                <img class="form-control" id="photo6" src="#" alt="photo 6" style="display:none;" />
                             </div>
                         </div>
                         
-
-                        <!-- CONDITION INPUT -->
-                        <div class="form-group">
-                            <div class="input-title">
-                            <h6>Condition</h6>
-                            </div>
-                            <div class="form-control">
-                                <div class="row radio">
-                                    <div class="col-6 col-md-3">
-                                        <input type="radio" name="condition" value="new"> New<br>
-                                    </div>
-                                    <div class="col-6 col-md-3">
-                                        <input type="radio" name="condition" value="good"> Good<br>
-                                    </div>
-                                    <div class="col-6 col-md-3">
-                                        <input type="radio" name="condition" value="used"> Used<br>
-                                    </div>
-                                    <div class="col-6 col-md-3">
-                                        <input type="radio" name="condition" value="poor"> Poor<br>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- COLOR INPUT -->
-                        <div class="form-group">
-                            <div class="input-title">
-                            <h6>Color</h6>
-                            </div>
-                            <div class="form-control">
-                                <div class="radio row">
-                                    <div class="col-6 col-sm-4 col-lg-3">
-                                        <input type="checkbox" name="color" value="red"> Red<br>
-                                        <input type="checkbox" name="color" value="orange"> Orange<br>
-                                        <input type="checkbox" name="color" value="yellow"> Yellow<br>
-                                    </div>
-                                    <div class="col-6 col-sm-4 col-lg-3">
-                                        <input type="checkbox" name="color" value="green"> Green<br>
-                                        <input type="checkbox" name="color" value="blue"> Blue<br>
-                                        <input type="checkbox" name="color" value="purple"> Purple<br>
-                                    </div>
-                                    <div class="col-6 col-sm-4 col-lg-3">
-                                        <input type="checkbox" name="color" value="pink"> Pink<br>
-                                        <input type="checkbox" name="color" value="brown"> Brown<br>
-                                        <input type="checkbox" name="color" value="gray"> Gray<br>
-                                    </div>
-                                    <div class="col-6 col-sm-4 col-lg-3">
-                                        <input type="checkbox" name="color" value="white"> White<br>
-                                        <input type="checkbox" name="color" value="black"> Black<br>
-                                        <input type="checkbox" name="color" value="other"> Other<br>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- SIZE INPUT -->
-                        <div class="form-group">
-                            <div class="input-title">
-                            <h6>Size</h6>
-                            </div>
-                            <div class="form-control">
-                                <div class="row radio">
-                                    <div class="col-md-4">
-                                        <input type="radio" name="size" value="xxs"> &lt;XS<br>
-                                        <input type="radio" name="size" value="xs"> XS<br>
-                                        <input type="radio" name="size" value="s"> S<br>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input type="radio" name="size" value="m"> M<br>
-                                        <input type="radio" name="size" value="l"> L<br>
-                                        <input type="radio" name="size" value="xl"> XL<br>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input type="radio" name="size" value="xxl"> &gt;XL<br>
-                                        <input type="radio" name="size" value="other"> Other<br>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- GENDER INPUT -->
-                        <div class="form-group">
-                            <div class="input-title">
-                            <h6>Gender</h6>
-                            </div>
-                            <div class="form-control">
-                                <div class="row radio">
-                                    <div class="col-sm-4">
-                                        <input type="radio" name="gender" value="male"> Male<br>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <input type="radio" name="gender" value="gender"> Female<br>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <input type="radio" name="gender" value="gender"> Unisex<br>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                         <!-- PROP TYPE INPUT -->
                         <div class="form-group">
                             <div class="input-title">
@@ -237,6 +179,131 @@
                                     <div class="col-md-4">
                                         <input type="checkbox" name="time-period" value="future"> Future<br>
                                         <input type="checkbox" name="time-period" value="other"> Other<br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CULTURE/REGION INPUT -->
+                        <div class="form-group">
+                            <div class="input-title">
+                            <h6>Region   </h6>
+                            </div>
+                            <div class="form-control">
+                                <div class="row radio">
+                                    <div class="col-md-4">
+                                        <input type="checkbox" name="culture" value="namerica"> North America <br>
+                                        <input type="checkbox" name="culture" value="samerica"> South America <br>
+                                        <input type="checkbox" name="culture" value="asia"> Asia <br>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" name="culture" value="europe"> Europe <br>
+                                        <input type="checkbox" name="culture" value="africa"> Africa <br>
+                                        <input type="checkbox" name="culture" value="australia"> Australia <br>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" name="culture" value="fantasy"> Fantasy <br>
+                                        <input type="checkbox" name="culture" value="scifi"> Sci-Fi <br>
+                                        <input type="checkbox" name="culture" value="other"> Other<br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- GENDER INPUT -->
+                        <div class="form-group">
+                            <div class="input-title">
+                            <h6>Gender</h6>
+                            </div>
+                            <div class="form-control">
+                                <div class="row radio">
+                                    <div class="col-sm-4">
+                                        <input type="radio" name="gender" value="male"> Male<br>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input type="radio" name="gender" value="female"> Female<br>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input type="radio" name="gender" value="unisex"> Unisex<br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- COLOR INPUT -->
+                        <div class="form-group">
+                            <div class="input-title">
+                            <h6>Color</h6>
+                            </div>
+                            <div class="form-control">
+                                <div class="radio row">
+                                    <div class="col-6 col-sm-4 col-lg-3">
+                                        <input type="checkbox" name="color" value="red"> Red<br>
+                                        <input type="checkbox" name="color" value="orange"> Orange<br>
+                                        <input type="checkbox" name="color" value="yellow"> Yellow<br>
+                                    </div>
+                                    <div class="col-6 col-sm-4 col-lg-3">
+                                        <input type="checkbox" name="color" value="green"> Green<br>
+                                        <input type="checkbox" name="color" value="blue"> Blue<br>
+                                        <input type="checkbox" name="color" value="purple"> Purple<br>
+                                    </div>
+                                    <div class="col-6 col-sm-4 col-lg-3">
+                                        <input type="checkbox" name="color" value="pink"> Pink<br>
+                                        <input type="checkbox" name="color" value="brown"> Brown<br>
+                                        <input type="checkbox" name="color" value="gray"> Gray<br>
+                                    </div>
+                                    <div class="col-6 col-sm-4 col-lg-3">
+                                        <input type="checkbox" name="color" value="white"> White<br>
+                                        <input type="checkbox" name="color" value="black"> Black<br>
+                                        <input type="checkbox" name="color" value="other"> Other<br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SIZE INPUT -->
+                        <div class="form-group">
+                            <div class="input-title">
+                            <h6>Size</h6>
+                            </div>
+                            <div class="form-control">
+                                <div class="row radio">
+                                    <div class="col-md-4">
+                                        <input type="radio" name="size" value="xxs"> &lt;XS<br>
+                                        <input type="radio" name="size" value="xs"> XS<br>
+                                        <input type="radio" name="size" value="s"> S<br>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="radio" name="size" value="m"> M<br>
+                                        <input type="radio" name="size" value="l"> L<br>
+                                        <input type="radio" name="size" value="xl"> XL<br>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="radio" name="size" value="xxl"> &gt;XL<br>
+                                        <input type="radio" name="size" value="other"> Other<br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CONDITION INPUT -->
+                        <div class="form-group">
+                            <div class="input-title">
+                            <h6>Condition</h6>
+                            </div>
+                            <div class="form-control">
+                                <div class="row radio">
+                                    <div class="col-6 col-md-3">
+                                        <input type="radio" name="condition" value="new"> New<br>
+                                    </div>
+                                    <div class="col-6 col-md-3">
+                                        <input type="radio" name="condition" value="good"> Good<br>
+                                    </div>
+                                    <div class="col-6 col-md-3">
+                                        <input type="radio" name="condition" value="used"> Used<br>
+                                    </div>
+                                    <div class="col-6 col-md-3">
+                                        <input type="radio" name="condition" value="poor"> Poor<br>
                                     </div>
                                 </div>
                             </div>

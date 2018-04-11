@@ -56,12 +56,17 @@ def getInfo(item_id, cursor):
     cursor.execute("SELECT itemname FROM item WHERE itemid='{0}';".format(item_id))
     itemname = cursor.fetchone()
     cursor.execute("SELECT phfront FROM item WHERE itemid='{0}';".format(item_id))
-
-    image1 = cursor.fetchone()
-    cursor.execute("SELECT phbottom FROM item WHERE itemid='{0}';".format(item_id))
-    image2 = cursor.fetchone()
+    ph_front = cursor.fetchone()
+    cursor.execute("SELECT phback FROM item WHERE itemid='{0}';".format(item_id))
+    ph_back = cursor.fetchone()
     cursor.execute("SELECT phtop FROM item WHERE itemid='{0}';".format(item_id))
-    image3 = cursor.fetchone()
+    ph_top = cursor.fetchone()
+    cursor.execute("SELECT phbottom FROM item WHERE itemid='{0}';".format(item_id))
+    ph_bottom = cursor.fetchone()
+    cursor.execute("SELECT phright FROM item WHERE itemid='{0}';".format(item_id))
+    ph_right = cursor.fetchone()
+    cursor.execute("SELECT phleft FROM item WHERE itemid='{0}';".format(item_id))
+    ph_left = cursor.fetchone()
 
     cursor.execute("SELECT description FROM item WHERE itemid='{0}';".format(item_id))
     description = cursor.fetchone()
@@ -69,30 +74,29 @@ def getInfo(item_id, cursor):
     pendingdelete = cursor.fetchone()
     cursor.execute("SELECT sex FROM item WHERE itemid='{0}';".format(item_id))
     sex = cursor.fetchone()
-    # cursor.execute("SELECT condition FROM item WHERE itemid='{0}';".format(item_id))
-    # condition = cursor.fetchone()
-    # cursor.execute("SELECT timeperiod FROM item WHERE itemid='{0}';".format(item_id))
-    # timeperiod = cursor.fetchone()
-    # cursor.execute("SELECT culture FROM item WHERE itemid='{0}';".format(item_id))
-    # culture = cursor.fetchone()
+    cursor.execute("SELECT condition FROM item WHERE itemid='{0}';".format(item_id))
+    condition = cursor.fetchone()
+    cursor.execute("SELECT time FROM item WHERE itemid='{0}';".format(item_id))
+    timeperiod = cursor.fetchone()
+    cursor.execute("SELECT culture FROM item WHERE itemid='{0}';".format(item_id))
+    culture = cursor.fetchone()
     cursor.execute("SELECT color FROM item WHERE itemid='{0}';".format(item_id))
     color = cursor.fetchone()
     cursor.execute("SELECT size FROM item WHERE itemid='{0}';".format(item_id))
     size = cursor.fetchone()
     cursor.execute("SELECT itemtype FROM item WHERE itemid='{0}';".format(item_id))
     itemtype = cursor.fetchone()
-    # cursor.execute("SELECT itype FROM item WHERE itemid='{0}';".format(item_id))
-    # itype = cursor.fetchone()
+    cursor.execute("SELECT itype FROM item WHERE itemid='{0}';".format(item_id))
+    itype = cursor.fetchone()
     cursor.execute("SELECT isavailable FROM item WHERE itemid='{0}';".format(item_id))
     isavailable = cursor.fetchone()
 
-    # return itemname, image1, image2, image3, description, pendingdelete, sex, condition, timeperiod, culture, color, size, itemtype, itype, isavailable
-    return itemname, image1, image2, image3, description, pendingdelete, sex, color, size, itemtype, isavailable
+    return itemname, ph_front, ph_back, ph_top, ph_bottom, ph_right, ph_left, description, pendingdelete, sex, condition, timeperiod, culture, color, size, itemtype, itype, isavailable
 
 def getImagedata(image):
-    imagedata = []
-    for i in image:
-        image_data = bytes(i)
+    if image != None:
+        imagedata = []
+        image_data = bytes(image)
         encoded = base64.b64encode(image_data)
         stren = encoded.decode("utf-8")
         imagedata.append(stren)
@@ -100,7 +104,8 @@ def getImagedata(image):
     # data = base64.b64decode(encoded)
     # image1 = Image.open(BytesIO(image_data))
     # image1.show()
-    return imagedata
+        return imagedata
+    return None
 
 
 # def createNewFolder(foldername, cursor, conn):

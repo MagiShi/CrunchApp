@@ -217,7 +217,6 @@ def addItem():
         time_list = request.form.getlist('time')
         culture_list = request.form.getlist('culture')
         sex = request.form.get('gender')
-        print (sex)
         color_list = request.form.getlist('color')
         size = request.form.get('sizeSelect')
         condition = request.form.get('condition')
@@ -293,7 +292,7 @@ def addItem():
             query = "rollback;"
             cursor.execute(query)
 
-            ##If item creation fails
+            ##If photo insertion fails
             error = 'Item creation failed because of photo insertion. Make sure that added photos do not share the same name'
             query = "DELETE from item where itemid='{0}'".format(item_id)
             cursor.execute(query)
@@ -725,15 +724,15 @@ def getItemInfo(item_id):
 
         imagedata1 = []
         if image1[0] != None:
-            imagedata1 = functions.getImagedata(image1)
+            imagedata1 = functions.getImagedata(image1[0])
 
         imagedata2 = []
         if image2[0] != None:
-            imagedata2 = functions.getImagedata(image2)
+            imagedata2 = functions.getImagedata(image2[0])
 
         imagedata3 = []
         if image3[0] != None:
-            imagedata3 = functions.getImagedata(image3)
+            imagedata3 = functions.getImagedata(image3[0])
 
         query = "SELECT startdate, enddate FROM reservation WHERE itemid='{0}' and status='current';".format(item_id)
         cursor.execute(query)
@@ -765,39 +764,46 @@ def edit(item_id):
     # declare all variables
     error = request.args.get('error')
     item_id = item_id
-    itemname = None
-    image1 = None
-    image2 = None
-    image3 = None
+    item_name = None
+    ph_front = None
+    ph_back = None
+    ph_top = None
+    ph_bottom = None
+    ph_right = None
+    ph_left = None
     description = None
-    pendingdelete = None
+    pending_delete = None
     sex = None
-    # condition = None
-    # timeperiod = None
-    # culture = None
+    condition = None
+    timep = None
+    culture = None
     color = None
     size = None
-    itemtype = None
-    # itype = None
-    isavailable = None
+    item_type = None
+    i_type = None
+    is_available = None
     
     try: 
         # calls functions.py method
-        itemname, _, _, _, description, pendingdelete, sex, color, size, itemtype, isavailable = functions.getInfo(item_id, cursor)
-        # itemname, image1, image2, image3, description, pendingdelete, sex, condition, timeperiod, culture, color, size, itemtype, itype, isavailable = getInfo(item_id)
+        item_name, ph_front, ph_back, ph_top, ph_bottom, ph_right, ph_left, description, pending_delete, sex, condition, timep, culture, color, size, item_type, i_type, is_available = functions.getInfo(item_id, cursor)
 
-        #print ("executed")
+        ph_front_data = functions.getImagedata(ph_front[0])
+        ph_back_data = functions.getImagedata(ph_back[0])
+        ph_top_data = functions.getImagedata(ph_top[0])
+        ph_bottom_data = functions.getImagedata(ph_bottom[0])
+        ph_right_data = functions.getImagedata(ph_right[0])
+        ph_left_data = functions.getImagedata(ph_left[0])
+
     except Exception as e: 
         cursor.execute("rollback;")
 
         ##If item does not exist etc
-        error = 'Item information cannot be retrieved'
+        error = 'Item information cannot be retrieved for edit'
         return redirect(url_for('loggedin', error=error))
 
-    ##culture, color, timeperiod are all arrays
-    return render_template('editItem.html', itemid=item_id, itemname=itemname, description=description, delete=pendingdelete, sex=sex, color=color, size=size, itemtype=itemtype, isavailable=isavailable, error=error)
-    # return render_template('editItem.html', itemid=item_id, itemname=itemname, description=description, delete=pendingdelete, sex=sex, condition=condition, timeperiod=timeperiod, culture=culture color=color, size=size, itemtype=itemtype, itype=itype, isavailable=isavailable, error=error)
-    # return render_template('editItem.html', itemid=item_id, itemname=itemname, image=imagedata1, image2=imagedata2, image3=imagedata3, description=description, delete=pendingdelete, sex=sex, condition=condition, timeperiod=timeperiod, culture=culture color=color, size=size, itemtype=itemtype, itype=itype, isavailable=isavailable, error=error)
+    ##culture, color, timeperiod are arrays/tuples
+    ## Passes in  lists for everything except itemname, and description
+    return render_template('editItem.html', itemname=item_name[0], phfront=ph_front_data, phback=ph_back_data, phtop=ph_top_data, phbottom=ph_bottom_data, phright=ph_right_data, phleft=ph_left_data, description=description[0], delete=pending_delete, sex=sex, condition=condition, timeperiod=timep, culture=culture, color=color, size=size, itemtype=item_type, itype=i_type, error=error)
 
 @app.route('/posteditItem/<item_id>', methods=["POST"])
 def editItem(item_id):
