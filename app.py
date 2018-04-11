@@ -531,7 +531,7 @@ def editProdFolders(item_id):
     return redirect(url_for('getItemInfo', item_id=item_id, error=error))
 
 # render Production Folders page with all folders in the database
-@app.route('/folders', methods=['POST', 'GET'])
+@app.route('/productions', methods=['POST', 'GET'])
 def prodFolders():
     foldernames = None
     folderNameQuery = "SELECT foldername FROM folder where pendingdelete=false;"
@@ -569,7 +569,7 @@ def renameFolder():
     # Refresh the Production Folders page with the updated name of the folder
     return redirect(url_for('prodFolders'))
 
-@app.route('/folders/<foldername>', methods=['POST', 'GET'])
+@app.route('/productions/<foldername>', methods=['POST', 'GET'])
 def folderContents(foldername):
     error = request.args.get('error')
     foldername = foldername
