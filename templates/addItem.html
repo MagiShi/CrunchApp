@@ -53,42 +53,169 @@
                         <div class="input-title">
                             <h6>Photo Upload</h6>
                             <div class="input-subtitle">
-                                Upload up to 3 photos.
+                                Upload up to  photos.
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-4 form-group">
+                                <div class="input-title">
+                                Front
+                                </div>
                                 <input type="file" name="photo1" accept="image/*" class="form-control" id="input-photo-1" placeholder="Photo">
                                 <img class="form-control" id="photo1" src="#" alt="photo 1" style="display:none;" />
                             </div>
                             <div class="col-lg-4 form-group">
+                                <div class="input-title">
+                                Back
+                                </div>
                                 <input type="file" name="photo2" accept="image/*" class="form-control" id="input-photo-2" placeholder="Photo">
                                 <img class="form-control" id="photo2" src="#" alt="photo 2" style="display:none;" />
                             </div>
                             <div class="col-lg-4 form-group">
+                                <div class="input-title">
+                                Top
+                                </div>
                                 <input type="file" name="photo3" accept="image/*" class="form-control" id="input-photo-3" placeholder="Photo">
                                 <img class="form-control" id="photo3" src="#" alt="photo 3" style="display:none;" />
                             </div>
+                            <div class="col-lg-4 form-group">
+                                <div class="input-title">
+                                Bottom
+                                </div>
+                                <input type="file" name="photo4" accept="image/*" class="form-control" id="input-photo-4" placeholder="Photo">
+                                <img class="form-control" id="photo4" src="#" alt="photo 4" style="display:none;" />
+                            </div>
+                            <div class="col-lg-4 form-group">
+                                <div class="input-title">
+                                Side1 (Left)
+                                </div>
+                                <input type="file" name="photo5" accept="image/*" class="form-control" id="input-photo-5" placeholder="Photo">
+                                <img class="form-control" id="photo5" src="#" alt="photo 5" style="display:none;" />
+                            </div>
+                            <div class="col-lg-4 form-group">
+                                <div class="input-title">
+                                Side2 (Right)
+                                </div>
+                                <input type="file" name="photo6" accept="image/*" class="form-control" id="input-photo-6" placeholder="Photo">
+                                <img class="form-control" id="photo6" src="#" alt="photo 6" style="display:none;" />
+                            </div>
                         </div>
 
-                        <!-- CONDITION INPUT -->
+                        <!-- PROP TYPE INPUT -->
                         <div class="form-group">
                             <div class="input-title">
-                            <h6>Condition</h6>
+                            <h6>Prop Type</h6>
                             </div>
                             <div class="form-control">
                                 <div class="row radio">
-                                    <div class="col-6 col-md-3">
-                                        <input type="radio" name="condition" value="new"> New<br>
+                                    <div class="col-md-4">
+                                        <input type="radio" name="prop" value="hand"> Hand<br>
+                                        <input type="radio" name="prop" value="personal"> Personal<br>
+                                        <input type="radio" name="prop" value="set"> Set<br>
                                     </div>
-                                    <div class="col-6 col-md-3">
-                                        <input type="radio" name="condition" value="good"> Good<br>
+                                    <div class="col-md-4">
+                                        <input type="radio" name="prop" value="trims"> Trims<br>
+                                        <input type="radio" name="prop" value="set-dressing"> Set Dressing<br>
                                     </div>
-                                    <div class="col-6 col-md-3">
-                                        <input type="radio" name="condition" value="used"> Used<br>
+                                    <div class="col-md-4">
+                                        <input type="radio" name="prop" value="greens"> Greens<br>
+                                        <input type="radio" name="prop" value="fx"> FX<br>
                                     </div>
-                                    <div class="col-6 col-md-3">
-                                        <input type="radio" name="condition" value="poor"> Poor<br>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- COSTUME TYPE INPUT -->
+                        <div class="form-group">
+                            <div class="input-title">
+                            <h6>Costume Type</h6>
+                            </div>
+                            <div class="form-control">
+                                <div class="row radio">
+                                    <div class="col-md-4">
+                                        <input type="radio" name="costume" value="outerwear"> Outerwear<br>
+                                        <input type="radio" name="costume" value="tops"> Tops<br>
+                                        <input type="radio" name="costume" value="pants"> Pants<br>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="radio" name="costume" value="skirt"> Skirt<br>
+                                        <input type="radio" name="costume" value="dress"> Dress<br>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="radio" name="costume" value="footwear"> Footwear<br>
+                                        <input type="radio" name="costume" value="other"> Other<br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TIME PERIOD INPUT -->
+                        <div class="form-group">
+                            <div class="input-title">
+                            <h6>Time Period</h6>
+                            </div>
+                            <div class="form-control">
+                                <div class="row radio">
+                                    <div class="col-md-4">
+                                        <input type="checkbox" name="time" value="ancient"> Ancient (Greek and Roman) <br>
+                                        <input type="checkbox" name="time" value="classical"> Classical (Renaissance to 1700) <br>
+                                        <input type="checkbox" name="time" value="earlymodern"> Early Modern (1700-1800) <br>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" name="time" value="latemodern"> Late Modern (1800-1900) <br>
+                                        <input type="checkbox" name="time" value="20th"> 20th Century <br>
+                                        <input type="checkbox" name="time" value="21st"> 21st Century <br>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" name="time" value="future"> Future<br>
+                                        <input type="checkbox" name="time" value="other"> Other<br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CULTURE/REGION INPUT -->
+                        <div class="form-group">
+                            <div class="input-title">
+                            <h6>Region   </h6>
+                            </div>
+                            <div class="form-control">
+                                <div class="row radio">
+                                    <div class="col-md-4">
+                                        <input type="checkbox" name="culture" value="namerica"> North America <br>
+                                        <input type="checkbox" name="culture" value="samerica"> South America <br>
+                                        <input type="checkbox" name="culture" value="asia"> Asia <br>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" name="culture" value="europe"> Europe <br>
+                                        <input type="checkbox" name="culture" value="africa"> Africa <br>
+                                        <input type="checkbox" name="culture" value="australia"> Australia <br>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="checkbox" name="culture" value="fantasy"> Fantasy <br>
+                                        <input type="checkbox" name="culture" value="scifi"> Sci-Fi <br>
+                                        <input type="checkbox" name="culture" value="other"> Other<br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- GENDER INPUT -->
+                        <div class="form-group">
+                            <div class="input-title">
+                            <h6>Gender</h6>
+                            </div>
+                            <div class="form-control">
+                                <div class="row radio">
+                                    <div class="col-sm-4">
+                                        <input type="radio" name="gender" value="male"> Male<br>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input type="radio" name="gender" value="female"> Female<br>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input type="radio" name="gender" value="unisex"> Unisex<br>
                                     </div>
                                 </div>
                             </div>
@@ -150,94 +277,24 @@
                             </div>
                         </div>
 
-                        <!-- GENDER INPUT -->
+                        <!-- CONDITION INPUT -->
                         <div class="form-group">
                             <div class="input-title">
-                            <h6>Gender</h6>
+                            <h6>Condition</h6>
                             </div>
                             <div class="form-control">
                                 <div class="row radio">
-                                    <div class="col-sm-4">
-                                        <input type="radio" name="gender" value="male"> Male<br>
+                                    <div class="col-6 col-md-3">
+                                        <input type="radio" name="condition" value="new"> New<br>
                                     </div>
-                                    <div class="col-sm-4">
-                                        <input type="radio" name="gender" value="gender"> Female<br>
+                                    <div class="col-6 col-md-3">
+                                        <input type="radio" name="condition" value="good"> Good<br>
                                     </div>
-                                    <div class="col-sm-4">
-                                        <input type="radio" name="gender" value="gender"> Unisex<br>
+                                    <div class="col-6 col-md-3">
+                                        <input type="radio" name="condition" value="used"> Used<br>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- PROP TYPE INPUT -->
-                        <div class="form-group">
-                            <div class="input-title">
-                            <h6>Prop Type</h6>
-                            </div>
-                            <div class="form-control">
-                                <div class="row radio">
-                                    <div class="col-md-4">
-                                        <input type="radio" name="prop-type" value="hand"> Hand<br>
-                                        <input type="radio" name="prop-type" value="personal"> Personal<br>
-                                        <input type="radio" name="prop-type" value="set"> Set<br>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input type="radio" name="prop-type" value="trims"> Trims<br>
-                                        <input type="radio" name="prop-type" value="set-dressing"> Set Dressing<br>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input type="radio" name="prop-type" value="greens"> Greens<br>
-                                        <input type="radio" name="prop-type" value="fx"> FX<br>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- COSTUME TYPE INPUT -->
-                        <div class="form-group">
-                            <div class="input-title">
-                            <h6>Costume Type</h6>
-                            </div>
-                            <div class="form-control">
-                                <div class="row radio">
-                                    <div class="col-md-4">
-                                        <input type="radio" name="clothing" value="outerwear"> Outerwear<br>
-                                        <input type="radio" name="clothing" value="tops"> Tops<br>
-                                        <input type="radio" name="clothing" value="pants"> Pants<br>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input type="radio" name="clothing" value="skirt"> Skirt<br>
-                                        <input type="radio" name="clothing" value="dress"> Dress<br>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input type="radio" name="clothing" value="footwear"> Footwear<br>
-                                        <input type="radio" name="clothing" value="other"> Other<br>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- TIME PERIOD INPUT -->
-                        <div class="form-group">
-                            <div class="input-title">
-                            <h6>Time Period</h6>
-                            </div>
-                            <div class="form-control">
-                                <div class="row radio">
-                                    <div class="col-md-4">
-                                        <input type="checkbox" name="time-period" value="ancient"> Ancient (Greek and Roman) <br>
-                                        <input type="checkbox" name="time-period" value="classical"> Classical (Renaissance to 1700) <br>
-                                        <input type="checkbox" name="time-period" value="early-modern"> Early Modern (1700-1800) <br>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input type="checkbox" name="time-period" value="late-modern"> Late Modern (1800-1900) <br>
-                                        <input type="checkbox" name="time-period" value="20th-century"> 20th Century <br>
-                                        <input type="checkbox" name="time-period" value="21st-century"> 21st Century <br>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input type="checkbox" name="time-period" value="future"> Future<br>
-                                        <input type="checkbox" name="time-period" value="other"> Other<br>
+                                    <div class="col-6 col-md-3">
+                                        <input type="radio" name="condition" value="poor"> Poor<br>
                                     </div>
                                 </div>
                             </div>

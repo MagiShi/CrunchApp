@@ -1,16 +1,66 @@
 import base64
 from io import BytesIO
 import os
+from werkzeug.utils import secure_filename
+
+##For Item creation and edit
+
+# Builds a string, converting list to sql array
+# Ex: ['c1', 'c2', 'c3'] -> {c1, c2, c3}
+def build_array_query_string(char_list):
+    length = len(char_list)
+    if length > 0:
+        char_str = '{'
+        for c in range(length):
+            if c >= length -1:
+                char_str += '{0}'.format(char_list[c])
+            else: 
+                char_str += '{0}, '.format(char_list[c])
+        char_str += '}'
+        return char_str
+    return None
+
+def upload_image(file, folder):
+    if file != None and file.filename != '':
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(folder, filename))
+
+        print (os.path.join(folder, filename))
+    else:
+        filename = None
+
+    return filename
+
+def setImageInDatabase(filename, image_col, item_id, cursor, conn, up_folder):
+    if filename != None:
+        try: 
+            print ("looking for file: " + "tmp/"+ filename )
+            # print ("loading file")
+            f = open("/tmp/" + filename,'rb')
+            filedata = f.read()
+            f.close()
+            # query = "UPDATE item SET {0} = '{1}' WHERE itemid='{2}';".format(image_col, filedata, item_id)
+            # cursor.execute(query)
+            query = "UPDATE item SET {0} = ".format(image_col, filedata, item_id)
+            cursor.execute(query + " %s WHERE itemid=%s;", (filedata, item_id))
+
+            
+            conn.commit()
+            os.remove(os.path.join(up_folder, filename))
+        except Exception as e:
+            print (e)
+            cursor.execute("rollback;")
+            raise e
 
 def getInfo(item_id, cursor):
     cursor.execute("SELECT itemname FROM item WHERE itemid='{0}';".format(item_id))
     itemname = cursor.fetchone()
-    cursor.execute("SELECT image1 FROM item WHERE itemid='{0}';".format(item_id))
+    cursor.execute("SELECT phfront FROM item WHERE itemid='{0}';".format(item_id))
 
     image1 = cursor.fetchone()
-    cursor.execute("SELECT image2 FROM item WHERE itemid='{0}';".format(item_id))
+    cursor.execute("SELECT phbottom FROM item WHERE itemid='{0}';".format(item_id))
     image2 = cursor.fetchone()
-    cursor.execute("SELECT image3 FROM item WHERE itemid='{0}';".format(item_id))
+    cursor.execute("SELECT phtop FROM item WHERE itemid='{0}';".format(item_id))
     image3 = cursor.fetchone()
 
     cursor.execute("SELECT description FROM item WHERE itemid='{0}';".format(item_id))
@@ -52,20 +102,6 @@ def getImagedata(image):
     # image1.show()
     return imagedata
 
-def setImageInDatabase(filename, item_id, cursor, conn, up_folder):
-    try: 
-        print ("looking for file: " + "tmp/"+ filename )
-        print ("loading file")
-        f = open("/tmp/"+filename,'rb')
-        filedata = f.read()
-        f.close()
-        cursor.execute("UPDATE item SET image1 = %s WHERE itemid=(%s);", (filedata, item_id))
-        conn.commit()
-        os.remove(os.path.join(up_folder, filename))
-    except Exception as e:
-        print (e)
-        cursor.execute("rollback;")
-        raise e
 
 # def createNewFolder(foldername, cursor, conn):
 #     try: 

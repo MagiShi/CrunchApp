@@ -1,6 +1,5 @@
 from flask import Flask, flash, redirect, render_template, request, session, abort, url_for, json, send_file
 from flask_mail import Mail, Message
-from werkzeug.utils import secure_filename
 import os
 from urllib.parse import urlparse
 import psycopg2
@@ -95,7 +94,7 @@ def loggedin():
     itemid = None
     itemidQuery = "SELECT itemid FROM item;"
     itemNameQuery = "SELECT itemname FROM item;"
-    imageQuery = "SELECT image1 FROM item;"
+    imageQuery = "SELECT phfront FROM item;"
     cursor.execute(itemidQuery)
     itemid = cursor.fetchall()
     cursor.execute(itemNameQuery)
@@ -202,152 +201,92 @@ def add():
 def addItem():
     if request.form.get("add-item-button"):
 
-        #initialize all values from the html form here
-        item_id = request.form['barcode']
-        item_name = request.form['itemname']
-        description = request.form['description']
-        try: 
-            sex = request.form['genderSelect']
-        except: 
-            sex = None
-        
-        try: 
-            condition = request.form['condition']
-        except: 
-            condition = None
+        #initialize all values from the html form here (except photos)
+        item_id = request.form.get('barcode')
+        item_name = request.form.get('itemname')
 
-        try:
-            timeperiodL = request.form.getlist('timeSelect')
-            # print (colorL)
-            timeperiod = '{'
-            for c in range(len(timeperiodL)):
-                if c >= len(timeperiodL) -1:
-                    timeperiod += '{0}'.format(timeperiodL[c])
-                else: 
-                    timeperiod += '{0}, '.format(timeperiodL[c])
-            timeperiod += '}'
-        except:
-            timeperiod = None
-
-        # try:
-        #     cultureL = request.form.getlist('colorSelect')
-        #     # print (colorL)
-        #     culture = '{'
-        #     for c in range(len(cultureL)):
-        #         if c >= len(cultureL) -1:
-        #             culture += '{0}'.format(cultureL[c])
-        #         else: 
-        #             culture += '{0}, '.format(cultureL[c])
-        #     culture += '}'
-        # except:
-        #     culture = None
-
-        try:
-            colorL = request.form.getlist('colorSelect')
-            # print (colorL)
-            color = '{'
-            for c in range(len(colorL)):
-                if c >= len(colorL) -1:
-                    color += '{0}'.format(colorL[c])
-                else: 
-                    color += '{0}, '.format(colorL[c])
-            color += '}'
-            # print (color)
-        except:
-            color = None
-
-        try:
-            size = request.form['sizeSelect']
-        except:
-            size = None
-        try:        
-            itemtype = request.form['typeSelect']
-        except:
-            itemtype = None
-        # try:
-        #     itype = request.form['itypeSelect']
-        # except:
-        #     itype = None
-        error = None
-        file1 = None
-        file2 = None
-        file3 = None
-
-        #for image1, temp image upload
-        try:
-            file1 = request.files['photo1']
-            if file1 != None and file1.filename != '':
-                filename1 = secure_filename(file1.filename)
-                file1.save(os.path.join(app.config['UPLOAD_FOLDER'], filename1))
-            else:
-                filename1 = None
-        except Exception as e:
-            print ("file1", e)
-            filename1 = None
-        
-        #for image2, temp image upload
-        try:
-            file2 = request.files['photo2']
-            if file2 != None and file2.filename != '':
-                filename2 = secure_filename(file2.filename)
-                file2.save(os.path.join(app.config['UPLOAD_FOLDER'], filename2))
-            else:
-                filename2 = None
-        except Exception as e:
-            print ("file2", e)
-            filename2 = None
-        
-        #for image3, temp image upload
-        try:
-            file3 = request.files['photo3']
-            if file3 != None and file3.filename != '':
-                print (file3)
-                filename3 = secure_filename(file3.filename)
-                file3.save(os.path.join(app.config['UPLOAD_FOLDER'], filename3))
-            else:
-                filename3 = None
-
-        except Exception as e:
-            print ("file3", e)
-            filename3 = None
-
+        # Check this before continuing through everything. All items MUST have an id and name
         if item_id == '' or item_name == '':
             error = 'Item must have a barcode/id and a name'
             return redirect(url_for('add', error=error))
+
+        description = request.form.get('description')
+
+        prop_t = request.form.get('prop')
+        costume_t = request.form.get('costume')
+        time_list = request.form.getlist('time')
+        culture_list = request.form.getlist('culture')
+        sex = request.form.get('gender')
+        print (sex)
+        color_list = request.form.getlist('color')
+        size = request.form.get('sizeSelect')
+        condition = request.form.get('condition')
+        item_type = None
+        i_type = None
+
+        # Initialize for photos (Different section just because photos are inserted separately from everything else)
+        ph_front = functions.upload_image(request.files.get('photo1'), app.config['UPLOAD_FOLDER'])
+        ph_back = functions.upload_image(request.files.get('photo2'), app.config['UPLOAD_FOLDER'])
+        ph_top = functions.upload_image(request.files.get('photo3'), app.config['UPLOAD_FOLDER'])
+        ph_bottom = functions.upload_image(request.files.get('photo4'), app.config['UPLOAD_FOLDER'])
+        ph_left = functions.upload_image(request.files.get('photo5'), app.config['UPLOAD_FOLDER'])
+        ph_right = functions.upload_image(request.files.get('photo6'), app.config['UPLOAD_FOLDER'])
+
+        # Initialize itemtype and itype (prop or costume) using prop_t and costume_t
+        if prop_t and costume_t:
+
+            # Redirects with error because a prop cannot be both a prop and a costume
+            error = 'Item cannot have both a prop type and an costume type'
+            return redirect(url_for('add', error=error))
+        elif prop_t:
+            item_type = 'prop'
+            i_type = prop_t
+        elif costume_t:
+            item_type = 'costume'
+            i_type = costume_t
+
+        # Build query string part for color and timeperiod (diff b/c can choose multiple choices and thus mapped to an array)
+        color = functions.build_array_query_string(color_list)
+        time = functions.build_array_query_string(time_list)
+        culture = functions.build_array_query_string(culture_list)
+
+        # String for description
         if description == '':
             description = 'N/A'
 
-        # query = "INSERT into item(itemid, itemname, pendingdelete, description, sex, condition, timeperiod, culture, color, size, itemtype, itype, isavailable) values ('{0}', '{1}',  false, '{2}');".format(item_id, item_name, description)
-
-        # charlist = [item_id, item_name, description, sex, condition, timeperiod, culture, color, size, itemtype, itype]
-        # query = "INSERT into item(itemid, itemname, description, sex, condition, timeperiod, culture, color, size, itemtype, itype, isavailable, pendingdelete) values ("
-
-        #for mult
-        charlist = [item_id, item_name, description, sex, condition, timeperiod, color, size, itemtype]
-        query = "INSERT into item(itemid, itemname, description, sex, condition, timeperiod, color, size, itemtype, isavailable, pendingdelete) values ("
-
-
-        for char in charlist:
+        #Build Query string (NOTE: this query does not insert photos (done later) and prod folders (not done during creation))
+        char_list = [item_id, item_name, description, item_type, i_type, time, culture, sex, color, size, condition]
+        query = "INSERT into item(itemid, itemname, description, itemtype, itype, time, culture, sex, color, size, condition, isavailable, pendingdelete) values ("
+        
+        for char in char_list:
             if char != None:
                 query += "'{0}', ".format(char)
             else:
                 query += " NULL, "
 
         query += " true, false);"
+        print (query)
 
-        print(query)
-        try:
+        try: 
             cursor.execute(query)
             conn.commit()
 
-            if filename1 != None:
-                functions.setImageInDatabase(filename1, item_id, cursor, conn, app.config['UPLOAD_FOLDER'])
+        except Exception as e:
+            print (e)
+            cursor.execute("rollback;")
 
-            if filename2 != None:
-                functions.setImageInDatabase(filename2, item_id, cursor, conn, app.config['UPLOAD_FOLDER'])
+            ##If item creation fails
+            error = 'Item creation has failed.'
+            return redirect(url_for('add', error=error))
 
-            if filename3 != None:
-                functions.setImageInDatabase(filename3, item_id, cursor, conn, app.config['UPLOAD_FOLDER'])
+        # Now insert images for the item, which is already in the database.
+        try:
+            functions.setImageInDatabase(ph_front, 'phfront', item_id, cursor, conn, app.config['UPLOAD_FOLDER'])
+            functions.setImageInDatabase(ph_back, 'phback', item_id, cursor, conn, app.config['UPLOAD_FOLDER'])
+            functions.setImageInDatabase(ph_top, 'phtop', item_id, cursor, conn, app.config['UPLOAD_FOLDER'])
+            functions.setImageInDatabase(ph_bottom, 'phbottom', item_id, cursor, conn, app.config['UPLOAD_FOLDER'])
+            functions.setImageInDatabase(ph_right, 'phright', item_id, cursor, conn, app.config['UPLOAD_FOLDER'])
+            functions.setImageInDatabase(ph_left, 'phleft', item_id, cursor, conn, app.config['UPLOAD_FOLDER'])
 
         except Exception as e:
             print (e)
@@ -355,7 +294,10 @@ def addItem():
             cursor.execute(query)
 
             ##If item creation fails
-            error = 'Item creation has failed.'
+            error = 'Item creation failed because of photo insertion. Make sure that added photos do not share the same name'
+            query = "DELETE from item where itemid='{0}'".format(item_id)
+            cursor.execute(query)
+            conn.commit()
             return redirect(url_for('add', error=error))
 
         error = 'Item successfully added.'
