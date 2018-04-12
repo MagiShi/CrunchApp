@@ -818,7 +818,7 @@ def edit(item_id):
 
     ##culture, color, timeperiod are arrays/tuples
     ## Passes in  lists for everything except itemname, and description
-    return render_template('editItem.html', itemname=item_name[0], phfront=ph_front_data, phback=ph_back_data, phtop=ph_top_data, phbottom=ph_bottom_data, phright=ph_right_data, phleft=ph_left_data, description=description[0], delete=pending_delete, sex=sex, condition=condition, timeperiod=timep, culture=culture, color=color, size=size, itemtype=item_type, itype=i_type, error=error)
+    return render_template('editItem.html', itemname=item_name[0], itemid=item_id, phfront=ph_front_data, phback=ph_back_data, phtop=ph_top_data, phbottom=ph_bottom_data, phright=ph_right_data, phleft=ph_left_data, description=description[0], delete=pending_delete, sex=sex, condition=condition, timeperiod=timep, culture=culture, color=color, size=size, itemtype=item_type, itype=i_type, error=error)
 
 @app.route('/posteditItem/<item_id>', methods=["POST"])
 def editItem(item_id):
