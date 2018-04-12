@@ -431,5 +431,18 @@
         if ('{{condition|first}}' !== 'None') {
             $('.condition.{{condition|first}}').attr('checked', 'true');
         }
+
+        // display the photos after selecting the files
+        $(":file").change(function (e) {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                $('#'+ $(this).attr('name')).css('display','initial');
+                var img = $('#'+ $(this).attr('name'));
+                reader.onload = function (e) {
+                    img.attr('src', e.target.result);
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
     });
 </script>
