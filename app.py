@@ -717,9 +717,9 @@ def getItemInfo(item_id):
 
     start_date = None
     end_date = None
+    email = None
     is_reserved=False
 
-    
     try: 
         # calls functions.py method
         item_name, ph_front, ph_back, ph_top, ph_bottom, ph_right, ph_left, description, pending_delete, sex, condition, timep, culture, color, size, item_type, i_type, is_available = functions.getInfo(item_id, cursor)
@@ -731,7 +731,7 @@ def getItemInfo(item_id):
         ph_right_data = functions.getImagedata(ph_right)
         ph_left_data = functions.getImagedata(ph_left)
 
-        query = "SELECT startdate, enddate FROM reservation WHERE itemid='{0}' and status='current';".format(item_id)
+        query = "SELECT startdate, enddate, email FROM reservation WHERE itemid='{0}' and status='current';".format(item_id)
         cursor.execute(query)
         # print (query)
         current_reservation = cursor.fetchone()
@@ -740,6 +740,7 @@ def getItemInfo(item_id):
 
             start_date = str(current_reservation[0])
             end_date = str(current_reservation[1])
+            email = current_reservation[2]
             is_reserved = True
 
     except Exception as e: 
@@ -751,7 +752,7 @@ def getItemInfo(item_id):
         return redirect(url_for('loggedin', error=error))
 
     ##culture, color, timeperiod and all ph_*_data are arrays
-    return render_template('item.html', itemid=item_id, itemname=item_name, phfront=ph_front_data, phback=ph_back_data, phtop=ph_top_data, phbottom=ph_bottom_data, phright=ph_right_data, phleft=ph_left_data, description=description, delete=pending_delete, sex=sex, condition=condition, timeperiod=timep, culture=culture, color=color, size=size, itemtype=item_type, itype=i_type, isavailable=is_available, error=error, r_start=start_date, r_end=end_date, iscurrentlyreserved=is_reserved)
+    return render_template('item.html', itemid=item_id, itemname=item_name, phfront=ph_front_data, phback=ph_back_data, phtop=ph_top_data, phbottom=ph_bottom_data, phright=ph_right_data, phleft=ph_left_data, description=description, delete=pending_delete, sex=sex, condition=condition, timeperiod=timep, culture=culture, color=color, size=size, itemtype=item_type, itype=i_type, isavailable=is_available, error=error, r_start=start_date, r_end=end_date, iscurrentlyreserved=is_reserved, email=email)
 
 # renders editItem page
 @app.route('/editItem/<item_id>', methods=["POST", "GET"])
