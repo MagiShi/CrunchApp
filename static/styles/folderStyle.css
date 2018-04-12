@@ -5,6 +5,17 @@
     transition: max-height 0.1s;
 }
 
+.folder-contents .item {
+    width: 100%;
+    border: 1px solid grey;
+    border-radius 3px;
+    background-color: white;
+    cursor: pointer;
+}
+.folder-contents .item img {
+    width: 100%;
+}
+
 #delete-button {
     font-size: 16px;
     background-color: #f55f5f;
