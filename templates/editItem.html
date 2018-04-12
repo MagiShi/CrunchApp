@@ -380,48 +380,12 @@
             $('.costume.{{itype|first}}').attr('checked', true);
         }
 
-        //********  pre-filled time period  ********
-        if ('{{timeperiod|first}}' !== 'None') {
-            var timeperiods = '{{timeperiod|first}}'; // format from db: colors = {classical,future}
-            // convert to array of string: timeperiods = ['classical','future']
-            timeperiods = timeperiods.split('{').join('').split('}').join('').split(',');
-            timeperiods.forEach(function(c) {
-                $('.time.' + c).attr('checked', 'true');
-            });
-        }
-
-        //********  pre-filled culture  ********
-        if ('{{culture|first}}' !== 'None') {
-            var cultures = '{{culture|first}}'; // format from db: cultures = {asia,europe}
-            cultures = cultures.split('{').join('').split('}').join('').split(','); // convert to array of string: cultures = ['asia','europe']
-            cultures.forEach(function(c) {
-                $('.culture.' + c).attr('checked', 'true');
-            });
-        }
-
-        //********  pre-filled gender  ********
-        if ('{{sex|first}}' !== 'None') {
-            $('.gender.{{sex|first}}').attr('checked', 'true');
-        }
-
-        //********  pre-filled color  ********
-        if ('{{color|first}}' !== 'None') {
-            var colors = '{{color|first}}'; // format from db: colors = {red,green,blue}
-            colors = colors.split('{').join('').split('}').join('').split(','); // convert to array of string: colors = ['red','green','blue']
-            colors.forEach(function(c) {
-                $('.color.' + c).attr('checked', 'true');
-            });
-        }
-
-        //********  pre-filled size  ********
-        if ('{{size|first}}' !== 'None') {
-            $('.size.{{size|first}}').attr('checked', 'true');
-        }
-
-        //********  pre-filled condition  ********
-        if ('{{condition|first}}' !== 'None') {
-            $('.condition.{{condition|first}}').attr('checked', 'true');
-        }
+        display_checkbox('time', '{{timeperiod|first}}');
+        display_checkbox('culture', '{{culture|first}}');
+        display_radio_button('gender', '{{sex|first}}');
+        display_checkbox('color', '{{color|first}}');
+        display_radio_button('size', '{{size|first}}');
+        display_radio_button('condition', '{{condition|first}}');
 
         // display the photos after selecting the files
         $(":file").change(function (e) {
@@ -436,4 +400,20 @@
             }
         });
     });
+
+    function display_radio_button(characteristic, value) {
+        if (value !== 'None') {
+            $('.' + characteristic + '.' + value).attr('checked', 'true');
+        }
+    }
+
+    function display_checkbox(characteristic, value) {
+        if (value !== 'None') {
+            // format from db: value = {red,green,blue}
+            value = value.split('{').join('').split('}').join('').split(','); // convert to array of string: value = ['red','green','blue']
+            value.forEach(function(c) {
+                $('.' + characteristic + '.' + c).attr('checked', 'true');
+            });
+        }
+    }
 </script>
