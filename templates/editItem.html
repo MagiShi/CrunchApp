@@ -28,7 +28,7 @@
 
 
                     <!-- Example of how to display image -->
-<!--                     {% for i in phfront %}
+                    <!-- {% for i in phfront %}
 
                     <div class="col-12">
                             <img id="item-preview" src="data:image/jpeg;base64, {{i}}" />
@@ -44,12 +44,12 @@
                         </div>
 
                         <!--BARCODE INPUT-->
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <div class="input-title">
                             <h6>Barcode</h6>
                             </div>
                             <input type="text" name="barcode" class="form-control" id="input-barcode" placeholder="Barcode" value="{{itemid}}">
-                        </div>
+                        </div> -->
                         
                         <!--DESCRIPTION INPUT-->
                         <div class="form-group">
@@ -167,18 +167,21 @@
                             <div class="form-control">
                                 <div class="row radio">
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="time-period" value="ancient"> Ancient (Greek and Roman) <br>
-                                        <input type="checkbox" name="time-period" value="classical"> Classical (Renaiisance to 1700) <br>
-                                        <input type="checkbox" name="time-period" value="early-modern"> Early Modern (1700-1800) <br>
+                                        <input class="time ancient" type="checkbox" name="time-period" value="ancient">
+                                            Ancient (Greek and Roman) <br>
+                                        <input class="time classical" type="checkbox" name="time-period" value="classical">
+                                            Classical (Renaiisance to 1700) <br>
+                                        <input class="time earlymodern" type="checkbox" name="time-period" value="earlymodern">
+                                            Early Modern (1700-1800) <br>
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="time-period" value="late-modern"> Late Modern (1800-1900) <br>
-                                        <input type="checkbox" name="time-period" value="20th-century"> 20th Century <br>
-                                        <input type="checkbox" name="time-period" value="21st-century"> 21st Century <br>
+                                        <input class="time latemodern" type="checkbox" name="time-period" value="latemodern"> Late Modern (1800-1900) <br>
+                                        <input class="time 20th" type="checkbox" name="time-period" value="20th"> 20th Century <br>
+                                        <input class="time 21st" type="checkbox" name="time-period" value="21st"> 21st Century <br>
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="time-period" value="future"> Future<br>
-                                        <input type="checkbox" name="time-period" value="other"> Other<br>
+                                        <input class="time future" type="checkbox" name="time-period" value="future"> Future<br>
+                                        <input class="time other" type="checkbox" name="time-period" value="other"> Other<br>
                                     </div>
                                 </div>
                             </div>
@@ -192,19 +195,19 @@
                             <div class="form-control">
                                 <div class="row radio">
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="culture" value="namerica"> North America <br>
-                                        <input type="checkbox" name="culture" value="samerica"> South America <br>
-                                        <input type="checkbox" name="culture" value="asia"> Asia <br>
+                                        <input class="culture namerica" type="checkbox" name="culture" value="namerica"> North America <br>
+                                        <input class="culture samerica" type="checkbox" name="culture" value="samerica"> South America <br>
+                                        <input class="culture asia" type="checkbox" name="culture" value="asia"> Asia <br>
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="culture" value="europe"> Europe <br>
-                                        <input type="checkbox" name="culture" value="africa"> Africa <br>
-                                        <input type="checkbox" name="culture" value="australia"> Australia <br>
+                                        <input class="culture europe" type="checkbox" name="culture" value="europe"> Europe <br>
+                                        <input class="culture africa" type="checkbox" name="culture" value="africa"> Africa <br>
+                                        <input class="culture australia" type="checkbox" name="culture" value="australia"> Australia <br>
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="checkbox" name="culture" value="fantasy"> Fantasy <br>
-                                        <input type="checkbox" name="culture" value="scifi"> Sci-Fi <br>
-                                        <input type="checkbox" name="culture" value="other"> Other<br>
+                                        <input class="culture fantasy" type="checkbox" name="culture" value="fantasy"> Fantasy <br>
+                                        <input class="culture scifi" type="checkbox" name="culture" value="scifi"> Sci-Fi <br>
+                                        <input class="culture other" type="checkbox" name="culture" value="other"> Other<br>
                                     </div>
                                 </div>
                             </div>
@@ -218,13 +221,13 @@
                             <div class="form-control">
                                 <div class="row radio">
                                     <div class="col-sm-4">
-                                        <input type="radio" name="gender" value="male"> Male<br>
+                                        <input class="gender male" type="radio" name="gender" value="male"> Male<br>
                                     </div>
                                     <div class="col-sm-4">
-                                        <input type="radio" name="gender" value="female"> Female<br>
+                                        <input class="gender female" type="radio" name="gender" value="female"> Female<br>
                                     </div>
                                     <div class="col-sm-4">
-                                        <input type="radio" name="gender" value="unisex"> Unisex<br>
+                                        <input class="gender unisex" type="radio" name="gender" value="unisex"> Unisex<br>
                                     </div>
                                 </div>
                             </div>
@@ -238,24 +241,24 @@
                             <div class="form-control">
                                 <div class="radio row">
                                     <div class="col-6 col-sm-4 col-lg-3">
-                                        <input type="checkbox" name="color" value="red"> Red<br>
-                                        <input type="checkbox" name="color" value="orange"> Orange<br>
-                                        <input type="checkbox" name="color" value="yellow"> Yellow<br>
+                                        <input class="color red" type="checkbox" name="color" value="red"> Red<br>
+                                        <input class="color orange" type="checkbox" name="color" value="orange"> Orange<br>
+                                        <input class="color yellow" type="checkbox" name="color" value="yellow"> Yellow<br>
                                     </div>
                                     <div class="col-6 col-sm-4 col-lg-3">
-                                        <input type="checkbox" name="color" value="green"> Green<br>
-                                        <input type="checkbox" name="color" value="blue"> Blue<br>
-                                        <input type="checkbox" name="color" value="purple"> Purple<br>
+                                        <input class="color green" type="checkbox" name="color" value="green"> Green<br>
+                                        <input class="color blue" type="checkbox" name="color" value="blue"> Blue<br>
+                                        <input class="color purple" type="checkbox" name="color" value="purple"> Purple<br>
                                     </div>
                                     <div class="col-6 col-sm-4 col-lg-3">
-                                        <input type="checkbox" name="color" value="pink"> Pink<br>
-                                        <input type="checkbox" name="color" value="brown"> Brown<br>
-                                        <input type="checkbox" name="color" value="gray"> Gray<br>
+                                        <input class="color pink" type="checkbox" name="color" value="pink"> Pink<br>
+                                        <input class="color brown" type="checkbox" name="color" value="brown"> Brown<br>
+                                        <input class="color gray" type="checkbox" name="color" value="gray"> Gray<br>
                                     </div>
                                     <div class="col-6 col-sm-4 col-lg-3">
-                                        <input type="checkbox" name="color" value="white"> White<br>
-                                        <input type="checkbox" name="color" value="black"> Black<br>
-                                        <input type="checkbox" name="color" value="other"> Other<br>
+                                        <input class="color white" type="checkbox" name="color" value="white"> White<br>
+                                        <input class="color black" type="checkbox" name="color" value="black"> Black<br>
+                                        <input class="color other" type="checkbox" name="color" value="other"> Other<br>
                                     </div>
                                 </div>
                             </div>
@@ -269,18 +272,18 @@
                             <div class="form-control">
                                 <div class="row radio">
                                     <div class="col-md-4">
-                                        <input type="radio" name="size" value="xxs"> &lt;XS<br>
-                                        <input type="radio" name="size" value="xs"> XS<br>
-                                        <input type="radio" name="size" value="s"> S<br>
+                                        <input class="size xxs" type="radio" name="size" value="xxs"> &lt;XS<br>
+                                        <input class="size xs" type="radio" name="size" value="xs"> XS<br>
+                                        <input class="size s" type="radio" name="size" value="s"> S<br>
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="radio" name="size" value="m"> M<br>
-                                        <input type="radio" name="size" value="l"> L<br>
-                                        <input type="radio" name="size" value="xl"> XL<br>
+                                        <input class="size m" type="radio" name="size" value="m"> M<br>
+                                        <input class="size l" type="radio" name="size" value="l"> L<br>
+                                        <input class="size xl" type="radio" name="size" value="xl"> XL<br>
                                     </div>
                                     <div class="col-md-4">
-                                        <input type="radio" name="size" value="xxl"> &gt;XL<br>
-                                        <input type="radio" name="size" value="other"> Other<br>
+                                        <input class="size xxl" type="radio" name="size" value="xxl"> &gt;XL<br>
+                                        <input class="size other" type="radio" name="size" value="other"> Other<br>
                                     </div>
                                 </div>
                             </div>
@@ -294,16 +297,16 @@
                             <div class="form-control">
                                 <div class="row radio">
                                     <div class="col-6 col-md-3">
-                                        <input type="radio" name="condition" value="new"> New<br>
+                                        <input class="condition new" type="radio" name="condition" value="new"> New<br>
                                     </div>
                                     <div class="col-6 col-md-3">
-                                        <input type="radio" name="condition" value="good"> Good<br>
+                                        <input class="condition good" type="radio" name="condition" value="good"> Good<br>
                                     </div>
                                     <div class="col-6 col-md-3">
-                                        <input type="radio" name="condition" value="used"> Used<br>
+                                        <input class="condition used" type="radio" name="condition" value="used"> Used<br>
                                     </div>
                                     <div class="col-6 col-md-3">
-                                        <input type="radio" name="condition" value="poor"> Poor<br>
+                                        <input class="condition poor" type="radio" name="condition" value="poor"> Poor<br>
                                     </div>
                                 </div>
                             </div>
@@ -348,5 +351,58 @@
             $('#cancel-modal').modal('show');
             return false;
         });
+
+        // //********  pre-filled costume type  ********
+        // if ('{{sex|first}}' !== 'None') {
+        //     $('.gender.{{sex|first}}').attr('checked', true);
+        // }
+
+        // //********  pre-filled prop type  ********
+        // if ('{{sex|first}}' !== 'None') {
+        //     $('.gender.{{sex|first}}').attr('checked', true);
+        // }
+
+        //********  pre-filled time period  ********
+        if ('{{timeperiod|first}}' !== 'None') {
+            var timeperiods = '{{timeperiod|first}}'; // format from db: colors = {classical,future}
+            // convert to array of string: timeperiods = ['classical','future']
+            timeperiods = timeperiods.split('{').join('').split('}').join('').split(',');
+            timeperiods.forEach(function(c) {
+                $('.time.' + c).attr('checked', 'true');
+            });
+        }
+
+        //********  pre-filled culture  ********
+        if ('{{culture|first}}' !== 'None') {
+            var cultures = '{{culture|first}}'; // format from db: cultures = {asia,europe}
+            cultures = cultures.split('{').join('').split('}').join('').split(','); // convert to array of string: cultures = ['asia','europe']
+            cultures.forEach(function(c) {
+                $('.culture.' + c).attr('checked', 'true');
+            });
+        }
+
+        //********  pre-filled gender  ********
+        if ('{{sex|first}}' !== 'None') {
+            $('.gender.{{sex|first}}').attr('checked', 'true');
+        }
+
+        //********  pre-filled color  ********
+        if ('{{color|first}}' !== 'None') {
+            var colors = '{{color|first}}'; // format from db: colors = {red,green,blue}
+            colors = colors.split('{').join('').split('}').join('').split(','); // convert to array of string: colors = ['red','green','blue']
+            colors.forEach(function(c) {
+                $('.color.' + c).attr('checked', 'true');
+            });
+        }
+
+        //********  pre-filled size  ********
+        if ('{{size|first}}' !== 'None') {
+            $('.size.{{size|first}}').attr('checked', 'true');
+        }
+
+        //********  pre-filled condition  ********
+        if ('{{condition|first}}' !== 'None') {
+            $('.condition.{{condition|first}}').attr('checked', 'true');
+        }
     });
 </script>
