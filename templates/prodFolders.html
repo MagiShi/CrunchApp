@@ -33,32 +33,28 @@
                         <div class="form-group">
                             <ul class="list-group">
                                 {% for foldername in foldernames %}
-                                <li id="folder_{{foldername[0]}}" class="list-group-item list-group-item-action">
-                                    
-                                    <button type="button" onclick="toggleAccordion(this)">{{foldername[0]}}</button>
-                                    
+                                <li id="folder_{{foldername[0]}}" class="list-group-item list-group-item-action flex-column">
+                                    <div class="d-flex w-100 justify-content-between" style="text-align:left;">
+                                        <p>{{foldername[0]}}</p>
+                                        <div style="min-width:51px; margin-left:13px;">
+                                            <div style="min-width:51px; margin-left:13px;">
+                                                <!-- EDIT NAME BUTTON-->
+                                                <button type="button" class="icon-button rename-folder" data-toggle="modal" data-target="#rename-modal" onclick="activate_rename_field('{{foldername[0]}}');"  data-tooltip="tooltip" data-placement="top" title="Rename Folder">
+                                                    {% include 'icon/pencil.svg' %}
+                                                </button>
+                                                <!-- DELETE FOLDER BUTTON -->
+                                                 <button type="button" class="icon-button delete-folder" data-toggle="modal" data-target="#delete-modal" onclick="get_delete_name('{{foldername|first}}');" style="margin-left: 5px;" data-tooltip="tooltip" data-placement="top" title="Delete Folder">
+                                                     {% include 'icon/delete.svg' %}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button onclick="toggleAccordion(this)">View</button>
                                     <div class="folder-contents">
                                         <p>item name</p>
                                         <p>item name</p>
                                         <p>item name</p>
-                                        <p>item name</p>
                                     </div>
-                                    
-                                    <div style="min-width:51px; margin-left:13px;">
-                                        <!--EDIT NAME BUTTON-->
-                                        <button type="button" class="icon-button rename-folder" data-toggle="modal" data-target="#rename-modal" onclick="activate_rename_field('{{foldername[0]}}');"  data-tooltip="tooltip" data-placement="top" title="Rename Folder">
-                                            {% include 'icon/pencil.svg' %}
-                                        </button>
-
-                                        <!--DELETE FOLDER BUTTON-->
-                                        <button type="button" class="icon-button delete-folder" data-toggle="modal" data-target="#delete-modal" onclick="get_delete_name('{{foldername|first}}');"
-                                        style="margin-left: 5px;" data-tooltip="tooltip" data-placement="top"
-                                        title="Delete Folder">
-                                            {% include 'icon/delete.svg' %}
-                                        </button>
-                                    </div>
-
-                                        
                                 </li>
                                 {% endfor %}
                             </ul>
