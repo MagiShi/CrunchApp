@@ -794,6 +794,7 @@ def edit(item_id):
 
     except Exception as e: 
         cursor.execute("rollback;")
+        print (e)
 
         ##If item does not exist etc
         error = 'Item information cannot be retrieved for edit'
