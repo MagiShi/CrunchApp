@@ -1,7 +1,7 @@
 .help-container {
     margin-top: 140px;
-    margin-left: 60px;
-    margin-right: 60px;
+    margin-left: 80px;
+    margin-right: 80px;
     margin-bottom: 100px;
 }
 
@@ -23,6 +23,11 @@
     padding: 25px 20px;
     margin-bottom: 20px;
 }
+@media screen and (max-width: 576px) { 
+    .help-topic-links {
+        margin-bottom: 0px;
+    }
+}
 .help-topic-links p {
     text-align: center;
 }
@@ -36,6 +41,8 @@
     margin-top: 90px;
     font-size: 1.7rem;
 }
-
-.help-content div {
+@media screen and (max-width: 576px) { 
+    .help-content h1 {
+        margin-top: 150px;
+    }
 }
