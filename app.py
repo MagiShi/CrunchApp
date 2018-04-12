@@ -749,6 +749,18 @@ def getItemInfo(item_id):
             email = current_reservation[2]
             is_reserved = True
 
+        na = ('N/A',)
+        if condition[0] is None:
+            condition = na
+        if sex[0] is None:
+            sex = na
+        if size[0] is None:
+            size = na
+        if item_type[0] is None:
+            item_type = na
+        if i_type[0] is None:
+            i_type = na
+
     except Exception as e: 
         print (e)
         cursor.execute("rollback;")

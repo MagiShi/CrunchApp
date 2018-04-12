@@ -343,6 +343,7 @@
             return false;
         });
 
+        // display the photos after selecting the files
         $(":file").change(function (e) {
             if (this.files && this.files[0]) {
                 var reader = new FileReader();

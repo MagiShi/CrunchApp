@@ -73,14 +73,19 @@
                     <div class="item-text row">
                         <div class="col-12">
                             <p>Barcode: {{itemid}}</p>
-                            <p>Condition: TO DO</p> <!-- {{condition | first}} -->
+                            <p>Condition: {{condition | first}}</p>
                             <p>Gender: {{sex | first}}</p>
-                            <p>Size: {{size | first}}</p>
-                            <p>Color:  {{color | first}}</p>
-                            <p>Clothing  Type: TO DO</p> <!-- {{itype | first}} -->
-                            <p>Time Period: TO DO</p> <!-- {{timeperiod | first}} -->
+                            <p style="text-transform: uppercase;">Size: {{size | first}}</p>
+                            <p id="color">Color: </p>
+                            <p id="time" style="text-transform: capitalize">Time Period: </p>
+                            <p id="culture" style="text-transform: capitalize">Region: </p>
+                            {% if "setdressing" in itype[0] %}
+                                <p>Clothing Type: set dressing</p>
+                            {% else %}
+                                <p>Clothing Type: {{itype | first}}</p>
+                            {% endif %}
                             <p>Item Type: {{itemtype | first}}</p>
-                            <p>Description: {{description | first}}
+                            <p>Description: {{description | first}}</p>
                         </div>
                     </div>
 
@@ -144,5 +149,35 @@
         $( '#delete-item-button' ).click(function() {
             $('#deleteModal').modal('show');
         });
+
+        append_db_format_array('{{color | first}}', 'color');
+        append_db_format_array('{{timeperiod | first}}', 'time');
+        append_db_format_array('{{culture | first}}', 'culture');
     });
+
+    function append_db_format_array(array_string, characteristic_id) {
+        if (array_string === 'None') {
+            $('#' + characteristic_id).append("N/A");
+        } else {
+            // format of array_string from db: array_string = {a,b,c}
+            array_string = array_string.split('{').join('').split('}').join('').replace(',', ', '); //convert to a string: array_string = "a, b, c"
+            if (characteristic_id === 'time') {
+                array_string = rename_timeperiod(array_string);
+            }
+
+            if (characteristic_id === 'culture') {
+                array_string = rename_culture(array_string);
+            }
+
+            $('#' + characteristic_id).append(array_string);
+        }
+    }
+
+    function rename_timeperiod(time) {
+        return time.replace('earlymodern', 'early modern').replace('latemodern', 'late modern').replace('20th', '20th century').replace('21st', '21st century');
+    }
+
+    function rename_culture(culture) {
+        return culture.replace('namerica', 'north america').replace('samerica', 'south america')
+    }
 </script>
