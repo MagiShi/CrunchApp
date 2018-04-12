@@ -14,7 +14,8 @@
         <!-- Our CSS -->
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/addStyle.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/folderStyle.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/modalStyle.css') }}"><!-- <-<!-- Production Folder functions -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/modalStyle.css') }}">
+        <!-- Production Folder functions -->
         <script src="{{ url_for('static',filename='prodFolders.js') }}"></script>
     </head>
     <body>
@@ -30,37 +31,34 @@
 
                     <div style="text-align:center;">
                         <div class="form-group">
-                            <div class="input-title">
-                                <h6>Select a Production Folder</h6>
-                            </div>
-                            
                             <ul class="list-group">
                                 {% for foldername in foldernames %}
-                                <li id="folder_{{foldername[0]}}" class="list-group-item list-group-item-action flex-column">
-                                    <div class="d-flex w-100 justify-content-between" style="text-align:left;">
-                                        <button type="button" onclick="toggleAccordion(this)">{{foldername[0]}}</button>
+                                <li id="folder_{{foldername[0]}}" class="list-group-item list-group-item-action">
                                     
-                                        <div class="folder-contents">
-                                            <p>item name</p>
-                                            <p>item name</p>
-                                            <p>item name</p>
-                                            <p>item name</p>
-                                        </div>
-                                        
-                                        <div style="min-width:51px; margin-left:13px;">
-                                            <!--EDIT NAME BUTTON-->
-                                            <button type="button" class="icon-button rename-folder" data-toggle="modal" data-target="#rename-modal" onclick="activate_rename_field('{{foldername[0]}}');"  data-tooltip="tooltip" data-placement="top" title="Rename Folder">
-                                                {% include 'icon/pencil.svg' %}
-                                            </button>
-
-                                            <!--DELETE FOLDER BUTTON-->
-                                            <button type="button" class="icon-button delete-folder" data-toggle="modal" data-target="#delete-modal" onclick="get_delete_name('{{foldername|first}}');"
-                                            style="margin-left: 5px;" data-tooltip="tooltip" data-placement="top"
-                                            title="Delete Folder">
-                                                {% include 'icon/delete.svg' %}
-                                            </button>
-                                        </div>
+                                    <button type="button" onclick="toggleAccordion(this)">{{foldername[0]}}</button>
+                                    
+                                    <div class="folder-contents">
+                                        <p>item name</p>
+                                        <p>item name</p>
+                                        <p>item name</p>
+                                        <p>item name</p>
                                     </div>
+                                    
+                                    <div style="min-width:51px; margin-left:13px;">
+                                        <!--EDIT NAME BUTTON-->
+                                        <button type="button" class="icon-button rename-folder" data-toggle="modal" data-target="#rename-modal" onclick="activate_rename_field('{{foldername[0]}}');"  data-tooltip="tooltip" data-placement="top" title="Rename Folder">
+                                            {% include 'icon/pencil.svg' %}
+                                        </button>
+
+                                        <!--DELETE FOLDER BUTTON-->
+                                        <button type="button" class="icon-button delete-folder" data-toggle="modal" data-target="#delete-modal" onclick="get_delete_name('{{foldername|first}}');"
+                                        style="margin-left: 5px;" data-tooltip="tooltip" data-placement="top"
+                                        title="Delete Folder">
+                                            {% include 'icon/delete.svg' %}
+                                        </button>
+                                    </div>
+
+                                        
                                 </li>
                                 {% endfor %}
                             </ul>

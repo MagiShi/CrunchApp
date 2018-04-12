@@ -1,5 +1,5 @@
-function toggleAccordion(filterButton) {
-    var panel = filterButton.nextElementSibling;
+function toggleAccordion(clickedButton) {
+    var panel = clickedButton.nextElementSibling;
     if (panel.style.maxHeight){
       panel.style.maxHeight = null;
     } else {

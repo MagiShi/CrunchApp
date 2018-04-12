@@ -303,6 +303,12 @@ def addItem():
         return redirect(url_for('getItemInfo', item_id=item_id, error=error))
 
 
+# renders addItem page
+@app.route('/help')
+def help():
+    error = request.args.get('error')
+    return render_template('help.html', error=error)
+
 @app.route('/logout')
 def logout():
     session.pop('user', None)

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Help &amp; FAQ - UAH Theatre</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+        <!-- Tether -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+        <!-- Font Awesome -->
+        <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+        <!-- Our CSS -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/helpStyle.css') }}">
+    </head>
+    <body>
+        <!--NAV BAR-->
+        {% include 'navbar.html' %}
+        <div class="help-container container-fluid">
+            <div class="help-topic-links row">
+                <ul>
+                    <li><a href="#home-help">Home Page and Searching</a></li>
+                    <li><a href="#filter-help"></a>Filter Menu</li>
+                    <li><a href="#barcode-help"></a>Barcodes</li>
+                </ul>
+            </div>
+            <div class="help-content row">
+                <div id="home-help">
+                    <h1>Home Page and Searching</h1>
+                    <p>When you first arrive at the Home page, you see a list of all the items in the system. You can narrow down the list by using the filter menu. You can also search for a specific item by typing its name or its unique barcode into the search bar.</p>
+                </div>
+                <div id="filter-help">
+                    <h1>Filter Menu</h1>
+                    <p>You can access the Filter Menu by clicking on the Filter Menu icon (&nbsp;<i class="fas fa-sliders-h"></i>&nbsp;) next to the search bar.</p>
+                    <p>Open up the different panels (e.g. "Color," "Size") to specify which characteristics you wish to narrow down the list by. The default state, where all the checkboxes under each panel are unchecked, means the list is not filtered by any of those characteristics. For example, if the Size panel has no checkboxes checked, then you are viewing items of all sizes.</p>
+                    <p>After you check the appropriate checkboxes, make sure to press the Apply Filter button in order to refresh the list of items with the filters now applied.</p>
+                </div>
+                <div id="barcode-help">
+                    <h1>Barcodes</h1>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

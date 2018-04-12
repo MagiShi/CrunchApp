@@ -1,0 +1,21 @@
+.help-container {
+    margin-top: 140px;
+    margin-left: 60px;
+    margin-right: 60px;
+    margin-bottom: 100px;
+}
+
+@media screen and (max-width: 576px) { 
+    .help-container {
+        margin-top: 210px;
+        margin-left: 40px;
+        margin-right: 40px;
+    }
+}
+
+.help-topic-links {
+    border: 1px solid grey;
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 100px;
+}
