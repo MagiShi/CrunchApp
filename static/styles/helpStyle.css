@@ -13,13 +13,29 @@
     }
 }
 
+.help-container > h1 {
+    margin-bottom: 50px;
+}
+
 .help-topic-links {
     border: 1px solid grey;
     border-radius: 4px;
-    padding: 20px;
-    margin-bottom: 100px;
+    padding: 25px 20px;
+    margin-bottom: 20px;
+}
+.help-topic-links p {
+    text-align: center;
 }
 .help-topic-links ul {
     margin-bottom: 0;
+    padding: 0;
     list-style-type: none;
+}
+
+.help-content h1 {
+    margin-top: 90px;
+    font-size: 1.7rem;
+}
+
+.help-content div {
 }

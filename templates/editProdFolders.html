@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Edit Production Folders - UAH Theatre</title>
+        <title>Edit Item's Production - UAH Theatre</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <!-- jQuery -->
@@ -23,14 +23,14 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="add-container offset-2 col-8 offset-md-4 col-md-4">
-                    <h3>Add/Remove Item from Folder</h3>
+                    <h3>Add/Remove Item from Production</h3>
                     {% if error %}
                         <p class="error" style="color:red;"><strong>*</strong> {{ error }}
                     {% endif %}
                     <form method=POST action='/posteditFolders/{{itemid}}'>
                         <div class="form-group">
                             <div class="input-title">
-                                <h6>Choose which folders you want to add/remove {{ itemname | first }} from</h6>
+                                <h6>Choose which production you want to add/remove {{ itemname | first }} from</h6>
                             </div>
                             <div class="list-group">
                                 <!-- TO DO: AutoSelect Folders item belongs to -->
@@ -61,11 +61,11 @@
                         <button type="button" name="cancel-button" class="btn" id="cancel-button" value="Cancel" data-toggle="modal" data-target="#cancel-modal">Cancel</button>
 
                         <!--ADD/REMOVE BUTTON-->
-                        <button type="submit" name="add-to-folder-button" class="btn offset-md-1" id="add-to-folder-button" value="Add">Add to Selected Folder(s)</button>
+                        <button type="submit" name="add-to-folder-button" class="btn offset-md-1" id="add-to-folder-button" value="Add">Add to Selected Production(s)</button>
 
                         <!-- CREATE NEW FOLDER BUTTON -->
                         <!-- Trigger the create modal -->
-                        <button type="button" name="create-folder-button" class="btn" id="create-folder-button" value="Create" data-toggle="modal" data-target="#add-folder-modal">Create New Folder</button>
+                        <button type="button" name="create-folder-button" class="btn" id="create-folder-button" value="Create" data-toggle="modal" data-target="#add-folder-modal">Create New Production</button>
 
                     </form>
 
@@ -95,7 +95,7 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title">Create the Folder</h5>
+                                    <h5 class="modal-title">Create the Production</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
