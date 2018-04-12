@@ -6,7 +6,7 @@ CREATE TYPE CULTURE AS ENUM('namerica', 'samerica', 'asia', 'europe', 'africa', 
 CREATE TYPE COLOR AS ENUM('red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'brown', 'gray', 'white', 'black', 'other');
 CREATE TYPE SIZE AS ENUM('xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl', 'other');
 CREATE TYPE ITEMTYPE AS ENUM('prop', 'costume');
-CREATE TYPE ITYPE AS ENUM('outer', 'top', 'pants', 'skirts', 'dress', 'under', 'footwear', 'other', 'hand', 'personal', 'set', 'trim', 'setdressing', 'greens', 'mfx');
+CREATE TYPE ITYPE AS ENUM('outerwear', 'tops', 'pants', 'skirt', 'dress', 'underwear', 'footwear', 'other', 'hand', 'personal', 'set', 'trims', 'setdressing', 'greens', 'fx');
 
 #ENUM for reservation status
 CREATE TYPE reservationstatus AS ENUM ('past', 'current', 'future');
