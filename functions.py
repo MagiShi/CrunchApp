@@ -93,19 +93,20 @@ def getInfo(item_id, cursor):
 
     return itemname, ph_front, ph_back, ph_top, ph_bottom, ph_right, ph_left, description, pendingdelete, sex, condition, timeperiod, culture, color, size, itemtype, itype, isavailable
 
-def getImagedata(image):
-    if image != None:
-        imagedata = []
-        image_data = bytes(image)
-        encoded = base64.b64encode(image_data)
-        stren = encoded.decode("utf-8")
-        imagedata.append(stren)
+def getImagedata(images):
+    imagedata = []
+    for image in images:
+        if image != None:
+            imagedata = []
+            image_data = bytes(image)
+            encoded = base64.b64encode(image_data)
+            stren = encoded.decode("utf-8")
+            imagedata.append(stren)
     # to show image as a seperate pop-up (?) --local only
     # data = base64.b64decode(encoded)
     # image1 = Image.open(BytesIO(image_data))
     # image1.show()
-        return imagedata
-    return None
+    return imagedata
 
 
 # def createNewFolder(foldername, cursor, conn):

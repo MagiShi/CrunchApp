@@ -719,20 +719,17 @@ def getItemInfo(item_id):
     
     try: 
         # calls functions.py method
-        itemname, image1, image2, image3, description, pendingdelete, sex, color, size, itemtype, isavailable = functions.getInfo(item_id, cursor)
+        item_name, ph_front, ph_back, ph_top, ph_bottom, ph_right, ph_left, description, pending_delete, sex, condition, timep, culture, color, size, item_type, i_type, is_available = functions.getInfo(item_id, cursor)
+        print ("itemname: ", item_name)
+        # itemname, image1, image2, image3, description, pendingdelete, sex, color, size, itemtype, isavailable = functions.getInfo(item_id, cursor)
         # itemname, image1, image2, image3, description, pendingdelete, sex, condition, timeperiod, culture, color, size, itemtype, itype, isavailable = getInfo(item_id)
 
-        imagedata1 = []
-        if image1[0] != None:
-            imagedata1 = functions.getImagedata(image1[0])
-
+        imagedata1 = functions.getImagedata(ph_front)
         imagedata2 = []
-        if image2[0] != None:
-            imagedata2 = functions.getImagedata(image2[0])
-
         imagedata3 = []
-        if image3[0] != None:
-            imagedata3 = functions.getImagedata(image3[0])
+        # imagedata2 = functions.getImagedata(image2[0])
+
+        # imagedata3 = functions.getImagedata(image3[0])
 
         query = "SELECT startdate, enddate FROM reservation WHERE itemid='{0}' and status='current';".format(item_id)
         cursor.execute(query)
@@ -755,7 +752,8 @@ def getItemInfo(item_id):
 
     ##culture, color, timeperiod are all arrays
 
-    return render_template('item.html', itemid=item_id, itemname=itemname, image=imagedata1, image2=imagedata2, image3=imagedata3, description=description, delete=pendingdelete, sex=sex, color=color, size=size, itemtype=itemtype, isavailable=isavailable, error=error, r_start=start_date, r_end=end_date, iscurrentlyreserved=is_reserved)
+    return render_template('item.html', itemid=item_id, image=imagedata1)
+    # return render_template('item.html', itemid=item_id, itemname=itemname, image=imagedata1, image2=imagedata2, image3=imagedata3, description=description, delete=pendingdelete, sex=sex, color=color, size=size, itemtype=itemtype, isavailable=isavailable, error=error, r_start=start_date, r_end=end_date, iscurrentlyreserved=is_reserved)
     # return render_template('item.html', itemid=item_id, itemname=itemname, image=imagedata1, image2=imagedata2, image3=imagedata3, description=description, delete=pendingdelete, sex=sex, condition=condition, timeperiod=timeperiod, culture=culture color=color, size=size, itemtype=itemtype, itype=itype, isavailable=isavailable, error=error)
 
 # renders editItem page
@@ -787,15 +785,16 @@ def edit(item_id):
         # calls functions.py method
         item_name, ph_front, ph_back, ph_top, ph_bottom, ph_right, ph_left, description, pending_delete, sex, condition, timep, culture, color, size, item_type, i_type, is_available = functions.getInfo(item_id, cursor)
 
-        ph_front_data = functions.getImagedata(ph_front[0])
-        ph_back_data = functions.getImagedata(ph_back[0])
-        ph_top_data = functions.getImagedata(ph_top[0])
-        ph_bottom_data = functions.getImagedata(ph_bottom[0])
-        ph_right_data = functions.getImagedata(ph_right[0])
-        ph_left_data = functions.getImagedata(ph_left[0])
+        ph_front_data = functions.getImagedata(ph_front)
+        ph_back_data = functions.getImagedata(ph_back)
+        ph_top_data = functions.getImagedata(ph_top)
+        ph_bottom_data = functions.getImagedata(ph_bottom)
+        ph_right_data = functions.getImagedata(ph_right)
+        ph_left_data = functions.getImagedata(ph_left)
 
     except Exception as e: 
         cursor.execute("rollback;")
+        print (e)
 
         ##If item does not exist etc
         error = 'Item information cannot be retrieved for edit'
