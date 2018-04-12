@@ -68,46 +68,71 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-4 form-group">
-                                <div class="input-title">
-                                Front
-                                </div>
+                                <div class="input-title">Front</div>
                                 <input type="file" name="photo1" accept="image/*" class="form-control" id="input-photo-1" placeholder="Photo">
-                                <img class="form-control" id="photo1" src="#" alt="photo 1" style="display:none;" />
+                                {% if phfront %}
+                                    {% for i in phfront %}
+                                        <img class="form-control" id="photo1" src="data:image/jpeg;base64, {{i}}" alt="photo 1" />
+                                    {% endfor %}
+                                {% else %}
+                                    <img class="form-control" id="photo1" src="#" alt="photo 1" style="display:none;" />
+                                {% endif %}
+
                             </div>
                             <div class="col-lg-4 form-group">
-                                <div class="input-title">
-                                Back
-                                </div>
+                                <div class="input-title">Back</div>
                                 <input type="file" name="photo2" accept="image/*" class="form-control" id="input-photo-2" placeholder="Photo">
-                                <img class="form-control" id="photo2" src="#" alt="photo 2" style="display:none;" />
+                                {% if phback %}
+                                    {% for i in phback %}
+                                        <img class="form-control" id="photo2" src="data:image/jpeg;base64, {{i}}" alt="photo 2" />
+                                    {% endfor %}
+                                {% else %}
+                                    <img class="form-control" id="photo2" src="#" alt="photo 2" style="display:none;" />
+                                {% endif %}
                             </div>
                             <div class="col-lg-4 form-group">
-                                <div class="input-title">
-                                Top
-                                </div>
+                                <div class="input-title">Top</div>
                                 <input type="file" name="photo3" accept="image/*" class="form-control" id="input-photo-3" placeholder="Photo">
-                                <img class="form-control" id="photo3" src="#" alt="photo 3" style="display:none;" />
+                                {% if phtop %}
+                                    {% for i in phtop %}
+                                        <img class="form-control" id="photo3" src="data:image/jpeg;base64, {{i}}" alt="photo 3" />
+                                    {% endfor %}
+                                {% else %}
+                                    <img class="form-control" id="photo3" src="#" alt="photo 3" style="display:none;" />
+                                {% endif %}
                             </div>
                             <div class="col-lg-4 form-group">
-                                <div class="input-title">
-                                Bottom
-                                </div>
+                                <div class="input-title">Bottom</div>
                                 <input type="file" name="photo4" accept="image/*" class="form-control" id="input-photo-4" placeholder="Photo">
-                                <img class="form-control" id="photo4" src="#" alt="photo 4" style="display:none;" />
+                                {% if phbottom %}
+                                    {% for i in phbottom %}
+                                        <img class="form-control" id="photo4" src="data:image/jpeg;base64, {{i}}" alt="photo 4" />
+                                    {% endfor %}
+                                {% else %}
+                                    <img class="form-control" id="photo4" src="#" alt="photo 4" style="display:none;" />
+                                {% endif %}
                             </div>
                             <div class="col-lg-4 form-group">
-                                <div class="input-title">
-                                Side1 (Left)
-                                </div>
+                                <div class="input-title">Side1 (Left)</div>
                                 <input type="file" name="photo5" accept="image/*" class="form-control" id="input-photo-5" placeholder="Photo">
-                                <img class="form-control" id="photo5" src="#" alt="photo 5" style="display:none;" />
+                                {% if phleft %}
+                                    {% for i in phleft %}
+                                        <img class="form-control" id="photo5" src="data:image/jpeg;base64, {{i}}" alt="photo 5" />
+                                    {% endfor %}
+                                {% else %}
+                                    <img class="form-control" id="photo5" src="#" alt="photo 5" style="display:none;" />
+                                {% endif %}
                             </div>
                             <div class="col-lg-4 form-group">
-                                <div class="input-title">
-                                Side2 (Right)
-                                </div>
+                                <div class="input-title">Side2 (Right)</div>
                                 <input type="file" name="photo6" accept="image/*" class="form-control" id="input-photo-6" placeholder="Photo">
-                                <img class="form-control" id="photo6" src="#" alt="photo 6" style="display:none;" />
+                                {% if phright %}
+                                    {% for i in phright %}
+                                        <img class="form-control" id="photo6" src="data:image/jpeg;base64, {{i}}" alt="photo 6" />
+                                    {% endfor %}
+                                {% else %}
+                                    <img class="form-control" id="photo6" src="#" alt="photo 6" style="display:none;" />
+                                {% endif %}
                             </div>
                         </div>
                         
@@ -363,9 +388,6 @@
         if ('{{itemtype|first}}' === 'costume') {
             $('.costume.{{itype|first}}').attr('checked', true);
         }
-
-        console.log('{{itemtype|first}}');
-        console.log('{{itype|first}}');
 
         //********  pre-filled time period  ********
         if ('{{timeperiod|first}}' !== 'None') {
