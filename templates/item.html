@@ -29,16 +29,81 @@
                 </div>
             </div>
             <div class="row">
+
+
+
+
+
                 <!-- IMAGES -->
                 <div class="col-md-6">
-                    <div class="item-image row">
+                    <!-- <div class="item-image row">
                     {% for i in phfront %}
                         <div class="col-12">
                             <img id="item-preview" src="data:image/jpeg;base64, {{i}}" />
                         </div>
                     {% endfor %}
                     </div>
+                </div> -->
+                    <div id="photo-carousel" class="carousel slide item-image row" data-ride="carousel">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                        <li data-target="#photo-carousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#photo-carousel" data-slide-to="1"></li>
+                        <li data-target="#photo-carousel" data-slide-to="2"></li>
+                        </ol>
+
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                {% for i in phfront %}
+                                    <div class="col-12">
+                                        <img id="item-preview" src="data:image/jpeg;base64, {{i}}" atl="Front"/>
+                                    </div>
+                                {% endfor %}
+                                <!-- <div class="carousel-caption">
+                                    <h8>Front</h8>
+                                </div> -->
+                            </div>
+
+                            {% if phback %}
+                                <div class="carousel-item">
+                                    {% for i in phback %}
+                                        <div class="col-12">
+                                            <img id="item-preview" src="data:image/jpeg;base64, {{i}}" atl="Back"/>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            {% if phtop %}
+                                <div class="carousel-item">
+                                    {% for i in phtop %}
+                                        <div class="col-12">
+                                            <img id="item-preview" src="data:image/jpeg;base64, {{i}}" atl="Back"/>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Left and right controls -->
+                        <a class="carousel-control-prev" href="#photo-carousel" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#photo-carousel" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
                 </div>
+
+
+
+
+
+
+
                 <div class="col-md-6">
                     <!-- RESERVATION -->
                         {%if iscurrentlyreserved %}
@@ -153,6 +218,10 @@
         append_db_format_array('{{color | first}}', 'color');
         append_db_format_array('{{timeperiod | first}}', 'time');
         append_db_format_array('{{culture | first}}', 'culture');
+
+        $('.carousel').carousel({
+            interval: 0
+        });
     });
 
     function append_db_format_array(array_string, characteristic_id) {
