@@ -104,12 +104,7 @@ def loggedin():
         cursor.execute(itemNameQuery)
         itemname = cursor.fetchall()
         cursor.execute(imageQuery)
-        image = cursor.fetchall()
-        for x in image:
-            imagedata = []
-            if x[0] != None:
-                imagedata = functions.getImagedata(x)
-                x = imagedata
+        
 
         return render_template('home.html', itemid=itemid, itemname=itemname, image=image)
 
@@ -847,21 +842,111 @@ def edit(item_id):
 
 @app.route('/posteditItem/<item_id>', methods=["POST"])
 def editItem(item_id):
-    item_id = item_id
-    itemname = request.form['itemname']
-    description = request.form['description']
+    error = request.args.get('error')
+
+    #initialize all values from the html form here (except photos)
+    item_id = request.form.get('add-item-button')
+    item_name = request.form.get('itemname')
+
+    # Check this before continuing through everything. All items MUST have an id and name
+    if item_name == '':
+        error = 'Item must have a name'
+        return redirect(url_for('edit', error=error, item_id=item_id))
+
+    description = request.form.get('description')
+
+    prop_t = request.form.get('prop')
+    costume_t = request.form.get('costume')
+    time_list = request.form.getlist('time')
+    culture_list = request.form.getlist('culture')
+    sex = request.form.get('gender')
+    color_list = request.form.getlist('color')
+    size = request.form.get('sizeSelect')
+    condition = request.form.get('condition')
+    item_type = None
+    i_type = None
+
+    # Initialize for photos (Different section just because photos are inserted separately from everything else)
+    ph_front = functions.upload_image(request.files.get('photo1'), app.config['UPLOAD_FOLDER'])
+    ph_back = functions.upload_image(request.files.get('photo2'), app.config['UPLOAD_FOLDER'])
+    ph_top = functions.upload_image(request.files.get('photo3'), app.config['UPLOAD_FOLDER'])
+    ph_bottom = functions.upload_image(request.files.get('photo4'), app.config['UPLOAD_FOLDER'])
+    ph_left = functions.upload_image(request.files.get('photo5'), app.config['UPLOAD_FOLDER'])
+    ph_right = functions.upload_image(request.files.get('photo6'), app.config['UPLOAD_FOLDER'])
+
+    # Initialize itemtype and itype (prop or costume) using prop_t and costume_t
+    if prop_t and costume_t:
+        # Redirects with error because a prop cannot be both a prop and a costume
+        error = 'Item cannot have both a prop type and an costume type'
+        return redirect(url_for('edit', error=error, item_id=item_id))
+    elif prop_t:
+        item_type = 'prop'
+        i_type = prop_t
+    elif costume_t:
+        item_type = 'costume'
+        i_type = costume_t
+
+    # Build query string part for color and timeperiod (diff b/c can choose multiple choices and thus mapped to an array)
+    color = functions.build_array_query_string(color_list)
+    time = functions.build_array_query_string(time_list)
+    culture = functions.build_array_query_string(culture_list)
+
+    # String for description
+    if description == '':
+        description = 'N/A'
+
+    #Build Query string (NOTE: this query does not insert photos (done later) and prod folders (not done during creation) as well as itemname and description)
+    query = "UPDATE item SET itemtype='{0}', itype='{1}', time='{2}', culture='{3}', sex='{4}', color='{5}', size='{6}', condition='{7}' WHERE itemid='{8}';".format(item_type, i_type, time, culture, sex, color, size, condition, item_id)
+    print (query)
+    #replace any None with NULL
+    query = query.replace('\'None\'', 'NULL')
+    print (query)
+    # raise NotImplementedError
+
     try: 
-        query = ("UPDATE item SET itemname ='{1}', description ='{2}' WHERE itemid='{0}';".format(item_id, itemname, description))
-        #query = ("UPDATE item SET itemname = '{1}' WHERE itemid= '{0}';".format(item_id, itemname, description))
         cursor.execute(query)
         conn.commit()
-        error = 'Item successfully edited.'
-    except Exception as e: 
+
+    except Exception as e:
+        print (e)
         cursor.execute("rollback;")
 
-        ##If item does not exist etc
-        error = 'Item information cannot be retrieved'
-        return redirect(url_for('loggedin', error=error))
+        ##If item creation fails
+        error = 'Item editing has failed.'
+        return redirect(url_for('edit', error=error, item_id=item_id))
+
+    ##Now change the name and descirption:
+    query = "UPDATE item set itemname='{0}', description='{1}'".format(item_name, description)
+    print (query)
+    try: 
+        cursor.execute(query)
+        conn.commit()
+
+    except Exception as e:
+        print (e)
+        cursor.execute("rollback;")
+
+        ##If item creation fails
+        error = 'Item name and description cannot be changed. Photos were not changed either'
+        return redirect(url_for('edit', error=error, item_id=item_id))
+
+    # Now insert images for the item, which is already in the database.
+    try:
+        functions.setImageInDatabase(ph_front, 'phfront', item_id, cursor, conn, app.config['UPLOAD_FOLDER'])
+        functions.setImageInDatabase(ph_back, 'phback', item_id, cursor, conn, app.config['UPLOAD_FOLDER'])
+        functions.setImageInDatabase(ph_top, 'phtop', item_id, cursor, conn, app.config['UPLOAD_FOLDER'])
+        functions.setImageInDatabase(ph_bottom, 'phbottom', item_id, cursor, conn, app.config['UPLOAD_FOLDER'])
+        functions.setImageInDatabase(ph_right, 'phright', item_id, cursor, conn, app.config['UPLOAD_FOLDER'])
+        functions.setImageInDatabase(ph_left, 'phleft', item_id, cursor, conn, app.config['UPLOAD_FOLDER'])
+
+    except Exception as e:
+        print (e)
+        query = "rollback;"
+        cursor.execute(query)
+
+        ##If photo insertion fails
+        error = 'Photo changes failed. Make sure that added photos do not share the same name. All other information updated.'
+        return redirect(url_for('edit', error=error, item_id=item_id))
     return redirect(url_for('getItemInfo', item_id=item_id, error=error))
 
 @app.route('/filtered', methods=["POST"])

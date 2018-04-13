@@ -18,7 +18,7 @@ def build_array_query_string(char_list):
                 char_str += '{0}, '.format(char_list[c])
         char_str += '}'
         return char_str
-    return None
+    return {}
 
 def upload_image(file, folder):
     if file != None and file.filename != '':
