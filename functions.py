@@ -206,3 +206,9 @@ def checkNumOfPastReservations(cursor, conn):
     except Exception as e:
         cursor.execute("rollback;")
         print(e)
+
+def isLoggedIn(session):
+    if session is None:
+        return False
+    else:
+        return True

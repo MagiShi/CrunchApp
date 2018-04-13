@@ -90,25 +90,28 @@ def login():
 #rendering home page after logging in
 @app.route('/home')
 def loggedin():
-    itemname = None
-    image = None
-    itemid = None
-    itemidQuery = "SELECT itemid FROM item;"
-    itemNameQuery = "SELECT itemname FROM item;"
-    imageQuery = "SELECT phfront FROM item;"
-    cursor.execute(itemidQuery)
-    itemid = cursor.fetchall()
-    cursor.execute(itemNameQuery)
-    itemname = cursor.fetchall()
-    cursor.execute(imageQuery)
-    image = cursor.fetchall()
-    for x in image:
-        imagedata = []
-        if x[0] != None:
-            imagedata = functions.getImagedata(x)
-            x = imagedata
+    if functions.isLoggedIn(session.get('user')) is False:
+        return redirect(url_for('welcome'))
+    else:
+        itemname = None
+        image = None
+        itemid = None
+        itemidQuery = "SELECT itemid FROM item;"
+        itemNameQuery = "SELECT itemname FROM item;"
+        imageQuery = "SELECT phfront FROM item;"
+        cursor.execute(itemidQuery)
+        itemid = cursor.fetchall()
+        cursor.execute(itemNameQuery)
+        itemname = cursor.fetchall()
+        cursor.execute(imageQuery)
+        image = cursor.fetchall()
+        for x in image:
+            imagedata = []
+            if x[0] != None:
+                imagedata = functions.getImagedata(x)
+                x = imagedata
 
-    return render_template('home.html', itemid=itemid, itemname=itemname, image=image)
+        return render_template('home.html', itemid=itemid, itemname=itemname, image=image)
 
 #rendering registration page
 @app.route('/register')
@@ -191,8 +194,11 @@ def register():
 # renders addItem page
 @app.route('/addItem')
 def add():
-    error = request.args.get('error')
-    return render_template('addItem.html', error=error)
+    if functions.isLoggedIn(session.get('user')) is False:
+        return redirect(url_for('welcome'))
+    else:
+        error = request.args.get('error')
+        return render_template('addItem.html', error=error)
 
 # Add item to the database, after button is clicked on add item page.
 @app.route('/postaddItem', methods=['POST'])
@@ -304,8 +310,11 @@ def addItem():
 # renders addItem page
 @app.route('/help')
 def help():
-    error = request.args.get('error')
-    return render_template('help.html', error=error)
+    if functions.isLoggedIn(session.get('user')) is False:
+        return redirect(url_for('welcome'))
+    else:
+        error = request.args.get('error')
+        return render_template('help.html', error=error)
 
 @app.route('/logout')
 def logout():
@@ -314,90 +323,93 @@ def logout():
 
 @app.route('/setReservation/<item_id>', methods=["POST", "GET"])
 def reserveItem(item_id):
-    # print ("pe", passed_error)
-    error = None
-    # passed_error = None
-    # if type(item_id) == list:
-    #     itemid = item_id[0]
-    #     passed_error = item_id[1]
-    # else: 
-    #     itemid = item_id
-
-    # print(error)
-    try:
-        # checks to see if the reservation statuses need to be updated.
-        changedday, day = functions.updateLastAccess(cursor, conn)
-
-        # changedpast: a bool value to see if the number of past reservations 
-        # per user needs to be checked because a status has been changed to past
-        changedpast = False
-
-        # if the date is different, we need to update the statuses, 
-        if changedday:
-            changedpast = functions.updateReservationStatus(cursor, conn, day)
-        # print (changedpast)
-
-        # if changedpast return true, this means that we need to check to see that there are only 3 past reservations per user.
-        if changedpast:
-            functions.checkNumOfPastReservations(cursor, conn)
-
-        #At this point, all updates have been done for the database.
-
-        #returns all reservations with that item id
-        cursor.execute("SELECT * from reservation where itemid='{0}' and (status='current' or status='future');".format(item_id))
-
-        all_reservations_this_item = cursor.fetchall()
-        index = 0
-        for c in all_reservations_this_item:
-            all_reservations_this_item[index] = c[:2] + (c[2].strftime('%Y-%m-%d'), c[3].strftime('%Y-%m-%d')) + c[4:]
-            index += 1
-        ## Convert the list of tuples to JSON so it can be readable in JavaScript.
-        ## [('a','b'),('d','c')] -> [['a','b],['c','d']]
-        ## default=str turns datetime.date into str, because it is not JSON serializable
-        all_reservations_this_item = json.dumps(all_reservations_this_item, default=str)
-
-        ## The datepicker bootstrap automatically chooses today as start and end date in setReservation page.
-        ## Ensure the default start and end dates are valid. They are should be the closest available date to today.
-        cursor.execute("SELECT * from reservation where itemid='{0}' and status='current';".format(item_id))
-        # only get the start, and end. This list of tuples should have length of 1.
-        current_item_reservation = [ (x[2],x[3]) for x in cursor.fetchall()]
-
-        cursor.execute("SELECT * from reservation where itemid='{0}' and status='future';".format(item_id))
-        # only get the start, and end.
-        future_item_reservations = [ (x[2],x[3]) for x in cursor.fetchall()]
-        # sort the list by the ascending start date.
-        future_item_reservations = sorted(future_item_reservations)
-
-        # today's date. Type: datetime.date ; Format: '%Y-%m-%d'
-        today = datetime.datetime.now()
-        today = today.date()
-
-        default_start = today
-        # if there is the current reservation. Set default_start to a day after enddate of current reservation.
-        if len(current_item_reservation) > 0:
-            default_start = current_item_reservation[0][1] + datetime.timedelta(days=1)
-
-        # if there are any future reservations for that item
-        if len(future_item_reservations) > 0:
-            for c in future_item_reservations:
-                # if startdate of the reservation is same date with default_start, set default_start to a day after enddate of reservation.
-                if c[0] == default_start:
-                    default_start = c[1] + datetime.timedelta(days=1)
-                # break the loop at the moment when startdate of the reservation is not as same as default_start.
-                else:
-                    break
-
-        default_start = default_start.strftime('%m/%d/%Y')
-
-    except Exception as e:
-        cursor.execute("rollback;")
-        print(e)
-        # if passed_error:
-            # error = passed_error
+    if functions.isLoggedIn(session.get('user')) is False:
+        return redirect(url_for('welcome'))
+    else:
+        # print ("pe", passed_error)
+        error = None
+        # passed_error = None
+        # if type(item_id) == list:
+        #     itemid = item_id[0]
+        #     passed_error = item_id[1]
         # else: 
-        error = "Cannot retrieve reservation information for item {0}.".format(itemid)
-        return render_template('setReservation.html', itemid=item_id, error=error)
-    return render_template('setReservation.html', itemid=item_id, all_reservations=all_reservations_this_item, default_start=default_start, error=error)
+        #     itemid = item_id
+
+        # print(error)
+        try:
+            # checks to see if the reservation statuses need to be updated.
+            changedday, day = functions.updateLastAccess(cursor, conn)
+
+            # changedpast: a bool value to see if the number of past reservations 
+            # per user needs to be checked because a status has been changed to past
+            changedpast = False
+
+            # if the date is different, we need to update the statuses, 
+            if changedday:
+                changedpast = functions.updateReservationStatus(cursor, conn, day)
+            # print (changedpast)
+
+            # if changedpast return true, this means that we need to check to see that there are only 3 past reservations per user.
+            if changedpast:
+                functions.checkNumOfPastReservations(cursor, conn)
+
+            #At this point, all updates have been done for the database.
+
+            #returns all reservations with that item id
+            cursor.execute("SELECT * from reservation where itemid='{0}' and (status='current' or status='future');".format(item_id))
+
+            all_reservations_this_item = cursor.fetchall()
+            index = 0
+            for c in all_reservations_this_item:
+                all_reservations_this_item[index] = c[:2] + (c[2].strftime('%Y-%m-%d'), c[3].strftime('%Y-%m-%d')) + c[4:]
+                index += 1
+            ## Convert the list of tuples to JSON so it can be readable in JavaScript.
+            ## [('a','b'),('d','c')] -> [['a','b],['c','d']]
+            ## default=str turns datetime.date into str, because it is not JSON serializable
+            all_reservations_this_item = json.dumps(all_reservations_this_item, default=str)
+
+            ## The datepicker bootstrap automatically chooses today as start and end date in setReservation page.
+            ## Ensure the default start and end dates are valid. They are should be the closest available date to today.
+            cursor.execute("SELECT * from reservation where itemid='{0}' and status='current';".format(item_id))
+            # only get the start, and end. This list of tuples should have length of 1.
+            current_item_reservation = [ (x[2],x[3]) for x in cursor.fetchall()]
+
+            cursor.execute("SELECT * from reservation where itemid='{0}' and status='future';".format(item_id))
+            # only get the start, and end.
+            future_item_reservations = [ (x[2],x[3]) for x in cursor.fetchall()]
+            # sort the list by the ascending start date.
+            future_item_reservations = sorted(future_item_reservations)
+
+            # today's date. Type: datetime.date ; Format: '%Y-%m-%d'
+            today = datetime.datetime.now()
+            today = today.date()
+
+            default_start = today
+            # if there is the current reservation. Set default_start to a day after enddate of current reservation.
+            if len(current_item_reservation) > 0:
+                default_start = current_item_reservation[0][1] + datetime.timedelta(days=1)
+
+            # if there are any future reservations for that item
+            if len(future_item_reservations) > 0:
+                for c in future_item_reservations:
+                    # if startdate of the reservation is same date with default_start, set default_start to a day after enddate of reservation.
+                    if c[0] == default_start:
+                        default_start = c[1] + datetime.timedelta(days=1)
+                    # break the loop at the moment when startdate of the reservation is not as same as default_start.
+                    else:
+                        break
+
+            default_start = default_start.strftime('%m/%d/%Y')
+
+        except Exception as e:
+            cursor.execute("rollback;")
+            print(e)
+            # if passed_error:
+                # error = passed_error
+            # else: 
+            error = "Cannot retrieve reservation information for item {0}.".format(itemid)
+            return render_template('setReservation.html', itemid=item_id, error=error)
+        return render_template('setReservation.html', itemid=item_id, all_reservations=all_reservations_this_item, default_start=default_start, error=error)
 
 
 @app.route('/postSetReservation/<item_id>', methods=["POST", "GET"])
@@ -496,36 +508,39 @@ def editReservation(data):
 
 @app.route('/editFolders/<item_id>', methods=["POST", "GET"])
 def toEditProdFolders(item_id):
-    item_id = item_id
-    error = None
-    itemname = None
-    foldername = None
+    if functions.isLoggedIn(session.get('user')) is False:
+        return redirect(url_for('welcome'))
+    else:
+        item_id = item_id
+        error = None
+        itemname = None
+        foldername = None
 
-    folderNameQuery = "SELECT foldername FROM folder where pendingdelete=false;"
-    cursor.execute(folderNameQuery)
-    foldername = cursor.fetchall()
-    query = "SELECT foldername FROM folder where pendingdelete=true;"
-    cursor.execute(query)
-    # code bellow converts the tuple into a simple arraylist in order to pass the data directly into JS.
-    # ex: [('Folder 1',),('Folder 2',)] -> ['Folder 1', 'Folder 2']
-    deletedfolders = [ x[0] for x in cursor.fetchall()]
-    error = request.args.get('error')
+        folderNameQuery = "SELECT foldername FROM folder where pendingdelete=false;"
+        cursor.execute(folderNameQuery)
+        foldername = cursor.fetchall()
+        query = "SELECT foldername FROM folder where pendingdelete=true;"
+        cursor.execute(query)
+        # code bellow converts the tuple into a simple arraylist in order to pass the data directly into JS.
+        # ex: [('Folder 1',),('Folder 2',)] -> ['Folder 1', 'Folder 2']
+        deletedfolders = [ x[0] for x in cursor.fetchall()]
+        error = request.args.get('error')
 
-    
-    #query = "SELECT * FROM item WHERE itemid='{0}';".format(item_id)
-    try: 
-        cursor.execute("SELECT itemname FROM item WHERE itemid='{0}';".format(item_id))
-        itemname = cursor.fetchone()
+        
+        #query = "SELECT * FROM item WHERE itemid='{0}';".format(item_id)
+        try: 
+            cursor.execute("SELECT itemname FROM item WHERE itemid='{0}';".format(item_id))
+            itemname = cursor.fetchone()
 
-    except Exception as e: 
-        print (e)
-        # cursor.execute("rollback;")
+        except Exception as e: 
+            print (e)
+            # cursor.execute("rollback;")
 
-        # ##If item does not exist etc
-        # error = 'Item information cannot be retrieved'
-        # return redirect(url_for('loggedin', error=error))
+            # ##If item does not exist etc
+            # error = 'Item information cannot be retrieved'
+            # return redirect(url_for('loggedin', error=error))
 
-    return render_template('editProdFolders.html', itemid=item_id, itemname=itemname, foldername=foldername, deletedfolders=deletedfolders, error=error)
+        return render_template('editProdFolders.html', itemid=item_id, itemname=itemname, foldername=foldername, deletedfolders=deletedfolders, error=error)
 
 @app.route('/posteditFolders/<item_id>', methods=['POST'])
 def editProdFolders(item_id):
@@ -536,21 +551,24 @@ def editProdFolders(item_id):
 # render Production Folders page with all folders in the database
 @app.route('/productions', methods=['POST', 'GET'])
 def prodFolders():
-    foldernames = None
-    folderNameQuery = "SELECT foldername FROM folder where pendingdelete=false;"
-    cursor.execute(folderNameQuery)
-    foldernames = cursor.fetchall()
+    if functions.isLoggedIn(session.get('user')) is False:
+        return redirect(url_for('welcome'))
+    else:
+        foldernames = None
+        folderNameQuery = "SELECT foldername FROM folder where pendingdelete=false;"
+        cursor.execute(folderNameQuery)
+        foldernames = cursor.fetchall()
 
-    query = "SELECT foldername FROM folder where pendingdelete=true;"
-    cursor.execute(query)
-    # code bellow converts the tuple into a simple arraylist in order to pass the data directly into JS.
-    # ex: [('Folder 1',),('Folder 2',)] -> ['Folder 1', 'Folder 2']
-    deletedfolders = [ x[0] for x in cursor.fetchall()]
+        query = "SELECT foldername FROM folder where pendingdelete=true;"
+        cursor.execute(query)
+        # code bellow converts the tuple into a simple arraylist in order to pass the data directly into JS.
+        # ex: [('Folder 1',),('Folder 2',)] -> ['Folder 1', 'Folder 2']
+        deletedfolders = [ x[0] for x in cursor.fetchall()]
 
-    error = request.args.get('error')
-    # print (foldernames)
+        error = request.args.get('error')
+        # print (foldernames)
 
-    return render_template('prodFolders.html', foldernames=foldernames, deletedfolders=deletedfolders, error=error)
+        return render_template('prodFolders.html', foldernames=foldernames, deletedfolders=deletedfolders, error=error)
 
 # Update the name of production folder
 @app.route('/postrenameFolder', methods=['POST'])
@@ -574,106 +592,112 @@ def renameFolder():
 
 @app.route('/productions/<foldername>', methods=['POST', 'GET'])
 def folderContents(foldername):
-    error = request.args.get('error')
-    foldername = foldername
-    # try:
-    # except Exception as e:
-    #     cursor.execute("rollback;")
+    if functions.isLoggedIn(session.get('user')) is False:
+        return redirect(url_for('welcome'))
+    else:
+        error = request.args.get('error')
+        foldername = foldername
+        # try:
+        # except Exception as e:
+        #     cursor.execute("rollback;")
 
-    #     ##If folder does not exist etc
-    #     error = 'Folder information cannot be retrieved'
-    #     return redirect(url_for('prodFolders', error=error))
-    # # Refresh the Production Folders page with the updated name of the folder
-    return render_template('prodFolderContents.html', error=error, foldername = foldername)
+        #     ##If folder does not exist etc
+        #     error = 'Folder information cannot be retrieved'
+        #     return redirect(url_for('prodFolders', error=error))
+        # # Refresh the Production Folders page with the updated name of the folder
+        return render_template('prodFolderContents.html', error=error, foldername = foldername)
 
 # render My Reservations page with all reservations in the database for that user
 @app.route('/reservations', methods=['POST', 'GET'])
 def reservations():
-    try:
+    if functions.isLoggedIn(session.get('user')) is False:
+        return redirect(url_for('welcome'))
+    else:
+        try:
 
-        # checks to see if the reservation statuses need to be updated.
-        changedday, day = functions.updateLastAccess(cursor, conn)
+            # checks to see if the reservation statuses need to be updated.
+            changedday, day = functions.updateLastAccess(cursor, conn)
 
-        # changedpast: a bool value to see if the number of past reservations 
-        # per user needs to be checked because a status has been changed to past
-        changedpast = False
+            # changedpast: a bool value to see if the number of past reservations 
+            # per user needs to be checked because a status has been changed to past
+            changedpast = False
 
-        # if the date is different, we need to update the statuses, 
-        if changedday:
-            changedpast = functions.updateReservationStatus(cursor, conn, day)
-        # print (changedpast)
+            # if the date is different, we need to update the statuses, 
+            if changedday:
+                changedpast = functions.updateReservationStatus(cursor, conn, day)
+            # print (changedpast)
 
-        # if changedpast return true, this means that we need to check to see that there are only 3 past reservations per user.
-        if changedpast:
-            functions.checkNumOfPastReservations(cursor, conn)
+            # if changedpast return true, this means that we need to check to see that there are only 3 past reservations per user.
+            if changedpast:
+                functions.checkNumOfPastReservations(cursor, conn)
 
-        #At this point, all updates have been done for the database.
+            #At this point, all updates have been done for the database.
 
-        #get the email of the user
-        email = session.get('user')
+            #get the email of the user
+            email = session.get('user')
 
-        # query for all past reservations for a user
-        # query = "SELECT * from reservation where email='{0}' and status='past';".format(email)
-        query = "SELECT email, reservation.itemid, startdate, enddate, status, itemname FROM reservation, item WHERE email='{0}' and item.itemid=reservation.itemid and status='past';".format(email)
-        cursor.execute(query)
-        past_user_reservations = cursor.fetchall()
-        index = 0
-        for c in past_user_reservations:
-            past_user_reservations[index] = c[:2] + (c[2].strftime('%m/%d/%Y'), c[3].strftime('%m/%d/%Y')) + c[4:]
-            index += 1
-
-            # print c
-
-        # query for all current reservations for a user
-        query = "SELECT email, reservation.itemid, startdate, enddate, status, itemname FROM reservation, item WHERE email='{0}' and item.itemid=reservation.itemid and status='current';".format(email)
-        cursor.execute(query)
-        current_user_reservations = cursor.fetchall()
-        index = 0
-        for c in current_user_reservations:
-            current_user_reservations[index] = c[:2] + (c[2].strftime('%m/%d/%Y'), c[3].strftime('%m/%d/%Y')) + c[4:]
-            index += 1
-
-        # query for all future reservations for a user
-        query = "SELECT email, reservation.itemid, startdate, enddate, status, itemname FROM reservation, item WHERE email='{0}' and item.itemid=reservation.itemid and status='future';".format(email)
-        cursor.execute(query)
-        future_user_reservations = cursor.fetchall()
-        index = 0
-        editable_reservations = []
-        for c in future_user_reservations:
-            future_user_reservations[index] = c[:2] + (c[2].strftime('%m/%d/%Y'), c[3].strftime('%m/%d/%Y')) + c[4:]
-            index += 1
-            if c[1] not in editable_reservations:
-                editable_reservations.append(c[1])
-
-        #returns all reservations as a whole (needed to know item availability)
-        #but only contains items in user has reserved, excluding the past reservations
-        query = "SELECT email, reservation.itemid, startdate, enddate, status, itemname FROM reservation, item WHERE  item.itemid=reservation.itemid and (status='current' or status='future');".format(email)
-        cursor.execute(query)
-        all_reservations = cursor.fetchall()
-        index = 0
-        for c in all_reservations:
-            if c[1] in editable_reservations:
-                all_reservations[index] = c[:2] + (c[2].strftime('%Y-%m-%d'), c[3].strftime('%Y-%m-%d')) + c[4:]
+            # query for all past reservations for a user
+            # query = "SELECT * from reservation where email='{0}' and status='past';".format(email)
+            query = "SELECT email, reservation.itemid, startdate, enddate, status, itemname FROM reservation, item WHERE email='{0}' and item.itemid=reservation.itemid and status='past';".format(email)
+            cursor.execute(query)
+            past_user_reservations = cursor.fetchall()
+            index = 0
+            for c in past_user_reservations:
+                past_user_reservations[index] = c[:2] + (c[2].strftime('%m/%d/%Y'), c[3].strftime('%m/%d/%Y')) + c[4:]
                 index += 1
-            else:
-                all_reservations.pop(index)
 
-        ## Convert the list of tuples to JSON so it can be readable in JavaScript.
-        ## [('a','b'),('d','c')] -> [['a','b],['c','d']]
-        ## default=str turns datetime.date into str, because it is not JSON serializable
-        all_reservations = json.dumps(all_reservations, default=str)
+                # print c
 
-    except Exception as e:
-        cursor.execute("rollback;")
-        print("Error: ", e)
-        error = "Cannot find your reservations"
-        return render_template('reservations.html', error=error)
+            # query for all current reservations for a user
+            query = "SELECT email, reservation.itemid, startdate, enddate, status, itemname FROM reservation, item WHERE email='{0}' and item.itemid=reservation.itemid and status='current';".format(email)
+            cursor.execute(query)
+            current_user_reservations = cursor.fetchall()
+            index = 0
+            for c in current_user_reservations:
+                current_user_reservations[index] = c[:2] + (c[2].strftime('%m/%d/%Y'), c[3].strftime('%m/%d/%Y')) + c[4:]
+                index += 1
 
-    # allreservations gives all reservations in the system
-    # past_user_reservations gives the specific user's past reservations (should only have last 3)
-    # current gives the specific user's current reservations 
-    # future gives the specific user's future reservations  
-    return render_template('reservations.html', past_user_reservations=past_user_reservations,  current_user_reservations=current_user_reservations,  future_user_reservations=future_user_reservations, all_reservations=all_reservations)
+            # query for all future reservations for a user
+            query = "SELECT email, reservation.itemid, startdate, enddate, status, itemname FROM reservation, item WHERE email='{0}' and item.itemid=reservation.itemid and status='future';".format(email)
+            cursor.execute(query)
+            future_user_reservations = cursor.fetchall()
+            index = 0
+            editable_reservations = []
+            for c in future_user_reservations:
+                future_user_reservations[index] = c[:2] + (c[2].strftime('%m/%d/%Y'), c[3].strftime('%m/%d/%Y')) + c[4:]
+                index += 1
+                if c[1] not in editable_reservations:
+                    editable_reservations.append(c[1])
+
+            #returns all reservations as a whole (needed to know item availability)
+            #but only contains items in user has reserved, excluding the past reservations
+            query = "SELECT email, reservation.itemid, startdate, enddate, status, itemname FROM reservation, item WHERE  item.itemid=reservation.itemid and (status='current' or status='future');".format(email)
+            cursor.execute(query)
+            all_reservations = cursor.fetchall()
+            index = 0
+            for c in all_reservations:
+                if c[1] in editable_reservations:
+                    all_reservations[index] = c[:2] + (c[2].strftime('%Y-%m-%d'), c[3].strftime('%Y-%m-%d')) + c[4:]
+                    index += 1
+                else:
+                    all_reservations.pop(index)
+
+            ## Convert the list of tuples to JSON so it can be readable in JavaScript.
+            ## [('a','b'),('d','c')] -> [['a','b],['c','d']]
+            ## default=str turns datetime.date into str, because it is not JSON serializable
+            all_reservations = json.dumps(all_reservations, default=str)
+
+        except Exception as e:
+            cursor.execute("rollback;")
+            print("Error: ", e)
+            error = "Cannot find your reservations"
+            return render_template('reservations.html', error=error)
+
+        # allreservations gives all reservations in the system
+        # past_user_reservations gives the specific user's past reservations (should only have last 3)
+        # current gives the specific user's current reservations 
+        # future gives the specific user's future reservations  
+        return render_template('reservations.html', past_user_reservations=past_user_reservations,  current_user_reservations=current_user_reservations,  future_user_reservations=future_user_reservations, all_reservations=all_reservations)
 
 
 @app.route('/deleteItem/<item_id>', methods=['POST'])
@@ -773,50 +797,53 @@ def getItemInfo(item_id):
 # renders editItem page
 @app.route('/editItem/<item_id>', methods=["POST", "GET"])
 def edit(item_id):
-    # declare all variables
-    error = request.args.get('error')
-    item_id = item_id
-    item_name = None
-    ph_front = None
-    ph_back = None
-    ph_top = None
-    ph_bottom = None
-    ph_right = None
-    ph_left = None
-    description = None
-    pending_delete = None
-    sex = None
-    condition = None
-    timep = None
-    culture = None
-    color = None
-    size = None
-    item_type = None
-    i_type = None
-    is_available = None
-    
-    try: 
-        # calls functions.py method
-        item_name, ph_front, ph_back, ph_top, ph_bottom, ph_right, ph_left, description, pending_delete, sex, condition, timep, culture, color, size, item_type, i_type, is_available = functions.getInfo(item_id, cursor)
+    if functions.isLoggedIn(session.get('user')) is False:
+        return redirect(url_for('welcome'))
+    else:
+        # declare all variables
+        error = request.args.get('error')
+        item_id = item_id
+        item_name = None
+        ph_front = None
+        ph_back = None
+        ph_top = None
+        ph_bottom = None
+        ph_right = None
+        ph_left = None
+        description = None
+        pending_delete = None
+        sex = None
+        condition = None
+        timep = None
+        culture = None
+        color = None
+        size = None
+        item_type = None
+        i_type = None
+        is_available = None
+        
+        try: 
+            # calls functions.py method
+            item_name, ph_front, ph_back, ph_top, ph_bottom, ph_right, ph_left, description, pending_delete, sex, condition, timep, culture, color, size, item_type, i_type, is_available = functions.getInfo(item_id, cursor)
 
-        ph_front_data = functions.getImagedata(ph_front)
-        ph_back_data = functions.getImagedata(ph_back)
-        ph_top_data = functions.getImagedata(ph_top)
-        ph_bottom_data = functions.getImagedata(ph_bottom)
-        ph_right_data = functions.getImagedata(ph_right)
-        ph_left_data = functions.getImagedata(ph_left)
+            ph_front_data = functions.getImagedata(ph_front)
+            ph_back_data = functions.getImagedata(ph_back)
+            ph_top_data = functions.getImagedata(ph_top)
+            ph_bottom_data = functions.getImagedata(ph_bottom)
+            ph_right_data = functions.getImagedata(ph_right)
+            ph_left_data = functions.getImagedata(ph_left)
 
-    except Exception as e: 
-        cursor.execute("rollback;")
-        print (e)
+        except Exception as e: 
+            cursor.execute("rollback;")
+            print (e)
 
-        ##If item does not exist etc
-        error = 'Item information cannot be retrieved for edit'
-        return redirect(url_for('loggedin', error=error))
+            ##If item does not exist etc
+            error = 'Item information cannot be retrieved for edit'
+            return redirect(url_for('loggedin', error=error))
 
-    ##culture, color, timeperiod are arrays/tuples
-    ## Passes in  lists for everything except itemname, and description
-    return render_template('editItem.html', itemname=item_name[0], itemid=item_id, phfront=ph_front_data, phback=ph_back_data, phtop=ph_top_data, phbottom=ph_bottom_data, phright=ph_right_data, phleft=ph_left_data, description=description[0], delete=pending_delete, sex=sex, condition=condition, timeperiod=timep, culture=culture, color=color, size=size, itemtype=item_type, itype=i_type, error=error)
+        ##culture, color, timeperiod are arrays/tuples
+        ## Passes in  lists for everything except itemname, and description
+        return render_template('editItem.html', itemname=item_name[0], itemid=item_id, phfront=ph_front_data, phback=ph_back_data, phtop=ph_top_data, phbottom=ph_bottom_data, phright=ph_right_data, phleft=ph_left_data, description=description[0], delete=pending_delete, sex=sex, condition=condition, timeperiod=timep, culture=culture, color=color, size=size, itemtype=item_type, itype=i_type, error=error)
 
 @app.route('/posteditItem/<item_id>', methods=["POST"])
 def editItem(item_id):
