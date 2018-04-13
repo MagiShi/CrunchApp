@@ -21,6 +21,7 @@ import datetime
 import ast
 
 app = Flask(__name__)
+
 app.secret_key = os.environ['SECRET_KEY']
 
 #configuring upload_folder variable
@@ -108,9 +109,6 @@ def loggedin():
             x = imagedata
 
     return render_template('home.html', itemid=itemid, itemname=itemname, image=image)
-def guest():
-    # should look different than a registered user (not able to add, delete, etc)
-    return render_template('home.html')
 
 #rendering registration page
 @app.route('/register')
