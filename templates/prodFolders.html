@@ -33,7 +33,7 @@
                         <div class="form-group">
                             <ul class="list-group">
                                 {% for foldername in foldernames %}
-                                <li id="folder_{{foldername[0]}}" class="list-group-item list-group-item-action flex-column">
+                                <li id="folder_{{foldername[0]}}" class="folder list-group-item list-group-item-action flex-column">
                                     <div class="d-flex w-100 justify-content-between" style="text-align:left;">
                                         <p>{{foldername[0]}}</p>
                                         <div style="min-width:51px; margin-left:13px;">
@@ -49,11 +49,13 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button onclick="toggleAccordion(this)">View</button>
+                                    <button onclick="toggleAccordion(this)"><i class="fas fa-angle-down"></i></button>
                                     <div class="folder-contents row">
-                                        <div class="col-md-6 col-lg-3 item" onclick="window.open('item/b2');" >
-                                            <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/No_image_available_600_x_450.svg">
-                                            <p>item name</p>
+                                        <div class="col-6 col-md-4" onclick="window.open('item/b2');" >
+                                            <div class="item">
+                                                <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/No_image_available_600_x_450.svg">
+                                                <p>item name</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </li>

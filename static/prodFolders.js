@@ -1,5 +1,6 @@
 function toggleAccordion(clickedButton) {
-    var panel = clickedButton.nextElementSibling;
+    clickedButton.innerHTML = "heck";
+    var panel = clickedButton.nextSibling;
     if (panel.style.maxHeight){
       panel.style.maxHeight = null;
     } else {

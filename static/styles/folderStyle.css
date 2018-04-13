@@ -5,15 +5,36 @@
     transition: max-height 0.1s;
 }
 
+.folder-contents > div {
+    width: 100%;
+    padding: 25px 15px;
+    box-sizing: border-box;
+}
+
 .folder-contents .item {
     width: 100%;
-    border: 1px solid grey;
-    border-radius 3px;
+    border: 1px solid #d3d3d3;
+    border-radius: 3px;
     background-color: white;
     cursor: pointer;
+    padding: 10px 20px;
 }
 .folder-contents .item img {
     width: 100%;
+}
+
+.folder > button {
+    padding: 5px 15px;
+    color: white;
+    background-color: #0275d8;
+    border-radius: 4px;
+    border-style: none;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: -40px;
+}
+.folder > button:hover {
+    background-color: #FDDA24;
 }
 
 #delete-button {
@@ -51,10 +72,6 @@
 
 .folder-name {
     color: black;
-}
-.folder-name:hover {
-    text-decoration: none;
-    color: #0275d8;
 }
 
 .icon-button {
