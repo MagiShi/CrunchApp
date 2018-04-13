@@ -101,12 +101,7 @@ def loggedin():
     cursor.execute(itemNameQuery)
     itemname = cursor.fetchall()
     cursor.execute(imageQuery)
-    image = cursor.fetchall()
-    for x in image:
-        imagedata = []
-        if x[0] != None:
-            imagedata = functions.getImagedata(x)
-            x = imagedata
+    
 
     return render_template('home.html', itemid=itemid, itemname=itemname, image=image)
 
