@@ -930,7 +930,7 @@ def editItem(item_id):
         cursor.execute("rollback;")
 
         ##If item creation fails
-        error = 'Item name and description cannot be changed. Photos were not changed either'
+        error = 'Item name and description cannot be changed. Please make sure that the name is unique. Photos were not updated.'
         return redirect(url_for('edit', error=error, item_id=item_id))
 
     # Now insert images for the item, which is already in the database.
