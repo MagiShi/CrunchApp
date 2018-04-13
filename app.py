@@ -106,7 +106,7 @@ def loggedin():
         imagedata = []
         if x[0] != None:
             imagedata = functions.getImagedata(x)
-            x = imagedata
+            x[0] = imagedata
 
     return render_template('home.html', itemid=itemid, itemname=itemname, image=image)
 
