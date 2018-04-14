@@ -77,7 +77,31 @@
                             {% if phtop %}
                                 <div class="carousel-item">
                                     {% for i in phtop %}
-                                        <img id="item-preview" src="data:image/jpeg;base64, {{i}}" atl="Back"/>
+                                        <img id="item-preview" src="data:image/jpeg;base64, {{i}}" atl="Top"/>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            {% if phbottom %}
+                                <div class="carousel-item">
+                                    {% for i in phbottom %}
+                                        <img id="item-preview" src="data:image/jpeg;base64, {{i}}" atl="Bottom"/>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            {% if phright %}
+                                <div class="carousel-item">
+                                    {% for i in phright %}
+                                        <img id="item-preview" src="data:image/jpeg;base64, {{i}}" atl="Right"/>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            {% if phleft %}
+                                <div class="carousel-item">
+                                    {% for i in phleft %}
+                                        <img id="item-preview" src="data:image/jpeg;base64, {{i}}" atl="Left"/>
                                     {% endfor %}
                                 </div>
                             {% endif %}
