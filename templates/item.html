@@ -34,14 +34,14 @@
                 <div class="col-md-6">
                     <div id="photo-carousel" class="carousel slide item-image row" data-ride="carousel">
                         <!-- Indicators -->
+                        {% if phcount > 1 %}
                         <ol class="carousel-indicators">
-                        {% if phcount > 0 %}
-                                <li data-target="#photo-carousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#photo-carousel" data-slide-to="0" class="active"></li>
                             {% for i in (1, phcount) %}
                                 <li data-target="#photo-carousel" data-slide-to="{{i}}"></li>
                             {% endfor %}
-                        {% endif %}
                         </ol>
+                        {% endif %}
                         <!-- Left control -->
                         {% if phcount > 1 %}
                         <a class="carousel-control-prev col-1" href="#photo-carousel" role="button" data-slide="prev">
@@ -58,7 +58,7 @@
                                 </div>
                             {% endif %}
 
-                            {% if phtop %}
+                            {% if phfront %}
                                 <div class="carousel-item">
                                     {% for i in phfront %}
                                         <img id="item-preview" src="data:image/jpeg;base64, {{i}}" atl="Front"/>
@@ -210,6 +210,12 @@
         $('.carousel').carousel({
             interval: 0
         });
+
+        if ({{phcount}} > 0) {
+            $('.carousel-inner div:first-child').addClass('active');
+        }
+
+        console.log('{{phcount}}');
     });
 
     function append_db_format_array(array_string, characteristic_id) {
