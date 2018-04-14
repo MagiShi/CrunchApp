@@ -510,8 +510,6 @@ def editReservation(data):
         error = "Cannot update date"
         return redirect(url_for('reservations', error=error))
     return redirect(url_for('reservations', error=error))
- 
-
 
 @app.route('/editFolders/<item_id>', methods=["POST", "GET"])
 def toEditProdFolders(item_id):
@@ -582,6 +580,7 @@ def prodFolders():
 def renameFolder():
     # get the folder new name from the user's input
     folderNewName = request.form['foldername']
+
     # get the folder id from the value of 'Save' button
     folderCurrentname = request.form['saveNameButton']
     try:
@@ -1100,19 +1099,30 @@ def filterItems():
 @app.route('/addFolder', methods=["POST"])
 def addFolder():
     foldername = request.form['foldername']
-    try: 
-        query = "INSERT into folder VALUES ('{0}', false);".format(foldername)
-        cursor.execute(query)
-        conn.commit()
 
-        # functions.createNewFolder(foldername, cursor, conn)
-        error = "Folder '{0}' added".format(foldername) #Temp message?
-    except Exception as e: 
-        cursor.execute("rollback;")
+    # Check to see if 8 folders (not pending deletion) already exist
+    numFoldersQuery = "SELECT * from folder where pendingdelete=false;"
+    cursor.execute(numFoldersQuery);
+    validFolders = cursor.fetchall();
 
-        ##If folder should not have passed checks (should not happen)
-        error = 'Folder cannot be created'
-        return redirect(url_for('addFolderButton', error=error))
+    if (len(validFolders) >= 8):
+        # there is no room to add another folder
+        error = 'Only 8 production folders can exist at a time.'
+
+    if error == None:  
+        try: 
+            query = "INSERT into folder VALUES ('{0}', false);".format(foldername)
+            cursor.execute(query)
+            conn.commit()
+
+            # functions.createNewFolder(foldername, cursor, conn)
+            error = "Folder '{0}' added".format(foldername) #Temp message?
+        except Exception as e: 
+            cursor.execute("rollback;")
+
+            ##If folder should not have passed checks (should not happen)
+            error = 'Folder cannot be created'
+            return redirect(url_for('addFolderButton', error=error))
 
     item_id = request.form.get('addFolderButton')
 
@@ -1127,6 +1137,8 @@ def addFolder():
 def deleteFolder():
     foldername = request.form['foldername']
     # print (request.form)
+    print("foldername")
+    print(foldername)
     try: 
         query = "UPDATE folder set pendingdelete=true where foldername='{0}';".format(foldername)
         cursor.execute(query)
