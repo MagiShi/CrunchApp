@@ -207,9 +207,18 @@ def addItem():
 
         item_name = request.form.get('itemname')
 
-        # Check this before continuing through everything. All items MUST have an id and name
+        # Check this before continuing through everything. All items MUST have a name
         if item_name == '':
             error = 'Item must have a name'
+            return redirect(url_for('add', error=error))
+
+        # Check if itemName already exists
+        itemNameQuery ="SELECT itemname FROM item where itemname='{0}'".format(item_name)
+        cursor.execute(itemNameQuery)
+        itemnames = cursor.fetchall()
+
+        if (itemnames != None):
+            error = 'Another item already exists with that name. See the Help & FAQ menu for more details.'
             return redirect(url_for('add', error=error))
 
         description = request.form.get('description')
@@ -719,92 +728,95 @@ def deleteItemFlag(item_id):
 #pre-loading information for a specific item
 @app.route('/item/<item_id>', methods=['POST', 'GET'])
 def getItemInfo(item_id):
-    # declare all variables
-    error = request.args.get('error')
-    item_id = item_id
-    item_name = None
-    ph_front = None
-    ph_back = None
-    ph_top = None
-    ph_bottom = None
-    ph_right = None
-    ph_left = None
-    description = None
-    pending_delete = None
-    sex = None
-    condition = None
-    timep = None
-    culture = None
-    color = None
-    size = None
-    item_type = None
-    i_type = None
-    is_available = None
+    if functions.isLoggedIn(session.get('user')) is False:
+        return redirect(url_for('welcome'))
+    else:
+        # declare all variables
+        error = request.args.get('error')
+        item_id = item_id
+        item_name = None
+        ph_front = None
+        ph_back = None
+        ph_top = None
+        ph_bottom = None
+        ph_right = None
+        ph_left = None
+        description = None
+        pending_delete = None
+        sex = None
+        condition = None
+        timep = None
+        culture = None
+        color = None
+        size = None
+        item_type = None
+        i_type = None
+        is_available = None
 
-    start_date = None
-    end_date = None
-    email = None
-    is_reserved=False
+        start_date = None
+        end_date = None
+        email = None
+        is_reserved=False
 
-    try: 
-        # calls functions.py method
-        item_name, ph_front, ph_back, ph_top, ph_bottom, ph_right, ph_left, description, pending_delete, sex, condition, timep, culture, color, size, item_type, i_type, is_available = functions.getInfo(item_id, cursor)
+        try: 
+            # calls functions.py method
+            item_name, ph_front, ph_back, ph_top, ph_bottom, ph_right, ph_left, description, pending_delete, sex, condition, timep, culture, color, size, item_type, i_type, is_available = functions.getInfo(item_id, cursor)
 
-        ph_front_data = functions.getImagedata(ph_front)
-        ph_back_data = functions.getImagedata(ph_back)
-        ph_top_data = functions.getImagedata(ph_top)
-        ph_bottom_data = functions.getImagedata(ph_bottom)
-        ph_right_data = functions.getImagedata(ph_right)
-        ph_left_data = functions.getImagedata(ph_left)
+            ph_front_data = functions.getImagedata(ph_front)
+            ph_back_data = functions.getImagedata(ph_back)
+            ph_top_data = functions.getImagedata(ph_top)
+            ph_bottom_data = functions.getImagedata(ph_bottom)
+            ph_right_data = functions.getImagedata(ph_right)
+            ph_left_data = functions.getImagedata(ph_left)
 
-        query = "SELECT startdate, enddate, email FROM reservation WHERE itemid='{0}' and status='current';".format(item_id)
-        cursor.execute(query)
-        # print (query)
-        current_reservation = cursor.fetchone()
-        # print(current_reservation)
-        if current_reservation != None:
+            query = "SELECT startdate, enddate, email FROM reservation WHERE itemid='{0}' and status='current';".format(item_id)
+            cursor.execute(query)
+            # print (query)
+            current_reservation = cursor.fetchone()
+            # print(current_reservation)
+            if current_reservation != None:
 
-            start_date = str(current_reservation[0])
-            end_date = str(current_reservation[1])
-            email = current_reservation[2]
-            is_reserved = True
+                start_date = str(current_reservation[0])
+                end_date = str(current_reservation[1])
+                email = current_reservation[2]
+                is_reserved = True
 
-        na = ('N/A',)
-        if condition[0] is None:
-            condition = na
-        if sex[0] is None:
-            sex = na
-        if size[0] is None:
-            size = na
-        if item_type[0] is None:
-            item_type = na
-        if i_type[0] is None:
-            i_type = na
+            na = ('N/A',)
+            if condition[0] is None:
+                condition = na
+            if sex[0] is None:
+                sex = na
+            if size[0] is None:
+                size = na
+            if item_type[0] is None:
+                item_type = na
+            if i_type[0] is None:
+                i_type = na
 
-        photo_count = 0
-        if ph_front_data:
-            photo_count += 1
-        if ph_back_data:
-            photo_count += 1
-        if ph_top_data:
-            photo_count += 1
-        if ph_bottom_data:
-            photo_count += 1
-        if ph_right_data:
-            photo_count += 1
-        if ph_left_data:
-            photo_count += 1
+            photo_count = 0
+            if ph_front_data:
+                photo_count += 1
+            if ph_back_data:
+                photo_count += 1
+            if ph_top_data:
+                photo_count += 1
+            if ph_bottom_data:
+                photo_count += 1
+            if ph_right_data:
+                photo_count += 1
+            if ph_left_data:
+                photo_count += 1
 
-    except Exception as e: 
-        print (e)
-        cursor.execute("rollback;")
+        except Exception as e: 
+            print (e)
+            cursor.execute("rollback;")
 
-        ##If item does not exist etc
-        error = 'Item information cannot be retrieved'
-        return redirect(url_for('loggedin', error=error))
+            ##If item does not exist etc
+            error = 'Item information cannot be retrieved'
+            return redirect(url_for('loggedin', error=error))
 
-    ##culture, color, timeperiod and all ph_*_data are arrays
-    return render_template('item.html', itemid=item_id, itemname=item_name, phcount=photo_count, phfront=ph_front_data, phback=ph_back_data, phtop=ph_top_data, phbottom=ph_bottom_data, phright=ph_right_data, phleft=ph_left_data, description=description, delete=pending_delete, sex=sex, condition=condition, timeperiod=timep, culture=culture, color=color, size=size, itemtype=item_type, itype=i_type, isavailable=is_available, error=error, r_start=start_date, r_end=end_date, iscurrentlyreserved=is_reserved, email=email)
+        ##culture, color, timeperiod and all ph_*_data are arrays
+        return render_template('item.html', itemid=item_id, itemname=item_name, phcount=photo_count, phfront=ph_front_data, phback=ph_back_data, phtop=ph_top_data, phbottom=ph_bottom_data, phright=ph_right_data, phleft=ph_left_data, description=description, delete=pending_delete, sex=sex, condition=condition, timeperiod=timep, culture=culture, color=color, size=size, itemtype=item_type, itype=i_type, isavailable=is_available, error=error, r_start=start_date, r_end=end_date, iscurrentlyreserved=is_reserved, email=email)
 
 # renders editItem page
 @app.route('/editItem/<item_id>', methods=["POST", "GET"])
@@ -865,10 +877,19 @@ def editItem(item_id):
     item_id = request.form.get('add-item-button')
     item_name = request.form.get('itemname')
 
-    # Check this before continuing through everything. All items MUST have an id and name
+    # Check this before continuing through everything. All items MUST have a name
     if item_name == '':
         error = 'Item must have a name'
         return redirect(url_for('edit', error=error, item_id=item_id))
+
+     # Check if itemName already exists
+    itemNameQuery ="SELECT itemname FROM item where itemname='{0}'".format(item_name)
+    cursor.execute(itemNameQuery)
+    itemnames = cursor.fetchall()
+
+    if (itemnames != None):
+        error = 'Another item already exists with that name. See the Help & FAQ menu for more details.'
+        return redirect(url_for('add', error=error))
 
     description = request.form.get('description')
 
