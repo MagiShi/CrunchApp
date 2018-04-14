@@ -778,6 +778,20 @@ def getItemInfo(item_id):
         if i_type[0] is None:
             i_type = na
 
+        photo_count = 0
+        if ph_front_data:
+            photo_count += 1
+        if ph_back_data:
+            photo_count += 1
+        if ph_top_data:
+            photo_count += 1
+        if ph_bottom_data:
+            photo_count += 1
+        if ph_right_data:
+            photo_count += 1
+        if ph_left_data:
+            photo_count += 1
+
     except Exception as e: 
         print (e)
         cursor.execute("rollback;")
@@ -787,7 +801,7 @@ def getItemInfo(item_id):
         return redirect(url_for('loggedin', error=error))
 
     ##culture, color, timeperiod and all ph_*_data are arrays
-    return render_template('item.html', itemid=item_id, itemname=item_name, phfront=ph_front_data, phback=ph_back_data, phtop=ph_top_data, phbottom=ph_bottom_data, phright=ph_right_data, phleft=ph_left_data, description=description, delete=pending_delete, sex=sex, condition=condition, timeperiod=timep, culture=culture, color=color, size=size, itemtype=item_type, itype=i_type, isavailable=is_available, error=error, r_start=start_date, r_end=end_date, iscurrentlyreserved=is_reserved, email=email)
+    return render_template('item.html', itemid=item_id, itemname=item_name, phcount=photo_count, phfront=ph_front_data, phback=ph_back_data, phtop=ph_top_data, phbottom=ph_bottom_data, phright=ph_right_data, phleft=ph_left_data, description=description, delete=pending_delete, sex=sex, condition=condition, timeperiod=timep, culture=culture, color=color, size=size, itemtype=item_type, itype=i_type, isavailable=is_available, error=error, r_start=start_date, r_end=end_date, iscurrentlyreserved=is_reserved, email=email)
 
 # renders editItem page
 @app.route('/editItem/<item_id>', methods=["POST", "GET"])

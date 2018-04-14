@@ -3,13 +3,13 @@
 }
 @media screen and (max-width: 640px) {
     .item-detail-container {
-        padding: calc(54px + 40px) 15vw !important; /* navbar 3 rows height is 54px */
+        padding: calc(54px + 40px) 15vw !important;
     }
 }
 
 @media screen and (max-width: 575px) {
     .item-detail-container {
-        padding: calc(156px + 20px) 15vw !important;
+        padding: calc(156px + 20px) 15vw !important; /* navbar 3 rows height is 156px */
     }
 }
 
@@ -30,6 +30,7 @@
 
 .item-image img {
     width: 100%;
+    height: 100%;
 }
 
 .prod-folder,
@@ -115,13 +116,23 @@
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
 }
 
-.carousel-control-next,
-.carousel-control-prev {
+.carousel-control-next.col-1,
+.carousel-control-prev.col-1 {
     width: 6%;
+    position: initial;
+    padding: 0;
 }
 
 .carousel-indicators li {
     border-radius: 4px;
     height: 7px;
     max-width: 7px;
+}
+
+.carousel-inner > .carousel-item > img {
+    object-fit: contain;
+}
+
+.carousel-inner.col-10 {
+    padding: 0;
 }
