@@ -35,26 +35,36 @@
                     <div id="photo-carousel" class="carousel slide item-image row" data-ride="carousel">
                         <!-- Indicators -->
                         <ol class="carousel-indicators">
-                        <li data-target="#photo-carousel" data-slide-to="0" class="active"></li>
-                        <li data-target="#photo-carousel" data-slide-to="1"></li>
-                        <li data-target="#photo-carousel" data-slide-to="2"></li>
+                        {% if phcount > 0 %}
+                                <li data-target="#photo-carousel" data-slide-to="0" class="active"></li>
+                            {% for i in (1, phcount) %}
+                                <li data-target="#photo-carousel" data-slide-to="{{i}}"></li>
+                            {% endfor %}
+                        {% endif %}
                         </ol>
                         <!-- Left control -->
+                        {% if phcount > 1 %}
                         <a class="carousel-control-prev col-1" href="#photo-carousel" role="button" data-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span class="sr-only">Previous</span>
                         </a>
+                        {% endif %}
 
                         <!-- Wrapper for slides -->
                         <div class="carousel-inner col-10">
-                            <div class="carousel-item active">
-                                {% for i in phfront %}
-                                    <img id="item-preview" src="data:image/jpeg;base64, {{i}}" atl="Front"/>
-                                {% endfor %}
-                                <!-- <div class="carousel-caption">
-                                    <h8>Front</h8>
-                                </div> -->
-                            </div>
+                            {% if phcount == 0 %}
+                                <div class="carousel-item active">
+                                    <img id="item-preview" src="{{ url_for('static',filename='images/noimage.png') }}" atl="no photo available"/>
+                                </div>
+                            {% endif %}
+
+                            {% if phtop %}
+                                <div class="carousel-item">
+                                    {% for i in phfront %}
+                                        <img id="item-preview" src="data:image/jpeg;base64, {{i}}" atl="Front"/>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
 
                             {% if phback %}
                                 <div class="carousel-item">
@@ -73,10 +83,12 @@
                             {% endif %}
                         </div>
                         <!-- Right control -->
+                        {% if phcount > 1 %}
                         <a class="carousel-control-next col-1" href="#photo-carousel" role="button" data-slide="next">
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="sr-only">Next</span>
                         </a>
+                        {% endif %}
                     </div>
                 </div>
 
