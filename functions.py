@@ -2,6 +2,8 @@ import base64
 from io import BytesIO
 import os
 from werkzeug.utils import secure_filename
+import random
+import string
 
 ##For Item creation and edit
 
@@ -212,3 +214,20 @@ def isLoggedIn(session):
         return False
     else:
         return True
+
+def generate_barcode(conn, cursor):
+    new_id = ''.join(random.choices(string.ascii_letters + string.digits, k=5))
+    try:
+        query = "SELECT itemid from item where itemid='{0}';".format(new_id)
+        cursor.execute(query)
+        exists = cursor.fetchone()
+        print ("exists", exists)
+        if exists is not None:
+            return generate_barcode(conn, cursor)
+
+    except Exception as e:
+        print (e)
+        cursor.execute("rollback;")
+        new_id = generate_barcode(conn, cursor)
+
+    return new_id

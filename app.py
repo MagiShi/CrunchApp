@@ -201,12 +201,15 @@ def addItem():
     if request.form.get("add-item-button"):
 
         #initialize all values from the html form here (except photos)
-        item_id = request.form.get('barcode')
+        # item_id = request.form.get('barcode')
+        item_id = functions.generate_barcode(conn, cursor)
+        # print (item_id)
+
         item_name = request.form.get('itemname')
 
         # Check this before continuing through everything. All items MUST have an id and name
-        if item_id == '' or item_name == '':
-            error = 'Item must have a barcode/id and a name'
+        if item_name == '':
+            error = 'Item must have a name'
             return redirect(url_for('add', error=error))
 
         description = request.form.get('description')
@@ -274,7 +277,7 @@ def addItem():
             cursor.execute("rollback;")
 
             ##If item creation fails
-            error = 'Item creation has failed.'
+            error = 'Item creation has failed. Make sure that the item name is unique. See Help/Documentation for more details'
             return redirect(url_for('add', error=error))
 
         # Now insert images for the item, which is already in the database.
@@ -941,7 +944,7 @@ def editItem(item_id):
         cursor.execute("rollback;")
 
         ##If item creation fails
-        error = 'Item name and description cannot be changed. Photos were not changed either'
+        error = 'Item name and description cannot be changed. Please make sure that the name is unique. Photos were not updated.'
         return redirect(url_for('edit', error=error, item_id=item_id))
 
     # Now insert images for the item, which is already in the database.
