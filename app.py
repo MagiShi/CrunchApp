@@ -207,9 +207,18 @@ def addItem():
 
         item_name = request.form.get('itemname')
 
-        # Check this before continuing through everything. All items MUST have an id and name
+        # Check this before continuing through everything. All items MUST have a name
         if item_name == '':
             error = 'Item must have a name'
+            return redirect(url_for('add', error=error))
+
+        # Check if itemName already exists
+        itemNameQuery ="SELECT itemname FROM item where itemname='{0}'".format(item_name)
+        cursor.execute(itemNameQuery)
+        itemnames = cursor.fetchall()
+
+        if (itemnames != None):
+            error = 'Another item already exists with that name. See the Help & FAQ menu for more details.'
             return redirect(url_for('add', error=error))
 
         description = request.form.get('description')
@@ -868,10 +877,19 @@ def editItem(item_id):
     item_id = request.form.get('add-item-button')
     item_name = request.form.get('itemname')
 
-    # Check this before continuing through everything. All items MUST have an id and name
+    # Check this before continuing through everything. All items MUST have a name
     if item_name == '':
         error = 'Item must have a name'
         return redirect(url_for('edit', error=error, item_id=item_id))
+
+     # Check if itemName already exists
+    itemNameQuery ="SELECT itemname FROM item where itemname='{0}'".format(item_name)
+    cursor.execute(itemNameQuery)
+    itemnames = cursor.fetchall()
+
+    if (itemnames != None):
+        error = 'Another item already exists with that name. See the Help & FAQ menu for more details.'
+        return redirect(url_for('add', error=error))
 
     description = request.form.get('description')
 
