@@ -95,8 +95,13 @@
 
                         <!-- PROP TYPE INPUT -->
                         <div class="form-group">
-                            <div class="input-title">
-                            <h6>Prop Type</h6>
+                            <div class="row radio-title-div"> 
+                                <div class="input-title col-6">
+                                    <h6>Prop Type</h6>
+                                </div>
+                                <div class="col-6 clear-button-div">
+                                    <button type="button" class="clear-button" onclick="clear_radio_butttons('prop')">Clear</button>
+                                </div>
                             </div>
                             <div class="form-control">
                                 <div class="row radio">
@@ -120,8 +125,13 @@
                         
                         <!-- COSTUME TYPE INPUT -->
                         <div class="form-group">
-                            <div class="input-title">
-                            <h6>Costume Type</h6>
+                            <div class="row radio-title-div"> 
+                                <div class="input-title col-6">
+                                    <h6>Costume Type</h6>
+                                </div>
+                                <div class="col-6 clear-button-div">
+                                    <button type="button" class="clear-button" onclick="clear_radio_butttons('costume')">Clear</button>
+                                </div>
                             </div>
                             <div class="form-control">
                                 <div class="row radio">
@@ -348,4 +358,8 @@
             }
         });
     });
+
+    function clear_radio_butttons(input_name) {
+        $('input[name=' + input_name + ']:checked').prop('checked',false);
+    }
 </script>

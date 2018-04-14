@@ -33,14 +33,6 @@
                             </div>
                             <input type="text" name="itemname" class="form-control" id="input-item-name" placeholder="Item Name" value="{{itemname}}">
                         </div>
-
-                        <!--BARCODE INPUT-->
-                        <!-- <div class="form-group">
-                            <div class="input-title">
-                            <h6>Barcode</h6>
-                            </div>
-                            <input type="text" name="barcode" class="form-control" id="input-barcode" placeholder="Barcode" value="{{itemid}}">
-                        </div> -->
                         
                         <!--DESCRIPTION INPUT-->
                         <div class="form-group">
@@ -129,8 +121,13 @@
                         
                         <!-- PROP TYPE INPUT -->
                         <div class="form-group">
-                            <div class="input-title">
-                            <h6>Prop Type</h6>
+                            <div class="row radio-title-div"> 
+                                <div class="input-title col-6">
+                                    <h6>Prop Type</h6>
+                                </div>
+                                <div class="col-6 clear-button-div">
+                                    <button type="button" class="clear-button" onclick="clear_radio_butttons('prop')">Clear</button>
+                                </div>
                             </div>
                             <div class="form-control">
                                 <div class="row radio">
@@ -154,8 +151,13 @@
                         
                         <!-- COSTUME TYPE INPUT -->
                         <div class="form-group">
-                            <div class="input-title">
-                            <h6>Costume Type</h6>
+                            <div class="row radio-title-div"> 
+                                <div class="input-title col-6">
+                                    <h6>Costume Type</h6>
+                                </div>
+                                <div class="col-6 clear-button-div">
+                                    <button type="button" class="clear-button" onclick="clear_radio_butttons('costume')">Clear</button>
+                                </div>
                             </div>
                             <div class="form-control">
                                 <div class="row radio">
@@ -415,5 +417,9 @@
                 $('.' + characteristic + '.' + c).attr('checked', 'true');
             });
         }
+    }
+
+    function clear_radio_butttons(input_name) {
+        $('input[name=' + input_name + ']:checked').prop('checked',false);
     }
 </script>
