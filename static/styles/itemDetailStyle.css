@@ -1,5 +1,5 @@
 .item-detail-container {
-    padding: calc(54px + 40px) 20vw !important; /* navbar 1 row height is 54px */
+    padding: calc(54px + 40px) 10vw !important; /* navbar 1 row height is 54px */
 }
 @media screen and (max-width: 640px) {
     .item-detail-container {
