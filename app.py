@@ -109,8 +109,8 @@ def loggedin():
         imageList = [list(row) for row in image]
         for each in imageList:
             if (each != None):
-                ph_front = each[0]
-                each[0] = functions.getImagedata(ph_front)
+                ph_front = each
+                each = functions.getImagedata(ph_front)
         
 
         return render_template('home.html', itemid=itemid, itemname=itemname, image=imageList)
