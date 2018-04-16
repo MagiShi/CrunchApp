@@ -108,7 +108,6 @@ def loggedin():
         image = cursor.fetchall()
         imageList = [list(row) for row in image]
         for each in imageList:
-            if (each != None):
                 ph_front = each
                 each = functions.getImagedata(ph_front)
         
