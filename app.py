@@ -521,10 +521,10 @@ def toEditProdFolders(item_id):
         itemname = None
         foldername = None
 
-        folderNameQuery = "SELECT foldername FROM productionfolders where exists=false;"
+        folderNameQuery = "SELECT foldername FROM productionfolders where exists=true;"
         cursor.execute(folderNameQuery)
         foldername = cursor.fetchall()
-        query = "SELECT foldername FROM productionfolders where exists=true;"
+        query = "SELECT foldername FROM productionfolders where exists=false;"
         cursor.execute(query)
         # code bellow converts the tuple into a simple arraylist in order to pass the data directly into JS.
         # ex: [('Folder 1',),('Folder 2',)] -> ['Folder 1', 'Folder 2']
@@ -550,6 +550,7 @@ def toEditProdFolders(item_id):
 @app.route('/posteditFolders/<item_id>', methods=['POST'])
 def editProdFolders(item_id):
     item_id = item_id
+    print (request.form.get('options'))
     error = None
     return redirect(url_for('getItemInfo', item_id=item_id, error=error))
 
