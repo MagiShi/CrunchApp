@@ -42,6 +42,7 @@ mail = Mail(app)
 url = urlparse(os.environ['DATABASE_URL'])
 
 
+
 db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname)
 schema = "schema.sql"
 #connecting a cursor for the database
@@ -571,11 +572,11 @@ def prodFolders():
         return redirect(url_for('welcome'))
     else:
         foldernames = None
-        folderNameQuery = "SELECT foldername FROM productionfolders where exists=false;"
+        folderNameQuery = "SELECT foldername FROM productionfolders where exists=true;"
         cursor.execute(folderNameQuery)
         foldernames = cursor.fetchall()
 
-        query = "SELECT foldername FROM productionfolders where exists=true;"
+        query = "SELECT foldername FROM productionfolders where exists=false;"
         cursor.execute(query)
         # code bellow converts the tuple into a simple arraylist in order to pass the data directly into JS.
         # ex: [('Folder 1',),('Folder 2',)] -> ['Folder 1', 'Folder 2']
@@ -591,11 +592,17 @@ def prodFolders():
 def renameFolder():
     # get the folder new name from the user's input
     folderNewName = request.form['foldername']
+    print("folderrename")
+    print(folderNewName)
 
     # get the folder id from the value of 'Save' button
     folderCurrentname = request.form['saveNameButton']
+
+    print("foldercurrentname")
+    print(folderCurrentname)
+
     try:
-        query = "UPDATE folder SET foldername ='{1}' WHERE foldername='{0}';".format(folderCurrentname, folderNewName)
+        query = "UPDATE productionfolders SET foldername ='{1}' WHERE foldername='{0}';".format(folderCurrentname, folderNewName)
         cursor.execute(query)
         conn.commit()
     except Exception as e:
@@ -1159,7 +1166,7 @@ def deleteFolder():
     print("foldername")
     print(foldername)
     try: 
-        query = "UPDATE productionfolders set exists=true where foldername='{0}';".format(foldername)
+        query = "UPDATE productionfolders set exists=false where foldername='{0}';".format(foldername)
         cursor.execute(query)
         conn.commit()
 

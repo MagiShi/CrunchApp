@@ -35,8 +35,6 @@ $(document).ready(function() {
             $('#save-name-button').prop('type', 'button');
             $('#rename-modal').modal('hide');
             return;
-        } else {
-            check_duplicate_folder_name("#save-name-button", name_input);
         }
     });
 
@@ -52,8 +50,6 @@ $(document).ready(function() {
             $('#add-folder-button').prop('type', 'button');
             $( '.error-message' ).text("* The name either is empty or contains only white spaces. Please input the eligible name for the folder. Example: Folder number 12");
             return;
-        } else {
-            check_duplicate_folder_name("#add-folder-button", name_input);
         }
     });
 
@@ -65,7 +61,7 @@ function activate_rename_field(folder_name) {
     $('#rename-modal').on('show.bs.modal', function(e) {
         $(this).find("input").val(folder_name);
         $(this).find("#save-name-button").val(folder_name);
-        current_renamed_folder =  folder_name;
+        current_renamed_folder = folder_name;
         //Reset the error message to empty string
         $( '.error-message' ).text('');
     });
@@ -76,34 +72,4 @@ function get_delete_name(folder_name) {
         $(this).find("input").val(folder_name);
         $(this).find("#delete-confirmed").val(folder_name);
     });
-}
-
-function check_duplicate_folder_name(button_id, name_input) {
-    var is_duplicate = false;
-
-    // Check if the input name is duplicate with any existing folders (not deleted-pending)
-    $( '.list-group-item' ).each(function() {
-        var foldername = $(this).attr('id').split("_")[1];
-        if (foldername !== current_renamed_folder) {
-            if (foldername === name_input) {
-                $( '.error-message' ).text("* There is an existing folder with that name. Please use the different name for the folder.");
-                $(button_id).prop('type', 'button');
-                is_duplicate = true;
-            }
-        }
-    });
-
-    // Check if the input name is duplicate with any deleted-pending folders
-    var deleted_folders = {{ deletedfolders|safe }};
-    deleted_folders.forEach(function(e) {
-        if (e === name_input) {
-            $( '.error-message' ).text("* There is a pending deleted folder with that name. Please use the different name for the folder.");
-            $(button_id).prop('type', 'button');
-            is_duplicate = true;
-        }
-    });
-
-    if (!is_duplicate) {
-        $(button_id).prop('type', 'submit');
-    }
 }
