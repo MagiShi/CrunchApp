@@ -106,14 +106,14 @@ def loggedin():
         cursor.execute(imageQuery)
 
         image = cursor.fetchall()
-
-        for each in image:
+        imageList = [list(row) for row in image]
+        for each in imageList:
             if (each[0] != None):
                 ph_front = each[0]
                 each[0] = functions.getImagedata(ph_front)
         
 
-        return render_template('home.html', itemid=itemid, itemname=itemname, image=image)
+        return render_template('home.html', itemid=itemid, itemname=itemname, image=imageList)
 
 #rendering registration page
 @app.route('/register')
