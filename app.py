@@ -521,10 +521,10 @@ def toEditProdFolders(item_id):
         itemname = None
         foldername = None
 
-        folderNameQuery = "SELECT foldername FROM folder where pendingdelete=false;"
+        folderNameQuery = "SELECT foldername FROM productionfolders where exists=false;"
         cursor.execute(folderNameQuery)
         foldername = cursor.fetchall()
-        query = "SELECT foldername FROM folder where pendingdelete=true;"
+        query = "SELECT foldername FROM productionfolders where exists=true;"
         cursor.execute(query)
         # code bellow converts the tuple into a simple arraylist in order to pass the data directly into JS.
         # ex: [('Folder 1',),('Folder 2',)] -> ['Folder 1', 'Folder 2']
@@ -560,11 +560,11 @@ def prodFolders():
         return redirect(url_for('welcome'))
     else:
         foldernames = None
-        folderNameQuery = "SELECT foldername FROM folder where pendingdelete=false;"
+        folderNameQuery = "SELECT foldername FROM productionfolders where exists=false;"
         cursor.execute(folderNameQuery)
         foldernames = cursor.fetchall()
 
-        query = "SELECT foldername FROM folder where pendingdelete=true;"
+        query = "SELECT foldername FROM productionfolders where exists=true;"
         cursor.execute(query)
         # code bellow converts the tuple into a simple arraylist in order to pass the data directly into JS.
         # ex: [('Folder 1',),('Folder 2',)] -> ['Folder 1', 'Folder 2']
@@ -1098,20 +1098,21 @@ def filterItems():
 #Adding a new folder 
 @app.route('/addFolder', methods=["POST"])
 def addFolder():
-    foldername = request.form['foldername']
+    folder_name = request.form['foldername']
 
     # Check to see if 8 folders (not pending deletion) already exist
-    numFoldersQuery = "SELECT * from folder where pendingdelete=false;"
-    cursor.execute(numFoldersQuery);
-    validFolders = cursor.fetchall();
+    num_folder_q = "SELECT * from productionfolders where exists=true;"
+    cursor.execute(num_folder_q);
+    valid_folders = cursor.fetchall();
 
-    if (len(validFolders) >= 8):
+    if (len(valid_folders) <1 ):
         # there is no room to add another folder
         error = 'Only 8 production folders can exist at a time.'
 
     if error == None:  
         try: 
-            query = "INSERT into folder VALUES ('{0}', false);".format(foldername)
+            folder_id = valid_folders[0]
+            query = "UPDATE productionfolders SET foldername='{0}', exists=false WHERE folderid='{1}';".format(folder_name, folder_id)
             cursor.execute(query)
             conn.commit()
 
@@ -1140,7 +1141,7 @@ def deleteFolder():
     print("foldername")
     print(foldername)
     try: 
-        query = "UPDATE folder set pendingdelete=true where foldername='{0}';".format(foldername)
+        query = "UPDATE productionfolders set exists=true where foldername='{0}';".format(foldername)
         cursor.execute(query)
         conn.commit()
 

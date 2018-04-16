@@ -7,8 +7,8 @@ NULL, username varchar(256) NOT NULL, password varchar(256) NOT NULL, isAdmin Bo
 #item table with enum characteristics
 Create Table item (itemId varchar(50) PRIMARY KEY NOT NULL, itemName varchar(50) NOT NULL, phfront BYTEA, phback BYTEA, phtop BYTEA, phbottom BYTEA, phleft BYTEA, phright BYTEA, pendingDelete Boolean NOT NULL DEFAULT FALSE, description varchar(256), sex sex, condition condition, time time[], culture culture[], color color[], size size, itemtype itemtype, itype itype, isAvailable Boolean DEFAULT TRUE, f1 Boolean NOT NULL DEFAULT FALSE, f2 Boolean NOT NULL DEFAULT FALSE, f3 Boolean NOT NULL DEFAULT FALSE, folder4 Boolean NOT NULL DEFAULT FALSE, folder5 Boolean NOT NULL DEFAULT FALSE, folder6 Boolean NOT NULL DEFAULT FALSE, folder7 Boolean NOT NULL DEFAULT FALSE, folder8 Boolean NOT NULL DEFAULT FALSE);
 
-#Folder
-Create Table folder(folderName varchar(256) PRIMARY KEY, pendingDelete Boolean NOT NULL DEFAULT FALSE);
+-- #Folder
+-- Create Table folder(folderName varchar(256) PRIMARY KEY, pendingDelete Boolean NOT NULL DEFAULT FALSE);
 
 #Reservation (check enum list for reservationstatus ['past', 'current', 'future'])
 #NOTE: startdate and enddate are DATE only, no time. [Ex: 'Mar-01-2018']
@@ -19,7 +19,7 @@ Create Table reservation (email varchar(256) NOT NULL references registereduser(
 Create Table lastaccess (day DATE PRIMARY KEY);
 
 #List of production folders:
-Create Table productionfolders(folderName varchar(256) NOT NULL, folderId folderId UNIQUE, PRIMARY KEY(folderId));
+Create Table productionfolders(folderName varchar(256) NOT NULL, folderId folderId UNIQUE, pendingDelete Boolean NOT NULL, PRIMARY KEY(folderId));
 
 
 ## Sprint 4
