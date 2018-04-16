@@ -2,10 +2,10 @@
 
 # 1. Release Notes
 ### Software Features
-- *Adding items*
+- **Adding items**
   - Users can save items along with defining characteristics into the application.
   - Characteristics include: prop/costume type, color, size, time period
-- *Production Folders*
+- _Production Folders_
   - Items can be organized into one or more theater productions, represented as "production folders" in the application.
 - *Search and filter*
   - Users can search for specific items by typing in the item name or unique barcode into the search bar.
