@@ -29,10 +29,10 @@
                 {% for item in itemid %}
                     <div class="col-md-6 col-lg-3 item-summary">
                         <div class="item" onclick="location.href='item/{{itemid[loop.index0][0]}}'">
-                            <!--{% for i in image[1] %} -->
-                               <!-- <img id="item-preview" src="data:image/jpeg;base64, {{i}}" /> -->
-                            <!--  {% endfor %}-->
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/No_image_available_600_x_450.svg">
+                            {% for i in image[loop.index0] %} 
+                               <img id="item-preview" src="data:image/jpeg;base64, {{i}}" /> 
+                            {% endfor %}
+                            
                             <p>{{itemname[loop.index0][0]}}</p>
                         </div>
                     </div>
