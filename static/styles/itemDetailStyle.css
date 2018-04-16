@@ -136,3 +136,15 @@
 .carousel-inner.col-10 {
     padding: 0;
 }
+
+.carousel {
+    height: 75vh;
+}
+
+.carousel-item.active {
+    height: 100%;
+}
+
+.item-detail-container .item-detail-text {
+    padding: 35px;
+}
