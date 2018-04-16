@@ -107,9 +107,11 @@ def loggedin():
 
         image = cursor.fetchall()
         imageList = [list(row) for row in image]
-        #for each in imageList:
-               # ph_front = each
-                #each = functions.getImagedata(ph_front)
+        for each in imageList:
+            print(each)
+            ph_front = each
+            each = functions.getImagedata(ph_front)
+            print(each)
         print(imageList)
         print(itemname)
 
