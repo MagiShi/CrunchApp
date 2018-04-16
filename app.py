@@ -104,9 +104,19 @@ def loggedin():
         cursor.execute(itemNameQuery)
         itemname = cursor.fetchall()
         cursor.execute(imageQuery)
-        
 
-        return render_template('home.html', itemid=itemid, itemname=itemname, image=image)
+        image = cursor.fetchall()
+        imageList = [list(row) for row in image]
+        for each in imageList:
+            if each != None:
+                print(each)
+                ph_front = each
+                each = functions.getImagedata(ph_front)
+                print(each)
+        print(imageList)
+        print(itemname)
+
+        return render_template('home.html', itemid=itemid, itemname=itemname, image=imageList)
 
 #rendering registration page
 @app.route('/register')
@@ -763,6 +773,7 @@ def getItemInfo(item_id):
             item_name, ph_front, ph_back, ph_top, ph_bottom, ph_right, ph_left, description, pending_delete, sex, condition, timep, culture, color, size, item_type, i_type, is_available = functions.getInfo(item_id, cursor)
 
             ph_front_data = functions.getImagedata(ph_front)
+            print(ph_front_data)
             ph_back_data = functions.getImagedata(ph_back)
             ph_top_data = functions.getImagedata(ph_top)
             ph_bottom_data = functions.getImagedata(ph_bottom)
