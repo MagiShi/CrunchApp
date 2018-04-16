@@ -110,7 +110,8 @@ def loggedin():
         for each in imageList:
                 ph_front = each
                 each = functions.getImagedata(ph_front)
-        
+        print(imageList)
+        print(itemname)
 
         return render_template('home.html', itemid=itemid, itemname=itemname, image=imageList)
 
