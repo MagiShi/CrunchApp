@@ -1096,14 +1096,17 @@ def filterItems():
     return render_template('homefiltered.html', itemid=itemid, error=error)
 
 #Adding a new folder 
-@app.route('/addFolder', methods=["POST"])
+@app.route('/addFolder', methods=["POST", "GET"])
 def addFolder():
+    error = request.args.get('error')
+    item_id = request.form.get('addFolder')
     folder_name = request.form['foldername']
 
     # Check to see if 8 folders (not pending deletion) already exist
-    num_folder_q = "SELECT * from productionfolders where exists=true;"
+    num_folder_q = "SELECT folderid from productionfolders where exists=false;"
     cursor.execute(num_folder_q);
     valid_folders = cursor.fetchall();
+    print (valid_folders)
 
     if (len(valid_folders) <1 ):
         # there is no room to add another folder
@@ -1111,21 +1114,24 @@ def addFolder():
 
     if error == None:  
         try: 
-            folder_id = valid_folders[0]
-            query = "UPDATE productionfolders SET foldername='{0}', exists=false WHERE folderid='{1}';".format(folder_name, folder_id)
+            folder_id = valid_folders[0][0]
+            query = "UPDATE productionfolders SET foldername='{0}', exists=true WHERE folderid='{1}';".format(folder_name, folder_id)
+            print (query)
             cursor.execute(query)
             conn.commit()
 
             # functions.createNewFolder(foldername, cursor, conn)
-            error = "Folder '{0}' added".format(foldername) #Temp message?
+            error = "Folder '{0}' added".format(folder_name) #Temp message?
         except Exception as e: 
             cursor.execute("rollback;")
 
-            ##If folder should not have passed checks (should not happen)
-            error = 'Folder cannot be created'
-            return redirect(url_for('addFolderButton', error=error))
+            ##If foldername is a repeat.
+            error = 'Folder cannot be created. Make sure a folder with this name does not already exist.  See Help & FAQ for more details.'
 
-    item_id = request.form.get('addFolderButton')
+            if item_id:
+                return redirect(url_for('addFolder', error=error))
+            else:
+                return redirect(url_for('prodFolders', error=error))
 
     # checking to see where redirect, depending on if there is an item_id
     if item_id:

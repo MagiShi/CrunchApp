@@ -19,7 +19,7 @@ Create Table reservation (email varchar(256) NOT NULL references registereduser(
 Create Table lastaccess (day DATE PRIMARY KEY);
 
 #List of production folders:
-Create Table productionfolders(folderName varchar(256) NOT NULL, folderId folderId UNIQUE, pendingDelete Boolean NOT NULL, PRIMARY KEY(folderId));
+Create Table productionfolders(folderName varchar(256) NOT NULL UNIQUE, folderId folderId UNIQUE, pendingDelete Boolean NOT NULL, PRIMARY KEY(folderId));
 
 
 ## Sprint 4
