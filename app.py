@@ -778,9 +778,8 @@ def getItemInfo(item_id):
         try: 
             # calls functions.py method
             item_name, ph_front, ph_back, ph_top, ph_bottom, ph_right, ph_left, description, pending_delete, sex, condition, timep, culture, color, size, item_type, i_type, is_available = functions.getInfo(item_id, cursor)
-
+            print(ph_front)
             ph_front_data = functions.getImagedata(ph_front)
-            print(ph_front_data)
             ph_back_data = functions.getImagedata(ph_back)
             ph_top_data = functions.getImagedata(ph_top)
             ph_bottom_data = functions.getImagedata(ph_bottom)
