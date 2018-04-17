@@ -31,7 +31,7 @@
                         <div class="item" onclick="location.href='item/{{itemid[loop.index0][0]}}'">
                             {% if image[loop.index0][0] != None %}
                                 {% for i in image[loop.index0] %} 
-                                    <img id="item-preview" width="600px" height="450px" src="data:image/jpeg;base64, {{i}}" /> 
+                                    <img id="item-preview" src="data:image/jpeg;base64, {{i}}" /> 
                                 {% endfor %}
                             {% endif %}
                             {% if image[loop.index0][0] == None %}
