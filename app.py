@@ -108,7 +108,7 @@ def loggedin():
 
         image = cursor.fetchall()
         imageList = [list(row) for row in image]
-        print(ImageList[10][0])
+        print(imageList[10][0])
         for idx, each in enumerate(imageList):
                 img = imageList[idx][0]
                 ph_front = img
