@@ -35,6 +35,8 @@ $(document).ready(function() {
             $('#save-name-button').prop('type', 'button');
             $('#rename-modal').modal('hide');
             return;
+        } else {
+            $('#save-name-button').prop('type', 'submit');
         }
     });
 
@@ -50,6 +52,8 @@ $(document).ready(function() {
             $('#add-folder-button').prop('type', 'button');
             $( '.error-message' ).text("* The name either is empty or contains only white spaces. Please input the eligible name for the folder. Example: Folder number 12");
             return;
+        } else {
+            $('#add-folder-button').prop('type', 'submit');
         }
     });
 
