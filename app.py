@@ -42,6 +42,7 @@ mail = Mail(app)
 url = urlparse(os.environ['DATABASE_URL'])
 
 
+
 db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname)
 schema = "schema.sql"
 #connecting a cursor for the database
@@ -107,14 +108,16 @@ def loggedin():
 
         image = cursor.fetchall()
         imageList = [list(row) for row in image]
-        for each in imageList:
-            if each != None:
-                print(each)
-                ph_front = each
-                each = functions.getImagedata(ph_front)
-                print(each)
+        print(imageList[10][0])
+        for idx, each in enumerate(imageList):
+                img = imageList[idx]
+                ph_front = img
+                if ph_front[0] != None:
+                    imgData = functions.getImagedata(ph_front)
+                    imageList[idx] = imgData
         print(imageList)
-        print(itemname)
+                
+
 
         return render_template('home.html', itemid=itemid, itemname=itemname, image=imageList)
 
@@ -610,11 +613,11 @@ def prodFolders():
         return redirect(url_for('welcome'))
     else:
         foldernames = None
-        folderNameQuery = "SELECT foldername FROM productionfolders where exists=false;"
+        folderNameQuery = "SELECT foldername FROM productionfolders where exists=true;"
         cursor.execute(folderNameQuery)
         foldernames = cursor.fetchall()
 
-        query = "SELECT foldername FROM productionfolders where exists=true;"
+        query = "SELECT foldername FROM productionfolders where exists=false;"
         cursor.execute(query)
         # code bellow converts the tuple into a simple arraylist in order to pass the data directly into JS.
         # ex: [('Folder 1',),('Folder 2',)] -> ['Folder 1', 'Folder 2']
@@ -630,11 +633,17 @@ def prodFolders():
 def renameFolder():
     # get the folder new name from the user's input
     folderNewName = request.form['foldername']
+    print("folderrename")
+    print(folderNewName)
 
     # get the folder id from the value of 'Save' button
     folderCurrentname = request.form['saveNameButton']
+
+    print("foldercurrentname")
+    print(folderCurrentname)
+
     try:
-        query = "UPDATE folder SET foldername ='{1}' WHERE foldername='{0}';".format(folderCurrentname, folderNewName)
+        query = "UPDATE productionfolders SET foldername ='{1}' WHERE foldername='{0}';".format(folderCurrentname, folderNewName)
         cursor.execute(query)
         conn.commit()
     except Exception as e:
@@ -810,9 +819,7 @@ def getItemInfo(item_id):
         try: 
             # calls functions.py method
             item_name, ph_front, ph_back, ph_top, ph_bottom, ph_right, ph_left, description, pending_delete, sex, condition, timep, culture, color, size, item_type, i_type, is_available = functions.getInfo(item_id, cursor)
-
             ph_front_data = functions.getImagedata(ph_front)
-            # print(ph_front_data)
             ph_back_data = functions.getImagedata(ph_back)
             ph_top_data = functions.getImagedata(ph_top)
             ph_bottom_data = functions.getImagedata(ph_bottom)
@@ -1198,7 +1205,7 @@ def deleteFolder():
     print("foldername")
     print(foldername)
     try: 
-        query = "UPDATE productionfolders set exists=true where foldername='{0}';".format(foldername)
+        query = "UPDATE productionfolders set exists=false where foldername='{0}';".format(foldername)
         cursor.execute(query)
         conn.commit()
 
