@@ -113,7 +113,7 @@ def loggedin():
                 ph_front = each
                 each = functions.getImagedata(ph_front)
                 print(each)
-        print(imagList[10][0])
+        print(imageList[10][0])
         print(imageList)
         print(itemname)
 
