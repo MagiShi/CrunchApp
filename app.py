@@ -109,11 +109,11 @@ def loggedin():
         image = cursor.fetchall()
         imageList = [list(row) for row in image]
         for each in imageList:
-            if each != None:
-                print(each)
+                print(each[0])
                 ph_front = each
                 each = functions.getImagedata(ph_front)
                 print(each)
+        print(imagList[10][0])
         print(imageList)
         print(itemname)
 
