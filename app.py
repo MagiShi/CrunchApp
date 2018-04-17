@@ -531,14 +531,16 @@ def toEditProdFolders(item_id):
         itemname = None
         foldername = None
 
-        folderNameQuery = "SELECT foldername FROM productionfolders where exists=true;"
+        folderNameQuery = "SELECT foldername, folderid FROM productionfolders where exists=true;"
         cursor.execute(folderNameQuery)
-        foldername = cursor.fetchall()
-        query = "SELECT foldername FROM productionfolders where exists=false;"
-        cursor.execute(query)
-        # code bellow converts the tuple into a simple arraylist in order to pass the data directly into JS.
-        # ex: [('Folder 1',),('Folder 2',)] -> ['Folder 1', 'Folder 2']
-        deletedfolders = [ x[0] for x in cursor.fetchall()]
+        all_foldername = cursor.fetchall()
+        print (all_foldername)
+        # query = "SELECT foldername, folderid FROM productionfolders where exists=false;"
+        # cursor.execute(query)
+        # # code bellow converts the tuple into a simple arraylist in order to pass the data directly into JS.
+        # # ex: [('Folder 1',),('Folder 2',)] -> ['Folder 1', 'Folder 2']
+        # # deletedfolders = [ x[0] for x in cursor.fetchall()]
+        # deletedfolders = json.dumps(cursor.fetchall(), default=str)
         error = request.args.get('error')
 
         
@@ -555,12 +557,49 @@ def toEditProdFolders(item_id):
             # error = 'Item information cannot be retrieved'
             # return redirect(url_for('loggedin', error=error))
 
-        return render_template('editProdFolders.html', itemid=item_id, itemname=itemname, foldername=foldername, deletedfolders=deletedfolders, error=error)
+        # return render_template('editProdFolders.html', itemid=item_id, itemname=itemname, foldername=foldername, deletedfolders=deletedfolders, error=error)
+        return render_template('editProdFolders.html', itemid=item_id, itemname=itemname, foldername=all_foldername, error=error)
+
 
 @app.route('/posteditFolders/<item_id>', methods=['POST'])
 def editProdFolders(item_id):
     item_id = item_id
-    print (request.form.get('options'))
+    f1= request.form.get('f1')
+    f2= request.form.get('f2')
+    f3= request.form.get('f3')
+    f4= request.form.get('f4')
+    f5= request.form.get('f5')
+    f6= request.form.get('f6')
+    f7= request.form.get('f7')
+    f8= request.form.get('f8')
+
+    # EX: [('f1', None), ('f2', None), ('f3', None), ('f4', None), ('f5', 'f5'), ('f6', 'f6'), ('f7', None), ('f8', None)]
+    folder_list=[('f1',f1), ('f2', f2), ('f3', f3), ('f4', f4), ('f5', f5), ('f6', f6), ('f7', f7), ('f8', f8)]
+    # print (folder_list)
+
+    query = "UPDATE item SET "
+    for fid, in_folder in folder_list:
+        query += "{0}=".format(fid)
+        # print ("in_folder? : ", in_folder, fid)
+        if in_folder:
+            query += "TRUE, "
+        else:
+            query += "FALSE, "
+    #Get rid of last ", " part of string
+    query = query[:-2]  
+
+    query += " WHERE itemid='{0}';".format(item_id)
+    print (query)
+    try:
+        cursor.execute(query)
+        conn.commit()
+    except Exception as e:
+        print(e)
+        cursor.execute("rollback;")
+        error = "Production folder changes cannot be executed"
+        return redirect(url_for('toEditProdFolders', item_id=item_id, error=error))
+
+
     error = None
     return redirect(url_for('getItemInfo', item_id=item_id, error=error))
 
@@ -773,7 +812,7 @@ def getItemInfo(item_id):
             item_name, ph_front, ph_back, ph_top, ph_bottom, ph_right, ph_left, description, pending_delete, sex, condition, timep, culture, color, size, item_type, i_type, is_available = functions.getInfo(item_id, cursor)
 
             ph_front_data = functions.getImagedata(ph_front)
-            print(ph_front_data)
+            # print(ph_front_data)
             ph_back_data = functions.getImagedata(ph_back)
             ph_top_data = functions.getImagedata(ph_top)
             ph_bottom_data = functions.getImagedata(ph_bottom)

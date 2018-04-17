@@ -48,9 +48,9 @@
                                     {% endif %} -->
 
 
-                                    <label class="btn list-group-item list-group-item-action" id="folder_{{folder[0]}}">
-                                        <input type="checkbox" name="options" value="{{folder|first}}"> {{folder[0]}}
-                                    </label>
+                                    <div class="btn list-group-item list-group-item-action" id="folder_{{folder[0]}}">
+                                        <input type="checkbox" name="{{folder[1]}}" value="{{folder[1]}}"> {{folder[0]}}
+                                    </div>
                                     {% endfor %}
                                 </div>
                             </div>
