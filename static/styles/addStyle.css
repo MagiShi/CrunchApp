@@ -100,3 +100,11 @@
 .radio-title-div {
     margin-bottom: 2px;
 }
+
+.radio-title-div button {
+    line-height: 21px;
+}
+
+.hide {
+    display: none;
+}
