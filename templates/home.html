@@ -34,8 +34,9 @@
                                     <img id="item-preview" src="data:image/jpeg;base64, {{i}}" /> 
                                 {% endfor %}
                             {% endif %}
-                            
-
+                            {% if image[loop.index0][0] = None %}
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/No_image_available_600_x_450.svg">
+                            {% endif %}
                             
                             <p>{{itemname[loop.index0][0]}}</p>
                         </div>
