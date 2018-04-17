@@ -110,11 +110,11 @@ def loggedin():
         imageList = [list(row) for row in image]
         print(imageList[10][0])
         for idx, each in enumerate(imageList):
-                img = imageList[idx][0]
+                img = imageList[idx]
                 ph_front = img
-                if ph_front != None:
+                if ph_front[0] != None:
                     imgData = functions.getImagedata(ph_front)
-                    imageList[idx][0] = imgData
+                    imageList[idx] = imgData
         print(imageList)
                 
 
