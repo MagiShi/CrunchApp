@@ -108,14 +108,14 @@ def loggedin():
 
         image = cursor.fetchall()
         imageList = [list(row) for row in image]
-        for each in imageList:
-                print(each[0])
-                ph_front = each
-                each = functions.getImagedata(ph_front)
-                print(each)
-        print(imageList[10][0])
+        for idx, each in enumerate(imageList):
+                img = imageList[idx][0]
+                ph_front = img
+                imgData = functions.getImagedata(ph_front)
+                imageList[idx][0] = imgData
         print(imageList)
-        print(itemname)
+                
+
 
         return render_template('home.html', itemid=itemid, itemname=itemname, image=imageList)
 
