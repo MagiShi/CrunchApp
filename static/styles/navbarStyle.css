@@ -82,7 +82,7 @@
     -webkit-box-shadow: 5px 7px 30px -7px rgba(0,0,0,0.5);
     -moz-box-shadow: 5px 7px 30px -7px rgba(0,0,0,0.5);
     box-shadow: 5px 7px 30px -7px rgba(0,0,0,0.5);
-    width: 30vw;
+    width: 30vw !important;
 }
 .navbar #searchBar::placeholder {
     color: #a8a8a8;

@@ -1,3 +1,11 @@
+function toggleSearchbar(element) {
+    if (element.value.length > 0) {
+        element.style.width = '30vw';
+    } else {
+        element.style.width = '20vw';
+    }
+}
+
 // For the opening and closing of the left filter menu
 function toggleFilterMenu() {
     if (document.getElementById("filter-menu").style.width == "310px") {
