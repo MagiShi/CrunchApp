@@ -1152,13 +1152,13 @@ def filterItems():
         error = 'Cannot filter'
         return redirect(url_for('loggedin', error=error))
     itemname = []
-        for each in itemid:
-            query2 = "SELECT itemname WHERE itemid = " + each[0] + " FROM item;"
-            temp = []
-            cursor.execute(query2)
-            itemname1 = cursor.fetchone()
-            temp[0] = itemname1
-            itemname.append(temp)
+    for each in itemid:
+        query2 = "SELECT itemname WHERE itemid = " + each[0] + " FROM item;"
+        temp = []
+        cursor.execute(query2)
+        itemname1 = cursor.fetchone()
+        temp[0] = itemname1
+        itemname.append(temp)
 
         print(itemname)
     return render_template('homefiltered.html', itemid=itemid, error=error, itemname=itemname)
