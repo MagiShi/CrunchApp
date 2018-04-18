@@ -14,17 +14,26 @@
   - Users can mark items as to be reserved for a certain date range. This way, other users know that the item is unavailable during that time.
   - Users can view their upcoming, current, and past reservations.
 ### Bugs and Defects
-- Bug 1
-- Bug 2
+- When making or updating the date range of a reservation, the calendar widget requires that you **press the green Apply button** for the input to save. (Do not choose the date and then click outside of the calendar widget if you want changes to be saved.)
+- On an item's detail page, if there is a carousel of images and the user clicks through the carousel, the image only resizes and repositions itself after a second or two. This is just a minor aesthetic bug.
+- Another minor aesthetic bug: some of the icons on the navigation bar (search bar and the two menu buttons) take some time to load. This makes the buttons smaller for a moment or so.
 ### Missing Functionality
 - Feature 1
 - Feature 2
 
 # 2. Install Guide
 ### Pre-requisites
+- Machine should have Python installed
 ### Dependent libraries
+- requirements.txt
+- Set up [Flask](http://flask.pocoo.org/docs/0.12/quickstart/)
+- Set up [Heroku](https://devcenter.heroku.com/articles/getting-started-with-python#introduction)
 ### Download instructions
-### Build instructions
+- You can find the source code for Thracker at this [repo](https://github.com/MagiShi/CrunchApp).
 ### Installation of application
+- Thracker is a web application and will not require installation for use.
 ### Run instructions
+- Navigate to the program files
+- 'heroku open' will open the herokuapp project
+- 'flask run' will open the application locally
 ### Troubleshooting
