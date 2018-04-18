@@ -1180,7 +1180,7 @@ def filterItems():
         return redirect(url_for('loggedin', error=error))
     itemname = []
     for each in itemid:
-        query2 = "SELECT itemname WHERE itemid = " + each[0] + " FROM item;"
+        query2 = "SELECT itemname FROM item WHERE itemid = " + each[0] + ";"
         temp = []
         cursor.execute(query2)
         itemname1 = cursor.fetchone()
