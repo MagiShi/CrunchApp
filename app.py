@@ -229,8 +229,9 @@ def addItem():
         itemNameQuery ="SELECT itemname FROM item where itemname='{0}'".format(item_name)
         cursor.execute(itemNameQuery)
         itemnames = cursor.fetchall()
+        print ("i" , itemnames)
 
-        if (itemnames != None):
+        if len(itemnames) > 1:
             error = 'Another item already exists with that name. See the Help & FAQ menu for more details.'
             return redirect(url_for('add', error=error))
 
@@ -585,7 +586,7 @@ def toEditProdFolders(item_id):
         ## all_folder_info: 
         ## [(folder_name, folder_id, if_item_in_folder)]
         ## EX: [('Folder 9', 'f8'), ('Name4', 'f3'), ('Name5', 'f1'), ('Name7', 'f6'), ('Name8', 'f7'), ('Name 10', 'f4'), ('Folder 20', 'f5')]
-        # print (all_folder_info)
+        print (all_folder_info)
 
 
         return render_template('editProdFolders.html', itemid=item_id, itemname=item_name, foldername=all_folder_info, error=error)
@@ -971,9 +972,9 @@ def editItem(item_id):
     cursor.execute(itemNameQuery)
     itemnames = cursor.fetchall()
 
-    if (itemnames != None):
+    if (len(itemnames) > 1):
         error = 'Another item already exists with that name. See the Help & FAQ menu for more details.'
-        return redirect(url_for('add', error=error))
+        return redirect(url_for('edit', error=error, item_id=item_id))
 
     description = request.form.get('description')
 
@@ -1038,7 +1039,7 @@ def editItem(item_id):
         return redirect(url_for('edit', error=error, item_id=item_id))
 
     ##Now change the name and descirption:
-    query = "UPDATE item set itemname='{0}', description='{1}'".format(item_name, description)
+    query = "UPDATE item SET itemname='{0}', description='{1}' WHERE itemid='{2}'".format(item_name, description, item_id)
     print (query)
     try: 
         cursor.execute(query)
