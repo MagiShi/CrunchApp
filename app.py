@@ -1157,7 +1157,7 @@ def filterItems():
 @app.route('/addFolder', methods=["POST", "GET"])
 def addFolder():
     error = request.args.get('error')
-    item_id = request.form.get('addFolder')
+    item_id = request.form.get('addFolderButton')
     folder_name = request.form['foldername']
 
     # Check to see if 8 folders (not pending deletion) already exist
@@ -1187,7 +1187,7 @@ def addFolder():
             error = 'Folder cannot be created. Make sure a folder with this name does not already exist.  See Help & FAQ for more details.'
 
             if item_id:
-                return redirect(url_for('addFolder', error=error))
+                return redirect(url_for('toEditProdFolders', item_id=item_id, error=error))
             else:
                 return redirect(url_for('prodFolders', error=error))
 
