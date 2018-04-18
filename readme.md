@@ -34,6 +34,6 @@
 - Thracker is a web application and will not require installation for use.
 ### Run instructions
 - Navigate to the program files
-- 'heroku open' will open the herokuapp project
-- 'flask run' will open the application locally
+- `heroku open` will open the herokuapp project
+- `flask run` will open the application locally
 ### Troubleshooting
