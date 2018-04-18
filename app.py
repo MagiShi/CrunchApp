@@ -531,37 +531,64 @@ def toEditProdFolders(item_id):
     else:
         item_id = item_id
         error = None
-        itemname = None
-        foldername = None
+        item_name = None
+        f1 = None
+        f2 = None
+        f3 = None
+        f4 = None
+        f5 = None
+        f6 = None
+        f7 = None
+        f8 = None
+
 
         folderNameQuery = "SELECT foldername, folderid FROM productionfolders where exists=true;"
         cursor.execute(folderNameQuery)
-        all_foldername = cursor.fetchall()
-        print (all_foldername)
-        # query = "SELECT foldername, folderid FROM productionfolders where exists=false;"
-        # cursor.execute(query)
-        # # code bellow converts the tuple into a simple arraylist in order to pass the data directly into JS.
-        # # ex: [('Folder 1',),('Folder 2',)] -> ['Folder 1', 'Folder 2']
-        # # deletedfolders = [ x[0] for x in cursor.fetchall()]
-        # deletedfolders = json.dumps(cursor.fetchall(), default=str)
+        all_folder_names = cursor.fetchall()
+        # print (all_foldername)
         error = request.args.get('error')
 
+        query = "SELECT itemname, f1, f2, f3, f4, f5, f6, f7, f8 FROM item where itemid='{0}';".format(item_id)
+        print (query)
         
         #query = "SELECT * FROM item WHERE itemid='{0}';".format(item_id)
         try: 
-            cursor.execute("SELECT itemname FROM item WHERE itemid='{0}';".format(item_id))
-            itemname = cursor.fetchone()
+            cursor.execute(query)
+            all_info = cursor.fetchone()
+            # print (allinfo)
+            if len(all_info) > 8:
+                item_name = all_info[0]
+                f1 = all_info[1]
+                f2 = all_info[2]
+                f3 = all_info[3]
+                f4 = all_info[4]
+                f5 = all_info[5]
+                f6 = all_info[6]
+                f7 = all_info[7]
+                f8 = all_info[8]
 
         except Exception as e: 
             print (e)
-            # cursor.execute("rollback;")
+            cursor.execute("rollback;")
 
             # ##If item does not exist etc
-            # error = 'Item information cannot be retrieved'
-            # return redirect(url_for('loggedin', error=error))
+            error = 'Item production folder information cannot be retrieved'
+            return redirect(url_for('getItemInfo', item_id=item_id, error=error))
 
-        # return render_template('editProdFolders.html', itemid=item_id, itemname=itemname, foldername=foldername, deletedfolders=deletedfolders, error=error)
-        return render_template('editProdFolders.html', itemid=item_id, itemname=itemname, foldername=all_foldername, error=error)
+        all_folder_id = [f1, f2, f3, f4, f5, f6, f7, f8]
+        all_folder_info = []
+        for i in range(len(all_folder_id)):
+            fstring = "f{0}".format(i)
+            for fname, fid in all_folder_names:
+                if fid == fstring:
+                    all_folder_info.append((fname, fid, all_folder_id[i]))
+        ## all_folder_info: 
+        ## [(folder_name, folder_id, if_item_in_folder)]
+        ## EX: [('Folder 9', 'f8'), ('Name4', 'f3'), ('Name5', 'f1'), ('Name7', 'f6'), ('Name8', 'f7'), ('Name 10', 'f4'), ('Folder 20', 'f5')]
+        # print (all_folder_info)
+
+
+        return render_template('editProdFolders.html', itemid=item_id, itemname=item_name, foldername=all_folder_info, error=error)
 
 
 @app.route('/posteditFolders/<item_id>', methods=['POST'])
