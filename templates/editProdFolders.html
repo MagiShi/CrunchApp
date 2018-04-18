@@ -33,24 +33,21 @@
                                 <h6>Choose which production you want to add/remove {{ itemname | first }} from</h6>
                             </div>
                             <div class="list-group">
-                                <!-- TO DO: AutoSelect Folders item belongs to -->
                                 <div class="btn-gtoup" data-toggle="buttons">
                                     {% for folder in foldername %}
-                                    <!-- class="active" -->
-<!--                                     {% if itemname in folder %} //select stmt
-                                        <label class="btn list-group-item list-group-item-action active">
-                                            <input type="checkbox" name="options" autocomplete="off"> {{folder[0]}}
-                                        </label>
-                                    {% else %}
-                                        <label class="btn list-group-item list-group-item-action">
-                                            <input type="checkbox" name="options" autocomplete="off"> {{folder[0]}}
-                                        </label>
-                                    {% endif %} -->
 
+                                        {% if folder[2] == true %}
+                                            <div class="btn list-group-item list-group-item-action active" id="folder_{{folder[0]}}">
+                                                <input type="checkbox" name="{{folder[1]}}" value="{{folder[1]}}"> {{folder[0]}}
+                                            </div>
+                                        {% endif %}
 
-                                    <div class="btn list-group-item list-group-item-action" id="folder_{{folder[0]}}">
-                                        <input type="checkbox" name="{{folder[1]}}" value="{{folder[1]}}"> {{folder[0]}}
-                                    </div>
+                                        {% if folder[2] == false %}
+                                            <div class="btn list-group-item list-group-item-action" id="folder_{{folder[0]}}">
+                                                <input type="checkbox" name="{{folder[1]}}" value="{{folder[1]}}"> {{folder[0]}}
+                                            </div>
+                                        {% endif %}
+                                        
                                     {% endfor %}
                                 </div>
                             </div>

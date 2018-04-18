@@ -604,7 +604,7 @@ def editProdFolders(item_id):
     f8= request.form.get('f8')
 
     # EX: [('f1', None), ('f2', None), ('f3', None), ('f4', None), ('f5', 'f5'), ('f6', 'f6'), ('f7', None), ('f8', None)]
-    folder_list=[('f1',f1), ('f2', f2), ('f3', f3), ('f4', f4), ('f5', f5), ('f6', f6), ('f7', f7), ('f8', f8)]
+    folder_list=[('f1', f1), ('f2', f2), ('f3', f3), ('f4', f4), ('f5', f5), ('f6', f6), ('f7', f7), ('f8', f8)]
     # print (folder_list)
 
     query = "UPDATE item SET "
@@ -1304,6 +1304,9 @@ def deleteFolder():
         query = "UPDATE productionfolders set exists=false where foldername='{0}';".format(foldername)
         cursor.execute(query)
         conn.commit()
+
+        # change the foldername to some default value
+        # select * from itemtable where itemname = itemname
 
         # functions.createNewFolder(foldername, cursor, conn)
         error = "Folder '{0}' pending deletion".format(foldername) #Temp message
