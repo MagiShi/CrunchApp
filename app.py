@@ -1144,17 +1144,6 @@ def filterItems():
         cursor.execute(query)
         #conn.commit()
         itemid = cursor.fetchall()
-        placeholder = itemid
-        itemname = []
-        for each in itemid:
-            query2 = "SELECT itemname WHERE itemid = " + each[0] + " FROM item;"
-            temp = []
-            cursor.execute(query2)
-            itemname1 = cursor.fetchone()
-            temp[0] = itemname1
-            itemname.append(temp)
-
-        print(itemname)
         error = 'Items filtered (temp message)'
     except Exception as e: 
         cursor.execute("rollback;")
@@ -1162,7 +1151,7 @@ def filterItems():
         ##Error
         error = 'Cannot filter'
         return redirect(url_for('loggedin', error=error))
-    return render_template('homefiltered.html', itemid=placeholder, error=error, itemname=itemname)
+    return render_template('homefiltered.html', itemid=itemid, error=error)
 
 #Adding a new folder 
 @app.route('/addFolder', methods=["POST", "GET"])
