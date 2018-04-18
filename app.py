@@ -108,14 +108,14 @@ def loggedin():
 
         image = cursor.fetchall()
         imageList = [list(row) for row in image]
-        print(imageList[10][0])
+        # print(imageList[10][0])
         for idx, each in enumerate(imageList):
                 img = imageList[idx]
                 ph_front = img
                 if ph_front[0] != None:
                     imgData = functions.getImagedata(ph_front)
                     imageList[idx] = imgData
-        print(imageList)
+        # print(imageList)
                 
 
 

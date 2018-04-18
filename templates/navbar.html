@@ -7,7 +7,7 @@
     <script src="{{ url_for('static',filename='navbar.js') }}"></script>
 </head>
 <nav class="navbar fixed-top">
-    <form class="form-inline">
+    <div class="form-inline">
         <!-- THRACKER -->
         <a class="navbar-brand" href="/home">Thracker</a>
         <div class="input-group">
@@ -18,18 +18,20 @@
                 </button>
             </div>
             <!-- SEARCH BAR INPUT -->
-            <input id="searchBar" class="form-control" type="text" placeholder="Search by name or barcode">
-            <!-- MAGNIFYING GLASS ICON BUTTON -->
-            <span class="input-group-btn">
-                <button class="btn" type="button"><i class="fas fa-search"></i></button>
-            </span>
+            <form class="form-inline">
+                <input id="searchBar" class="form-control" type="text" placeholder="Search by name or barcode">
+                <!-- MAGNIFYING GLASS ICON BUTTON -->
+                <span class="input-group-btn">
+                    <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+                </span>
+            </form>
         </div>
         <!-- ADD ITEM BUTTON -->
         <div id="add-item-page-button" onclick="location.href='/addItem'">Add New Item</div>
         <!-- MENU BUTTON -->
         <div onclick="toggleAccountMenu()" id="menu-nav-button" class="ml-auto"><i class="fas fa-user-circle"></i>
         </div>
-    </form>
+    </div>
 </nav>
 <!-- FILTER MENU -->
 <div id="filter-menu" class="left-side-menu">
