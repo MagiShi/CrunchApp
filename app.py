@@ -660,24 +660,24 @@ def prodFolders():
 def renameFolder():
     # get the folder new name from the user's input
     folderNewName = request.form['foldername']
-    print("folderrename")
-    print(folderNewName)
+    # print("folderrename")
+    # print(folderNewName)
 
     # get the folder id from the value of 'Save' button
     folderCurrentname = request.form['saveNameButton']
 
-    print("foldercurrentname")
-    print(folderCurrentname)
+    # print("foldercurrentname")
+    # print(folderCurrentname)
 
     try:
-        query = "UPDATE productionfolders SET foldername ='{1}' WHERE foldername='{0}';".format(folderCurrentname, folderNewName)
+        query = "UPDATE productionfolders SET foldername ='{0}' WHERE foldername='{1}';".format(folderNewName, folderCurrentname)
         cursor.execute(query)
         conn.commit()
     except Exception as e:
         cursor.execute("rollback;")
 
         ##If folder does not exist etc
-        error = 'Folder information cannot be retrieved'
+        error = 'Folder name cannot be updated. Please make sure a folder with this name does not already exist.  See Help & FAQ for more details.'
         return redirect(url_for('prodFolders', error=error))
     # Refresh the Production Folders page with the updated name of the folder
     return redirect(url_for('prodFolders'))
