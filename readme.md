@@ -37,3 +37,4 @@
 - `heroku open` will open the herokuapp project
 - `flask run` will open the application locally
 ### Troubleshooting
+- Sometimes a user's reservations will not appear on their My Reservations page. Our highly technical fix is just to refresh until they eventually appear.
