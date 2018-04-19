@@ -1250,6 +1250,10 @@ def filterItems():
         print(itemname)
     return render_template('homefiltered.html', itemid=itemid, error=error, itemname=itemname)
 
+@app.route('/search', methods=["POST"])
+def searchItems():
+     return render_template('homefiltered.html')
+
 #Adding a new folder 
 @app.route('/addFolder', methods=["POST", "GET"])
 def addFolder():
