@@ -15,15 +15,18 @@
   - Users can view their upcoming, current, and past reservations.
 ### Bugs and Defects
 - When making or updating the date range of a reservation, the calendar widget requires that you **press the green Apply button** for the input to save. (Do not choose the date and then click outside of the calendar widget if you want changes to be saved.)
+- **The application does not allow multiple image files with the same name** when adding or editing an item.
+- Production folders **cannot** be named "Folder1", "Folder2", "Folder3", ..., "Folder8".
 - On an item's detail page, if there is a carousel of images and the user clicks through the carousel, the image only resizes and repositions itself after a second or two. This is just a minor aesthetic bug.
 - Another minor aesthetic bug: some of the icons on the navigation bar (search bar and the two menu buttons) take some time to load. This makes the buttons smaller for a moment or so.
 ### Missing Functionality
-- Feature 1
-- Feature 2
+- Originally, our team wanted a "guest" view; this would've meant that a user could view and search for items (but not be able to add/edit/delete items, make reservations, add/edit production folders) without having to login. 
+- Additionally, we planned on having a normal user account and an admin account. As an admin, the user would have all the normal functionalities, as well as the ability to completely delete users, items, reservations, and production folders. Currently we mark items as "deletion pending," for example, but don't completely remove them from the database.
+- Our team was also not able to create an Account Page where the user could update their username, password, and email address.
 
 # 2. Install Guide
 ### Pre-requisites
-- Machine should have Python installed
+- Machine should have Python 3 installed
 ### Dependent libraries
 - requirements.txt
 - Set up [Flask](http://flask.pocoo.org/docs/0.12/quickstart/)
