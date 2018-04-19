@@ -1264,6 +1264,9 @@ def searchItems():
     searchItemname = []
 
     for idx, each in enumerate(itemid):
+        print(searchQuery)
+        print(each[0])
+        print(itemname[idx][0])
         if((searchQuery in each[0]) or (searchQuery in itemname[idx][0])):
             searchItemid.append([each[0]])
             searchItemname.append([itemname[idx][0]])
