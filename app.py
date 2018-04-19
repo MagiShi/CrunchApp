@@ -1245,10 +1245,214 @@ def filterItems():
         ##Error
         error = 'Cannot filter'
         return redirect(url_for('loggedin', error=error))
+    query = "SELECT itemname FROM item" 
+
+    if charBool or charArrayBool:
+        query += " WHERE "
+
+    newQ = True #flag for new query
+
+    ##Deal with those stored as arrays ['timeperiod', 'color']
+    if charArrayBool:
+        for c in char_array_enum_list:
+            filterCharList = char2val.get(c)
+            # print (c, "   ", filterCharList)
+
+            newChar = True #flag for filterCharList, new char
+            for char in filterCharList:
+
+                #if first query part
+                if newQ:
+                    query += "('{0}' = ANY({1})".format(char, c)
+                    newQ = False
+                    newChar = False
+                #if first for the particular characteristic
+                elif newChar:
+                    query += " AND ('{0}' = ANY({1})".format(char, c)
+                    newChar = False
+                else:
+                    query += " OR '{0}' = ANY({1})".format(char, c)
+            if filterCharList:
+                query += ")"
+
+    #Filtering based on other attributes ['sex', 'size', 'condition', 'isavailable']
+    if charBool:
+        for c in char_enum_list:
+            filterCharList = char2val.get(c)
+            # print (filterCharList)
+            newChar = True #counter for filterCharList
+            for char in filterCharList:
+
+                #if first query part
+                if newQ:
+                    query += "({0} = '{1}'".format(c, char)
+                    newQ = False
+                    newChar = False
+                #if first for the particular characteristic
+                elif newChar:
+                    query += " AND ({0} = '{1}'".format(c, char)
+                    newChar = False
+                else:
+                    query += " OR {0} = '{1}'".format(c, char)
+            if filterCharList:
+                query += ")"
+
+    query += ";"
+
+    try: 
+        cursor.execute(query)
+        #conn.commit()
+        itemname = cursor.fetchall()
+        error = 'Items filtered (temp message)'
+    except Exception as e: 
+        cursor.execute("rollback;")
+
+        ##Error
+        error = 'Cannot filter'
+        return redirect(url_for('loggedin', error=error))       
+
+    query = "SELECT phfront FROM item" 
+
+    if charBool or charArrayBool:
+        query += " WHERE "
+
+    newQ = True #flag for new query
+
+    ##Deal with those stored as arrays ['timeperiod', 'color']
+    if charArrayBool:
+        for c in char_array_enum_list:
+            filterCharList = char2val.get(c)
+            # print (c, "   ", filterCharList)
+
+            newChar = True #flag for filterCharList, new char
+            for char in filterCharList:
+
+                #if first query part
+                if newQ:
+                    query += "('{0}' = ANY({1})".format(char, c)
+                    newQ = False
+                    newChar = False
+                #if first for the particular characteristic
+                elif newChar:
+                    query += " AND ('{0}' = ANY({1})".format(char, c)
+                    newChar = False
+                else:
+                    query += " OR '{0}' = ANY({1})".format(char, c)
+            if filterCharList:
+                query += ")"
+
+    #Filtering based on other attributes ['sex', 'size', 'condition', 'isavailable']
+    if charBool:
+        for c in char_enum_list:
+            filterCharList = char2val.get(c)
+            # print (filterCharList)
+            newChar = True #counter for filterCharList
+            for char in filterCharList:
+
+                #if first query part
+                if newQ:
+                    query += "({0} = '{1}'".format(c, char)
+                    newQ = False
+                    newChar = False
+                #if first for the particular characteristic
+                elif newChar:
+                    query += " AND ({0} = '{1}'".format(c, char)
+                    newChar = False
+                else:
+                    query += " OR {0} = '{1}'".format(c, char)
+            if filterCharList:
+                query += ")"
+
+    query += ";"
+
+    try: 
+        cursor.execute(query)
+        #conn.commit()
+        itemname = cursor.fetchall()
+        error = 'Items filtered (temp message)'
+    except Exception as e: 
+        cursor.execute("rollback;")
+
+        ##Error
+        error = 'Cannot filter'
+        return redirect(url_for('loggedin', error=error))
+    query = "SELECT itemname FROM item" 
+
+    if charBool or charArrayBool:
+        query += " WHERE "
+
+    newQ = True #flag for new query
+
+    ##Deal with those stored as arrays ['timeperiod', 'color']
+    if charArrayBool:
+        for c in char_array_enum_list:
+            filterCharList = char2val.get(c)
+            # print (c, "   ", filterCharList)
+
+            newChar = True #flag for filterCharList, new char
+            for char in filterCharList:
+
+                #if first query part
+                if newQ:
+                    query += "('{0}' = ANY({1})".format(char, c)
+                    newQ = False
+                    newChar = False
+                #if first for the particular characteristic
+                elif newChar:
+                    query += " AND ('{0}' = ANY({1})".format(char, c)
+                    newChar = False
+                else:
+                    query += " OR '{0}' = ANY({1})".format(char, c)
+            if filterCharList:
+                query += ")"
+
+    #Filtering based on other attributes ['sex', 'size', 'condition', 'isavailable']
+    if charBool:
+        for c in char_enum_list:
+            filterCharList = char2val.get(c)
+            # print (filterCharList)
+            newChar = True #counter for filterCharList
+            for char in filterCharList:
+
+                #if first query part
+                if newQ:
+                    query += "({0} = '{1}'".format(c, char)
+                    newQ = False
+                    newChar = False
+                #if first for the particular characteristic
+                elif newChar:
+                    query += " AND ({0} = '{1}'".format(c, char)
+                    newChar = False
+                else:
+                    query += " OR {0} = '{1}'".format(c, char)
+            if filterCharList:
+                query += ")"
+
+    query += ";"
+
+    try: 
+        cursor.execute(query)
+        #conn.commit()
+        image = cursor.fetchall()
+        error = 'Items filtered (temp message)'
+    except Exception as e: 
+        cursor.execute("rollback;")
+
+        ##Error
+        error = 'Cannot filter'
+        return redirect(url_for('loggedin', error=error))
    
 
         print(itemname)
-    return render_template('homefiltered.html', itemid=itemid, error=error, itemname=itemname)
+    imageList = [list(row) for row in image]
+        # print(imageList[10][0])
+    for idx, each in enumerate(imageList):
+        img = imageList[idx]
+        ph_front = img
+        if ph_front[0] != None:
+            imgData = functions.getImagedata(ph_front)
+            imageList[idx] = imgData
+    return render_template('homefiltered.html', itemid=itemid, error=error, itemname=itemname, image=imageList)
 
 @app.route('/search', methods=["POST"])
 def searchItems():
