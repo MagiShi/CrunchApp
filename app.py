@@ -132,9 +132,11 @@ def newUser():
 @app.route('/forgotpass')
 def forgotPass():
     if request.args.get('error') is None:
-        error = 'Please enter email address'
+        # error = 'Please enter email address.'
+        error = None
     else:
-        error = request.args.get('error')
+        error = 'Please enter email address.'
+        # error = request.args.get('error')
     return render_template('forgotpass.html', error=error)
 
 #For after clicking on forgot password button 
@@ -159,7 +161,7 @@ def sendMail():
         print (e)
         query = "rollback;"
         cursor.execute(query)
-        error = 'Please enter an email'
+        error = 'Please enter an email.'
         return redirect(url_for('forgotPass', error=error))
     error = 'Email sent'
     return redirect(url_for('welcome', error=error))
@@ -181,7 +183,7 @@ def register():
         isAdmin = True
 
     if username == '' or email == '' or password == '':
-        error = 'Please fill in all fields'
+        error = 'Please fill in all fields.'
         return redirect(url_for('newUser', error=error))
 
     query = "INSERT into registereduser values ('{0}', '{1}', '{2}', {3});".format(email, username, password, isAdmin)
@@ -223,7 +225,7 @@ def addItem():
 
         # Check this before continuing through everything. All items MUST have a name
         if item_name == '':
-            error = 'Item must have a name'
+            error = 'Item must have a name.'
             return redirect(url_for('add', error=error))
 
         # Check if itemName already exists
@@ -261,7 +263,7 @@ def addItem():
         if prop_t and costume_t:
 
             # Redirects with error because a prop cannot be both a prop and a costume
-            error = 'Item cannot have both a prop type and an costume type'
+            error = 'Item cannot have both a prop type and an costume type.'
             return redirect(url_for('add', error=error))
         elif prop_t:
             item_type = 'prop'
@@ -301,7 +303,7 @@ def addItem():
             cursor.execute("rollback;")
 
             ##If item creation fails
-            error = 'Item creation has failed. Make sure that the item name is unique. See Help/Documentation for more details'
+            error = 'Item creation has failed. Make sure that the item name is unique. See the Help & FAQ menu for more details.'
             return redirect(url_for('add', error=error))
 
         # Now insert images for the item, which is already in the database.
@@ -319,7 +321,7 @@ def addItem():
             cursor.execute(query)
 
             ##If photo insertion fails
-            error = 'Item creation failed because of photo insertion. Make sure that added photos do not share the same name'
+            error = 'Item creation failed because of photo insertion. Make sure that added photos do not share the same name.'
             query = "DELETE from item where itemid='{0}'".format(item_id)
             cursor.execute(query)
             conn.commit()
@@ -461,12 +463,12 @@ def postReserveItem(item_id):
         print (query)
         cursor.execute(query)
         conn.commit()
-        error = "Your reservation for item with barcode {0} has been reserved from {1} to {2}".format(itemid, start_date, end_date)
+        error = "Your reservation for item with barcode {0} has been reserved from {1} to {2}.".format(itemid, start_date, end_date)
 
     except Exception as e:
         cursor.execute("rollback;")
         # print("Error on item reservation page:", e)
-        passed_error = "Your reservation for item with barcode {0} cannot be created for dates {1} to {2}".format(itemid, start_date, end_date)
+        passed_error = "Your reservation for item with barcode {0} cannot be created for dates {1} to {2}.".format(itemid, start_date, end_date)
         try:
             #returns all reservations with that item id
             cursor.execute("SELECT * from reservation where itemid='{0}';".format(item_id))
@@ -522,7 +524,7 @@ def editReservation(data):
     except Exception as e:
         cursor.execute("rollback;")
         print(e)
-        error = "Cannot update date"
+        error = "Cannot update date."
         return redirect(url_for('reservations', error=error))
     return redirect(url_for('reservations', error=error))
 
@@ -531,6 +533,7 @@ def toEditProdFolders(item_id):
     if functions.isLoggedIn(session.get('user')) is False:
         return redirect(url_for('welcome'))
     else:
+        print("to edit prod folders")
         item_id = item_id
         error = None
         item_name = None
@@ -559,8 +562,8 @@ def toEditProdFolders(item_id):
         try: 
             cursor.execute(query)
             all_info = cursor.fetchone()
-            # print("All info")
-            # print (all_info)
+            print("All info")
+            print (all_info)
             if len(all_info) > 8:
                 item_name = all_info[0]
                 f1 = all_info[1]
@@ -577,7 +580,7 @@ def toEditProdFolders(item_id):
             cursor.execute("rollback;")
 
             # ##If item does not exist etc
-            error = 'Item production folder information cannot be retrieved'
+            error = 'Item production folder information cannot be retrieved.'
             return redirect(url_for('getItemInfo', item_id=item_id, error=error))
 
         all_folder_id = [f1, f2, f3, f4, f5, f6, f7, f8]
@@ -632,14 +635,13 @@ def editProdFolders(item_id):
     try:
         cursor.execute(query)
         conn.commit()
+        error = "The item was successfully added to the selected production folders."
     except Exception as e:
         print(e)
         cursor.execute("rollback;")
-        error = "Production folder changes cannot be executed"
+        error = "Production folder changes cannot be executed."
         return redirect(url_for('toEditProdFolders', item_id=item_id, error=error))
 
-
-    error = None
     return redirect(url_for('getItemInfo', item_id=item_id, error=error))
 
 # render Production Folders page with all folders in the database
@@ -666,7 +668,7 @@ def prodFolders():
             print (e)
 
             cursor.execute("rollback;")
-            error = "Cannot get production folders"
+            error = "Cannot get production folders."
         # print (folder_names)
         # print (all_items)
 
@@ -730,7 +732,7 @@ def renameFolder():
         cursor.execute("rollback;")
 
         ##If folder does not exist etc
-        error = 'Folder name cannot be updated. Please make sure a folder with this name does not already exist.  See Help & FAQ for more details.'
+        error = 'Folder name cannot be updated. Please make sure a folder with this name does not already exist. See the Help & FAQ menu for more details.'
         return redirect(url_for('prodFolders', error=error))
     # Refresh the Production Folders page with the updated name of the folder
     return redirect(url_for('prodFolders'))
@@ -835,7 +837,7 @@ def reservations():
         except Exception as e:
             cursor.execute("rollback;")
             print("Error: ", e)
-            error = "Cannot find your reservations"
+            error = "Cannot find your reservations."
             return render_template('reservations.html', error=error)
 
         # allreservations gives all reservations in the system
@@ -858,7 +860,7 @@ def deleteItemFlag(item_id):
         cursor.execute(query)
 
         ##If item creation fails
-        error = 'Item deletion has failed. Could not remove item from production folders'
+        error = 'Item deletion has failed. Could not remove item from production folders.'
         return redirect(url_for('getItemInfo', item_id=item_id, error=error))
 
     query = "DELETE from reservation where itemid='{0}';".format(item_id)
@@ -871,11 +873,11 @@ def deleteItemFlag(item_id):
         cursor.execute(query)
 
         ##If item creation fails
-        error = 'Item deletion has failed. Could not remove item reservations. Item is removed from all production folders'
+        error = 'Item deletion has failed. Could not remove item reservations. Item is removed from all production folders.'
         return redirect(url_for('getItemInfo', item_id=item_id, error=error))
 
     conn.commit()
-    error = 'Item marked for deletion! Waiting for action by Admin'
+    error = 'Item marked for deletion! Waiting for action by Admin.'
     return redirect(url_for('getItemInfo', item_id=item_id, error=error))
 
 #pre-loading information for a specific item
@@ -964,7 +966,7 @@ def getItemInfo(item_id):
             cursor.execute("rollback;")
 
             ##If item does not exist etc
-            error = 'Item information cannot be retrieved'
+            error = 'Item information cannot be retrieved.'
             return redirect(url_for('loggedin', error=error))
 
         ##culture, color, timeperiod and all ph_*_data are arrays
@@ -1014,7 +1016,7 @@ def edit(item_id):
             print (e)
 
             ##If item does not exist etc
-            error = 'Item information cannot be retrieved for edit'
+            error = 'Item information cannot be retrieved for edit.'
             return redirect(url_for('loggedin', error=error))
 
         ##culture, color, timeperiod are arrays/tuples
@@ -1031,7 +1033,7 @@ def editItem(item_id):
 
     # Check this before continuing through everything. All items MUST have a name
     if item_name == '':
-        error = 'Item must have a name'
+        error = 'Item must have a name.'
         return redirect(url_for('edit', error=error, item_id=item_id))
 
      # Check if itemName already exists
@@ -1067,7 +1069,7 @@ def editItem(item_id):
     # Initialize itemtype and itype (prop or costume) using prop_t and costume_t
     if prop_t and costume_t:
         # Redirects with error because a prop cannot be both a prop and a costume
-        error = 'Item cannot have both a prop type and an costume type'
+        error = 'Item cannot have both a prop type and an costume type.'
         return redirect(url_for('edit', error=error, item_id=item_id))
     elif prop_t:
         item_type = 'prop'
@@ -1244,7 +1246,7 @@ def filterItems():
         cursor.execute("rollback;")
 
         ##Error
-        error = 'Cannot filter'
+        error = 'Cannot filter.'
         return redirect(url_for('loggedin', error=error))
 
     query = "SELECT itemname FROM item" 
@@ -1310,7 +1312,7 @@ def filterItems():
         cursor.execute("rollback;")
 
         ##Error
-        error = 'Cannot filter'
+        error = 'Cannot filter.'
         return redirect(url_for('loggedin', error=error))
     query = "SELECT itemname FROM item" 
 
@@ -1375,7 +1377,7 @@ def filterItems():
         cursor.execute("rollback;")
 
         ##Error
-        error = 'Cannot filter'
+        error = 'Cannot filter.'
         return redirect(url_for('loggedin', error=error))       
 
     query = "SELECT itemname FROM item" 
@@ -1441,7 +1443,7 @@ def filterItems():
         cursor.execute("rollback;")
 
         ##Error
-        error = 'Cannot filter'
+        error = 'Cannot filter.'
         return redirect(url_for('loggedin', error=error))
     query = "SELECT phfront FROM item" 
 
@@ -1506,7 +1508,7 @@ def filterItems():
         cursor.execute("rollback;")
 
         ##Error
-        error = 'Cannot filter'
+        error = 'Cannot filter.'
         return redirect(url_for('loggedin', error=error))
    
 
@@ -1581,12 +1583,12 @@ def addFolder():
             conn.commit()
 
             # functions.createNewFolder(foldername, cursor, conn)
-            error = "Folder '{0}' added".format(folder_name) #Temp message?
+            error = "Folder '{0}' added.".format(folder_name) #Temp message?
         except Exception as e: 
             cursor.execute("rollback;")
 
             ##If foldername is a repeat.
-            error = 'Folder cannot be created. Make sure a folder with this name does not already exist.  See Help & FAQ for more details.'
+            error = 'Folder cannot be created. Make sure a folder with this name does not already exist. See the Help & FAQ menu for more details.'
 
             if item_id:
                 return redirect(url_for('toEditProdFolders', item_id=item_id, error=error))
@@ -1643,12 +1645,12 @@ def deleteFolder():
         conn.commit()
 
         # functions.createNewFolder(foldername, cursor, conn)
-        error = "Folder '{0}' pending deletion".format(foldername) #Temp message
+        error = "Folder '{0}' pending deletion.".format(foldername) #Temp message
     except Exception as e: 
         cursor.execute("rollback;")
 
         ##If folder should not have passed checks (should not happen)
-        error = 'Cannot delete folder'
+        error = 'Cannot delete folder.'
         return redirect(url_for('prodFolders', error=error))
 
     # checking to see where redirect, depending on if there is an item_id
