@@ -30,7 +30,14 @@
                     <div class="col-sm-6 col-md-4 col-lg-3 item-container">
                         <div class="item" onclick="location.href='item/{{itemid[loop.index0][0]}}'">
                             <div class="item-image-container">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/No_image_available_600_x_450.svg">
+                                {% if image[loop.index0][0] != None %}
+                                    {% for i in image[loop.index0] %} 
+                                        <img id="item-preview" src="data:image/jpeg;base64, {{i}}" /> 
+                                    {% endfor %}
+                                {% endif %}
+                                {% if image[loop.index0][0] == None %}
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/No_image_available_600_x_450.svg">
+                                {% endif %}
                             </div>
                             <p>{{item[0]}}</p>
                         </div>

@@ -1256,13 +1256,16 @@ def searchItems():
 
     itemidQuery = "SELECT itemid FROM item;"
     itemNameQuery = "SELECT itemname FROM item;"
+    imageQuery = "SELECT phfront FROM item;"
     cursor.execute(itemidQuery)
     itemid = cursor.fetchall()
     cursor.execute(itemNameQuery)
     itemname = cursor.fetchall()
+    cursor.execute(imageQuery)
+    image = cursor.fetchall()
     searchItemid = []
     searchItemname = []
-
+    searchImages = []
     for idx, each in enumerate(itemid):
         print(searchQuery)
         print(each[0])
@@ -1270,10 +1273,16 @@ def searchItems():
         if((searchQuery in each[0]) or (searchQuery in itemname[idx][0])):
             searchItemid.append([each[0]])
             searchItemname.append([itemname[idx][0]])
+            searchImages.append([image[idx][0]])
+    for idx, each in enumerate(searchImages):
+                img = searchImages[idx]
+                ph_front = img
+                if ph_front[0] != None:
+                    imgData = functions.getImagedata(ph_front)
+                    searchImages[idx] = imgData    
 
 
-
-    return render_template('homefiltered.html', itemid=searchItemid, itemname=searchItemname)
+    return render_template('homefiltered.html', itemid=searchItemid, itemname=searchItemname, image=searchImages)
 
 #Adding a new folder 
 @app.route('/addFolder', methods=["POST", "GET"])
