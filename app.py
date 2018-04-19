@@ -43,6 +43,7 @@ url = urlparse(os.environ['DATABASE_URL'])
 
 
 
+
 db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname)
 schema = "schema.sql"
 #connecting a cursor for the database
@@ -1596,15 +1597,43 @@ def addFolder():
 def deleteFolder():
     foldername = request.form['foldername']
     # print (request.form)
-    print("foldername")
-    print(foldername)
     try: 
+        folderidquery = "SELECT folderid from productionfolders where foldername='{0}';".format(foldername)
+        cursor.execute(folderidquery)
+        folderid = cursor.fetchone()[0]
+
+        # find the items that have that folderid = true
+        # set it to false
+        updateItemQuery = "UPDATE item set {0}=false where {0}=true;".format(folderid)
+        cursor.execute(updateItemQuery)
+        conn.commit()
+
         query = "UPDATE productionfolders set exists=false where foldername='{0}';".format(foldername)
         cursor.execute(query)
         conn.commit()
 
         # change the foldername to some default value
-        # select * from itemtable where itemname = itemname
+        # so we can use the previously used name again
+        if (folderid == "f1"):
+            newFolderName = "Folder1"
+        elif (folderid == "f2"):
+            newFolderName = "Folder2"
+        elif (folderid == "f3"):
+            newFolderName = "Folder3"
+        elif (folderid == "f4"):
+            newFolderName = "Folder4"
+        elif (folderid == "f5"):
+            newFolderName = "Folder5"
+        elif (folderid == "f6"):
+            newFolderName = "Folder6"
+        elif (folderid == "f7"):
+            newFolderName = "Folder7"
+        elif (folderid == "f8"):
+            newFolderName = "Folder8"
+
+        updateNameQuery = "UPDATE productionfolders set foldername='{0}' where folderid='{1}';".format(newFolderName, folderid)
+        cursor.execute(updateNameQuery)
+        conn.commit()
 
         # functions.createNewFolder(foldername, cursor, conn)
         error = "Folder '{0}' pending deletion".format(foldername) #Temp message
@@ -1613,7 +1642,7 @@ def deleteFolder():
 
         ##If folder should not have passed checks (should not happen)
         error = 'Cannot delete folder'
-        return redirect(url_for('loggedin', error=error))
+        return redirect(url_for('prodFolders', error=error))
 
     # checking to see where redirect, depending on if there is an item_id
     return redirect(url_for('prodFolders', error=error))
