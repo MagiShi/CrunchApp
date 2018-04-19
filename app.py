@@ -644,7 +644,9 @@ def prodFolders():
         error = request.args.get('error')
         folder_names = None
         all_items = None
-        folderNameQuery = "SELECT foldername, folderid FROM productionfolders where exists=true;"
+
+        ## foldernames are now organized by folderid
+        folderNameQuery = "SELECT foldername, folderid FROM productionfolders where exists=true ORDER BY foldername;"
         try:
             cursor.execute(folderNameQuery)
             folder_names = cursor.fetchall()
@@ -661,8 +663,7 @@ def prodFolders():
         # print (all_items)
 
         # want: [(Foldername, folderid, [(Itemname, itemid), (Itemname2, itemid2)]), (Foldername2, folderid2, [(Itemname, itemid), (Itemname2, itemid2)])]
-        
-        ## overall list ^
+        ## overall list
         list_of_folders = []
         for f_name, f_id in folder_names:
 
@@ -679,16 +680,25 @@ def prodFolders():
                 folder_dict['f6'] = (f6)
                 folder_dict['f7'] = (f7)
                 folder_dict['f8'] = (f8)
-                # items_in_folder = []
 
                 if folder_dict.get(f_id):
                     # print ("FOUND: folder", f_id, folder_dict[f_id])
+                    # items_in_folder = (i_id, i_name)
                     items_in_folders.append((i_id, i_name))
                     # items_in_folders_list.append(items_in_folder)
-            list_of_folders.append((f_name, f_id, items_in_folders))
-        print (list_of_folders)
 
-        return render_template('prodFolders.html', foldernames=folder_names, iteminfolder=items_in_folders ,error=error)
+            ## use if want to pass in only folders that have items
+            # if len(items_in_folders) > 0:
+            #     list_of_folders.append((f_name, f_id, items_in_folders))
+
+            ## use instead of above if statement if want to pass in info 
+            ## for all folders, even those with no info.
+            list_of_folders.append((f_name, f_id, items_in_folders))
+
+        # print (list_of_folders)
+
+        ## Both foldernames and itemsinfolder are lists, sorted by the folderid
+        return render_template('prodFolders.html', foldernames=folder_names, itemsinfolder=items_in_folders ,error=error)
 
 # Update the name of production folder
 @app.route('/postrenameFolder', methods=['POST'])
