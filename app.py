@@ -547,17 +547,20 @@ def toEditProdFolders(item_id):
         folderNameQuery = "SELECT foldername, folderid FROM productionfolders where exists=true;"
         cursor.execute(folderNameQuery)
         all_folder_names = cursor.fetchall()
-        # print (all_foldername)
+        # print("All folder names")
+        # print (all_folder_names)
         error = request.args.get('error')
 
         query = "SELECT itemname, f1, f2, f3, f4, f5, f6, f7, f8 FROM item where itemid='{0}';".format(item_id)
-        print (query)
+        # print("HERE")
+        # print (query)
         
         #query = "SELECT * FROM item WHERE itemid='{0}';".format(item_id)
         try: 
             cursor.execute(query)
             all_info = cursor.fetchone()
-            # print (allinfo)
+            # print("All info")
+            # print (all_info)
             if len(all_info) > 8:
                 item_name = all_info[0]
                 f1 = all_info[1]
@@ -578,16 +581,18 @@ def toEditProdFolders(item_id):
             return redirect(url_for('getItemInfo', item_id=item_id, error=error))
 
         all_folder_id = [f1, f2, f3, f4, f5, f6, f7, f8]
+        # print("all folder id")
+        # print(all_folder_id)
         all_folder_info = []
         for i in range(len(all_folder_id)):
-            fstring = "f{0}".format(i)
+            fstring = "f{0}".format(i + 1)
             for fname, fid in all_folder_names:
                 if fid == fstring:
                     all_folder_info.append((fname, fid, all_folder_id[i]))
         ## all_folder_info: 
         ## [(folder_name, folder_id, if_item_in_folder)]
         ## EX: [('Folder 9', 'f8'), ('Name4', 'f3'), ('Name5', 'f1'), ('Name7', 'f6'), ('Name8', 'f7'), ('Name 10', 'f4'), ('Folder 20', 'f5')]
-        print (all_folder_info)
+        # print (all_folder_info)
 
 
         return render_template('editProdFolders.html', itemid=item_id, itemname=item_name, foldername=all_folder_info, error=error)
@@ -595,6 +600,7 @@ def toEditProdFolders(item_id):
 
 @app.route('/posteditFolders/<item_id>', methods=['POST'])
 def editProdFolders(item_id):
+    print("HERE")
     item_id = item_id
     f1= request.form.get('f1')
     f2= request.form.get('f2')
@@ -607,7 +613,8 @@ def editProdFolders(item_id):
 
     # EX: [('f1', None), ('f2', None), ('f3', None), ('f4', None), ('f5', 'f5'), ('f6', 'f6'), ('f7', None), ('f8', None)]
     folder_list=[('f1', f1), ('f2', f2), ('f3', f3), ('f4', f4), ('f5', f5), ('f6', f6), ('f7', f7), ('f8', f8)]
-    # print (folder_list)
+    print("folder list")
+    print (folder_list)
 
     query = "UPDATE item SET "
     for fid, in_folder in folder_list:
