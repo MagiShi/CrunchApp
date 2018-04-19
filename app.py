@@ -1252,7 +1252,25 @@ def filterItems():
 
 @app.route('/search', methods=["POST"])
 def searchItems():
-     return render_template('homefiltered.html')
+    searchQuery = request.form.get('search')
+
+    itemidQuery = "SELECT itemid FROM item;"
+    itemNameQuery = "SELECT itemname FROM item;"
+    cursor.execute(itemidQuery)
+    itemid = cursor.fetchall()
+    cursor.execute(itemNameQuery)
+    itemname = cursor.fetchall()
+    searchItemid = []
+    searchItemname = []
+
+    for idx, each in enumerate(itemid):
+        if((searchQuery in each[0]) or (searchQuery in itemname[idx][0])):
+            searchItemid.append([each[0]])
+            searchItemname.append([itemname[idx][0]])
+
+
+
+    return render_template('homefiltered.html', itemid=searchItemid, itemname=searchItemname)
 
 #Adding a new folder 
 @app.route('/addFolder', methods=["POST", "GET"])
