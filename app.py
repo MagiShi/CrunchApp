@@ -840,15 +840,30 @@ def reservations():
 @app.route('/deleteItem/<item_id>', methods=['POST'])
 def deleteItemFlag(item_id):
     item_id = item_id
-    query = "UPDATE item set pendingdelete=true where itemid='{0}';".format(item_id)
+    query = "UPDATE item set pendingdelete=true, f1=FALSE, f2=FALSE, f3=FALSE, f4=FALSE, f5=FALSE, f6=FALSE, f7=FALSE, f8=FALSE where itemid='{0}';".format(item_id)
+    print (query)
     try: 
         cursor.execute(query)
+
     except Exception as e: 
         query = "rollback;"
         cursor.execute(query)
 
         ##If item creation fails
-        error = 'Item deletion has failed.'
+        error = 'Item deletion has failed. Could not remove item from production folders'
+        return redirect(url_for('getItemInfo', item_id=item_id, error=error))
+
+    query = "DELETE from reservation where itemid='{0}';".format(item_id)
+    print (query)
+    try: 
+        cursor.execute(query)
+
+    except Exception as e: 
+        query = "rollback;"
+        cursor.execute(query)
+
+        ##If item creation fails
+        error = 'Item deletion has failed. Could not remove item reservations. Item is removed from all production folders'
         return redirect(url_for('getItemInfo', item_id=item_id, error=error))
 
     conn.commit()
