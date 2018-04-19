@@ -1252,7 +1252,7 @@ def filterItems():
 
 @app.route('/search', methods=["POST"])
 def searchItems():
-    searchQuery = request.form.get('search')
+    searchQuery = request.form.get('searchBar')
 
     itemidQuery = "SELECT itemid FROM item;"
     itemNameQuery = "SELECT itemname FROM item;"
