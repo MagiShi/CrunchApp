@@ -640,21 +640,58 @@ def prodFolders():
     if functions.isLoggedIn(session.get('user')) is False:
         return redirect(url_for('welcome'))
     else:
-        foldernames = None
-        folderNameQuery = "SELECT foldername FROM productionfolders where exists=true;"
-        cursor.execute(folderNameQuery)
-        foldernames = cursor.fetchall()
-
-        query = "SELECT foldername FROM productionfolders where exists=false;"
-        cursor.execute(query)
-        # code bellow converts the tuple into a simple arraylist in order to pass the data directly into JS.
-        # ex: [('Folder 1',),('Folder 2',)] -> ['Folder 1', 'Folder 2']
-        deletedfolders = [ x[0] for x in cursor.fetchall()]
 
         error = request.args.get('error')
+        folder_names = None
+        all_items = None
+        folderNameQuery = "SELECT foldername, folderid FROM productionfolders where exists=true;"
+        try:
+            cursor.execute(folderNameQuery)
+            folder_names = cursor.fetchall()
+
+            item_query = "SELECT itemid, itemname, f1, f2, f3, f4, f5 ,f6 ,f7, f8 FROM item;"
+            cursor.execute(item_query)
+            all_items = cursor.fetchall()
+        except Exception as e:
+            print (e)
+
+            cursor.execute("rollback;")
+            error = "Cannot get production folders"
+        # print (folder_names)
+        # print (all_items)
+
+        items_in_folders_list = []
+        for i_id, i_name, f1, f2, f3, f4, f5, f6, f7, f8 in all_items:
+            # print (i_id, i_name, f1, f2, f3, f4, f5, f6, f7, f8)
+            folder_dict = {}
+            folder_dict['f1'] = (f1)
+            folder_dict['f2'] = (f2)
+            folder_dict['f3'] = (f3)
+            folder_dict['f4'] = (f4)
+            folder_dict['f5'] = (f5)
+            folder_dict['f6'] = (f6)
+            folder_dict['f7'] = (f7)
+            folder_dict['f8'] = (f8)
+            items_in_folder = []
+            for f_name, f_id in folder_names:
+                # print (f_name, f_id) 
+                if folder_dict.get(f_id):
+                    # print ("FOUND: folder", f_id, folder_dict[f_id])
+                    items_in_folder.append((i_id, i_name))
+                items_in_folders_list.append((f_id, f_name, items_in_folder))
+        # print (items_in_folders_list)
+        # folder_of_items = []
+
+        # query = "SELECT foldername FROM productionfolders where exists=false;"
+        # cursor.execute(query)
+        # # code bellow converts the tuple into a simple arraylist in order to pass the data directly into JS.
+        # # ex: [('Folder 1',),('Folder 2',)] -> ['Folder 1', 'Folder 2']
+        # deletedfolders = [ x[0] for x in cursor.fetchall()]
+
         # print (foldernames)
 
-        return render_template('prodFolders.html', foldernames=foldernames, deletedfolders=deletedfolders, error=error)
+        # return render_template('prodFolders.html', foldernames=folder_names, deletedfolders=deletedfolders, error=error)
+        return render_template('prodFolders.html', foldernames=folder_names, iteminfolder=items_in_folders_list ,error=error)
 
 # Update the name of production folder
 @app.route('/postrenameFolder', methods=['POST'])
