@@ -1311,7 +1311,7 @@ def filterItems():
         error = 'Cannot filter'
         return redirect(url_for('loggedin', error=error))       
 
-    query = "SELECT phfront FROM item" 
+    query = "SELECT itemname FROM item" 
 
     if charBool or charArrayBool:
         query += " WHERE "
@@ -1376,7 +1376,7 @@ def filterItems():
         ##Error
         error = 'Cannot filter'
         return redirect(url_for('loggedin', error=error))
-    query = "SELECT itemname FROM item" 
+    query = "SELECT phfront FROM item" 
 
     if charBool or charArrayBool:
         query += " WHERE "
