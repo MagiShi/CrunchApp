@@ -11,7 +11,7 @@ var availability = "(all availabilities); ";
 
 
 var formValues = JSON.parse(localStorage.getItem('formValues')) || {};
-var $checkboxes = $("filter-menu :checkbox");
+var $checkboxes = $("#filter-menu :checkbox");
 
 
 function allChecked(){
