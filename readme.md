@@ -22,13 +22,14 @@
 ### Missing Functionality
 - Originally, our team wanted a "guest" view; this would've meant that a user could view and search for items (but not be able to add/edit/delete items, make reservations, add/edit production folders) without having to login. 
 - Additionally, we planned on having a normal user account and an admin account. As an admin, the user would have all the normal functionalities, as well as the ability to completely delete users, items, reservations, and production folders. Currently we mark items as "deletion pending," for example, but don't completely remove them from the database.
-- Our team was also not able to create an Account Page where the user could update their username, password, and email address.
+- There is no User Account Page where the user could update their username, password, and email address.
+- Currently, a user cannot search by itemname/barcode and filter characteristics at the same time.
 
 # 2. Install Guide
 ### Pre-requisites
 - Machine should have Python 3 installed
 ### Dependent libraries
-- requirements.txt
+- install the packages within requirements.txt
 - Set up [Flask](http://flask.pocoo.org/docs/0.12/quickstart/)
 - Set up [Heroku](https://devcenter.heroku.com/articles/getting-started-with-python#introduction)
 ### Download instructions
@@ -38,6 +39,8 @@
 ### Run instructions
 - Navigate to the program files
 - `heroku open` will open the herokuapp project
-- `flask run` will open the application locally
+- To open the  application locally
+	- For Windows: `flask run`
+	- For OSX: `python3 app.py`
 ### Troubleshooting
 - Sometimes a user's reservations will not appear on their My Reservations page. Our highly technical fix is just to refresh until they eventually appear.
