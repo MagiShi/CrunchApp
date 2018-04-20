@@ -9,23 +9,6 @@ var size = "(all sizes); ";
 var condition = "(all conditions); ";
 var availability = "(all availabilities); ";
 
-
-var checkboxValues = JSON.parse(localStorage.getItem('checkboxValues')) || {},
-    $checkboxes = $(":checkbox");
-
-$checkboxes.on("change", function(){
-  $checkboxes.each(function(){
-    checkboxValues[this.id] = this.checked;
-  });
-  
-  localStorage.setItem("checkboxValues", JSON.stringify(checkboxValues));
-});
-
-// On page load
-$.each(checkboxValues, function(key, value) {
-  $("#" + key).prop('checked', value);
-});
-
 // Update the homepage's text representing the current filters
 function updateFiltersList() {
     // Loop through all the filters and check the checked checkboxess
@@ -37,7 +20,7 @@ function updateFiltersList() {
 }
 
 // Update a specific filter section (e.g. color, size, condition) based on the currently selected checkboxes
-function updateFilterSelection(i) {
+function updateFilterSection(i) {
     var resultingString = "";
     
     var currFilters = "";
