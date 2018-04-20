@@ -10,7 +10,7 @@ var condition = "(all conditions); ";
 var availability = "(all availabilities); ";
 
 var formValues = JSON.parse(localStorage.getItem('formValues')) || {};
-var $checkboxes = $("left-side-menu:checkbox");
+var $checkboxes = $("left-side-menu :checkbox");
 
 
 function allChecked(){
