@@ -661,7 +661,7 @@ def prodFolders():
             cursor.execute(folderNameQuery)
             folder_names = cursor.fetchall()
 
-            item_query = "SELECT itemid, itemname, f1, f2, f3, f4, f5 ,f6 ,f7, f8 FROM item;"
+            item_query = "SELECT itemid, itemname, f1, f2, f3, f4, f5 ,f6 ,f7, f8, phfront FROM item;"
             cursor.execute(item_query)
             all_items = cursor.fetchall()
         except Exception as e:
@@ -670,17 +670,17 @@ def prodFolders():
             cursor.execute("rollback;")
             error = "Cannot get production folders."
         # print (folder_names)
-        # print (all_items)
+        print (all_items)
 
-        # want: [(Foldername, folderid, [(Itemname, itemid), (Itemname2, itemid2)]), (Foldername2, folderid2, [(Itemname, itemid), (Itemname2, itemid2)])]
+        # want: [(Foldername, folderid, [(Itemname, itemid, photo1), (Itemname2, itemid2, photo2)]), (Foldername2, folderid2, [(Itemname, itemid), (Itemname2, itemid2)])]
         ## overall list
         list_of_folders = []
         for f_name, f_id in folder_names:
 
             ## list of items that are in a specific folder
-            ## [(Itemname, itemid), (Itemname2, itemid2)]
+            ## [(Itemname, itemid, photo), (Itemname2, itemid2, photo2)]
             items_in_folders = []
-            for i_id, i_name, f1, f2, f3, f4, f5, f6, f7, f8 in all_items:
+            for i_id, i_name, f1, f2, f3, f4, f5, f6, f7, f8, phf in all_items:
                 folder_dict = {}
                 folder_dict['f1'] = (f1)
                 folder_dict['f2'] = (f2)
@@ -692,9 +692,11 @@ def prodFolders():
                 folder_dict['f8'] = (f8)
 
                 if folder_dict.get(f_id):
+                    # print (phf)
+                    ph = functions.getImagedata([phf])
                     # print ("FOUND: folder", f_id, folder_dict[f_id])
                     # items_in_folder = (i_id, i_name)
-                    items_in_folders.append((i_id, i_name))
+                    items_in_folders.append((i_id, i_name, ph))
                     # items_in_folders_list.append(items_in_folder)
 
             ## use if want to pass in only folders that have items
@@ -705,7 +707,8 @@ def prodFolders():
             ## for all folders, even those with no info.
             list_of_folders.append((f_name, f_id, items_in_folders))
 
-        # print (list_of_folders)
+        print (list_of_folders)
+        # print (ph)
 
         ## Both foldernames and itemsinfolder are lists, sorted by the folderid
         return render_template('prodFolders.html', foldernames=folder_names, itemsinfolder=items_in_folders ,error=error)
@@ -922,6 +925,7 @@ def getItemInfo(item_id):
             ph_bottom_data = functions.getImagedata(ph_bottom)
             ph_right_data = functions.getImagedata(ph_right)
             ph_left_data = functions.getImagedata(ph_left)
+            print (ph_front)
 
             query = "SELECT startdate, enddate, email FROM reservation WHERE itemid='{0}' and status='current';".format(item_id)
             cursor.execute(query)
