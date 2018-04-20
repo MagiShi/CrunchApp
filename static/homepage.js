@@ -37,7 +37,7 @@ function updateFiltersList() {
 }
 
 // Update a specific filter section (e.g. color, size, condition) based on the currently selected checkboxes
-function updateFilterSection(i) {
+function updateFilterSelection(i) {
     var resultingString = "";
     
     var currFilters = "";
