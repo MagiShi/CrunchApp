@@ -1258,9 +1258,9 @@ def filterItems():
     image = []
 
     for each in allCol:
-        itemid.append(each[0])
-        itemname.append(each[1])
-        image.append(each[2])
+        itemid.append([each[0]])
+        itemname.append([each[1]])
+        image.append([each[2]])
     imageList = [list(row) for row in image]
         # print(imageList[10][0])
     for idx, each in enumerate(imageList):
