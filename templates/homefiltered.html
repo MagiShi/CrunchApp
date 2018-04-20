@@ -22,7 +22,9 @@
         <!-- MAIN PAGE CONTENT -->
         <div class="all-items container-fluid">
             <div class="row" id="current-filters">
-               (TODO: Applied filters need to appear here!!)
+               {% if search != "a" %}
+                    <p> Filtering by "{{search}}" </p>
+               {% endif %}
             </div>
             <!-- ITEM LIST -->
             <div class="row">
