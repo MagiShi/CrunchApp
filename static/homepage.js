@@ -9,8 +9,9 @@ var size = "(all sizes); ";
 var condition = "(all conditions); ";
 var availability = "(all availabilities); ";
 
+
 var formValues = JSON.parse(localStorage.getItem('formValues')) || {};
-var $checkboxes = $("left-side-menu :checkbox");
+var $checkboxes = $("filter-menu :checkbox");
 
 
 function allChecked(){
