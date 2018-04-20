@@ -9,21 +9,37 @@ var size = "(all sizes); ";
 var condition = "(all conditions); ";
 var availability = "(all availabilities); ";
 
-var checkboxValues = JSON.parse(localStorage.getItem('checkboxValues')) || {},
-    $checkboxes = $(":checkbox");
+var formValues = JSON.parse(localStorage.getItem('formValues')) || {};
+var $checkboxes = $("left-side-menu:checkbox");
+
+
+function allChecked(){
+  return $checkboxes.length === $checkboxes.filter(":checked").length;
+
+
+function updateStorage(){
+  $checkboxes.each(function(){
+    formValues[this.id] = this.checked;
+  });
+
+  formValues["buttonText"] = $button.text();
+  localStorage.setItem("formValues", JSON.stringify(formValues));
+}
+
+$button.on("click", function() {
+  updateStorage();
+});
 
 $checkboxes.on("change", function(){
-  $checkboxes.each(function(){
-    checkboxValues[this.id] = this.checked;
-  });
-  
-  localStorage.setItem("checkboxValues", JSON.stringify(checkboxValues));
+  updateStorage();
 });
 
 // On page load
-$.each(checkboxValues, function(key, value) {
+$.each(formValues, function(key, value) {
   $("#" + key).prop('checked', value);
 });
+
+$button.text(formValues["buttonText"]);
 // Update the homepage's text representing the current filters
 function updateFiltersList() {
     // Loop through all the filters and check the checked checkboxess
