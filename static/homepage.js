@@ -26,7 +26,6 @@ $.each(checkboxValues, function(key, value) {
   $("#" + key).prop('checked', value);
 });
 
-$button.text(formValues["buttonText"]);
 // Update the homepage's text representing the current filters
 function updateFiltersList() {
     // Loop through all the filters and check the checked checkboxess
