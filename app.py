@@ -1521,7 +1521,8 @@ def filterItems():
         if ph_front[0] != None:
             imgData = functions.getImagedata(ph_front)
             imageList[idx] = imgData
-    return render_template('homefiltered.html', itemid=itemid, error=error, itemname=itemname, image=imageList)
+    searchT = "a"
+    return render_template('homefiltered.html', itemid=itemid, error=error, itemname=itemname, image=imageList, search=searchT)
 
 @app.route('/search', methods=["POST"])
 def searchItems():
