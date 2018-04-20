@@ -10,8 +10,8 @@ var condition = "(all conditions); ";
 var availability = "(all availabilities); ";
 
 
-var formValues = JSON.parse(localStorage.getItem('formValues')) || {};
-var $checkboxes = $("#filter-menu :checkbox");
+var checkboxValues = JSON.parse(localStorage.getItem('checkboxValues')) || {},
+    $checkboxes = $(":checkbox");
 
 
 function allChecked(){
