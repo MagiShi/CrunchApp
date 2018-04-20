@@ -13,30 +13,16 @@ var availability = "(all availabilities); ";
 var checkboxValues = JSON.parse(localStorage.getItem('checkboxValues')) || {},
     $checkboxes = $(":checkbox");
 
-
-function allChecked(){
-  return $checkboxes.length === $checkboxes.filter(":checked").length;
-
-
-function updateStorage(){
-  $checkboxes.each(function(){
-    formValues[this.id] = this.checked;
-  });
-
-  formValues["buttonText"] = $button.text();
-  localStorage.setItem("formValues", JSON.stringify(formValues));
-}
-
-$button.on("click", function() {
-  updateStorage();
-});
-
 $checkboxes.on("change", function(){
-  updateStorage();
+  $checkboxes.each(function(){
+    checkboxValues[this.id] = this.checked;
+  });
+  
+  localStorage.setItem("checkboxValues", JSON.stringify(checkboxValues));
 });
 
 // On page load
-$.each(formValues, function(key, value) {
+$.each(checkboxValues, function(key, value) {
   $("#" + key).prop('checked', value);
 });
 
