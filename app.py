@@ -81,6 +81,11 @@ def login():
         else:
             ## Else set session value as the user email
             session['user'] = email_list[0]
+            
+            # this makes the session expire when the BROWSER is closed, not the tab/window
+            session.SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+            # this sets the session expiration time, but you can't use it with the above
+            # session.SESSION_COOKIE_AGE = 3600
     except: 
         ##Any errors should be handled here
         query = "rollback;"
