@@ -1555,7 +1555,7 @@ def searchItems():
                     searchImages[idx] = imgData    
 
 
-    return render_template('homefiltered.html', itemid=searchItemid, itemname=searchItemname, image=searchImages)
+    return render_template('homefiltered.html', itemid=searchItemid, itemname=searchItemname, image=searchImages, search=searchQuery)
 
 #Adding a new folder 
 @app.route('/addFolder', methods=["POST", "GET"])
