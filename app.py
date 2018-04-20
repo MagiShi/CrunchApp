@@ -711,7 +711,7 @@ def prodFolders():
         # print (ph)
 
         ## Both foldernames and itemsinfolder are lists, sorted by the folderid
-        return render_template('prodFolders.html', foldernames=folder_names, itemsinfolder=items_in_folders ,error=error)
+        return render_template('prodFolders.html', foldernames=folder_names, itemsinfolder=list_of_folders ,error=error)
 
 # Update the name of production folder
 @app.route('/postrenameFolder', methods=['POST'])
