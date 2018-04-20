@@ -19,6 +19,7 @@
 - Production folders **cannot** be named "Folder1", "Folder2", "Folder3", ..., "Folder8".
 - On an item's detail page, if there is a carousel of images and the user clicks through the carousel, the image only resizes and repositions itself after a second or two. This is just a minor aesthetic bug.
 - Another minor aesthetic bug: some of the icons on the navigation bar (search bar and the two menu buttons) take some time to load. This makes the buttons smaller for a moment or so.
+- In order to log out of the application, you must click the log out button in the right side menu or close the browser. Closing a tab or a window is not sufficient. All windows of the browser must be closed.
 ### Missing Functionality
 - Originally, our team wanted a "guest" view; this would've meant that a user could view and search for items (but not be able to add/edit/delete items, make reservations, add/edit production folders) without having to login. 
 - Additionally, we planned on having a normal user account and an admin account. As an admin, the user would have all the normal functionalities, as well as the ability to completely delete users, items, reservations, and production folders. Currently we mark items as "deletion pending," for example, but don't completely remove them from the database.
