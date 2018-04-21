@@ -251,7 +251,7 @@ def addItem():
         culture_list = request.form.getlist('culture')
         sex = request.form.get('gender')
         color_list = request.form.getlist('color')
-        size = request.form.get('sizeSelect')
+        size = request.form.get('size')
         condition = request.form.get('condition')
         item_type = None
         i_type = None
@@ -1059,7 +1059,7 @@ def editItem(item_id):
     culture_list = request.form.getlist('culture')
     sex = request.form.get('gender')
     color_list = request.form.getlist('color')
-    size = request.form.get('sizeSelect')
+    size = request.form.get('size')
     condition = request.form.get('condition')
     item_type = None
     i_type = None
