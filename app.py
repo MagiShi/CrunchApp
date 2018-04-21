@@ -952,6 +952,12 @@ def getItemInfo(item_id):
                 item_type = na
             if i_type[0] is None:
                 i_type = na
+            if color[0] == '{}':
+                color = na
+            if timep[0] == '{}':
+                timep = na
+            if culture[0] == '{}':
+                culture = na
 
             photo_count = 0
             if ph_front_data:
@@ -1024,7 +1030,7 @@ def edit(item_id):
             ##If item does not exist etc
             error = 'Item information cannot be retrieved for edit.'
             return redirect(url_for('loggedin', error=error))
-
+        # print (item_name, ph_front, ph_back, ph_top, ph_bottom, ph_right, ph_left, description, pending_delete, sex, condition, timep, culture, color, size, item_type, i_type, is_available)
         ##culture, color, timeperiod are arrays/tuples
         ## Passes in  lists for everything except itemname, and description
         return render_template('editItem.html', itemname=item_name[0], itemid=item_id, phfront=ph_front_data, phback=ph_back_data, phtop=ph_top_data, phbottom=ph_bottom_data, phright=ph_right_data, phleft=ph_left_data, description=description[0], delete=pending_delete, sex=sex, condition=condition, timeperiod=timep, culture=culture, color=color, size=size, itemtype=item_type, itype=i_type, error=error)
