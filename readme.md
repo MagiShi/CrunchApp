@@ -26,7 +26,6 @@
 - Additionally, we planned on having a normal user account and an admin account. As an admin, the user would have all the normal functionalities, as well as the ability to completely delete users, items, reservations, and production folders. Currently we mark items as "deletion pending," for example, but don't completely remove them from the database.
 - There is no User Account Page where the user could update their username, password, and email address.
 - Currently, a user cannot search by itemname/barcode and filter characteristics at the same time.
-- Reservations cannot be deleted as of now; the red "X" does not work
 
 # 2. Install Guide
 ### Pre-requisites
