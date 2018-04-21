@@ -109,7 +109,7 @@ function greyout_taken_dates_in_new_reservation(all, date) {
             "endDate": date,
             "minDate": today,
             "linkedCalendars": false,
-            "autoUpdateInput": false,
+            "autoUpdateInput": true,
             "showCustomRangeLabel": false,
         });
     });
