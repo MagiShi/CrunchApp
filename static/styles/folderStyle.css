@@ -23,6 +23,10 @@
     width: 100%;
 }
 
+.folder > div {
+    margin-bottom: 40px;
+}
+
 .folder > button {
     padding: 5px 15px;
     color: white;
