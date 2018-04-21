@@ -442,7 +442,7 @@
     }
 
     function display_checkbox(characteristic, value) {
-        if (value !== 'None') {
+        if (value !== '{}') {
             // format from db: value = {red,green,blue}
             value = value.split('{').join('').split('}').join('').split(','); // convert to array of string: value = ['red','green','blue']
             value.forEach(function(c) {
