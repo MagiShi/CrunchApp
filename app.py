@@ -1307,7 +1307,7 @@ def filterItems():
 @app.route('/search', methods=["POST"])
 def searchItems():
     searchQuery = request.form.get('searchBar')
-
+    searchQuery = searchQuery.lower()
     itemidQuery = "SELECT itemid FROM item;"
     itemNameQuery = "SELECT itemname FROM item;"
     imageQuery = "SELECT phfront FROM item;"
@@ -1324,7 +1324,7 @@ def searchItems():
         print(searchQuery)
         print(each[0])
         print(itemname[idx][0])
-        if((searchQuery in each[0]) or (searchQuery in itemname[idx][0])):
+        if((searchQuery in each[0].lower()) or (searchQuery in itemname[idx][0].lower())):
             searchItemid.append([each[0]])
             searchItemname.append([itemname[idx][0]])
             searchImages.append([image[idx][0]])
