@@ -666,7 +666,7 @@ def prodFolders():
             cursor.execute(folderNameQuery)
             folder_names = cursor.fetchall()
 
-            item_query = "SELECT itemid, itemname, f1, f2, f3, f4, f5 ,f6 ,f7, f8, phfront FROM item;"
+            item_query = "SELECT itemname, itemid, f1, f2, f3, f4, f5 ,f6 ,f7, f8, phfront FROM item;"
             cursor.execute(item_query)
             all_items = cursor.fetchall()
         except Exception as e:
@@ -685,7 +685,7 @@ def prodFolders():
             ## list of items that are in a specific folder
             ## [(Itemname, itemid, photo), (Itemname2, itemid2, photo2)]
             items_in_folders = []
-            for i_id, i_name, f1, f2, f3, f4, f5, f6, f7, f8, phf in all_items:
+            for i_name, i_id, f1, f2, f3, f4, f5, f6, f7, f8, phf in all_items:
                 folder_dict = {}
                 folder_dict['f1'] = (f1)
                 folder_dict['f2'] = (f2)
@@ -701,7 +701,7 @@ def prodFolders():
                     ph = functions.getImagedata([phf])
                     # print ("FOUND: folder", f_id, folder_dict[f_id])
                     # items_in_folder = (i_id, i_name)
-                    items_in_folders.append((i_id, i_name, ph))
+                    items_in_folders.append((i_name, i_id, ph))
                     # items_in_folders_list.append(items_in_folder)
 
             ## use if want to pass in only folders that have items
@@ -711,9 +711,6 @@ def prodFolders():
             ## use instead of above if statement if want to pass in info 
             ## for all folders, even those with no info.
             list_of_folders.append((f_name, f_id, items_in_folders))
-
-        print (list_of_folders)
-        # print (ph)
 
         ## Both foldernames and itemsinfolder are lists, sorted by the folderid
         return render_template('prodFolders.html', foldernames=folder_names, itemsinfolder=list_of_folders ,error=error)

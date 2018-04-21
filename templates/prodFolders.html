@@ -32,18 +32,19 @@
                     <div style="text-align:center;">
                         <div class="form-group">
                             <ul class="list-group">
-                                {% for foldername in foldernames %}
-                                <li id="folder_{{foldername[0]}}" class="folder list-group-item list-group-item-action flex-column">
+                                <!-- itemsinfolder: 0:Foldername, 1:folderid, 2:[(0:Itemname, 1:itemid, 2:photo1), (Itemname2, itemid2, photo2)]), (Foldername2, folderid2, [(Itemname, itemid), (Itemname2, itemid2)])] -->
+                                {% for folder in itemsinfolder %}
+                                <li id="folder_{{folder[0]}}" class="folder list-group-item list-group-item-action flex-column">
                                     <div class="d-flex w-100 justify-content-between" style="text-align:left;">
-                                        <p>{{foldername[0]}}</p>
+                                        <p>{{folder[0]}}</p>
                                         <div style="min-width:51px; margin-left:13px;">
                                             <div style="min-width:51px; margin-left:13px;">
                                                 <!-- EDIT NAME BUTTON-->
-                                                <button type="button" class="icon-button rename-folder" data-toggle="modal" data-target="#rename-modal" onclick="activate_rename_field('{{foldername[0]}}');"  data-tooltip="tooltip" data-placement="top" title="Rename Folder">
+                                                <button type="button" class="icon-button rename-folder" data-toggle="modal" data-target="#rename-modal" onclick="activate_rename_field('{{folder[0]}}');"  data-tooltip="tooltip" data-placement="top" title="Rename Folder">
                                                     {% include 'icon/pencil.svg' %}
                                                 </button>
                                                 <!-- DELETE FOLDER BUTTON -->
-                                                 <button type="button" class="icon-button delete-folder" data-toggle="modal" data-target="#delete-modal" onclick="get_delete_name('{{foldername|first}}');" style="margin-left: 5px;" data-tooltip="tooltip" data-placement="top" title="Delete Folder">
+                                                 <button type="button" class="icon-button delete-folder" data-toggle="modal" data-target="#delete-modal" onclick="get_delete_name('{{folder|first}}');" style="margin-left: 5px;" data-tooltip="tooltip" data-placement="top" title="Delete Folder">
                                                      {% include 'icon/delete.svg' %}
                                                 </button>
                                             </div>
@@ -51,12 +52,20 @@
                                     </div>
                                     <button onclick="toggleAccordion(this)"><i class="fas fa-angle-down"></i></button>
                                     <div class="folder-contents row">
-                                        <div class="col-6 col-md-4" onclick="window.open('item/b2');" >
+                                        {% for item in folder[2] %}
+                                        <div class="col-6 col-md-4" onclick="window.open('item/{{item[1]}}');" >
                                             <div class="item">
-                                                <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/No_image_available_600_x_450.svg">
-                                                <p>item name</p>
+                                                {% if item[2] %}
+                                                    {% for i in item[2] %}
+                                                        <img src="data:image/jpeg;base64, {{i}}"/>
+                                                    {% endfor %}
+                                                {% else %}
+                                                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/No_image_available_600_x_450.svg">
+                                                {% endif %}
+                                                <p>{{item[0]}}</p>
                                             </div>
                                         </div>
+                                        {% endfor %}
                                     </div>
                                 </li>
                                 {% endfor %}
