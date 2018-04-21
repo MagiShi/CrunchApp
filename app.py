@@ -1055,7 +1055,7 @@ def editItem(item_id):
 
     prop_t = request.form.get('prop')
     costume_t = request.form.get('costume')
-    time_list = request.form.getlist('time')
+    time_list = request.form.getlist('time-period')
     culture_list = request.form.getlist('culture')
     sex = request.form.get('gender')
     color_list = request.form.getlist('color')
