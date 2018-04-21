@@ -14,7 +14,7 @@
   - Users can mark items as to be reserved for a certain date range. This way, other users know that the item is unavailable during that time.
   - Users can view their upcoming, current, and past reservations.
 ### Bugs and Defects
-- When making or updating the date range of a reservation, the calendar widget requires that you **press the green Apply button** for the input to save. (Do not choose the date and then click outside of the calendar widget if you want changes to be saved.)
+- When making or updating the date range of a reservation, the calendar widget requires that you **press the green Apply button** for the input to save. (Do not choose the date and then click outside of the calendar widget if you want changes to be saved.) Please press **Cancel** if you have selected the new date but do not want to update the reservation.
 - **The application does not allow multiple image files with the same name** when adding or editing an item.
 - Production folders **cannot** be named "Folder1", "Folder2", "Folder3", ..., "Folder8".
 - On an item's detail page, if there is a carousel of images and the user clicks through the carousel, the image only resizes and repositions itself after a second or two. This is just a minor aesthetic bug.
