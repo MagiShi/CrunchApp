@@ -533,6 +533,29 @@ def editReservation(data):
         return redirect(url_for('reservations', error=error))
     return redirect(url_for('reservations', error=error))
 
+@app.route('/deleteReservation', methods=["POST"])
+def deleteReservation():
+    error = None
+    email, item_id, start_date, end_date = request.form.get('delreservation').split(' ')
+    start_date = datetime.datetime.strptime(start_date, '%m/%d/%Y').date()
+    end_date = datetime.datetime.strptime(end_date, '%m/%d/%Y').date()
+
+    query = "DELETE from reservation WHERE email='{0}' and itemid='{1}' and startdate='{2}' and enddate='{3}';".format(email, item_id, start_date, end_date)
+    try:
+        cursor.execute(query)
+
+    except Exception as e:
+        query = "rollback;"
+        cursor.execute(query)
+
+        ##If reservation creation fails
+        error = 'Reservation deletion has failed.'
+        return redirect(url_for('reservations', error=error))
+
+    conn.commit()
+    error = 'Reservation has been successful cancelled.'
+    return redirect(url_for('reservations', error=error))
+
 @app.route('/editFolders/<item_id>', methods=["POST", "GET"])
 def toEditProdFolders(item_id):
     if functions.isLoggedIn(session.get('user')) is False:
@@ -838,6 +861,7 @@ def reservations():
             ## [('a','b'),('d','c')] -> [['a','b],['c','d']]
             ## default=str turns datetime.date into str, because it is not JSON serializable
             all_reservations = json.dumps(all_reservations, default=str)
+            error = request.args.get('error')
 
         except Exception as e:
             cursor.execute("rollback;")
@@ -849,7 +873,7 @@ def reservations():
         # past_user_reservations gives the specific user's past reservations (should only have last 3)
         # current gives the specific user's current reservations 
         # future gives the specific user's future reservations  
-        return render_template('reservations.html', past_user_reservations=past_user_reservations,  current_user_reservations=current_user_reservations,  future_user_reservations=future_user_reservations, all_reservations=all_reservations)
+        return render_template('reservations.html', past_user_reservations=past_user_reservations,  current_user_reservations=current_user_reservations,  future_user_reservations=future_user_reservations, all_reservations=all_reservations, error=error)
 
 
 @app.route('/deleteItem/<item_id>', methods=['POST'])
