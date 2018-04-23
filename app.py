@@ -54,7 +54,7 @@ cursor = conn.cursor()
 @app.route('/')
 def welcome():
     error = request.args.get('error')
-    print (repr(error))
+    # print (repr(error))
     return render_template('login.html', error=error)
 
 #method after clicking on login button
@@ -66,7 +66,7 @@ def login():
     error = None
 
     query = "SELECT email FROM registereduser WHERE username = '{0}' AND password = '{1}';".format(username, password)
-    print (query)
+    # print (query)
     # errors = {"error": "The username or password you have entered is incorrect."}
     try:
         cursor.execute(query)
@@ -163,7 +163,7 @@ def sendMail():
         msg = Message("Your password is {0}".format(tup), sender=("crunch.thracker@gmail.com"), recipients=["{0}".format(email)])
         mail.send(msg)
     except Exception as e:
-        print (e)
+        # print (e)
         query = "rollback;"
         cursor.execute(query)
         error = 'Please enter an email.'
@@ -237,7 +237,7 @@ def addItem():
         itemNameQuery ="SELECT itemname FROM item where itemname='{0}'".format(item_name)
         cursor.execute(itemNameQuery)
         itemnames = cursor.fetchall()
-        print ("i" , itemnames)
+        # print ("i" , itemnames)
 
         if len(itemnames) > 1:
             error = 'Another item already exists with that name. See the Help & FAQ menu for more details.'
@@ -297,7 +297,7 @@ def addItem():
                 query += " NULL, "
 
         query += " true, false);"
-        print (query)
+        # print (query)
 
         try: 
             cursor.execute(query)
@@ -465,7 +465,7 @@ def postReserveItem(item_id):
     try:
         #returns all reservations with that item id
         query = "INSERT into reservation VALUES ('{0}', '{1}', '{2}', '{3}', '{4}');".format(email, item_id, start_date, end_date, status)
-        print (query)
+        # print (query)
         cursor.execute(query)
         conn.commit()
         error = "Your reservation for item with barcode {0} has been reserved from {1} to {2}.".format(itemid, start_date, end_date)
@@ -522,7 +522,7 @@ def editReservation(data):
     
     try:
         query = "UPDATE reservation SET startdate='{0}' , enddate='{1}' WHERE email='{2}' and itemid='{3}' and startdate='{4}';".format(start_date, end_date, email, item_id, old_start_date)
-        print(query)
+        # print(query)
         cursor.execute(query)
         conn.commit()
         error = "Update successful!"
@@ -561,7 +561,7 @@ def toEditProdFolders(item_id):
     if functions.isLoggedIn(session.get('user')) is False:
         return redirect(url_for('welcome'))
     else:
-        print("to edit prod folders")
+        # print("to edit prod folders")
         item_id = item_id
         error = None
         item_name = None
@@ -590,8 +590,8 @@ def toEditProdFolders(item_id):
         try: 
             cursor.execute(query)
             all_info = cursor.fetchone()
-            print("All info")
-            print (all_info)
+            # print("All info")
+            # print (all_info)
             if len(all_info) > 8:
                 item_name = all_info[0]
                 f1 = all_info[1]
@@ -631,7 +631,7 @@ def toEditProdFolders(item_id):
 
 @app.route('/posteditFolders/<item_id>', methods=['POST'])
 def editProdFolders(item_id):
-    print("HERE")
+    # print("HERE")
     item_id = item_id
     f1= request.form.get('f1')
     f2= request.form.get('f2')
@@ -1179,10 +1179,10 @@ def editItem(item_id):
 
 @app.route('/filtered', methods=["POST"])
 def filterItems():
-    # proptype = request.form.getlist('prop-type')
-    # clothingtype = request.form.getlist('clothing-type')
+    proptype = request.form.getlist('prop-type')
+    clothingtype = request.form.getlist('costume-type')
     timeperiod = request.form.getlist('time-period')
-    # culture = request.form.getlist('region')
+    culture = request.form.getlist('region')
     sex = request.form.getlist('sex')
     color = request.form.getlist('color')
     size = request.form.getlist('size')
@@ -1194,10 +1194,20 @@ def filterItems():
             isavailable.append(True)
         elif a == 'unavailable':
             isavailable.append(False)
-
+    # print ("c", clothingtype)
+    # print ("p", proptype)
 
     char2val = {}
     char2val['timeperiod'] = timeperiod
+    char2val['itype'] = []
+    # print (len(clothingtype))
+    # print (len(proptype))
+    if len(clothingtype) > 0 and len(proptype) < 1:
+        char2val['itype'] = clothingtype
+    elif len(proptype) > 0 and len(clothingtype) < 1:
+        char2val['itype'] = proptype
+    # print (char2val.get('itype'))
+    char2val['culture'] = culture
     char2val['sex'] = sex
     char2val['color'] = color
     char2val['size'] = size
@@ -1205,8 +1215,8 @@ def filterItems():
     char2val['isavailable'] = isavailable
 
     # charlist = [proptype, clothingtype, timeperiod, culture, sex, color, size, condition, availability]
-    char_array_enum_list = ['timeperiod', 'color']
-    char_enum_list = ['sex', 'size', 'condition', 'isavailable']
+    char_array_enum_list = ['timeperiod', 'color', 'culture']
+    char_enum_list = ['sex', 'size', 'condition', 'isavailable', 'itype']
     charArrayBool = False
     charBool = False
 
@@ -1214,8 +1224,11 @@ def filterItems():
         if char2val.get(c):
             charArrayBool = True
     for c in char_enum_list:
+        print (char2val.get(c))
         if char2val.get(c):
             charBool = True
+    # print (char_array_enum_list)
+    # print (char_enum_list)
     # print (charArrayBool)
     # print (charBool)
 
@@ -1272,6 +1285,7 @@ def filterItems():
                 query += ")"
 
     query += ";"
+    # print (query)
 
     try: 
         cursor.execute(query)
@@ -1321,9 +1335,9 @@ def searchItems():
     searchItemname = []
     searchImages = []
     for idx, each in enumerate(itemid):
-        print(searchQuery)
-        print(each[0])
-        print(itemname[idx][0])
+        # print(searchQuery)
+        # print(each[0])
+        # print(itemname[idx][0])
         if((searchQuery in each[0].lower()) or (searchQuery in itemname[idx][0].lower())):
             searchItemid.append([each[0]])
             searchItemname.append([itemname[idx][0]])
@@ -1349,7 +1363,7 @@ def addFolder():
     num_folder_q = "SELECT folderid from productionfolders where exists=false;"
     cursor.execute(num_folder_q);
     valid_folders = cursor.fetchall();
-    print (valid_folders)
+    # print (valid_folders)
 
     if (len(valid_folders) <1 ):
         # there is no room to add another folder
@@ -1359,7 +1373,7 @@ def addFolder():
         try: 
             folder_id = valid_folders[0][0]
             query = "UPDATE productionfolders SET foldername='{0}', exists=true WHERE folderid='{1}';".format(folder_name, folder_id)
-            print (query)
+            # print (query)
             cursor.execute(query)
             conn.commit()
 
