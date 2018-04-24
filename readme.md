@@ -21,6 +21,7 @@
 - Another minor aesthetic bug: some of the icons on the navigation bar (search bar and the two menu buttons) take some time to load. This makes the buttons smaller for a moment or so.
 - In order to log out of the application, you must click the log out button in the right side menu or close the browser. Closing a tab or a window is not sufficient. All windows of the browser must be closed.
 - On mobile, adding an item to a production folder does not work. Adding an item to a production folder must be done on a non-mobile device.
+- After filters have been applied, when you reopen the filter menu, the previously applied filters do not appear as already checked.
 ### Missing Functionality
 - Originally, our team wanted a "guest" view; this would've meant that a user could view and search for items (but not be able to add/edit/delete items, make reservations, add/edit production folders) without having to login. 
 - Additionally, we planned on having a normal user account and an admin account. As an admin, the user would have all the normal functionalities, as well as the ability to completely delete users, items, reservations, and production folders. Currently we mark items as "deletion pending," for example, but don't completely remove them from the database.
